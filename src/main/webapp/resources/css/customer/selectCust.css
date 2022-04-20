@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+/*상단 타이틀 영역*/
+.box-title {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	margin-bottom: 10px;
+}
+.main-title {
+	font-size: 18px;
+	font-weight: 700;
+	padding-right: 5px;
+}
+
+/*초기화 버튼*/
+#resetBtn {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+#resetBtn>span {
+	font-size: 20px;
+}
+
+/*신규등록 버튼*/
+#addCustBtn {
+	width: 80px;
+	height: 40px;
+	border-radius: 10px;
+	font-size: 14px;
+	position: absolute;
+	right: 0;
+	border: 2px #114574 solid;
+	color: #114574;
+	transition: all 0.2s;
+}
+#addCustBtn:hover {
+	background-color: #114574;
+	color: #fff;
+	transition: all 0.2s;
+}
+
+/*검색 영역*/
+.box-search {
+	width: 100%;
+	height: 150px;
+	padding: 30px;
+	border: 1px #C8C8C8 solid; 
+	display: flex;
+	justify-content: center;
+}
+.area-input {
+	width: 90%;
+}
+
+/*각 검색 요소*/
+.one-search {
+	width: 50%;
+	height: 50%;
+	padding-right: 50px;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+.search-title {
+	display: inline-block;
+	width: 25%;
+	text-align: right;
+	padding-right: 15px;
+}
+
+/*매장,고객번호 input*/
+.style-input {
+	width: 32.5%;
+}
+.style-input[readonly] {
+	background-color: #d9d9d9;
+}
+
+/*매장,고객번호 검색 버튼*/
+.one-search>button {
+	width: 10%;
+	height: 30px;
+	display: flex;
+	cursor: pointer;
+	margin-right: 10px;
+}
+.one-search>button>span {
+	width: 30px;
+	height: 30px;
+	border: 1px #c8c8c8 solid;
+	padding-top: 2px;
+}
+
+/*필수입력 표시*/
+.required {
+	color: #C22B12;
+}
+
+/*radio input*/
+.box-input-radio,
+.box-input-date {
+	width: 75%;
+	display: flex;
+	justify-content: space-between;
+}
+.box-input-radio>label>input {
+	margin-right: 8px;
+}
+
+/*date input*/
+.box-input-date>input {
+	width: 47.5%;
+	height: 30px;
+	border: 1px #c8c8c8 solid;
+}
+
+/*최종검색 버튼*/
+.area-btn {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+input[type="submit"] {
+	width: 80%;
+	height: 60%;
+	line-height: 40px;
+	background-color: #114574;
+	border-radius: 10px;
+	color: #fff;
+	cursor: pointer;
+}

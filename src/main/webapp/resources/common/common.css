@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+/*기본 설정*/
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: transparent;
+	text-decoration: none;
+	list-style-type: none;
+	box-sizing: border-box;
+	font-size: 16px;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: #707070;
+	letter-spacing: -0.3px;
+}
+
+/*페이지세로 가변적인 길이 유지*/
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	background-color: #eee;
+}
+#wrap {
+	min-height: 100%;
+	position: relative;
+}
+
+/*contect 기본설정*/
+#content {
+	width: 85%;
+	min-height: 100vh;
+	padding: 110px 30px 30px;
+	float: right;
+}
+
+/*container 기본설정*/
+.container {
+	width: 100%;
+	min-height: 100vh;
+	padding: 30px;
+	background-color: #fff;
+}
+
+/*이미지 꽉차게*/
+.img-full {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/*input 태그 디자인*/
+.style-input {
+	height: 30px;
+	border: 0.5px solid #C8C8C8;
+	padding: 15px;
+	font-size: 14px;
+}
+input::placeholder,
+textarea::placeholder {
+  	color: #C8C8C8;
+}
+input:focus,
+select:focus,
+textarea:focus
+ {
+	outline: none;
+}
+textarea {
+	white-space: pre-wrap;
+}

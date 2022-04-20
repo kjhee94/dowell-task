@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user">
+	<select id="selectLoginUser" parameterType="user" resultType="user">
+		SELECT 
+			USER_ID as userId,
+			USER_NM as userNm,
+			USER_DT_CD as userDtCd,
+			USE_YN as useYN,
+			USE_PWD as userPwd,
+			ST_DT as StDt,
+			ED_DT as EdDt,
+			U.PRT_CD as PrtCd,
+			PWD_UPD_DT as PwdUpdDt,
+			U.FST_REG_DT as FstRegDt,
+			U.FST_USER_ID as FstUserId,
+			U.LST_UPD_DT as LstUpdCd,
+			U.LST_UPD_ID as LstUpdId,
+			PRT_NM as PrtNm
+		FROM MA_USER_MT U
+		LEFT JOIN MA_PRT_MT P ON (U.PRT_CD=P.PRT_CD)
+		WHERE USER_ID=#{userId} AND USE_PWD=#{userPwd} AND USE_YN='Y'
+	</select>
+</mapper>
