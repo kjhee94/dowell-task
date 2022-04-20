@@ -30,16 +30,10 @@
 	height: 40px;
 	border-radius: 10px;
 	font-size: 14px;
+	cursor: pointer;
 	position: absolute;
 	right: 0;
-	border: 2px #114574 solid;
-	color: #114574;
-	transition: all 0.2s;
-}
-#addCustBtn:hover {
-	background-color: #114574;
-	color: #fff;
-	transition: all 0.2s;
+	border: 1px #c8c8c8 solid;
 }
 
 /*검색 영역*/
@@ -50,6 +44,7 @@
 	border: 1px #C8C8C8 solid; 
 	display: flex;
 	justify-content: center;
+	margin-bottom: 20px;
 }
 .area-input {
 	width: 90%;
@@ -68,26 +63,30 @@
 	display: inline-block;
 	width: 25%;
 	text-align: right;
-	padding-right: 15px;
+	padding-right: 5%;
 }
 
 /*매장,고객번호 input*/
+.box-input-text {
+	width: 75%;
+	display: flex;
+	justify-content: flex-start;
+}
 .style-input {
-	width: 32.5%;
+	width: 45%;
 }
 .style-input[readonly] {
 	background-color: #d9d9d9;
 }
 
 /*매장,고객번호 검색 버튼*/
-.one-search>button {
+.box-input-text>button {
 	width: 10%;
-	height: 30px;
 	display: flex;
+	align-items: flex-start;
 	cursor: pointer;
-	margin-right: 10px;
 }
-.one-search>button>span {
+.box-input-text>button>span {
 	width: 30px;
 	height: 30px;
 	border: 1px #c8c8c8 solid;
@@ -114,7 +113,12 @@
 .box-input-date>input {
 	width: 47.5%;
 	height: 30px;
+	padding: 0 15px;
+	font-size: 14px;
 	border: 1px #c8c8c8 solid;
+}
+.box-input-date>input:last-child {
+	margin-right: 0;
 }
 
 /*최종검색 버튼*/
@@ -132,4 +136,88 @@ input[type="submit"] {
 	border-radius: 10px;
 	color: #fff;
 	cursor: pointer;
+}
+
+/*결과 영역*/
+.box-result {
+	width: 100%;
+}
+.custNo,
+.jsDt,
+.jnPrt {
+	width: 12%;
+}
+.custNm,
+.custSs {
+	width: 9%;
+}
+.mblNo {
+	width: 13%
+}
+.firReg {
+	width: 14%;
+}
+.lstUpdDt {
+	width: 17%;
+}
+.box-result span {
+	
+}
+
+/*텍스트 중앙 정렬*/
+.mblNo,
+.custSs,
+.jsDt,
+.lstUpdDt {
+	text-align: center;
+}
+
+/*테이블 제목*/
+.result-title {
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	background-color: #eee;
+}
+.result-title>span {
+	display: inline-block;
+	padding: 0 15px;
+	text-align: center;
+	font-weight: 700;
+}
+.result-title>span:last-child {
+	border-right: 0;
+}
+
+/*테이블 내용*/
+.result-cust {
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 1px #c8c8c8 solid;
+}
+.result-cust>span {
+	display: inline-block;
+	padding: 0 15px;
+	height: 100%;
+	font-size: 14px;
+	border-right: 1px #c8c8c8 solid;
+}
+.result-cust>span:last-child {
+	border-right: 0;
+}
+
+/*이력,상세 버튼*/
+.result-cust>span>button {
+	width: 25px;
+	height: 25px;
+	border: 1px #c8c8c8 solid;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
+	vertical-align: sub;
+}
+.result-cust>span>button>span {
+	font-size: 18px;
+	padding-top: 3px;
 }

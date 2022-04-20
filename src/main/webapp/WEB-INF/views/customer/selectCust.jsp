@@ -35,19 +35,23 @@
 						<div class="area-input">
 							<div class="one-search">
 								<span class="search-title">매장</span>
-								<input class="style-input" type="text" name="prtCd" readonly value="${sessionScope.user.prtCd}">
-								<button id="prtSearchBtn" type="button">
-									<span class="material-icons">search</span>
-								</button>
-								<input class="style-input" type="text" name="prtNm" autofocus value="${sessionScope.user.prtNm}">
+								<div class="box-input-text">
+									<input class="style-input" type="text" name="prtCd" readonly value="${sessionScope.user.prtCd}">
+									<button id="prtSearchBtn" type="button">
+										<span class="material-icons">search</span>
+									</button>
+									<input class="style-input" type="text" name="prtNm" autofocus value="${sessionScope.user.prtNm}">
+								</div>
 							</div>
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
-								<input class="style-input" type="text" name="custNo" readonly>
-								<button id="custNoSearchBtn"  type="button">
-									<span class="material-icons">search</span>
-								</button>
-								<input class="style-input" type="text" name="custNm">
+								<div class="box-input-text">
+									<input class="style-input" type="text" name="custNo" readonly>
+									<button id="custNoSearchBtn"  type="button">
+										<span class="material-icons">search</span>
+									</button>
+									<input class="style-input" type="text" name="custNm">
+								</div>
 							</div>
 							<div class="one-search">
 								<span class="search-title">
@@ -70,7 +74,6 @@
 									<input type="date" name="jsDt1" value="2000-01-01">
 									<input type="date" name="jsDt2" value="2000-01-01">
 								</div>
-								
 							</div>
 						</div>
 						<div class="area-btn">
@@ -91,34 +94,58 @@
 						<span class="lstUpdDt">수정일자</span>
 					</div>
 					<div class="result-cust">
-						<span class="custNo">1</span>
-						<span class="custNm">홍*동</span>
+						<span class="custNo">1000000045
+							<button id="updListBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
+						<span class="custNm">홍*동
+							<button id="detailBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
 						<span class="mblNo">010-****-0001</span>
 						<span class="custSs">정상</span>
 						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남매장</span>
-						<span class="firReg">20220409/강주희</span>
-						<span class="lstUpdDt">2021-08-01/20220409</span>
+						<span class="jnPrt">강남특약점</span>
+						<span class="firReg">20220409 / 강주희</span>
+						<span class="lstUpdDt">2021-08-01 20220409</span>
 					</div>
 					<div class="result-cust">
-						<span class="custNo">1</span>
-						<span class="custNm">홍*동</span>
+						<span class="custNo">1000000045
+							<button id="updListBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
+						<span class="custNm">홍*동
+							<button id="detailBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
 						<span class="mblNo">010-****-0001</span>
 						<span class="custSs">정상</span>
 						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남매장</span>
-						<span class="firReg">20220409/강주희</span>
-						<span class="lstUpdDt">2021-08-01/20220409</span>
+						<span class="jnPrt">강남특약점</span>
+						<span class="firReg">20220409 / 강주희</span>
+						<span class="lstUpdDt">2021-08-01 20220409</span>
 					</div>
 					<div class="result-cust">
-						<span class="custNo">1</span>
-						<span class="custNm">홍*동</span>
+						<span class="custNo">1000000045
+							<button id="updListBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
+						<span class="custNm">홍*동
+							<button id="detailBtn" type="button">
+								<span class="material-icons">list_alt</span>
+							</button>
+						</span>
 						<span class="mblNo">010-****-0001</span>
 						<span class="custSs">정상</span>
 						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남매장</span>
-						<span class="firReg">20220409/강주희</span>
-						<span class="lstUpdDt">2021-08-01/20220409</span>
+						<span class="jnPrt">강남특약점</span>
+						<span class="firReg">20220409 / 강주희</span>
+						<span class="lstUpdDt">2021-08-01 20220409</span>
 					</div>
 				</div>
 			</div>
