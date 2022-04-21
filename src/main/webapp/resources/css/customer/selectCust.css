@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
+/*네비게이션 고정*/
+#gnb>li:nth-child(1)>.lnb {
+	display: block;
+}
+#gnb>li:nth-child(1)>.lnb>li:nth-child(1) {
+	background-color: #012840;
+}
+#gnb>li:nth-child(1)>.lnb>li:nth-child(1)>a {
+	color: #fff;
+}
+
 /*상단 타이틀 영역*/
 .box-title {
 	height: 50px;
@@ -143,13 +154,17 @@ input[type="submit"] {
 	width: 100%;
 }
 .custNo,
-.jsDt,
-.jnPrt {
+.custNm,
+.jsDt
+ {
 	width: 12%;
 }
-.custNm,
+.jnPrt
+ {
+	width: 10%;
+}
 .custSs {
-	width: 9%;
+	width: 8%;
 }
 .mblNo {
 	width: 13%
@@ -159,9 +174,6 @@ input[type="submit"] {
 }
 .lstUpdDt {
 	width: 17%;
-}
-.box-result span {
-	
 }
 
 /*텍스트 중앙 정렬*/
@@ -184,6 +196,7 @@ input[type="submit"] {
 	padding: 0 15px;
 	text-align: center;
 	font-weight: 700;
+	border-right: 1px #d9d9d9 solid;
 }
 .result-title>span:last-child {
 	border-right: 0;
@@ -194,14 +207,17 @@ input[type="submit"] {
 	width: 100%;
 	height: 60px;
 	line-height: 60px;
-	border-bottom: 1px #c8c8c8 solid;
+	border-bottom: 1px #d9d9d9 solid;
+}
+.result-cust:last-child {
+	border-bottom: 0;
 }
 .result-cust>span {
 	display: inline-block;
 	padding: 0 15px;
-	height: 100%;
 	font-size: 14px;
-	border-right: 1px #c8c8c8 solid;
+	border-right: 1px #d9d9d9 solid;
+	position: relative;
 }
 .result-cust>span:last-child {
 	border-right: 0;
@@ -214,10 +230,20 @@ input[type="submit"] {
 	border: 1px #c8c8c8 solid;
 	border-radius: 5px;
 	cursor: pointer;
-	margin-left: 5px;
-	vertical-align: sub;
+	
+	position: absolute;
+	right: 15px;
+	top: 18px;
 }
 .result-cust>span>button>span {
 	font-size: 18px;
 	padding-top: 3px;
+}
+
+/*고객이 없을 때*/
+.box-result>p {
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 14px;
 }

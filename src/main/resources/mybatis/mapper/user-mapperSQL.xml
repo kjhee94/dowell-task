@@ -3,20 +3,20 @@
 <mapper namespace="user">
 	<select id="selectLoginUser" parameterType="user" resultType="user">
 		SELECT 
-			USER_ID as userId,
-			USER_NM as userNm,
-			USER_DT_CD as userDtCd,
-			USE_YN as useYN,
-			USE_PWD as userPwd,
-			ST_DT as StDt,
-			ED_DT as EdDt,
+			U.USER_ID as userId,
+			U.USER_NM as userNm,
+			U.USER_DT_CD as userDtCd,
+			U.USE_YN as useYN,
+			U.USE_PWD as userPwd,
+			U.ST_DT as StDt,
+			U.ED_DT as EdDt,
 			U.PRT_CD as PrtCd,
-			PWD_UPD_DT as PwdUpdDt,
+			U.PWD_UPD_DT as PwdUpdDt,
 			U.FST_REG_DT as FstRegDt,
 			U.FST_USER_ID as FstUserId,
 			U.LST_UPD_DT as LstUpdCd,
 			U.LST_UPD_ID as LstUpdId,
-			PRT_NM as PrtNm
+			P.PRT_NM as PrtNm
 		FROM MA_USER_MT U
 		LEFT JOIN MA_PRT_MT P ON (U.PRT_CD=P.PRT_CD)
 		WHERE USER_ID=#{userId} AND USE_PWD=#{userPwd} AND USE_YN='Y'

@@ -23,16 +23,15 @@ public class UserController {
 	@RequestMapping(value = "/user/login.do", method = RequestMethod.POST)
 	public String userLogin(HttpServletRequest request, User user, ModelAndView mav) {
 		
+		//사용자의 정보 User에 담기
 		User u = uService.selectLoginUser(user);
-		//데이터 검증
-		//System.out.println(u);
 		
 		//유저 정보가 있을 때
 		if(u!=null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", u);
 			
-			return "customer/selectCust";
+			return "user/loginSuccess";
 		}
 		//유저 정보가 없을 때
 		else {

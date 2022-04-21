@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cust">
+	<select id="selectAllCust" parameterType="Hashmap" resultType="cust">
+		SELECT  
+		    C.CUST_NO as custNo,
+		    C.CUST_NM as custNm,
+		    C.MBL_NO as mblNo,
+		    C.CUST_SS_CD as custSsCd,
+		    C.JS_DT as jsDt,
+		    C.FST_USER_ID as fstUserId,
+		    C.LST_UPD_DT as lstUpdDt,
+		    C.LST_UPD_ID as lstUpdId,
+		    P.PRT_NM as jnPrtNm,
+		    U.USER_NM as fstUserNm
+		FROM CS_CUST01_MT C
+		LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)
+		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)
+		<if test="userDtCd.equals(2)">
+			WHERE P.PRT_CD = #{prtCd}
+		</if>
+		ORDER BY 1
+	</select>
+</mapper>

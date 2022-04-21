@@ -4,5 +4,6 @@
 	<!-- 별칭 등록 -->
 	<typeAliases>
 		<typeAlias type="com.kr.first.user.model.vo.User" alias="user"/>
+		<typeAlias type="com.kr.first.customer.model.vo.Customer" alias="cust"/>
 	</typeAliases>
 </configuration>

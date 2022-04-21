@@ -35,6 +35,9 @@ nav {
 	align-items: center;
 	position: relative;
 }
+.lnb {
+	display: none;
+}
 .lnb>li {
 	display: block;
 	height: 50px;
@@ -61,6 +64,7 @@ nav {
 .icon-arrow {
 	position: absolute;
 	right: 30px;
+	transition: all 0.2s;
 }
 
 /*hover 설정*/

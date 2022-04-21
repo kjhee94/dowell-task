@@ -4,7 +4,7 @@
 		<header>
 			<div class="box-side">
 				<div class="logo">
-					<a href="#">
+					<a href="/customer/selectAllCust.do">
 						<img class="img-full" alt="로고이미지" src="/resources/images/logo_w.png">
 					</a>
 				</div>
@@ -14,10 +14,10 @@
 							<div class="gnb-list">
 								<span class="material-icons icon-main">person_outline</span>
 								고객
-								<span class="material-icons icon-arrow">expand_less</span>
+								<span class="material-icons icon-arrow">navigate_next</span>
 							</div>
 							<ul class="lnb">
-								<li><a href="#">ㆍ 고객 조회</a></li>
+								<li><a href="/customer/selectAllCust.do">ㆍ 고객 조회</a></li>
 								<li><a href="#">ㆍ 고객 정보 조회</a></li>
 							</ul>
 						</li>
@@ -25,7 +25,7 @@
 							<div class="gnb-list">
 								<span class="material-icons icon-main">shopping_cart</span>
 								판매
-								<span class="material-icons icon-arrow">expand_less</span>
+								<span class="material-icons icon-arrow">navigate_next</span>
 							</div>
 							<ul class="lnb">
 								<li><a href="#">ㆍ 고객 판매 관리</a></li>
@@ -36,7 +36,7 @@
 							<div class="gnb-list">
 								<span class="material-icons icon-main">receipt_long</span>
 								주문
-								<span class="material-icons icon-arrow">expand_less</span>
+								<span class="material-icons icon-arrow">navigate_next</span>
 							</div>
 							<ul class="lnb">
 								<li><a href="#">ㆍ 주문 등록</a></li>

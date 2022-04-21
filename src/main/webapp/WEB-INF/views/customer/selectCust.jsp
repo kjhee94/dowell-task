@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/common/include.css">
 <link rel="stylesheet" href="/resources/css/customer/selectCust.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="/resources/common/common.js"></script>
+<script src="/resources/js/selectCust.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -71,8 +74,8 @@
 									가입일자
 								</span>
 								<div class="box-input-date">
-									<input type="date" name="jsDt1" value="2000-01-01">
-									<input type="date" name="jsDt2" value="2000-01-01">
+									<input type="date" name="jsDtFrom" id="jsDtFrom">
+									<input type="date" name="jsDtTo" id="jsDtTo">
 								</div>
 							</div>
 						</div>
@@ -93,60 +96,33 @@
 						<span class="firReg">등록자</span>
 						<span class="lstUpdDt">수정일자</span>
 					</div>
-					<div class="result-cust">
-						<span class="custNo">1000000045
-							<button id="updListBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="custNm">홍*동
-							<button id="detailBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="mblNo">010-****-0001</span>
-						<span class="custSs">정상</span>
-						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남특약점</span>
-						<span class="firReg">20220409 / 강주희</span>
-						<span class="lstUpdDt">2021-08-01 20220409</span>
-					</div>
-					<div class="result-cust">
-						<span class="custNo">1000000045
-							<button id="updListBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="custNm">홍*동
-							<button id="detailBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="mblNo">010-****-0001</span>
-						<span class="custSs">정상</span>
-						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남특약점</span>
-						<span class="firReg">20220409 / 강주희</span>
-						<span class="lstUpdDt">2021-08-01 20220409</span>
-					</div>
-					<div class="result-cust">
-						<span class="custNo">1000000045
-							<button id="updListBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="custNm">홍*동
-							<button id="detailBtn" type="button">
-								<span class="material-icons">list_alt</span>
-							</button>
-						</span>
-						<span class="mblNo">010-****-0001</span>
-						<span class="custSs">정상</span>
-						<span class="jsDt">2001-01-19</span>
-						<span class="jnPrt">강남특약점</span>
-						<span class="firReg">20220409 / 강주희</span>
-						<span class="lstUpdDt">2021-08-01 20220409</span>
-					</div>
+					<c:choose>
+						<c:when test="${!requestScope.list.isEmpty() }">
+							<c:forEach items="${requestScope.list }" var="c">
+								<div class="result-cust">
+									<span class="custNo">${c.custNo}
+										<button id="updListBtn" type="button">
+											<span class="material-icons">list_alt</span>
+										</button>
+									</span>
+									<span class="custNm">${c.custNm}
+										<button id="detailBtn" type="button">
+											<span class="material-icons">list_alt</span>
+										</button>
+									</span>
+									<span class="mblNo">${c.mblNo}</span>
+									<span class="custSs">${c.custSsCd}</span>
+									<span class="jsDt">${c.jsDt}</span>
+									<span class="jnPrt">${c.jnPrtNm}</span>
+									<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
+									<span class="lstUpdDt">${c.lstUpdDt} ${c.lstUpdId}</span>
+								</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p>해당하는 고객이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
