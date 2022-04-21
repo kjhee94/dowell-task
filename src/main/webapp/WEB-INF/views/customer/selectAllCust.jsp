@@ -28,7 +28,10 @@
 				<form action="" id="searchForm">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
-						<button id="resetBtn" type="reset">
+						<button id="resetBtn" type="button">
+							<input type="hidden" prtCd="${sessionScope.user.prtCd}">
+							<input type="hidden" prtNm="${sessionScope.user.prtNm}">
+							<input type="hidden" userDtCd="${sessionScope.user.userDtCd}">
 							<span class="material-icons">restart_alt</span>
 						</button>
 						<button id="addCustBtn" type="button">신규등록</button>
@@ -110,7 +113,12 @@
 											<span class="material-icons">list_alt</span>
 										</button>
 									</span>
-									<span class="mblNo">${c.mblNo}</span>
+									<c:if test="${c.mblNo ne ' '}">
+										<span class="mblNo">${c.mblNo}</span>
+									</c:if>
+									<c:if test="${c.mblNo eq ' '}">
+										<span class="mblNo">-</span>
+									</c:if>
 									<span class="custSs">${c.custSsCd}</span>
 									<span class="jsDt">${c.jsDt}</span>
 									<span class="jnPrt">${c.jnPrtNm}</span>

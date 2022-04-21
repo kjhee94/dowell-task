@@ -39,7 +39,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectCust");
+		mav.setViewName("customer/selectAllCust");
 		
 		return mav;
 	}

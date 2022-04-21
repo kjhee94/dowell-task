@@ -4,10 +4,24 @@
 	<select id="selectAllCust" parameterType="Hashmap" resultType="cust">
 		SELECT  
 		    C.CUST_NO as custNo,
-		    C.CUST_NM as custNm,
-		    C.MBL_NO as mblNo,
-		    C.CUST_SS_CD as custSsCd,
-		    C.JS_DT as jsDt,
+		    <!-- 고객이름 마킹처리 -->
+		    CASE
+		        WHEN LENGTH(C.CUST_NM)=2 THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',1)
+		        WHEN LENGTH(C.CUST_NM)>=3 THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',LENGTH(C.CUST_NM)-2,'*')||SUBSTR(C.CUST_NM,LENGTH(C.CUST_NM),1)
+		    END as custNm,
+		    <!-- 휴대폰번호  하이픈,마킹처리 -->
+		    CASE
+		        WHEN LENGTH(C.MBL_NO)=10 THEN SUBSTR(C.MBL_NO,1,3)||'-***-'||SUBSTR(C.MBL_NO,7)
+		        WHEN LENGTH(C.MBL_NO)=11 THEN SUBSTR(C.MBL_NO,1,3)||'-****-'||SUBSTR(C.MBL_NO,8)
+		    END as mblNo,
+		    <!-- 고객상태 변경 -->
+		    CASE
+		        WHEN C.CUST_SS_CD='10' THEN '정상'
+		        WHEN C.CUST_SS_CD='80' THEN '중지'
+		        WHEN C.CUST_SS_CD='90' THEN '해지'
+		    END as custSsCd,
+		    <!-- 가입일자 하이픈 삽입 -->
+		    SUBSTR(C.JS_DT,1,4)||'-'||SUBSTR(C.JS_DT,5,2)||'-'||SUBSTR(C.JS_DT,7) as jsDt,
 		    C.FST_USER_ID as fstUserId,
 		    C.LST_UPD_DT as lstUpdDt,
 		    C.LST_UPD_ID as lstUpdId,
@@ -16,8 +30,9 @@
 		FROM CS_CUST01_MT C
 		LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)
 		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)
+		<!-- 특약점일 경우 초기세팅 -->
 		<if test="userDtCd.equals(2)">
-			WHERE P.PRT_CD = #{prtCd}
+		    WHERE P.PRT_CD = #{prtCd}
 		</if>
 		ORDER BY 1
 	</select>
