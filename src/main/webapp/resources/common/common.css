@@ -44,6 +44,30 @@ body {
 	background-color: #fff;
 }
 
+/*상단 타이틀 영역 공통*/
+.box-title {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	margin-bottom: 10px;
+}
+.main-title {
+	font-size: 18px;
+	font-weight: 700;
+	padding-right: 5px;
+}
+
+/*초기화 버튼*/
+#resetBtn {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+#resetBtn>span {
+	font-size: 20px;
+}
+
 /*이미지 꽉차게*/
 .img-full {
 	display: block;
@@ -71,4 +95,7 @@ textarea:focus
 }
 textarea {
 	white-space: pre-wrap;
+}
+input[readonly] {
+	background-color: #d9d9d9;
 }

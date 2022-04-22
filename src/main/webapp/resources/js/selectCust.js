@@ -12,44 +12,44 @@ $(function(){
 	var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
 	$('#jsDtFrom').val(agoDate);
 	
-	if($('#jsDtTo').val()<$('#jsDtFrom').val()){
-		alere("이전일은 검색할 수 없습니다");
-	}
 	
 	//resetBtn 클릭시 초기화
 	$("#resetBtn").click(function(){
-		//매장값 세팅
-		$(".style-input[name='prtCd']").val($(this).children().attr('prtCd'));
-		$(".style-input[name='prtNm']").val($(this).children().next().attr('prtNm'));
-		
-		//고객번호 세팅
-		$(".style-input[name='custNo']").val('');
-		$(".style-input[name='custNm']").val('');
-		
-		//고객상태 세팅
-		$(".box-input-radio>label>input[value='all']").prop("checked", true);
-		
-		//날짜값 세팅
-		var today = new Date().toISOString().substring(0, 10);
-		$('#jsDtTo').val(today);
-		var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
-		$('#jsDtFrom').val(agoDate);
-		
-		//결과값 세팅
-		var prtCd = $(this).children().attr('prtCd');
-		var userDtCd = $(this).children().next().next().attr('userDtCd');
+		var prtCd = $(this).attr('prtCd');
+		var userDtCd = $(this).attr('userDtCd');
 		
 		$.ajax({
 			url:"/customer/selectAllCust.do",
 			data:{"prtCd":prtCd,"userDtCd":userDtCd},
 			type:"post",
-			success: function(result){
-				/////////////////////////////////
+			success: function(){
+				$('#jsDtTo').val(today);
+				$('#jsDtFrom').val(agoDate);
 			},
 			error: function(){
 				console.log("ajax 통신 실패");
 			}
 		})
+	});
+	
+	
+	//prtSearchBtn 클릭시 팝업 오픈
+	$('#prtSearchBtn').click(function(){
+		var option = "width=450, height=500, top=50, left=50, location=no, resizable";
+		window.open("/customer/selectAllPrt.do", "매장 조회", option);
+	});
+	
+	//custSearchBtn 클릭시 팝업 오픈
+	$('#custSearchBtn').click(function(){
+		var option = "width=650, height=500, top=50, left=50, location=no";
+		window.open("/customer/selectAllCust.do", "고객 조회", option);
+	});
+	
+	//updListBtn 클릭시 팝업 오픈
+	$('.btn-history').click(function(){
+		var custNo = $(this).parent().text();
+		var option = "width=850, height=500, top=50, left=50, location=no";
+		window.open("/customer/selectCustHt.do?custNo="+custNo, "고객 이력", option);
 	});
 });
 

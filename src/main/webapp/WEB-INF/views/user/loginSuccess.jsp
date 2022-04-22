@@ -9,7 +9,7 @@
 </head>
 <body>
 	<script>
-		location.replace('/customer/selectAllCust.do');
+		location.replace('/customer/selectOwnCust.do');
 	</script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+/*사용자 정보 박스*/
+.box-user {
+	width: 100%;
+	height: 70px;
+	padding: 30px;
+	border: 1px #C8C8C8 solid; 
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+.search-title {
+	padding-right: 30px; 
+}
+.box-info {
+	display: inline-block;
+}
+.box-info>input:first-child {
+	margin-right: 10px;
+}
+
+/*결과 영역*/
+.chgDt, .chgCd {width: 12%;}
+.chgBfCnt, .chgAftCnt, , .lstUpdDt {width: 19%;}
+.lstUpdId {width: 17%;}

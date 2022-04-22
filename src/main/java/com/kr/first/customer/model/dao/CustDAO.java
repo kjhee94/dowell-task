@@ -17,7 +17,7 @@ public class CustDAO {
 	@Qualifier(value = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 
-	public ArrayList<Customer> selectAllCust(HashMap<String, Object> map) {
-		return new ArrayList<Customer>(sqlSession.selectList("cust.selectAllCust",map));
+	public ArrayList<Customer> selectOwnCust(HashMap<String, Object> map) {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectOwnCust",map));
 	}
 }

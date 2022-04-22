@@ -16,7 +16,7 @@ public class CustServiceImpl implements CustService {
 	private CustDAO cDAO;
 
 	@Override
-	public ArrayList<Customer> selectAllCust(HashMap<String, Object> map) {
-		return cDAO.selectAllCust(map);
+	public ArrayList<Customer> selectOwnCust(HashMap<String, Object> map) {
+		return cDAO.selectOwnCust(map);
 	}
 }

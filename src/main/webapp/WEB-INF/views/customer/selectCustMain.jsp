@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/common/include.css">
-<link rel="stylesheet" href="/resources/css/customer/selectCust.css">
+<link rel="stylesheet" href="/resources/css/customer/selectCustMain.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
 <script src="/resources/js/selectCust.js"></script>
@@ -28,10 +28,7 @@
 				<form action="" id="searchForm">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
-						<button id="resetBtn" type="button">
-							<input type="hidden" prtCd="${sessionScope.user.prtCd}">
-							<input type="hidden" prtNm="${sessionScope.user.prtNm}">
-							<input type="hidden" userDtCd="${sessionScope.user.userDtCd}">
+						<button id="resetBtn" type="reset">
 							<span class="material-icons">restart_alt</span>
 						</button>
 						<button id="addCustBtn" type="button">신규등록</button>
@@ -53,7 +50,7 @@
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
 									<input class="style-input" type="text" name="custNo" readonly>
-									<button id="custNoSearchBtn"  type="button">
+									<button id="custSearchBtn"  type="button">
 										<span class="material-icons">search</span>
 									</button>
 									<input class="style-input" type="text" name="custNm">
@@ -102,14 +99,14 @@
 					<c:choose>
 						<c:when test="${!requestScope.list.isEmpty() }">
 							<c:forEach items="${requestScope.list }" var="c">
-								<div class="result-cust">
+								<div class="result-content">
 									<span class="custNo">${c.custNo}
-										<button id="updListBtn" type="button">
+										<button class="btn-history" type="button">
 											<span class="material-icons">list_alt</span>
 										</button>
 									</span>
 									<span class="custNm">${c.custNm}
-										<button id="detailBtn" type="button">
+										<button class="btn-detail" type="button">
 											<span class="material-icons">list_alt</span>
 										</button>
 									</span>

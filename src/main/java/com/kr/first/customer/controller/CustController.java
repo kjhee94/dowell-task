@@ -21,8 +21,8 @@ public class CustController {
 	@Autowired
 	private CustService cService;
 	
-	@RequestMapping(value = "/customer/selectAllCust.do")
-	public ModelAndView selectAllCust(@SessionAttribute User user, ModelAndView mav) {
+	@RequestMapping(value = "/customer/selectOwnCust.do")
+	public ModelAndView selectOwnCust(@SessionAttribute User user, ModelAndView mav) {
 		
 		//세션에서 거래처코드와 사용자구분코드(본사/특약점)가져오기
 		String prtCd = user.getPrtCd();
@@ -35,12 +35,27 @@ public class CustController {
 		map.put("userDtCd", userDtCd);
 		
 		//회원 전체 목록 list에 담기
-		ArrayList<Customer> list =  cService.selectAllCust(map);
+		ArrayList<Customer> list =  cService.selectOwnCust(map);
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectAllCust");
+		mav.setViewName("customer/selectCustMain");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/customer/selectAllPrt.do")
+	public String selectAllPrt() {
+		return "customer/selectPrt";
+	}
+	
+	@RequestMapping(value = "/customer/selectAllCust.do")
+	public String selectAllCust() {
+		return "customer/selectCust";
+	}
+	
+	@RequestMapping(value = "/customer/selectCustHt.do")
+	public String selectCustHt() {
+		return "customer/selectCustHt";
 	}
 }
