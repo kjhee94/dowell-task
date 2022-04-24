@@ -17,20 +17,18 @@
 </head>
 <body>
 	<div class="container">
-		<form id="searchPrt" action="" method="get">
-			<div class="box-title">
-				<span class="main-title">변경이력</span>
-			</div>
-			
-			<div class="box-user">
-				<span class="search-title">고객</span>
-				<div class="box-info">
-					<input type="text" class="style-input" value="1000000001" readonly>
-					<input type="text" class="style-input" value="강주희" readonly>
-				</div>
-			</div>
-		</form>
+		<div class="box-title">
+			<span class="main-title">변경이력</span>
+		</div>
 		
+		<div class="box-user">
+			<span class="search-title">고객</span>
+			<div class="box-info">
+				<input type="text" class="style-input" value="${requestScope.custNo}" readonly>
+				<input type="text" class="style-input" value="${requestScope.custNm}" readonly>
+			</div>
+		</div>
+					
 		<div class="box-result">
 			<div class="result-title">
 				<span class="chgDt">변경일자</span>
@@ -40,72 +38,67 @@
 				<span class="lstUpdId">수정자</span>
 				<span class="lstUpdDt">수정일시</span>
 			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
-			<div class="result-content">
-				<span class="chgDt">2021-07-12</span>
-				<span class="chgCd">휴대폰번호</span>
-				<span class="chgBfCnt">서울시 서대문 홍제동</span>
-				<span class="chgAftCnt">서울시 강남구 대치동</span>
-				<span class="lstUpdId">20210801 / 박소연</span>
-				<span class="lstUpdDt">2021-09-16 20210801</span>
-			</div>
+			<c:choose>
+				<c:when test="${!requestScope.list.isEmpty() }">
+					<c:forEach items="${requestScope.list }" var="h">
+						<div class="result-content">
+							<span class="chgDt">${h.chgDt}</span>
+							<span class="chgCd">${h.chgCd}</span>
+							<span class="chgBfCnt">
+								<c:choose>
+									<c:when test="${h.chgCd eq '고객상태'}">
+										<c:if test="${h.chgBfCnt eq '10'}">정상</c:if>
+										<c:if test="${h.chgBfCnt eq '80'}">중지</c:if>
+										<c:if test="${h.chgBfCnt eq '90'}">해지</c:if>
+									</c:when>
+									<c:when test="${h.chgCd eq '직업'}">
+										<c:if test="${h.chgBfCnt eq '10'}">학생</c:if>
+										<c:if test="${h.chgBfCnt eq '20'}">회사원</c:if>
+										<c:if test="${h.chgBfCnt eq '30'}">공무원</c:if>
+										<c:if test="${h.chgBfCnt eq '40'}">전문직</c:if>
+										<c:if test="${h.chgBfCnt eq '50'}">군인</c:if>
+										<c:if test="${h.chgBfCnt eq '60'}">주부</c:if>
+										<c:if test="${h.chgBfCnt eq '90'}">연예인</c:if>
+										<c:if test="${h.chgBfCnt eq '99'}">기타</c:if>
+									</c:when>
+									<c:otherwise>
+										${h.chgBfCnt}
+									</c:otherwise>
+								</c:choose>
+							</span>
+							<span class="chgAftCnt">
+								<c:choose>
+									<c:when test="${h.chgCd eq '고객상태'}">
+										<c:if test="${h.chgAftCnt eq '10'}">정상</c:if>
+										<c:if test="${h.chgAftCnt eq '80'}">중지</c:if>
+										<c:if test="${h.chgAftCnt eq '90'}">해지</c:if>
+									</c:when>
+									<c:when test="${h.chgCd eq '직업'}">
+										<c:if test="${h.chgAftCnt eq '10'}">학생</c:if>
+										<c:if test="${h.chgAftCnt eq '20'}">회사원</c:if>
+										<c:if test="${h.chgAftCnt eq '30'}">공무원</c:if>
+										<c:if test="${h.chgAftCnt eq '40'}">전문직</c:if>
+										<c:if test="${h.chgAftCnt eq '50'}">군인</c:if>
+										<c:if test="${h.chgAftCnt eq '60'}">주부</c:if>
+										<c:if test="${h.chgAftCnt eq '90'}">연예인</c:if>
+										<c:if test="${h.chgAftCnt eq '99'}">기타</c:if>
+									</c:when>
+									<c:otherwise>
+										${h.chgAftCnt}
+									</c:otherwise>
+								</c:choose>
+							</span>
+							<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
+							<span class="lstUpdDt">${h.lstUpdDt} ${h.lstUpdId}</span>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>변경내역이 없습니다.</p>
+				</c:otherwise>
+			</c:choose>	
 		</div>
-		
+				
 		<div class="box-btn">
 			<button class="btn-close">닫기</button>
 		</div>

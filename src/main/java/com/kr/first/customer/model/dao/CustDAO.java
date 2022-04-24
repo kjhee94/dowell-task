@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.kr.first.customer.model.vo.CustHt;
 import com.kr.first.customer.model.vo.Customer;
 import com.kr.first.customer.model.vo.Prt;
 
@@ -36,5 +37,13 @@ public class CustDAO {
 
 	public ArrayList<Customer> selectSearchCust(Customer cust) {
 		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",cust));
+	}
+
+	public String selectCustNm(String custNo) {
+		return sqlSession.selectOne("cust.selectCustNm",custNo);
+	}
+	
+	public ArrayList<CustHt> selectCustHt(String custNo) {
+		return new ArrayList<CustHt>(sqlSession.selectList("cust.selectCustHt",custNo));
 	}
 }

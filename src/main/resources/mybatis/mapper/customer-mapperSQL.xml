@@ -123,4 +123,68 @@
 		</choose>
 		ORDER BY 1
 	</select>
+	
+	<select id="selectCustNm" parameterType="String" resultType="String">
+		SELECT CUST_NM as custNm 
+		FROM CS_CUST01_MT 
+		WHERE CUST_NO = #{custNo}
+	</select>
+	
+	<!-- 고객이력 조회 쿼리 -->
+	<select id="selectCustHt" parameterType="String" resultType="custHt">
+		SELECT
+		    H.CUST_NO as custNo,
+		    C.CUST_Nm as custNm,
+		    <!-- 변경일자 하이픈 삽입 -->
+		    SUBSTR(H.CHG_DT,1,4)||'-'||SUBSTR(H.CHG_DT,5,2)||'-'||SUBSTR(H.CHG_DT,7) as chgDt,
+		    <!-- 변경항목 변경 -->
+		    CASE
+		        WHEN H.CHG_CD='CUST_NO' THEN '고객번호'
+		        WHEN H.CHG_CD='CUST_NM' THEN '고객이름'
+		        WHEN H.CHG_CD='SEX_CD' THEN '성별코드'
+		        WHEN H.CHG_CD='BRDY_DT' THEN '생년월일'
+		        WHEN H.CHG_CD IN ('POC_CD','poc_cd') THEN '직업'
+		        WHEN H.CHG_CD='MBL_NO' THEN '핸드폰번호'
+		        WHEN H.CHG_CD IN ('CUST_SS_CD', 'cust_ss_cd') THEN '고객상태'
+		        WHEN H.CHG_CD='JN_PRT_CD' THEN '가입매장'
+		        WHEN H.CHG_CD='STP_DT' THEN '중지일자'
+		        WHEN H.CHG_CD='CNCL_DT' THEN '해지일자'
+		    END as chgCd,
+		    <!-- 변경 전 내용 -->
+		    CASE
+		    	<!-- 성별 -->
+		        WHEN H.CHG_BF_CNT='F' THEN '여자'
+		        WHEN H.CHG_BF_CNT='M' THEN '남자'
+		        <!-- 핸드폰번호('-'포함 생년월일 제외) -->
+		        WHEN LENGTH(H.CHG_BF_CNT)=10 AND H.CHG_BF_CNT NOT LIKE '%-%' THEN SUBSTR(H.CHG_BF_CNT,1,3)||'-'||SUBSTR(H.CHG_BF_CNT,4,3)||'-'||SUBSTR(H.CHG_BF_CNT,7)
+		      	WHEN LENGTH(H.CHG_BF_CNT)=11 THEN SUBSTR(H.CHG_BF_CNT,1,3)||'-'||SUBSTR(H.CHG_BF_CNT,4,4)||'-'||SUBSTR(H.CHG_BF_CNT,8)
+		        <!-- 생년월일(가입매장제외) -->
+		        WHEN LENGTH(H.CHG_BF_CNT)=8 AND H.CHG_BF_CNT NOT LIKE 'B%' THEN SUBSTR(H.CHG_BF_CNT,1,4)||'-'||SUBSTR(H.CHG_BF_CNT,5,2)||'-'||SUBSTR(H.CHG_BF_CNT,7)
+		        <!-- 공백과 NULL값 처리 -->
+		        WHEN H.CHG_BF_CNT IN (' ',' nullnull') THEN '-'
+		        ELSE NVL(H.CHG_BF_CNT, '-')
+		    END chgBfCnt,
+		    <!-- 변경 후 내용 -->
+		    CASE 
+		    	<!-- 성별 -->
+		        WHEN H.CHG_AFT_CNT='F' THEN '여자'
+		        WHEN H.CHG_AFT_CNT='M' THEN '남자'
+		        <!-- 핸드폰번호('-'포함 생년월일 제외) -->
+		        WHEN LENGTH(H.CHG_AFT_CNT)=10 AND H.CHG_AFT_CNT NOT LIKE '%-%' THEN SUBSTR(H.CHG_AFT_CNT,1,3)||'-'||SUBSTR(H.CHG_AFT_CNT,4,3)||'-'||SUBSTR(H.CHG_AFT_CNT,7)
+		      	WHEN LENGTH(H.CHG_AFT_CNT)=11 THEN SUBSTR(H.CHG_AFT_CNT,1,3)||'-'||SUBSTR(H.CHG_AFT_CNT,4,4)||'-'||SUBSTR(H.CHG_AFT_CNT,8)
+		        <!-- 생년월일(가입매장제외) -->
+		        WHEN LENGTH(H.CHG_AFT_CNT)=8 AND H.CHG_AFT_CNT NOT LIKE 'B%' THEN SUBSTR(H.CHG_AFT_CNT,1,4)||'-'||SUBSTR(H.CHG_AFT_CNT,5,2)||'-'||SUBSTR(H.CHG_AFT_CNT,7)
+		        <!-- 공백과 NULL값 처리 -->
+		        WHEN H.CHG_AFT_CNT IN (' ',' nullnull') THEN '-'
+		        ELSE NVL(H.CHG_AFT_CNT, '-')
+		    END chgAftCnt,
+		    H.LST_UPD_ID as lstUpdId,
+		    U.USER_NM as lstUpdNm,
+		    H.LST_UPD_DT as lstUpdDt
+		FROM SD_CUST01_HT H
+		LEFT JOIN CS_CUST01_MT C ON (H.CUST_NO=C.CUST_NO)
+		LEFT JOIN MA_USER_MT U ON (H.LST_UPD_ID=U.USER_ID)
+		WHERE H.CUST_NO = #{custNo}
+		ORDER BY 3 DESC
+	</select>
 </mapper>

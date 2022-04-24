@@ -6,5 +6,6 @@
 		<typeAlias type="com.kr.first.user.model.vo.User" alias="user"/>
 		<typeAlias type="com.kr.first.customer.model.vo.Customer" alias="cust"/>
 		<typeAlias type="com.kr.first.customer.model.vo.Prt" alias="prt"/>
+		<typeAlias type="com.kr.first.customer.model.vo.CustHt" alias="custHt"/>
 	</typeAliases>
 </configuration>

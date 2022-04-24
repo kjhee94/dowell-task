@@ -101,4 +101,19 @@ $(function(){
 		$(opener.document).find('input[name="custNo"]').val(custNo);
 		$(opener.document).find('input[name="custNm"]').val(custNm);
 	});
+	
+//	
+//	//---------------------------------고객이력
+//	if($('.chgCd').text()=='고객상태'){
+//		var chgBfCnt = $(this).next().text();
+//		var chgAftCnt = $(this).next().next().text();
+//		
+//		if(chgBfCnt='10'){$(this).next().text('정상')}
+//		if(chgBfCnt='80'){$(this).next().text('중지')}
+//		if(chgBfCnt='90'){$(this).next().text('해지')}
+//		
+//		if(chgAftCnt='10'){$(this).next().text('정상')}
+//		if(chgAftCnt='80'){$(this).next().text('중지')}
+//		if(chgAftCnt='90'){$(this).next().text('해지')}
+//	}
 });

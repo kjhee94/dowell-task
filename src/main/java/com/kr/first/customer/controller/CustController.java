@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.first.customer.model.service.CustService;
+import com.kr.first.customer.model.vo.CustHt;
 import com.kr.first.customer.model.vo.Customer;
 import com.kr.first.customer.model.vo.Prt;
 import com.kr.first.user.model.vo.User;
@@ -61,8 +62,10 @@ public class CustController {
 	}
 	
 	@RequestMapping(value = "/customer/selectSearchPrt.do", method = RequestMethod.GET)
-	public ModelAndView selectSearchPrt(HttpServletRequest request, @RequestParam String keyword, ModelAndView mav) {
-		
+	public ModelAndView selectSearchPrt(HttpServletRequest request, 
+										@RequestParam String keyword, 
+										ModelAndView mav) 
+	{
 		//거래처 검색 목록 list에 담기
 		ArrayList<Prt> list =  cService.selectSearchPrt(keyword);
 		
@@ -99,10 +102,23 @@ public class CustController {
 		return mav;
 	}
 	
-	
-	
 	@RequestMapping(value = "/customer/selectCustHt.do")
-	public String selectCustHt() {
-		return "customer/selectCustHt";
+	public ModelAndView selectCustHt(HttpServletRequest request, 
+									 @RequestParam String custNo,  
+									 ModelAndView mav) 
+	{	
+		//고객 이름 가져오기
+		String custNm = cService.selectCustNm(custNo);
+		
+		//고객이력 목록 list에 담기
+		ArrayList<CustHt> list = cService.selectCustHt(custNo);
+		
+		//ModelAndView에 담아 return
+		mav.addObject("custNo", custNo);
+		mav.addObject("custNm", custNm);
+		mav.addObject("list", list);
+		mav.setViewName("customer/selectCustHt");
+		
+		return mav;
 	}
 }

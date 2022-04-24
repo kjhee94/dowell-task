@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kr.first.customer.model.dao.CustDAO;
+import com.kr.first.customer.model.vo.CustHt;
 import com.kr.first.customer.model.vo.Customer;
 import com.kr.first.customer.model.vo.Prt;
 
@@ -40,4 +41,16 @@ public class CustServiceImpl implements CustService {
 	public ArrayList<Customer> selectSearchCust(Customer cust) {
 		return cDAO.selectSearchCust(cust);
 	}
+
+	@Override
+	public String selectCustNm(String custNo) {
+		return cDAO.selectCustNm(custNo);
+	}
+	
+	@Override
+	public ArrayList<CustHt> selectCustHt(String custNo) {
+		return cDAO.selectCustHt(custNo);
+	}
+
+	
 }
