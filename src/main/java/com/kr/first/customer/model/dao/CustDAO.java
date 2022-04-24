@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.kr.first.customer.model.vo.Customer;
+import com.kr.first.customer.model.vo.Prt;
 
 @Repository
 public class CustDAO {
@@ -19,5 +20,21 @@ public class CustDAO {
 
 	public ArrayList<Customer> selectOwnCust(HashMap<String, Object> map) {
 		return new ArrayList<Customer>(sqlSession.selectList("cust.selectOwnCust",map));
+	}
+
+	public ArrayList<Prt> selectAllPrt() {
+		return new ArrayList<Prt>(sqlSession.selectList("cust.selectAllPrt"));
+	}
+
+	public ArrayList<Prt> selectSearchPrt(String keyword) {
+		return new ArrayList<Prt>(sqlSession.selectList("cust.selectSearchPrt",keyword));
+	}
+
+	public ArrayList<Customer> selectAllCust() {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectAllCust"));
+	}
+
+	public ArrayList<Customer> selectSearchCust(Customer cust) {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",cust));
 	}
 }

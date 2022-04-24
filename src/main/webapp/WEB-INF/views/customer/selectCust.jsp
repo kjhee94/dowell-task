@@ -12,13 +12,14 @@
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/css/customer/searchPopUp.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="/resources/js/popup.js"></script>
 </head>
 <body>
 	<div class="container">
-		<form id="searchPrt" action="" method="get">
+		<form action="/customer/selectSearchCust.do" method="get">
 			<div class="box-title">
 				<span class="main-title">고객조회</span>
-				<button id="resetBtn" type="reset">
+				<button id="resetCustBtn" type="reset">
 					<span class="material-icons">restart_alt</span>
 				</button>
 			</div>
@@ -44,116 +45,35 @@
 		
 		<div class="box-result">
 			<div class="result-title">
-				<span class="checkbox cb2">선택</span>
+				<span class="checkbox cb-cust">선택</span>
 				<span class="custNo">고객번호</span>
 				<span class="custNm">고객이름</span>
 				<span class="mblNo">핸드폰번호</span>
 				<span class="custSs">고객상태</span>
 			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox cb2">
-					<input type="checkbox" custNo="">
-				</span>
-					<span class="custNo">1000000001</span>
-				<span class="custNm">강주희</span>
-				<span class="mblNo">010-1234-4567</span>
-				<span class="custSs">정상</span>
-			</div>
+			<c:choose>
+				<c:when test="${!requestScope.list.isEmpty() }">
+					<c:forEach items="${requestScope.list }" var="c">
+						<div class="result-content result-cust-content">
+							<span class="checkbox cb-cust">
+								<input type="checkbox">
+							</span>
+								<span class="custNo">${c.custNo}</span>
+							<span class="custNm">${c.custNm}</span>
+							<span class="mblNo">${c.mblNo}</span>
+							<span class="custSs">${c.custSsCd}</span>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>해당하는 고객이 없습니다.</p>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		
 		<div class="box-btn">
 			<button class="btn-close">닫기</button>
-			<button class="btn-apply">적용</button>
+			<button class="btn-apply btn-cust-apply">적용</button>
 		</div>
 	</div>
 </body>

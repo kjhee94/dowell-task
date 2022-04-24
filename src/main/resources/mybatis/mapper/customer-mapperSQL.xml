@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cust">
+
+	<!-- 소속고객 전체 조회 쿼리 -->
 	<select id="selectOwnCust" parameterType="Hashmap" resultType="cust">
 		SELECT  
 		    C.CUST_NO as custNo,
@@ -13,6 +15,7 @@
 		    CASE
 		        WHEN LENGTH(C.MBL_NO)=10 THEN SUBSTR(C.MBL_NO,1,3)||'-***-'||SUBSTR(C.MBL_NO,7)
 		        WHEN LENGTH(C.MBL_NO)=11 THEN SUBSTR(C.MBL_NO,1,3)||'-****-'||SUBSTR(C.MBL_NO,8)
+		        ELSE '-'
 		    END as mblNo,
 		    <!-- 고객상태 변경 -->
 		    CASE
@@ -22,11 +25,11 @@
 		    END as custSsCd,
 		    <!-- 가입일자 하이픈 삽입 -->
 		    SUBSTR(C.JS_DT,1,4)||'-'||SUBSTR(C.JS_DT,5,2)||'-'||SUBSTR(C.JS_DT,7) as jsDt,
-		    C.FST_USER_ID as fstUserId,
-		    C.LST_UPD_DT as lstUpdDt,
-		    C.LST_UPD_ID as lstUpdId,
 		    P.PRT_NM as jnPrtNm,
-		    U.USER_NM as fstUserNm
+		    C.FST_USER_ID as fstUserId,
+		    U.USER_NM as fstUserNm,
+		    C.LST_UPD_DT as lstUpdDt,
+		    C.LST_UPD_ID as lstUpdId
 		FROM CS_CUST01_MT C
 		LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)
 		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)
@@ -34,6 +37,90 @@
 		<if test="userDtCd.equals(2)">
 		    WHERE P.PRT_CD = #{prtCd}
 		</if>
+		ORDER BY 1
+	</select>
+	
+	<!-- 거래처 전체 조회 쿼리 -->
+	<select id="selectAllPrt" resultType="prt">
+		SELECT 
+		    PRT_CD as prtCd,
+		    PRT_NM as prtNm,
+		    CASE
+		        WHEN PRT_SS_CD='10' THEN '정상'
+		        WHEN PRT_SS_CD='80' THEN '거래중지'
+		        WHEN PRT_SS_CD='90' THEN '해지'
+		    END as prtSsCd
+		FROM MA_PRT_MT
+		WHERE PRT_DT_CD = 2
+	</select>
+	
+	<!-- 거래처 검색 조회 쿼리 -->
+	<select id="selectSearchPrt" parameterType="String" resultType="prt">
+		SELECT 
+		    PRT_CD as prtCd,
+		    PRT_NM as prtNm,
+		    CASE
+		        WHEN PRT_SS_CD='10' THEN '정상'
+		        WHEN PRT_SS_CD='80' THEN '거래중지'
+		        WHEN PRT_SS_CD='90' THEN '해지'
+		    END as prtSsCd
+		FROM MA_PRT_MT
+		WHERE (PRT_CD LIKE #{keyword} OR PRT_NM LIKE #{keyword}||'%') 
+			  AND PRT_DT_CD = 2
+	</select>
+	
+	<!-- 고객 전체 조회 쿼리 -->
+	<select id="selectAllCust" resultType="cust">
+		SELECT  
+		    CUST_NO as custNo,
+		    CUST_NM as custNm,
+		    <!-- 휴대폰번호  하이픈처리 -->
+		    CASE
+		        WHEN LENGTH(MBL_NO)=10 THEN SUBSTR(MBL_NO,1,3)||'-'||SUBSTR(MBL_NO,4,3)||'-'||SUBSTR(MBL_NO,7)
+      			WHEN LENGTH(MBL_NO)=11 THEN SUBSTR(MBL_NO,1,3)||'-'||SUBSTR(MBL_NO,4,4)||'-'||SUBSTR(MBL_NO,8)
+		        ELSE '-'
+		    END as mblNo,
+		    <!-- 고객상태 변경 -->
+		    CASE
+		        WHEN CUST_SS_CD='10' THEN '정상'
+		        WHEN CUST_SS_CD='80' THEN '중지'
+		        WHEN CUST_SS_CD='90' THEN '해지'
+		    END as custSsCd
+		FROM CS_CUST01_MT
+		ORDER BY 1
+	</select>
+	
+	<!-- 고객 검색 조회 쿼리 -->
+	<select id="selectSearchCust" parameterType="cust" resultType="cust">
+		SELECT  
+		    CUST_NO as custNo,
+		    CUST_NM as custNm,
+		    <!-- 휴대폰번호  하이픈처리 -->
+		    CASE
+		        WHEN LENGTH(MBL_NO)=10 THEN SUBSTR(MBL_NO,1,3)||'-'||SUBSTR(MBL_NO,4,3)||'-'||SUBSTR(MBL_NO,7)
+      			WHEN LENGTH(MBL_NO)=11 THEN SUBSTR(MBL_NO,1,3)||'-'||SUBSTR(MBL_NO,4,4)||'-'||SUBSTR(MBL_NO,8)
+		        ELSE '-'
+		    END as mblNo,
+		    <!-- 고객상태 변경 -->
+		    CASE
+		        WHEN CUST_SS_CD='10' THEN '정상'
+		        WHEN CUST_SS_CD='80' THEN '중지'
+		        WHEN CUST_SS_CD='90' THEN '해지'
+		    END as custSsCd
+		FROM CS_CUST01_MT
+		WHERE 
+		<!-- 검색내역이 비어있냐에 따라 따로 결과처리 -->
+		<choose>
+			<when test="mblNo.isEmpty()">
+				CUST_NM LIKE '%'||#{custNm}||'%'
+			</when>
+			<when test="custNm.isEmpty()">
+				MBL_NO = #{mblNo}
+			</when>
+			<otherwise>
+				CUST_NM LIKE '%'||#{custNm}||'%' OR MBL_NO = #{mblNo}
+			</otherwise>
+		</choose>
 		ORDER BY 1
 	</select>
 </mapper>

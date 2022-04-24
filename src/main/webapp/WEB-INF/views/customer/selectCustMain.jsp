@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/resources/css/customer/selectCustMain.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
-<script src="/resources/js/selectCust.js"></script>
+<script src="/resources/js/main.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -39,11 +39,22 @@
 							<div class="one-search">
 								<span class="search-title">매장</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="prtCd" readonly value="${sessionScope.user.prtCd}">
-									<button id="prtSearchBtn" type="button">
-										<span class="material-icons">search</span>
-									</button>
-									<input class="style-input" type="text" name="prtNm" autofocus value="${sessionScope.user.prtNm}">
+									<c:choose>
+										<c:when test="${sessionScope.user.userDtCd eq 2}">
+											<input class="style-input" type="text" name="prtCd" readonly value="${sessionScope.user.prtCd}">
+											<button id="prtSearchBtn" type="button">
+												<span class="material-icons">search</span>
+											</button>
+											<input class="style-input" type="text" name="prtNm" autofocus value="${sessionScope.user.prtNm}">
+										</c:when>
+										<c:otherwise>
+											<input class="style-input" type="text" name="prtCd" readonly>
+											<button id="prtSearchBtn" type="button">
+												<span class="material-icons">search</span>
+											</button>
+										 	<input class="style-input" type="text" name="prtNm" autofocus>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 							<div class="one-search">
@@ -100,22 +111,19 @@
 						<c:when test="${!requestScope.list.isEmpty() }">
 							<c:forEach items="${requestScope.list }" var="c">
 								<div class="result-content">
-									<span class="custNo">${c.custNo}
+									<span class="custNo">
+										<span>${c.custNo}</span>
 										<button class="btn-history" type="button">
 											<span class="material-icons">list_alt</span>
 										</button>
 									</span>
-									<span class="custNm">${c.custNm}
+									<span class="custNm">
+										<span>${c.custNm}</span>
 										<button class="btn-detail" type="button">
 											<span class="material-icons">list_alt</span>
 										</button>
 									</span>
-									<c:if test="${c.mblNo ne ' '}">
-										<span class="mblNo">${c.mblNo}</span>
-									</c:if>
-									<c:if test="${c.mblNo eq ' '}">
-										<span class="mblNo">-</span>
-									</c:if>
+									<span class="mblNo">${c.mblNo}</span>
 									<span class="custSs">${c.custSsCd}</span>
 									<span class="jsDt">${c.jsDt}</span>
 									<span class="jnPrt">${c.jnPrtNm}</span>

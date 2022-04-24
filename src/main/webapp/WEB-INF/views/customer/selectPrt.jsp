@@ -12,13 +12,14 @@
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/css/customer/searchPopUp.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="/resources/js/popup.js"></script>
 </head>
 <body>
 	<div class="container">
-		<form id="searchPrt" action="" method="get">
+		<form action="/customer/selectSearchPrt.do" method="get">
 			<div class="box-title">
 				<span class="main-title">매장조회</span>
-				<button id="resetBtn" type="reset">
+				<button id="resetPrtBtn" type="reset">
 					<span class="material-icons">restart_alt</span>
 				</button>
 			</div>
@@ -38,96 +39,34 @@
 		
 		<div class="box-result">
 			<div class="result-title">
-				<span class="checkbox">선택</span>
+				<span class="checkbox cb-prt">선택</span>
 				<span class="prtCd">매장코드</span>
 				<span class="prtNm">매장명</span>
 				<span class="prtSs">매장상태</span>
 			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
-			<div class="result-content">
-				<span class="checkbox">
-					<input type="checkbox" prtCd="">
-				</span>
-				<span class="prtCd">A0000001</span>
-				<span class="prtNm">천호특약점</span>
-				<span class="prtSs">정상</span>
-			</div>
+			<c:choose>
+				<c:when test="${!requestScope.list.isEmpty() }">
+					<c:forEach items="${requestScope.list }" var="p">
+						<div class="result-content result-prt-content">
+							<span class="checkbox cb-prt">
+								<input type="checkbox">
+							</span>
+							<span class="prtCd">${p.prtCd}</span>
+							<span class="prtNm">${p.prtNm}</span>
+							<span class="prtSs">${p.prtSsCd}</span>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>해당하는 매장이 없습니다.</p>
+				</c:otherwise>
+			</c:choose>
+						
 		</div>
 		
 		<div class="box-btn">
 			<button class="btn-close">닫기</button>
-			<button class="btn-apply">적용</button>
+			<button class="btn-apply btn-prt-apply">적용</button>
 		</div>
 	</div>
 </body>

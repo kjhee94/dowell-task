@@ -59,7 +59,7 @@ body {
 }
 
 /*초기화 버튼*/
-#resetBtn {
+#resetBtn, #resetPrtBtn, #resetCustBtn{
 	display: flex;
 	align-items: center;
 	cursor: pointer;

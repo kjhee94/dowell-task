@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kr.first.customer.model.dao.CustDAO;
 import com.kr.first.customer.model.vo.Customer;
+import com.kr.first.customer.model.vo.Prt;
 
 @Service
 public class CustServiceImpl implements CustService {
@@ -18,5 +19,25 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public ArrayList<Customer> selectOwnCust(HashMap<String, Object> map) {
 		return cDAO.selectOwnCust(map);
+	}
+
+	@Override
+	public ArrayList<Prt> selectAllPrt() {
+		return cDAO.selectAllPrt();
+	}
+
+	@Override
+	public ArrayList<Prt> selectSearchPrt(String keyword) {
+		return cDAO.selectSearchPrt(keyword);
+	}
+
+	@Override
+	public ArrayList<Customer> selectAllCust() {
+		return cDAO.selectAllCust();
+	}
+
+	@Override
+	public ArrayList<Customer> selectSearchCust(Customer cust) {
+		return cDAO.selectSearchCust(cust);
 	}
 }
