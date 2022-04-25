@@ -89,7 +89,7 @@
 								</c:choose>
 							</span>
 							<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
-							<span class="lstUpdDt">${h.lstUpdDt} ${h.lstUpdId}</span>
+							<span class="lstUpdDt">${h.lstUpdDt}</span>
 						</div>
 					</c:forEach>
 				</c:when>

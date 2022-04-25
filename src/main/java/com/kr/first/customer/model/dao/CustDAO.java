@@ -35,8 +35,8 @@ public class CustDAO {
 		return new ArrayList<Customer>(sqlSession.selectList("cust.selectAllCust"));
 	}
 
-	public ArrayList<Customer> selectSearchCust(Customer cust) {
-		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",cust));
+	public ArrayList<Customer> selectSearchCust(HashMap<String, Object> map) {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",map));
 	}
 
 	public String selectCustNm(String custNo) {
@@ -45,5 +45,9 @@ public class CustDAO {
 	
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return new ArrayList<CustHt>(sqlSession.selectList("cust.selectCustHt",custNo));
+	}
+
+	public ArrayList<Customer> selectFullSearchCust(HashMap<String, Object> map) {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectFullSearchCust",map));
 	}
 }

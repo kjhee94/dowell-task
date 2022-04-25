@@ -20,7 +20,7 @@ public class Customer {
 	private String custSsCd;	//고객상태코드		- 10:정상 / 80:중지 / 90:해지
 	private String cnclCnts;	//해지사유내용
 	private String jnPrtCd;		//가입매장코드
-	private String jnPrtNm;		//가입매장코드		- JOIN
+	private String jnPrtNm;		//가입매장이름		- JOIN
 	private char emailRcvYn;	//이메일수신동의여부	- Y:동의 / N:미동의
 	private char smsRcvYn;		//SMS수신동의여부	- Y:동의 / N:미동의
 	private char tmRcvYn;		//TM수신동의여부	- Y:동의 / N:미동의
@@ -32,7 +32,7 @@ public class Customer {
 	private Date fstRegDt;		//최초등록일자
 	private String fstUserId;	//최초등록자(아이디)
 	private String fstUserNm;	//최초등록자(이름)	- JOIN
-	private Date lstUpdDt;		//최종수정일자
+	private String lstUpdDt;	//최종수정일자
 	private String lstUpdId;	//최종수정자
 	
 	//생성자
@@ -44,7 +44,7 @@ public class Customer {
 			String mblNo, char psmtGrcCd, String email, String zipCd, String addr, String addrDtl, String custSsCd,
 			String cnclCnts, String jnPrtCd, String jnPrtNm, char emailRcvYn, char smsRcvYn, char tmRcvYn, char dmRcvYn,
 			String fstJsDt, String jsDt, String stpDt, String cnclDt, Date fstRegDt, String fstUserId, String fstUserNm,
-			Date lstUpdDt, String lstUpdId) {
+			String lstUpdDt, String lstUpdId) {
 		this.custNo = custNo;
 		this.custNm = custNm;
 		this.sexCd = sexCd;
@@ -246,10 +246,10 @@ public class Customer {
 	public void setFstUserNm(String fstUserNm) {
 		this.fstUserNm = fstUserNm;
 	}
-	public Date getLstUpdDt() {
+	public String getLstUpdDt() {
 		return lstUpdDt;
 	}
-	public void setLstUpdDt(Date lstUpdDt) {
+	public void setLstUpdDt(String lstUpdDt) {
 		this.lstUpdDt = lstUpdDt;
 	}
 	public String getLstUpdId() {

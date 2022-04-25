@@ -2,13 +2,22 @@
  * 
  */
 $(function(){
+	//input focus
+	var len = $('input[autofocus]').val().length;
+	$('input[autofocus]')[0].setSelectionRange(len, len);
+	
 	//input date 날짜 기본값 세팅
 	//오늘날짜
-	var today = new Date().toISOString().substring(0, 10);
-	$('#jsDtTo').val(today);
+	if($('#jsDtTo').val()==''){
+		var today = new Date().toISOString().substring(0, 10);
+		$('#jsDtTo').val(today);
+	}
 	//일주일전
-	var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
-	$('#jsDtFrom').val(agoDate);
+	if($('#jsDtFrom').val()==''){
+		var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
+		$('#jsDtFrom').val(agoDate);
+	}
+	
 	
 	
 	//resetBtn 클릭시 초기화

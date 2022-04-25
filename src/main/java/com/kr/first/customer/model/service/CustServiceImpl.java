@@ -38,8 +38,8 @@ public class CustServiceImpl implements CustService {
 	}
 
 	@Override
-	public ArrayList<Customer> selectSearchCust(Customer cust) {
-		return cDAO.selectSearchCust(cust);
+	public ArrayList<Customer> selectSearchCust(HashMap<String, Object> map) {
+		return cDAO.selectSearchCust(map);
 	}
 
 	@Override
@@ -50,6 +50,11 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return cDAO.selectCustHt(custNo);
+	}
+	
+	@Override
+	public ArrayList<Customer> selectFullSearchCust(HashMap<String, Object> map) {
+		return cDAO.selectFullSearchCust(map);
 	}
 
 	

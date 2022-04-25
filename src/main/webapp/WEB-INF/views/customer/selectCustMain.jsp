@@ -25,7 +25,7 @@
 		<!-- content -->
 		<div id="content">
 			<div class="container">
-				<form action="" id="searchForm">
+				<form action="/customer/selectFullSearchCust.do" method="get">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
 						<button id="resetBtn" type="reset">
@@ -41,18 +41,24 @@
 								<div class="box-input-text">
 									<c:choose>
 										<c:when test="${sessionScope.user.userDtCd eq 2}">
-											<input class="style-input" type="text" name="prtCd" readonly value="${sessionScope.user.prtCd}">
+											<c:choose>
+												<c:when test="${requestScope.prtCd eq null}"><input class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly></c:when>
+												<c:otherwise><input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" readonly></c:otherwise>
+											</c:choose>
 											<button id="prtSearchBtn" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input class="style-input" type="text" name="prtNm" autofocus value="${sessionScope.user.prtNm}">
+											<c:choose>
+												<c:when test="${requestScope.prtNm eq null}"><input class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autofocus></c:when>
+												<c:otherwise><input class="style-input" type="text" name="prtNm" value="${requestScope.prtNm}" autofocus></c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
-											<input class="style-input" type="text" name="prtCd" readonly>
+											<input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" readonly>
 											<button id="prtSearchBtn" type="button">
 												<span class="material-icons">search</span>
 											</button>
-										 	<input class="style-input" type="text" name="prtNm" autofocus>
+										 	<input class="style-input" type="text" name="prtNm" value="${requestScope.prtNm}" autofocus>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -60,11 +66,11 @@
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="custNo" readonly>
+									<input class="style-input" type="text" name="custNo" value="${requestScope.custNo}" readonly>
 									<button id="custSearchBtn"  type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input class="style-input" type="text" name="custNm">
+									<input class="style-input" type="text" name="custNm" value="${requestScope.custNm}">
 								</div>
 							</div>
 							<div class="one-search">
@@ -73,10 +79,42 @@
 									고객상태
 								</span>
 								<div class="box-input-radio">
-									<label><input type="radio" name="custSsCd" value="all" checked>전체</label>
-									<label><input type="radio" name="custSsCd" value="10">정상</label>
-									<label><input type="radio" name="custSsCd" value="80">중지</label>
-									<label><input type="radio" name="custSsCd" value="90">해제</label>
+									<c:choose>
+										<c:when test="${requestScope.custSsCd ne null}">
+											<c:choose>
+												<c:when test="${requestScope.custSsCd eq 'all'}">
+													<label><input type="radio" name="custSsCd" value="all" checked>전체</label>
+													<label><input type="radio" name="custSsCd" value="10">정상</label>
+													<label><input type="radio" name="custSsCd" value="80">중지</label>
+													<label><input type="radio" name="custSsCd" value="90">해지</label>
+												</c:when>
+												<c:when test="${requestScope.custSsCd eq '10'}">
+													<label><input type="radio" name="custSsCd" value="all">전체</label>
+													<label><input type="radio" name="custSsCd" value="10" checked>정상</label>
+													<label><input type="radio" name="custSsCd" value="80">중지</label>
+													<label><input type="radio" name="custSsCd" value="90">해지</label>
+												</c:when>
+												<c:when test="${requestScope.custSsCd eq '80'}">
+													<label><input type="radio" name="custSsCd" value="all">전체</label>
+													<label><input type="radio" name="custSsCd" value="10">정상</label>
+													<label><input type="radio" name="custSsCd" value="80" checked>중지</label>
+													<label><input type="radio" name="custSsCd" value="90">해지</label>
+												</c:when>
+												<c:when test="${requestScope.custSsCd eq '90'}">
+													<label><input type="radio" name="custSsCd" value="all">전체</label>
+													<label><input type="radio" name="custSsCd" value="10">정상</label>
+													<label><input type="radio" name="custSsCd" value="80">중지</label>
+													<label><input type="radio" name="custSsCd" value="90" checked>해지</label>
+												</c:when>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<label><input type="radio" name="custSsCd" value="all" checked>전체</label>
+											<label><input type="radio" name="custSsCd" value="10">정상</label>
+											<label><input type="radio" name="custSsCd" value="80">중지</label>
+											<label><input type="radio" name="custSsCd" value="90">해지</label>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 							<div class="one-search">
@@ -85,8 +123,8 @@
 									가입일자
 								</span>
 								<div class="box-input-date">
-									<input type="date" name="jsDtFrom" id="jsDtFrom">
-									<input type="date" name="jsDtTo" id="jsDtTo">
+									<input type="date" name="jsDtFrom" id="jsDtFrom" value="${requestScope.jsDtFrom}">
+									<input type="date" name="jsDtTo" id="jsDtTo" value="${requestScope.jsDtTo}">
 								</div>
 							</div>
 						</div>
@@ -128,7 +166,7 @@
 									<span class="jsDt">${c.jsDt}</span>
 									<span class="jnPrt">${c.jnPrtNm}</span>
 									<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
-									<span class="lstUpdDt">${c.lstUpdDt} ${c.lstUpdId}</span>
+									<span class="lstUpdDt">${c.lstUpdDt}</span>
 								</div>
 							</c:forEach>
 						</c:when>

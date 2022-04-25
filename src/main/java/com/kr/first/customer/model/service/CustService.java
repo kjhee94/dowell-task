@@ -22,13 +22,16 @@ public interface CustService {
 	ArrayList<Customer> selectAllCust();
 
 	//고객 검색 조회 메소드(팝업)
-	ArrayList<Customer> selectSearchCust(Customer cust);
+	ArrayList<Customer> selectSearchCust(HashMap<String, Object> map);
 
 	//고객 이름 조회(팝업)
 	String selectCustNm(String custNo);
 	
 	//고객이력 조회 메소드(팝업)
 	ArrayList<CustHt> selectCustHt(String custNo);
+
+	//고객 전체검색 조회 메소드
+	ArrayList<Customer> selectFullSearchCust(HashMap<String, Object> map);
 
 	
 
