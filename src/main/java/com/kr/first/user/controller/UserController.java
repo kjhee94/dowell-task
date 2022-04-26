@@ -31,7 +31,10 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", u);
 			
+			
+			
 			return "user/loginSuccess";
+			//바로 고객리스트 불러오기
 		}
 		//유저 정보가 없을 때
 		else {

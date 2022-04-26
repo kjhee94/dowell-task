@@ -47,7 +47,7 @@
 			<div class="result-title">
 				<span class="checkbox cb-cust">선택</span>
 				<span class="custNo">고객번호</span>
-				<span class="custNm">고객이름</span>
+				<span class="custNm">고객명</span>
 				<span class="mblNo">핸드폰번호</span>
 				<span class="custSs">고객상태</span>
 			</div>

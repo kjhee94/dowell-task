@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,46 +135,48 @@
 					</div>
 				</form>
 				
-				<div class="box-result">
-					<div class="result-title">
-						<span class="custNo">고객번호</span>
-						<span class="custNm">고객이름</span>
-						<span class="mblNo">휴대폰번호</span>
-						<span class="custSs">고객상태</span>
-						<span class="jsDt">가입일자</span>
-						<span class="jnPrt">가입매장</span>
-						<span class="firReg">등록자</span>
-						<span class="lstUpdDt">수정일자</span>
+				<div class="box-scroll">
+					<div class="box-result">
+						<div class="result-title">
+							<span class="custNo">고객번호</span>
+							<span class="custNm">고객이름</span>
+							<span class="mblNo">휴대폰번호</span>
+							<span class="custSs">고객상태</span>
+							<span class="jsDt">가입일자</span>
+							<span class="jnPrt">가입매장</span>
+							<span class="firReg">등록자</span>
+							<span class="lstUpdDt">수정일자</span>
+						</div>
+						<c:choose>
+							<c:when test="${!requestScope.list.isEmpty() }">
+								<c:forEach items="${requestScope.list }" var="c">
+									<div class="result-content">
+										<span class="custNo">
+											<span>${c.custNo}</span>
+											<button class="btn-history" type="button">
+												<span class="material-icons">list_alt</span>
+											</button>
+										</span>
+										<span class="custNm">
+											<span>${c.custNm}</span>
+											<button class="btn-detail" type="button">
+												<span class="material-icons">list_alt</span>
+											</button>
+										</span>
+										<span class="mblNo">${c.mblNo}</span>
+										<span class="custSs">${c.custSsCd}</span>
+										<span class="jsDt">${c.jsDt}</span>
+										<span class="jnPrt">${c.jnPrtNm}</span>
+										<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
+										<span class="lstUpdDt"><fmt:formatDate value="${c.lstUpdDt}" pattern="yyyy-MM-dd HHmmss"/></span>
+									</div>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<p>해당하는 고객이 없습니다.</p>
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<c:choose>
-						<c:when test="${!requestScope.list.isEmpty() }">
-							<c:forEach items="${requestScope.list }" var="c">
-								<div class="result-content">
-									<span class="custNo">
-										<span>${c.custNo}</span>
-										<button class="btn-history" type="button">
-											<span class="material-icons">list_alt</span>
-										</button>
-									</span>
-									<span class="custNm">
-										<span>${c.custNm}</span>
-										<button class="btn-detail" type="button">
-											<span class="material-icons">list_alt</span>
-										</button>
-									</span>
-									<span class="mblNo">${c.mblNo}</span>
-									<span class="custSs">${c.custSsCd}</span>
-									<span class="jsDt">${c.jsDt}</span>
-									<span class="jnPrt">${c.jnPrtNm}</span>
-									<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
-									<span class="lstUpdDt">${c.lstUpdDt}</span>
-								</div>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<p>해당하는 고객이 없습니다.</p>
-						</c:otherwise>
-					</c:choose>
 				</div>
 			</div>
 		</div>

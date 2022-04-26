@@ -6,16 +6,20 @@ $(function(){
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
-	//input date 날짜 기본값 세팅
+	
 	//오늘날짜
-	if($('#jsDtTo').val()==''){
-		var today = new Date().toISOString().substring(0, 10);
-		$('#jsDtTo').val(today);
-	}
+	var today = new Date().toISOString().substring(0, 10);
 	//일주일전
+	var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
+	//input date 날짜 기본값 세팅
+	if($('#jsDtTo').val()==''){
+		$('#jsDtTo').val(today);
+		$('#jsDtTo').attr('min',agoDate);
+	}
+	
 	if($('#jsDtFrom').val()==''){
-		var agoDate = new Date(new Date().getTime()-(7*24*60*60*1000)).toISOString().substring(0, 10);
 		$('#jsDtFrom').val(agoDate);
+		$('#jsDtFrom').attr('min',today);
 	}
 	
 	

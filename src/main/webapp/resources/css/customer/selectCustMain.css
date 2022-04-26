@@ -11,6 +11,18 @@
 	color: #fff;
 }
 
+/* .container>form {
+	height: 210px;
+	margin-right: 60px;
+	background-color: #fff;
+	position: fixed;
+} */
+/* .box-scroll {
+	width: 100%;
+	margin-top: 230px;
+	overflow: scroll;
+} */
+
 /*신규등록 버튼*/
 #addCustBtn {
 	width: 80px;

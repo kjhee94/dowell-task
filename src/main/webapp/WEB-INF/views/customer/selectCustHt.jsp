@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +90,7 @@
 								</c:choose>
 							</span>
 							<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
-							<span class="lstUpdDt">${h.lstUpdDt}</span>
+							<span class="lstUpdDt"><fmt:formatDate value="${h.lstUpdDt}" pattern="yyyy-MM-dd HHmmss"/></span>
 						</div>
 					</c:forEach>
 				</c:when>

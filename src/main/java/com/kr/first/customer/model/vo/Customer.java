@@ -1,6 +1,6 @@
 package com.kr.first.customer.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Customer {
 	
@@ -32,7 +32,7 @@ public class Customer {
 	private Date fstRegDt;		//최초등록일자
 	private String fstUserId;	//최초등록자(아이디)
 	private String fstUserNm;	//최초등록자(이름)	- JOIN
-	private String lstUpdDt;	//최종수정일자
+	private Date lstUpdDt;	//최종수정일자
 	private String lstUpdId;	//최종수정자
 	
 	//생성자
@@ -44,7 +44,7 @@ public class Customer {
 			String mblNo, char psmtGrcCd, String email, String zipCd, String addr, String addrDtl, String custSsCd,
 			String cnclCnts, String jnPrtCd, String jnPrtNm, char emailRcvYn, char smsRcvYn, char tmRcvYn, char dmRcvYn,
 			String fstJsDt, String jsDt, String stpDt, String cnclDt, Date fstRegDt, String fstUserId, String fstUserNm,
-			String lstUpdDt, String lstUpdId) {
+			Date lstUpdDt, String lstUpdId) {
 		this.custNo = custNo;
 		this.custNm = custNm;
 		this.sexCd = sexCd;
@@ -246,10 +246,10 @@ public class Customer {
 	public void setFstUserNm(String fstUserNm) {
 		this.fstUserNm = fstUserNm;
 	}
-	public String getLstUpdDt() {
+	public Date getLstUpdDt() {
 		return lstUpdDt;
 	}
-	public void setLstUpdDt(String lstUpdDt) {
+	public void setLstUpdDt(Date lstUpdDt) {
 		this.lstUpdDt = lstUpdDt;
 	}
 	public String getLstUpdId() {

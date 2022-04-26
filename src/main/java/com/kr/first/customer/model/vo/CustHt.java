@@ -1,6 +1,6 @@
 package com.kr.first.customer.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class CustHt {
 
@@ -13,7 +13,7 @@ public class CustHt {
 	private String chgAftCnt;	//변경후내용
 	private Date fstRegDt;		//최초등록일자
 	private String fstUserId;	//최초등록자(아이디)
-	private String lstUpdDt;		//최종수정일자
+	private Date lstUpdDt;		//최종수정일자
 	private String lstUpdId;	//최종수정자
 	private String lstUpdNm;	//최종수정자(이름)	- JOIN
 	
@@ -23,7 +23,7 @@ public class CustHt {
 		// TODO Auto-generated constructor stub
 	}
 	public CustHt(String custNo, String chgDt, int chgSeq, String chgCd, String chgBfCnt, String chgAftCnt,
-			Date fstRegDt, String fstUserId, String lstUpdDt, String lstUpdId, String lstUpdNm) {
+			Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdId, String lstUpdNm) {
 		super();
 		this.custNo = custNo;
 		this.chgDt = chgDt;
@@ -87,10 +87,10 @@ public class CustHt {
 	public void setFstUserId(String fstUserId) {
 		this.fstUserId = fstUserId;
 	}
-	public String getLstUpdDt() {
+	public Date getLstUpdDt() {
 		return lstUpdDt;
 	}
-	public void setLstUpdDt(String lstUpdDt) {
+	public void setLstUpdDt(Date lstUpdDt) {
 		this.lstUpdDt = lstUpdDt;
 	}
 	public String getLstUpdId() {
@@ -113,6 +113,4 @@ public class CustHt {
 				+ ", chgBfCnt=" + chgBfCnt + ", chgAftCnt=" + chgAftCnt + ", fstRegDt=" + fstRegDt + ", fstUserId="
 				+ fstUserId + ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + ", lstUpdNm=" + lstUpdNm + "]";
 	}
-	
-	
 }
