@@ -24,22 +24,22 @@ body {
 	background-color: #eee;
 }
 #wrap {
-	min-height: 100%;
-	position: relative;
+	min-height: 100vh;
+	position: relative
 }
 
 /*contect 기본설정*/
 #content {
 	width: 85%;
-	min-height: 100vh;
 	padding: 110px 30px 30px;
 	float: right;
 }
-
 /*container 기본설정*/
 .container {
 	width: 100%;
 	padding: 30px;
+	/* 기본걷으로 꽉차는 container 설정 */
+	min-height: calc(100vh - 200px);
 	background-color: #fff;
 }
 
@@ -58,13 +58,14 @@ body {
 }
 
 /*초기화 버튼*/
-#resetBtn, #resetPrtBtn, #resetCustBtn{
+button[type="reset"]{
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 }
-#resetBtn>span {
-	font-size: 20px;
+button[type="reset"]>span {
+	font-size: 22px;
+	padding-top: 3px;
 }
 
 /*이미지 꽉차게*/

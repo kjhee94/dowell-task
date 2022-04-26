@@ -11,6 +11,7 @@ $(function(){
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
+	
 	//---------------------------------매장조회
 	//resetPrtBtn 클릭시 초기화
 	$('#resetPrtBtn').click(function(){

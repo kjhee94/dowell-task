@@ -61,7 +61,6 @@
 					<p>해당하는 매장이 없습니다.</p>
 				</c:otherwise>
 			</c:choose>
-						
 		</div>
 		
 		<div class="box-btn">

@@ -21,6 +21,10 @@
 }
 
 /*결과 영역*/
+.box-result {
+	height: 262px;
+}
+
 .chgDt,.chgCd {width: 12%;}
 .chgBfCnt,.chgAftCnt,.lstUpdDt {width: 19%;}
 .lstUpdId {width: 17%;}

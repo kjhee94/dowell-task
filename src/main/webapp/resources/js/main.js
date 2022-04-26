@@ -2,7 +2,7 @@
  * 
  */
 $(function(){
-	//input focus
+	//input focus val 끝으로
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
@@ -15,13 +15,26 @@ $(function(){
 	if($('#jsDtTo').val()==''){
 		$('#jsDtTo').val(today);
 		$('#jsDtTo').attr('min',agoDate);
+		$('#jsDtTo').attr('max',today);
 	}
 	
 	if($('#jsDtFrom').val()==''){
 		$('#jsDtFrom').val(agoDate);
-		$('#jsDtFrom').attr('min',today);
+		$('#jsDtFrom').attr('max',today);
 	}
 	
+	
+	//input date 날짜 변경시 min max 변경
+	$('#jsDtTo').change(function(){
+		var jsDtTo = $('#jsDtTo').val();
+		
+		$('#jsDtFrom').attr('max',jsDtTo);
+	});
+	$('#jsDtFrom').change(function(){
+		var jsDtFrom = $('#jsDtFrom').val();
+		
+		$('#jsDtTo').attr('min',jsDtFrom);
+	});
 	
 	
 	//resetBtn 클릭시 초기화
