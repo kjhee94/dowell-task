@@ -16,10 +16,10 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/customer/selectSearchCust.do" method="get">
+		<form action="/customer/selectSearchCust.do" method="post">
 			<div class="box-title">
 				<span class="main-title">고객조회</span>
-				<button id="resetCustBtn" type="reset">
+				<button id="resetCustBtn" class="btn-reset" type="reset">
 					<span class="material-icons">restart_alt</span>
 				</button>
 			</div>

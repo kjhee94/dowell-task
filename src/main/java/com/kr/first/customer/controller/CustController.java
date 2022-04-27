@@ -60,7 +60,7 @@ public class CustController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectSearchPrt.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer/selectSearchPrt.do", method = RequestMethod.POST)
 	public ModelAndView selectSearchPrt(HttpServletRequest request, 
 										@RequestParam String keyword, 
 										ModelAndView mav) 
@@ -70,6 +70,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
+		//검색내역 유지
 		mav.addObject("keyword", keyword);
 		mav.setViewName("customer/selectPrt");
 		
@@ -77,7 +78,7 @@ public class CustController {
 	}
 	
 	@RequestMapping(value = "/customer/selectAllCust.do")
-	public ModelAndView selectAllCust(HttpServletRequest request, ModelAndView mav) {
+	public ModelAndView selectAllCust(ModelAndView mav) {
 		
 		//고객 전체 목록 list에 담기
 		ArrayList<Customer> list =  cService.selectAllCust();
@@ -89,7 +90,7 @@ public class CustController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.POST)
 	public ModelAndView selectSearchCust(HttpServletRequest request,
 										 @RequestParam String custNm,
 										 @RequestParam String mblNo,
@@ -105,6 +106,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
+		//검색내역 유지
 		mav.addObject("custNm", custNm);
 		mav.addObject("mblNo", mblNo);
 		mav.setViewName("customer/selectCust");
@@ -132,7 +134,7 @@ public class CustController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectFullSearchCust.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer/selectFullSearchCust.do", method = RequestMethod.POST)
 	public ModelAndView selectFullSearchCust(HttpServletRequest request,
 											 @RequestParam String prtCd,
 											 @RequestParam String prtNm,
@@ -160,6 +162,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
+		//검색내역 유지
 		mav.addObject("prtCd", prtCd);
 		mav.addObject("prtNm", prtNm);
 		mav.addObject("custNo", custNo);

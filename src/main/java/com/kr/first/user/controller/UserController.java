@@ -31,8 +31,6 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", u);
 			
-			
-			
 			return "user/loginSuccess";
 			//바로 고객리스트 불러오기
 		}

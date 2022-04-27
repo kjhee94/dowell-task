@@ -11,18 +11,6 @@
 	color: #fff;
 }
 
-/* .container>form {
-	height: 210px;
-	margin-right: 60px;
-	background-color: #fff;
-	position: fixed;
-} */
-/* .box-scroll {
-	width: 100%;
-	margin-top: 230px;
-	overflow: auto;
-} */
-
 /*신규등록 버튼*/
 #addCustBtn {
 	width: 80px;
@@ -131,15 +119,15 @@
 	align-items: center;
 }
 button[type="submit"] {
-	width: 80px;
-	height: 80px;
+	width:70px;
+	height: 70px;
 	background-color: #114574;
 	border-radius: 50%;
 	color: #fff;
 	cursor: pointer;
 }
 button[type="submit"]>span {
-	font-size: 35px;
+	font-size: 30px;
 	color: #fff;
 	padding-top: 5px;
 }
@@ -214,7 +202,6 @@ button[type="submit"]>span {
 	border: 1px #c8c8c8 solid;
 	border-radius: 5px;
 	cursor: pointer;
-	
 	position: absolute;
 	right: 15px;
 	top: 18px;
@@ -226,8 +213,8 @@ button[type="submit"]>span {
 
 /*결과가 없을 때*/
 .box-result>p {
-	height: 50px;
-	line-height: 50px;
+	height: 55px;
+	line-height: 55px;
 	text-align: center;
 	font-size: 14px;
 }

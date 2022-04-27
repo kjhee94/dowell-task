@@ -58,12 +58,12 @@ body {
 }
 
 /*초기화 버튼*/
-button[type="reset"]{
+.btn-reset {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 }
-button[type="reset"]>span {
+.btn-reset>span {
 	font-size: 22px;
 	padding-top: 3px;
 }

@@ -22,7 +22,7 @@
 
 /*결과 영역*/
 .box-result {
-	height: 262px;
+	height: calc(100vh - 245px);
 }
 
 .chgDt,.chgCd {width: 12%;}

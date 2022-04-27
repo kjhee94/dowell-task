@@ -26,10 +26,10 @@
 		<!-- content -->
 		<div id="content">
 			<div class="container">
-				<form action="/customer/selectFullSearchCust.do" method="get">
+				<form action="/customer/selectFullSearchCust.do" method="post">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
-						<button id="resetBtn" type="reset">
+						<button id="resetBtn" class="btn-reset" type="button">
 							<span class="material-icons">restart_alt</span>
 						</button>
 						<button id="addCustBtn" type="button">신규등록</button>
@@ -68,7 +68,7 @@
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
 									<input class="style-input" type="text" name="custNo" value="${requestScope.custNo}" readonly>
-									<button id="custSearchBtn"  type="button">
+									<button id="custSearchBtn" type="button">
 										<span class="material-icons">search</span>
 									</button>
 									<input class="style-input" type="text" name="custNm" value="${requestScope.custNm}">

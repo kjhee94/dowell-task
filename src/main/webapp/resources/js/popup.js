@@ -7,6 +7,7 @@ $(function(){
 		window.close();
 	});
 	
+	
 	//input focus
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
@@ -61,7 +62,7 @@ $(function(){
 		window.location.href = '/customer/selectAllCust.do'
 	});
 	
-	//이름 2자 이상 검색가능
+	//이름 2자 이상만 검색가능
 	$('button[type="submit"]').click(function(){
 		var custNm = $('input[name="custNm"]').val();
 		

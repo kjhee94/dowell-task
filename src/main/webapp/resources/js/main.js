@@ -17,7 +17,6 @@ $(function(){
 		$('#jsDtTo').attr('min',agoDate);
 		$('#jsDtTo').attr('max',today);
 	}
-	
 	if($('#jsDtFrom').val()==''){
 		$('#jsDtFrom').val(agoDate);
 		$('#jsDtFrom').attr('max',today);
