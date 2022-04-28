@@ -38,34 +38,9 @@ body {
 .container {
 	width: 100%;
 	padding: 30px;
-	/* 기본걷으로 꽉차는 container 설정 */
+	/* 기본적으로 꽉차는 container 설정 */
 	min-height: calc(100vh - 200px);
 	background-color: #fff;
-}
-
-/*상단 타이틀 영역 공통*/
-.box-title {
-	height: 50px;
-	display: flex;
-	align-items: center;
-	position: relative;
-	margin-bottom: 10px;
-}
-.main-title {
-	font-size: 18px;
-	font-weight: 700;
-	padding-right: 5px;
-}
-
-/*초기화 버튼*/
-.btn-reset {
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-}
-.btn-reset>span {
-	font-size: 22px;
-	padding-top: 3px;
 }
 
 /*이미지 꽉차게*/
@@ -98,4 +73,56 @@ textarea {
 }
 input[readonly] {
 	background-color: #d9d9d9;
+}
+
+/*input checkbox 디자인*/
+input[type="checkbox"]{
+	width: 14px;
+	height: 14px;
+}
+
+/*input radio 디자인*/
+input[type="radio"]{
+	width: 14px;
+	height: 14px;
+	padding-top: 2px;
+}
+
+
+/*input date 디자인*/
+input[type="date"] {
+	height: 30px;
+	padding: 0 15px;
+	font-size: 14px;
+	border: 1px #c8c8c8 solid;
+}
+
+/*상단 타이틀 영역 공통*/
+.box-title {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	margin-bottom: 10px;
+}
+.main-title {
+	font-size: 18px;
+	font-weight: 700;
+	padding-right: 5px;
+}
+
+/*초기화 버튼*/
+.btn-reset {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+.btn-reset>span {
+	font-size: 22px;
+	padding-top: 3px;
+}
+
+/*필수입력 표시*/
+.required {
+	color: #C22B12;
 }

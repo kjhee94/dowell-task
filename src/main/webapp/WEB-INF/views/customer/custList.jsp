@@ -13,10 +13,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/common/include.css">
-<link rel="stylesheet" href="/resources/css/customer/selectCustMain.css">
+<link rel="stylesheet" href="/resources/css/customer/custList.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
-<script src="/resources/js/main.js"></script>
+<script src="/resources/js/customer/custList.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -29,10 +29,10 @@
 				<form action="/customer/selectFullSearchCust.do" method="post">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
-						<button id="resetBtn" class="btn-reset" type="button">
+						<button id="resetBtn" class="btn-reset" type="reset">
 							<span class="material-icons">restart_alt</span>
 						</button>
-						<button id="addCustBtn" type="button">신규등록</button>
+						<button id="custAddBtn" type="button">신규등록</button>
 					</div>
 					
 					<div class="box-search">
@@ -43,19 +43,19 @@
 									<c:choose>
 										<c:when test="${sessionScope.user.userDtCd eq 2}">
 											<c:choose>
-												<c:when test="${requestScope.prtCd eq null}"><input class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly></c:when>
-												<c:otherwise><input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" readonly></c:otherwise>
+												<c:when test="${requestScope.prtCd eq null}"><input class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" autofocus></c:when>
+												<c:otherwise><input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" autofocus></c:otherwise>
 											</c:choose>
 											<button id="prtSearchBtn" type="button">
 												<span class="material-icons">search</span>
 											</button>
 											<c:choose>
-												<c:when test="${requestScope.prtNm eq null}"><input class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autofocus></c:when>
-												<c:otherwise><input class="style-input" type="text" name="prtNm" value="${requestScope.prtNm}" autofocus></c:otherwise>
+												<c:when test="${requestScope.prtNm eq null}"><input class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}"></c:when>
+												<c:otherwise><input class="style-input" type="text" name="prtNm" value="${requestScope.prtNm}"></c:otherwise>
 											</c:choose>
 										</c:when>
 										<c:otherwise>
-											<input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" readonly>
+											<input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" autofocus>
 											<button id="prtSearchBtn" type="button">
 												<span class="material-icons">search</span>
 											</button>
@@ -67,7 +67,7 @@
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="custNo" value="${requestScope.custNo}" readonly>
+									<input class="style-input" type="text" name="custNo" value="${requestScope.custNo}">
 									<button id="custSearchBtn" type="button">
 										<span class="material-icons">search</span>
 									</button>
@@ -124,8 +124,8 @@
 									가입일자
 								</span>
 								<div class="box-input-date">
-									<input type="date" name="jsDtFrom" id="jsDtFrom" value="${requestScope.jsDtFrom}">
-									<input type="date" name="jsDtTo" id="jsDtTo" value="${requestScope.jsDtTo}">
+									<input type="date" name="jsDtFrom" id="jsDtFrom" max="${requestScope.jsDtTo}" value="${requestScope.jsDtFrom}">
+									<input type="date" name="jsDtTo" id="jsDtTo" min="${requestScope.jsDtFrom}" max="${requestScope.today}" value="${requestScope.jsDtTo}">
 								</div>
 							</div>
 						</div>

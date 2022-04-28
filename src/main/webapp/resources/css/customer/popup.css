@@ -120,12 +120,6 @@
 	border-right: 0;
 }
 
-/*체크박스 디자인*/
-.checkbox input{
-	width: 14px;
-	height: 14px;
-}
-
 /*닫기,적용 버튼 */
 .box-btn {
 	text-align: center;
@@ -148,8 +142,8 @@
 
 /*결과가 없을 때*/
 .box-result>p {
-	height: 50px;
-	line-height: 50px;
+	height: 55px;
+	line-height: 55px;
 	text-align: center;
 	font-size: 14px;
 }

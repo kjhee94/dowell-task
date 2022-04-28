@@ -18,7 +18,7 @@
 		    U.LST_UPD_ID as LstUpdId,   --최종수정자
 		    P.PRT_NM as PrtNm           --거래처이름(JOIN)
 		FROM MA_USER_MT U               				--사용자 테이블
-		LEFT JOIN MA_PRT_MT P ON (U.PRT_CD=P.PRT_CD)	--거래처관리 테이블과 사용자 테이블 조인(PRT_CD)
+		LEFT JOIN MA_PRT_MT P ON (U.PRT_CD=P.PRT_CD)	--사용자,거래처관리 JOIN(PRT_CD)
 		WHERE USER_ID=#{userId} AND     --입력한 사용자ID
 			  USE_PWD=#{userPwd} AND    --입력한 사용자 비밀번호
 			  USE_YN='Y'           		--사용여부가 'Y'(사용)

@@ -12,7 +12,7 @@
 }
 
 /*신규등록 버튼*/
-#addCustBtn {
+#custAddBtn {
 	width: 80px;
 	height: 40px;
 	border-radius: 10px;
@@ -83,10 +83,6 @@
 	padding-top: 2px;
 }
 
-/*필수입력 표시*/
-.required {
-	color: #C22B12;
-}
 
 /*radio input*/
 .box-input-radio,
@@ -100,15 +96,8 @@
 }
 
 /*date input*/
-.box-input-date>input {
+input[type="date"] {
 	width: 47.5%;
-	height: 30px;
-	padding: 0 15px;
-	font-size: 14px;
-	border: 1px #c8c8c8 solid;
-}
-.box-input-date>input:last-child {
-	margin-right: 0;
 }
 
 /*최종검색 버튼*/

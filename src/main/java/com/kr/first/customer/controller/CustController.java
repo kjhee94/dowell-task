@@ -1,6 +1,8 @@
 package com.kr.first.customer.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,15 @@ public class CustController {
 		String prtCd = user.getPrtCd();
 		int userDtCd = user.getUserDtCd();
 		
+		//오늘 날짜/일주일 전 날짜 가져오기
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//오늘날짜
+		String todayDate = sdf.format(c.getTime());
+		//일주일전
+		c.add(c.DATE, -7); //요일기준으로 -7 차이나는 날짜
+		String agoDate = sdf.format(c.getTime());
+		
 		//거래처코드와 사용자 구분코드 Hashmap에 넣기
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("prtCd", prtCd);
@@ -42,7 +53,10 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectCustMain");
+		mav.addObject("today", todayDate);
+		mav.addObject("jsDtTo", todayDate);
+		mav.addObject("jsDtFrom", agoDate);
+		mav.setViewName("customer/custList");
 		
 		return mav;
 	}
@@ -55,7 +69,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectPrt");
+		mav.setViewName("customer/prtPop");
 		
 		return mav;
 	}
@@ -72,7 +86,7 @@ public class CustController {
 		mav.addObject("list", list);
 		//검색내역 유지
 		mav.addObject("keyword", keyword);
-		mav.setViewName("customer/selectPrt");
+		mav.setViewName("customer/prtPop");
 		
 		return mav;
 	}
@@ -85,7 +99,7 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectCust");
+		mav.setViewName("customer/custPop");
 		
 		return mav;
 	}
@@ -109,7 +123,7 @@ public class CustController {
 		//검색내역 유지
 		mav.addObject("custNm", custNm);
 		mav.addObject("mblNo", mblNo);
-		mav.setViewName("customer/selectCust");
+		mav.setViewName("customer/custPop");
 		
 		return mav;
 	}
@@ -129,7 +143,7 @@ public class CustController {
 		mav.addObject("custNo", custNo);
 		mav.addObject("custNm", custNm);
 		mav.addObject("list", list);
-		mav.setViewName("customer/selectCustHt");
+		mav.setViewName("customer/custHtPop");
 		
 		return mav;
 	}
@@ -145,6 +159,11 @@ public class CustController {
 											 @RequestParam String jsDtTo,
 											 ModelAndView mav) 
 	{
+		//오늘 날짜
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String todayDate = sdf.format(c.getTime());
+		
 		//문자열에서 하이픈 제거
 		String rplJsDtFrom = jsDtFrom.replace("-", "");
 		String rplJsDtTo = jsDtTo.replace("-", "");
@@ -168,9 +187,18 @@ public class CustController {
 		mav.addObject("custNo", custNo);
 		mav.addObject("custNm", custNm);
 		mav.addObject("custSsCd", custSsCd);
+		mav.addObject("today", todayDate);
 		mav.addObject("jsDtFrom", jsDtFrom);
 		mav.addObject("jsDtTo", jsDtTo);
-		mav.setViewName("customer/selectCustMain");
+		mav.setViewName("customer/custList");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/customer/insertCust.do")
+	public ModelAndView insertCust(ModelAndView mav) {
+		
+		mav.setViewName("customer/custAdd");
 		
 		return mav;
 	}
