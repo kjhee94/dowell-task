@@ -33,6 +33,4 @@ public interface CustService {
 	//고객 전체검색 조회 메소드
 	ArrayList<Customer> selectFullSearchCust(HashMap<String, Object> map);
 
-	
-
 }
