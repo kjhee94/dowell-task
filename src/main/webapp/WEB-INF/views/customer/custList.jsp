@@ -125,7 +125,7 @@
 								</span>
 								<div class="box-input-date">
 									<input type="date" name="jsDtFrom" id="jsDtFrom" max="${requestScope.jsDtTo}" value="${requestScope.jsDtFrom}">
-									<input type="date" name="jsDtTo" id="jsDtTo" min="${requestScope.jsDtFrom}" max="${requestScope.today}" value="${requestScope.jsDtTo}">
+									<input type="date" name="jsDtTo" id="jsDtTo" min="${requestScope.jsDtFrom}" value="${requestScope.jsDtTo}">
 								</div>
 							</div>
 						</div>

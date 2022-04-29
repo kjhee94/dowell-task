@@ -53,7 +53,6 @@ public class CustController {
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.addObject("today", todayDate);
 		mav.addObject("jsDtTo", todayDate);
 		mav.addObject("jsDtFrom", agoDate);
 		mav.setViewName("customer/custList");
@@ -159,11 +158,6 @@ public class CustController {
 											 @RequestParam String jsDtTo,
 											 ModelAndView mav) 
 	{
-		//오늘 날짜
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String todayDate = sdf.format(c.getTime());
-		
 		//문자열에서 하이픈 제거
 		String rplJsDtFrom = jsDtFrom.replace("-", "");
 		String rplJsDtTo = jsDtTo.replace("-", "");
@@ -187,7 +181,6 @@ public class CustController {
 		mav.addObject("custNo", custNo);
 		mav.addObject("custNm", custNm);
 		mav.addObject("custSsCd", custSsCd);
-		mav.addObject("today", todayDate);
 		mav.addObject("jsDtFrom", jsDtFrom);
 		mav.addObject("jsDtTo", jsDtTo);
 		mav.setViewName("customer/custList");
