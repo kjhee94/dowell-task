@@ -36,7 +36,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
 				/WEB-INF/spring/appServlet/servlet-context.xml
-				classpath:application-Context.xml
+				classpath:application-context.xml
 			</param-value>
 			
 		</init-param>

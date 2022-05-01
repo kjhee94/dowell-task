@@ -3,24 +3,24 @@
 <mapper namespace="user">
 	<select id="selectLoginUser" parameterType="user" resultType="user">
 		SELECT 
-			U.USER_ID as userId,        --사용자ID
-		    U.USER_NM as userNm,        --사용자명
-		    U.USER_DT_CD as userDtCd,   --사용자구분코드 - 1:회사 / 2:특약점
-		    U.USE_YN as useYN,          --사용여부		- Y:사용 / N:미사용
-		    U.USE_PWD as userPwd,       --비밀번호
-		    U.ST_DT as StDt,            --시작일자
-		    U.ED_DT as EdDt,            --종료일자
-		    U.PRT_CD as PrtCd,          --거래처코드
-		    U.PWD_UPD_DT as PwdUpdDt,   --비밀번호 변경일자
-		    U.FST_REG_DT as FstRegDt,   --최초등록일자
-		    U.FST_USER_ID as FstUserId, --최초등록자
-		    U.LST_UPD_DT as LstUpdCd,   --최종수정일자
-		    U.LST_UPD_ID as LstUpdId,   --최종수정자
-		    P.PRT_NM as PrtNm           --거래처이름(JOIN)
+			U.USER_ID AS USERID,        				--사용자ID
+		    U.USER_NM AS USERNM,        				--사용자명
+		    U.USER_DT_CD AS USERDTCD,   				--사용자구분코드 - 1:회사 / 2:특약점
+		    U.USE_YN AS USEYN,          				--사용여부		- Y:사용 / N:미사용
+		    U.USE_PWD AS USERPWD,       				--비밀번호
+		    U.ST_DT AS STDT,            				--시작일자
+		    U.ED_DT AS EDDT,            				--종료일자
+		    U.PRT_CD AS PRTCD,          				--거래처코드
+		    U.PWD_UPD_DT AS PWDUPDDT,   				--비밀번호 변경일자
+		    U.FST_REG_DT AS FSTREGDT,   				--최초등록일자
+		    U.FST_USER_ID AS FSTUSERID, 				--최초등록자
+		    U.LST_UPD_DT AS LSTUPDCD,   				--최종수정일자
+		    U.LST_UPD_ID AS LSTUPDID,   				--최종수정자
+		    P.PRT_NM AS PRTNM           				--거래처이름(JOIN)
 		FROM MA_USER_MT U               				--사용자 테이블
 		LEFT JOIN MA_PRT_MT P ON (U.PRT_CD=P.PRT_CD)	--사용자,거래처관리 JOIN(PRT_CD)
-		WHERE USER_ID=#{userId} AND     --입력한 사용자ID
-			  USE_PWD=#{userPwd} AND    --입력한 사용자 비밀번호
-			  USE_YN='Y'           		--사용여부가 'Y'(사용)
+		WHERE USE_YN='Y'     							--사용여부가 'Y'(사용)
+			  AND USER_ID=#{userId}           			--입력한 사용자ID
+			  AND USE_PWD=#{userPwd}    				--입력한 사용자 비밀번호
 	</select>
 </mapper>

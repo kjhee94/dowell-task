@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO uDAO;
 
+	//로그인 메소드
 	@Override
 	public User selectLoginUser(User user) {
 		return uDAO.selectLoginUser(user);

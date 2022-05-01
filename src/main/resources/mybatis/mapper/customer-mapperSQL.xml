@@ -67,8 +67,10 @@
 		        WHEN PRT_SS_CD='90' THEN '해지'      										--'90'일때 '해지'출력
 		    END as prtSsCd
 		FROM MA_PRT_MT		   															--거래처관리 테이블
-		WHERE (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')	--거래처코트 또는 거래처 이름 검색 
-			  AND PRT_DT_CD = 2															--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
+		WHERE PRT_DT_CD = 2																--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
+			  <if test="keyword.isEmpty()">
+			  	AND (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')	--거래처코트 또는 거래처 이름 검색 
+			  </if>													
 	</select>
 	
 	
@@ -203,15 +205,15 @@
 		    C.CUST_NO as custNo,                                            --고객번호
 		    CASE                                                            --고객이름(마스킹처리)
 		        WHEN LENGTH(C.CUST_NM)=2     --이름이 2자일 때 끝자리만 *
-		        THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',1)
+		        	THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',1)
 		        WHEN LENGTH(C.CUST_NM)>=3    --이름이 3자 이상일 때 맨 앞뒤 제외 중간만 *
-		        THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',LENGTH(C.CUST_NM)-2,'*')||SUBSTR(C.CUST_NM,LENGTH(C.CUST_NM),1)
+		        	THEN SUBSTR(C.CUST_NM,1,1)||LPAD('*',LENGTH(C.CUST_NM)-2,'*')||SUBSTR(C.CUST_NM,LENGTH(C.CUST_NM),1)
 		    END as custNm,
 		    CASE                                                            --휴대폰번호(하이픈,마스킹처리)
 		        WHEN LENGTH(C.MBL_NO)=10    --휴대폰 번호가 10자리일 때 '000-***-0000'의 형태
-		        THEN SUBSTR(C.MBL_NO,1,3)||'-***-'||SUBSTR(C.MBL_NO,7)
+		        	THEN SUBSTR(C.MBL_NO,1,3)||'-***-'||SUBSTR(C.MBL_NO,7)
 		        WHEN LENGTH(C.MBL_NO)=11    --휴대폰 번호가 11자리일 때 '000-****-0000'의 형태
-		        THEN SUBSTR(C.MBL_NO,1,3)||'-****-'||SUBSTR(C.MBL_NO,8)
+		        	THEN SUBSTR(C.MBL_NO,1,3)||'-****-'||SUBSTR(C.MBL_NO,8)
 		        ELSE '-'                    --공백일 때 '-'의 형태
 		    END as mblNo,
 		    CASE                                                            --고객상태(한글변경)
@@ -219,7 +221,7 @@
 		        WHEN C.CUST_SS_CD='80' THEN '중지'    --'80'일때 '중지'출력
 		        WHEN C.CUST_SS_CD='90' THEN '해지'    --'90'일때 '해지'출력
 		    END as custSsCd,
-		    TO_CHAR(TO_DATE(C.JS_DT,'YYYY-MM-DD'),'YYYY-MM-DD') as jsDt,    --가입일자(하이픈처리)
+		    TO_CHAR(TO_DATE(C.JS_DT),'YYYY-MM-DD') as jsDt,    --가입일자(하이픈처리)
 		    P.PRT_NM as jnPrtNm,                                            --가입매장이름(JOIN)
 		    C.FST_USER_ID as fstUserId,                                     --최초등록자
 		    U.USER_NM as fstUserNm,                                         --최초등록자이름(JOIN)
@@ -229,16 +231,15 @@
 		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID) --고객관리,사용자 JOIN(FST_USER_ID/USER_ID)
 		WHERE (C.JS_DT BETWEEN #{jsDtFrom} AND #{jsDtTo})		--가입일자 검색조건
 			<!-- 검색내역이 비어있냐에 따라 따로 조건처리 -->
+			<if test="!custSsCd.equals('all') || !custSsCd.isEmpty()">
+		   		AND C.CUST_SS_CD = #{custSsCd}			    --고객상태코드 검색조건(전체_all일 경우 조건 제외)
+		    </if>
 			<if test="!prtCd.isEmpty()">
 				AND P.PRT_CD = #{prtCd}  					--거래처코드 검색조건
 			</if>
 			<if test="!custNo.isEmpty()">
 				AND C.CUST_NO = #{custNo}					--고객번호 검색조건
 			</if>
-		    <if test="!custSsCd.equals('all')">
-		   		AND C.CUST_SS_CD = #{custSsCd}			    --고객상태코드 검색조건(전체_all일 경우 조건 제외)
-		    </if>
-		    
 		ORDER BY 1		--고객번호 오름차순
 	</select>
 </mapper>

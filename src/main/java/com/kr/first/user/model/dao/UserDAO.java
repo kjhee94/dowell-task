@@ -14,6 +14,7 @@ public class UserDAO {
 	@Qualifier(value = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 
+	//로그인 메소드
 	public User selectLoginUser(User user) {
 		return sqlSession.selectOne("user.selectLoginUser",user);
 	}
