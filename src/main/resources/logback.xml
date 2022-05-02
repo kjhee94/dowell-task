@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
-	<!-- DEBUG 용 -->
+
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<!-- 로그 메세지 패턴 -->
-			<pattern>%d %5p [%c] %m%n</pattern>
+			<pattern>[%d{yyyy-MM-dd HH:mm:ss}][%-5level][%logger{36}] - %msg%n</pattern>
 		</encoder>
 	</appender>
 	
-	<!-- INFO 용 -->
-	<appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<!-- 로그 메세지 패턴 -->
-			<pattern>%d %5p %m%n</pattern>
-		</encoder>
-	</appender>
-	
-	<!-- 로거 -->
-	<logger name="board" level="DEBUG" appender-ref="console"/>
-	
-	<!-- 루트 로거 -->
-	<root level="DEBUG">
+	<logger name="org.springframework" level="info" additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+
+    <root level="debug">
 		<appender-ref ref="console"/>
 	</root>
 </configuration>
