@@ -53,10 +53,10 @@ public class CustController {
 		map.put("userDtCd", userDtCd);
 		
 		//소속고객 전체 목록 list에 담기
-		ArrayList<Customer> list =  cService.selectOwnCust(map);
+		//ArrayList<Customer> list =  cService.selectOwnCust(map);
 		
 		//ModelAndView에 담아 return
-		mav.addObject("list", list);
+		//mav.addObject("list", list);
 		mav.addObject("jsDtTo", todayDate);
 		mav.addObject("jsDtFrom", agoDate);
 		mav.setViewName("customer/custList");

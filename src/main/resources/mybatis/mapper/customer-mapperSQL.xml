@@ -3,7 +3,7 @@
 <mapper namespace="cust">
 
 	<!-- 고객 전체 검색 조회 -->
-	<select id="selectOwnCust" parameterType="cust" resultType="cust">
+	<select id="selectAllSearchCust" parameterType="Hashmap" resultType="cust">
 		SELECT
 		    C.CUST_NO AS CUSTNO,                                                                                          --고객번호
 		    CASE                                                                                                          --고객이름(마스킹처리)
@@ -39,13 +39,13 @@
 		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)                                                               --고객관리,거래처관리 JOIN(PRT_CD)
 		    LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)                                                           --고객관리,사용자 JOIN(FST_USER_ID/USER_ID)
 		WHERE (C.JS_DT BETWEEN #{jsDtFrom} AND #{jsDtTo})                                                                    --가입일자 검색조건
-			  <if test="!custSsCd.isEmpty() or !custSsCd.equals('all')">
+			  <if test="custSsCd!=null and custSsCd.equals('all')">
 		      	AND C.CUST_SS_CD = #{custSsCd}                                                                            --고객상태코드 검색조건
 		      </if>
-		      <if test="userDtCd.equals(2) or !prtCd.isEmpty()">
+		      <if test="prtCd!=null and !prtCd.isEmpty()">
 		      	AND P.PRT_CD = #{prtCd}                                                                                   --매장코드 검색조건
 		      </if>
-		      <if test="!custNo.isEmpty()">
+		      <if test="custNo!=null and !custNo.isEmpty()">
 		      	AND C.CUST_NO = #{custNo}                                                                                 --고객번호 검색조건
 		      </if>
 		ORDER BY 1                                                                                                        --고객번호 오름차순
@@ -242,13 +242,13 @@
 		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID) --고객관리,사용자 JOIN(FST_USER_ID/USER_ID)
 		WHERE (C.JS_DT BETWEEN #{jsDtFrom} AND #{jsDtTo})		--가입일자 검색조건
 			<!-- 검색내역이 비어있냐에 따라 따로 조건처리 -->
-			<if test="!custSsCd.equals('all') || !custSsCd.isEmpty()">
+			<if test="!custSsCd.equals('all') &amp;&amp; custSsCd!=null">
 		   		AND C.CUST_SS_CD = #{custSsCd}			    --고객상태코드 검색조건(전체_all일 경우 조건 제외)
 		    </if>
-			<if test="!prtCd.isEmpty()">
+			<if test="!prtCd.isEmpty() &amp;&amp; prtCd!=null">
 				AND P.PRT_CD = #{prtCd}  					--거래처코드 검색조건
 			</if>
-			<if test="!custNo.isEmpty()">
+			<if test="!custNo.isEmpty() &amp;&amp; custNo!=null">
 				AND C.CUST_NO = #{custNo}					--고객번호 검색조건
 			</if>
 		ORDER BY 1		--고객번호 오름차순

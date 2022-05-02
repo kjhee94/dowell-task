@@ -25,7 +25,7 @@
 		<!-- content -->
 		<div id="content">
 			<div class="container">
-				<form action="/customer/selectFullSearchCust.do" method="post">
+				<form action="" method="post">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
 						<button id="resetBtn" class="btn-reset" type="reset">
@@ -39,21 +39,21 @@
 							<div class="one-search">
 								<span class="search-title">매장</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="prtCd" autofocus>
+									<input class="style-input" type="text" name="prtCd" value="${requestScope.prtCd}" autofocus>
 									<button id="prtSearchBtn" type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input class="style-input" type="text" name="prtNm">
+									<input class="style-input" type="text" name="prtNm" value="${requestScope.prtNm}">
 								</div>
 							</div>
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="custNo">
+									<input class="style-input" type="text" name="custNo" value="${requestScope.custNo}">
 									<button id="custSearchBtn" type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input class="style-input" type="text" name="custNm">
+									<input class="style-input" type="text" name="custNm" value="${requestScope.custNm}">
 								</div>
 							</div>
 							<div class="one-search">
@@ -115,7 +115,7 @@
 										</button>
 									</span>
 									<span class="mblNo">${c.mblNo}</span>
-									<span class="custSs">${c.custSsCd}</span>
+									<span class="custSs">${c.custSsNm}</span>
 									<span class="jsDt">${c.jsDt}</span>
 									<span class="jnPrt">${c.jnPrtNm}</span>
 									<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>

@@ -3,6 +3,8 @@ package com.kr.first.customer.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,8 @@ public class CustServiceImpl implements CustService {
 	private CustDAO cDAO;
 
 	@Override
-	public ArrayList<Customer> selectOwnCust(HashMap<String, Object> map) {
-		return cDAO.selectOwnCust(map);
+	public ArrayList<Customer> selectAllSearchCust(HashMap<String, Object> map) {
+		return cDAO.selectAllSearchCust(map);
 	}
 
 	@Override

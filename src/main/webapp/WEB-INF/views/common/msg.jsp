@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>message</title>
 </head>
 <body>
 	<script>
-		alert('아이디 또는 비밀번호를 확인해 주세요');
-		location.replace('/');
+		alert('${requestScope.msg}');
+		location.replace('${requestScope.location}');
 	</script>
 </body>
 </html>
