@@ -21,14 +21,14 @@
 }
 
 /*결과 영역*/
-.box-result {
-	height: calc(100vh - 245px);
+.result-content {
+	height: calc(100vh - 285px);
 }
 
 .chgDt,.chgCd {width: 12%;}
 .chgBfCnt,.chgAftCnt,.lstUpdDt {width: 19%;}
 .lstUpdId {width: 17%;}
 
-.result-content {
+.one-content {
 	cursor: auto;
 }

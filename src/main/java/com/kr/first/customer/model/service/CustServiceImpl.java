@@ -21,8 +21,8 @@ public class CustServiceImpl implements CustService {
 
 	//고객 전체 검색 메소드
 	@Override
-	public ArrayList<Customer> selectSearchCust(HashMap<String, Object> map) {
-		return cDAO.selectSearchCust(map);
+	public ArrayList<Customer> selectSearchCust(Customer cust) {
+		return cDAO.selectSearchCust(cust);
 	}
 	
 	//거래처 검색 메소드
@@ -37,13 +37,13 @@ public class CustServiceImpl implements CustService {
 		return cDAO.selectCust(cust);
 	}
 
-	//고객이름 조회 메소드
+	//고객 이름 조회 메소드
 	@Override
 	public String selectCustNm(String custNo) {
 		return cDAO.selectCustNm(custNo);
 	}
 	
-	//고객이력 조회 메소드
+	//고객 이력 조회 메소드
 	@Override
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return cDAO.selectCustHt(custNo);

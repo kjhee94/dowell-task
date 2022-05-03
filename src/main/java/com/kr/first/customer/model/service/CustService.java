@@ -10,7 +10,7 @@ import com.kr.first.customer.model.vo.Prt;
 public interface CustService {
 
 	//고객 전체 검색 메소드
-	ArrayList<Customer> selectSearchCust(HashMap<String, Object> map);
+	ArrayList<Customer> selectSearchCust(Customer cust);
 
 	//거래처 검색 메소드(팝업)
 	ArrayList<Prt> selectPrt(String keyword);
@@ -21,6 +21,6 @@ public interface CustService {
 	//고객 이름 조회 메소드(팝업)
 	String selectCustNm(String custNo);
 	
-	//고객이력 조회 메소드(팝업)
+	//고객 이력 조회 메소드(팝업)
 	ArrayList<CustHt> selectCustHt(String custNo);
 }

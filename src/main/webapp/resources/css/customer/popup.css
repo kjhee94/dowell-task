@@ -64,9 +64,7 @@
 
 /*결과 영역*/
 .box-result {
-	height: calc(100vh - 276px);
 	margin-bottom: 20px;
-	overflow: auto;
 }
 /*매장조회 영역*/
 .cb-prt {width: 15%;}
@@ -92,7 +90,6 @@
 	text-align: center;
 	font-size: 15px;
 	font-weight: 500;
-	border-right: 1px #d9d9d9 solid;
 }
 .result-title>span:last-child {
 	border-right: 0;
@@ -100,23 +97,27 @@
 
 /*테이블 내용*/
 .result-content {
+	height: calc(100vh - 316px);
+	overflow: auto;
+}
+.one-content {
 	width: 100%;
 	height: 40px;
 	line-height: 40px;
 	border-bottom: 1px #d9d9d9 solid;
 	cursor: pointer;
 }
-.result-content:last-child {
+.one-content:last-child {
 	border-bottom: 0;
 }
-.result-content>span {
+.one-content>span {
 	display: inline-block;
 	padding: 0 10px;
 	text-align: center;
 	font-size: 14px;
 	border-right: 1px #d9d9d9 solid;
 }
-.result-content>span:last-child {
+.one-content>span:last-child {
 	border-right: 0;
 }
 
@@ -141,7 +142,7 @@
 }
 
 /*결과가 없을 때*/
-.box-result>p {
+.result-content>p {
 	height: 55px;
 	line-height: 55px;
 	text-align: center;

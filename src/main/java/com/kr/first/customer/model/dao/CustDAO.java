@@ -20,8 +20,8 @@ public class CustDAO {
 	private SqlSessionTemplate sqlSession;
 
 	//고객 전체 검색 메소드
-	public ArrayList<Customer> selectSearchCust(HashMap<String, Object> map) {
-		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",map));
+	public ArrayList<Customer> selectSearchCust(Customer cust) {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",cust));
 	}
 	
 	//거래처 검색 메소드
@@ -39,7 +39,7 @@ public class CustDAO {
 		return sqlSession.selectOne("cust.selectCustNm",custNo);
 	}
 	
-	//고객이력 조회 메소드
+	//고객 이력 조회 메소드
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return new ArrayList<CustHt>(sqlSession.selectList("cust.selectCustHt",custNo));
 	}

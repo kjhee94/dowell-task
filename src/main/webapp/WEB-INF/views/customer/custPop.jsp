@@ -51,31 +51,33 @@
 				<span class="mblNo">핸드폰번호</span>
 				<span class="custSsNm">고객상태</span>
 			</div>
-			<c:choose>
-				<c:when test="${requestScope.cList!=null }">
-					<c:choose>
-						<c:when test="${!requestScope.cList.isEmpty()}">
-							<c:forEach items="${requestScope.cList }" var="cl">
-								<div class="result-content result-cust-content">
-									<span class="checkbox cb-cust">
-										<input type="checkbox">
-									</span>
-										<span class="custNo">${cl.custNo}</span>
-									<span class="custNm">${cl.custNm}</span>
-									<span class="mblNo">${cl.mblNo}</span>
-									<span class="custSsNm">${cl.custSsNm}</span>
-								</div>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<p>해당하는 고객이 없습니다.</p>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<p>고객을 검색해주세요.</p>
-				</c:otherwise>
-			</c:choose>
+			<div class="result-content">
+				<c:choose>
+					<c:when test="${requestScope.cList!=null }">
+						<c:choose>
+							<c:when test="${!requestScope.cList.isEmpty()}">
+								<c:forEach items="${requestScope.cList }" var="cl">
+									<div class="one-content one-cust-content">
+										<span class="checkbox cb-cust">
+											<input type="checkbox">
+										</span>
+											<span class="custNo">${cl.custNo}</span>
+										<span class="custNm">${cl.custNm}</span>
+										<span class="mblNo">${cl.mblNo}</span>
+										<span class="custSsNm">${cl.custSsNm}</span>
+									</div>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<p>해당하는 고객이 없습니다.</p>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<p>고객을 검색해주세요.</p>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		
 		<div class="box-btn">

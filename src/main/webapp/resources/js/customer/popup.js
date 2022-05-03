@@ -7,6 +7,14 @@ $(function(){
 		window.close();
 	});
 	
+	//스크롤바 생성시 result-title 늘리기
+	$.fn.hasScrollBar = function() {
+		return (this.prop("scrollHeight") == 0 && this.prop("clientHeight") == 0) || (this.prop("scrollHeight") > this.prop("clientHeight"));
+	};
+	
+	if($('.result-content').hasScrollBar()){
+		$('.result-title').css('padding-right','16.5px');
+	}
 	
 	//input focus
 	var len = $('input[autofocus]').val().length;
@@ -54,7 +62,7 @@ $(function(){
 	});
 	
 	//행 더블클릭
-	$('.result-prt-content').dblclick(function(){
+	$('.one-prt-content').dblclick(function(){
 		//보낼값 변수값 지정
 		var prtCd = $(this).find('.prtCd').text();
 		var prtNm = $(this).find('.prtNm').text()
@@ -113,7 +121,7 @@ $(function(){
 	});
 	
 	//행 더블클릭
-	$('.result-cust-content').dblclick(function(){
+	$('.one-cust-content').dblclick(function(){
 		//보낼값 변수값 지정
 		var custNo = $(this).find('.custNo').text();
 		var custNm = $(this).find('.custNm').text()

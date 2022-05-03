@@ -44,30 +44,32 @@
 				<span class="prtNm">매장명</span>
 				<span class="prtSsNm">매장상태</span>
 			</div>
-			<c:choose>
-				<c:when test="${requestScope.pList!=null }">
-					<c:choose>
-						<c:when test="${!requestScope.pList.isEmpty()}">
-							<c:forEach items="${requestScope.pList }" var="pl">
-								<div class="result-content result-prt-content">
-									<span class="checkbox cb-prt">
-										<input type="checkbox">
-									</span>
-									<span class="prtCd">${pl.prtCd}</span>
-									<span class="prtNm">${pl.prtNm}</span>
-									<span class="prtSsNm">${pl.prtSsNm}</span>
-								</div>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<p>해당하는 매장이 없습니다.</p>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<p>매장을 검색해주세요.</p>
-				</c:otherwise>
-			</c:choose>
+			<div class="result-content">
+				<c:choose>
+					<c:when test="${requestScope.pList!=null }">
+						<c:choose>
+							<c:when test="${!requestScope.pList.isEmpty()}">
+								<c:forEach items="${requestScope.pList }" var="pl">
+									<div class="one-content one-prt-content">
+										<span class="checkbox cb-prt">
+											<input type="checkbox">
+										</span>
+										<span class="prtCd">${pl.prtCd}</span>
+										<span class="prtNm">${pl.prtNm}</span>
+										<span class="prtSsNm">${pl.prtSsNm}</span>
+									</div>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<p>해당하는 매장이 없습니다.</p>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<p>매장을 검색해주세요.</p>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		
 		<div class="box-btn">

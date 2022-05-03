@@ -39,23 +39,25 @@
 				<span class="lstUpdId">수정자</span>
 				<span class="lstUpdDt">수정일시</span>
 			</div>
-			<c:choose>
-				<c:when test="${!requestScope.hList.isEmpty() }">
-					<c:forEach items="${requestScope.hList }" var="h">
-						<div class="result-content">
-							<span class="chgDt">${h.chgDt}</span>
-							<span class="chgCd">${h.chgCd}</span>
-							<span class="chgBfCnt">${h.chgBfCnt}</span>
-							<span class="chgAftCnt">${h.chgAftCnt}</span>
-							<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
-							<span class="lstUpdDt">${h.lstUpdDtFm}</span>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<p>변경내역이 없습니다.</p>
-				</c:otherwise>
-			</c:choose>	
+			<div class="result-content">
+				<c:choose>
+					<c:when test="${!requestScope.hList.isEmpty() }">
+						<c:forEach items="${requestScope.hList }" var="h">
+							<div class="one-content">
+								<span class="chgDt">${h.chgDt}</span>
+								<span class="chgCd">${h.chgCd}</span>
+								<span class="chgBfCnt">${h.chgBfCnt}</span>
+								<span class="chgAftCnt">${h.chgAftCnt}</span>
+								<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
+								<span class="lstUpdDt">${h.lstUpdDtFm}</span>
+							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<p>변경내역이 없습니다.</p>
+					</c:otherwise>
+				</c:choose>	
+			</div>
 		</div>
 				
 		<div class="box-btn">
