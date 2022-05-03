@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/customer/selectSearchCust.do" method="post">
+		<form action="/customer/selectCust.do" method="post">
 			<div class="box-title">
 				<span class="main-title">고객조회</span>
 				<button id="resetCustBtn" class="btn-reset" type="reset">
@@ -49,24 +49,31 @@
 				<span class="custNo">고객번호</span>
 				<span class="custNm">고객명</span>
 				<span class="mblNo">핸드폰번호</span>
-				<span class="custSs">고객상태</span>
+				<span class="custSsNm">고객상태</span>
 			</div>
 			<c:choose>
-				<c:when test="${!requestScope.list.isEmpty() }">
-					<c:forEach items="${requestScope.list }" var="c">
-						<div class="result-content result-cust-content">
-							<span class="checkbox cb-cust">
-								<input type="checkbox">
-							</span>
-								<span class="custNo">${c.custNo}</span>
-							<span class="custNm">${c.custNm}</span>
-							<span class="mblNo">${c.mblNo}</span>
-							<span class="custSs">${c.custSsCd}</span>
-						</div>
-					</c:forEach>
+				<c:when test="${requestScope.cList!=null }">
+					<c:choose>
+						<c:when test="${!requestScope.cList.isEmpty()}">
+							<c:forEach items="${requestScope.cList }" var="cl">
+								<div class="result-content result-cust-content">
+									<span class="checkbox cb-cust">
+										<input type="checkbox">
+									</span>
+										<span class="custNo">${cl.custNo}</span>
+									<span class="custNm">${cl.custNm}</span>
+									<span class="mblNo">${cl.mblNo}</span>
+									<span class="custSsNm">${cl.custSsNm}</span>
+								</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p>해당하는 고객이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<p>해당하는 고객이 없습니다.</p>
+					<p>고객을 검색해주세요.</p>
 				</c:otherwise>
 			</c:choose>
 		</div>

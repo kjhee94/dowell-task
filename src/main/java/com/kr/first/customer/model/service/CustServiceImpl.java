@@ -19,45 +19,33 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private CustDAO cDAO;
 
-	@Override
-	public ArrayList<Customer> selectAllSearchCust(HashMap<String, Object> map) {
-		return cDAO.selectAllSearchCust(map);
-	}
-
-	@Override
-	public ArrayList<Prt> selectAllPrt() {
-		return cDAO.selectAllPrt();
-	}
-
-	@Override
-	public ArrayList<Prt> selectSearchPrt(String keyword) {
-		return cDAO.selectSearchPrt(keyword);
-	}
-
-	@Override
-	public ArrayList<Customer> selectAllCust() {
-		return cDAO.selectAllCust();
-	}
-
+	//고객 전체 검색 메소드
 	@Override
 	public ArrayList<Customer> selectSearchCust(HashMap<String, Object> map) {
 		return cDAO.selectSearchCust(map);
 	}
+	
+	//거래처 검색 메소드
+	@Override
+	public ArrayList<Prt> selectPrt(String keyword) {
+		return cDAO.selectPrt(keyword);
+	}
 
+	//고객 검색 메소드
+	@Override
+	public ArrayList<Customer> selectCust(Customer cust) {
+		return cDAO.selectCust(cust);
+	}
+
+	//고객이름 조회 메소드
 	@Override
 	public String selectCustNm(String custNo) {
 		return cDAO.selectCustNm(custNo);
 	}
 	
+	//고객이력 조회 메소드
 	@Override
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return cDAO.selectCustHt(custNo);
 	}
-	
-	@Override
-	public ArrayList<Customer> selectFullSearchCust(HashMap<String, Object> map) {
-		return cDAO.selectFullSearchCust(map);
-	}
-
-	
 }

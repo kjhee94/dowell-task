@@ -128,15 +128,15 @@ button[type="submit"]>span {
 	overflow: auto;
 }
 .custNo, .custNm, .jsDt {width: 12%;}
-.jnPrt {width: 10%;}
-.custSs {width: 8%;}
+.prtNm {width: 10%;}
+.custSsNm {width: 8%;}
 .mblNo {width: 13%}
 .firReg {width: 14%;}
 .lstUpdDt {width: 17%;}
 
 /*텍스트 중앙 정렬*/
 .mblNo,
-.custSs,
+.custSsNm,
 .jsDt,
 .lstUpdDt {
 	text-align: center;

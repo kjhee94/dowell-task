@@ -71,13 +71,13 @@
 /*매장조회 영역*/
 .cb-prt {width: 15%;}
 .prtCd,.prtNm {width: 28%;}
-.prtSs {width: 26%;}
+.prtSsNm {width: 26%;}
 
 /*고객조회 영역*/
 .cb-cust {width: 11%;}
 .custNo,.mblNo {width: 25%;}
 .custNm {width: 20%;}
-.custSs {width: 15%;}
+.custSsNm {width: 15%;}
 
 /*테이블 제목*/
 .result-title {

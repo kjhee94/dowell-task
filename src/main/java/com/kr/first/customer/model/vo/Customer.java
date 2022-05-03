@@ -20,8 +20,8 @@ public class Customer {
 	private String custSsCd;	//고객상태코드		- 10:정상 / 80:중지 / 90:해지
 	private String custSsNm;	//고객상태이름		- JOIN
 	private String cnclCnts;	//해지사유내용
-	private String jnPrtCd;		//가입매장코드
-	private String jnPrtNm;		//가입매장이름		- JOIN
+	private String prtCd;		//가입매장코드
+	private String prtNm;		//가입매장이름		- JOIN
 	private char emailRcvYn;	//이메일수신동의여부	- Y:동의 / N:미동의
 	private char smsRcvYn;		//SMS수신동의여부	- Y:동의 / N:미동의
 	private char tmRcvYn;		//TM수신동의여부	- Y:동의 / N:미동의
@@ -68,8 +68,8 @@ public class Customer {
 		this.custSsCd = custSsCd;
 		this.custSsNm = custSsNm;
 		this.cnclCnts = cnclCnts;
-		this.jnPrtCd = jnPrtCd;
-		this.jnPrtNm = jnPrtNm;
+		this.prtCd = jnPrtCd;
+		this.prtNm = jnPrtNm;
 		this.emailRcvYn = emailRcvYn;
 		this.smsRcvYn = smsRcvYn;
 		this.tmRcvYn = tmRcvYn;
@@ -218,20 +218,20 @@ public class Customer {
 		this.cnclCnts = cnclCnts;
 	}
 
-	public String getJnPrtCd() {
-		return jnPrtCd;
+	public String getPrtCd() {
+		return prtCd;
 	}
 
-	public void setJnPrtCd(String jnPrtCd) {
-		this.jnPrtCd = jnPrtCd;
+	public void setPrtCd(String prtCd) {
+		this.prtCd = prtCd;
 	}
 
-	public String getJnPrtNm() {
-		return jnPrtNm;
+	public String getPrtNm() {
+		return prtNm;
 	}
 
-	public void setJnPrtNm(String jnPrtNm) {
-		this.jnPrtNm = jnPrtNm;
+	public void setPrtNm(String prtNm) {
+		this.prtNm = prtNm;
 	}
 
 	public char getEmailRcvYn() {
@@ -369,8 +369,8 @@ public class Customer {
 		return "Customer [custNo=" + custNo + ", custNm=" + custNm + ", sexCd=" + sexCd + ", scalYn=" + scalYn
 				+ ", brdyDt=" + brdyDt + ", mrrgDt=" + mrrgDt + ", pocCd=" + pocCd + ", mblNo=" + mblNo + ", psmtGrcCd="
 				+ psmtGrcCd + ", email=" + email + ", zipCd=" + zipCd + ", addr=" + addr + ", addrDtl=" + addrDtl
-				+ ", custSsCd=" + custSsCd + ", custSsNm=" + custSsNm + ", cnclCnts=" + cnclCnts + ", jnPrtCd="
-				+ jnPrtCd + ", jnPrtNm=" + jnPrtNm + ", emailRcvYn=" + emailRcvYn + ", smsRcvYn=" + smsRcvYn
+				+ ", custSsCd=" + custSsCd + ", custSsNm=" + custSsNm + ", cnclCnts=" + cnclCnts + ", prtCd="
+				+ prtCd + ", prtNm=" + prtNm + ", emailRcvYn=" + emailRcvYn + ", smsRcvYn=" + smsRcvYn
 				+ ", tmRcvYn=" + tmRcvYn + ", dmRcvYn=" + dmRcvYn + ", fstJsDt=" + fstJsDt + ", jsDt=" + jsDt
 				+ ", jsDtFrom=" + jsDtFrom + ", jsDtTo=" + jsDtTo + ", stpDt=" + stpDt + ", cnclDt=" + cnclDt
 				+ ", fstRegDt=" + fstRegDt + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt="

@@ -14,18 +14,21 @@ public class CustHt {
 	private Date fstRegDt;		//최초등록일자
 	private String fstUserId;	//최초등록자(아이디)
 	private Date lstUpdDt;		//최종수정일자
+	private String lstUpdDtFm;	//최종수정일자포맷수정
 	private String lstUpdId;	//최종수정자
 	private String lstUpdNm;	//최종수정자(이름)	- JOIN
+	
 	
 	//생성자
 	public CustHt() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CustHt(String custNo, String chgDt, int chgSeq, String chgCd, String chgBfCnt, String chgAftCnt,
-			Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdId, String lstUpdNm) {
-		super();
+	public CustHt(String custNo, String custNm, String chgDt, int chgSeq, String chgCd, String chgBfCnt,
+			String chgAftCnt, Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdDtFm, String lstUpdId,
+			String lstUpdNm) {
 		this.custNo = custNo;
+		this.custNm = custNm;
 		this.chgDt = chgDt;
 		this.chgSeq = chgSeq;
 		this.chgCd = chgCd;
@@ -34,16 +37,24 @@ public class CustHt {
 		this.fstRegDt = fstRegDt;
 		this.fstUserId = fstUserId;
 		this.lstUpdDt = lstUpdDt;
+		this.lstUpdDtFm = lstUpdDtFm;
 		this.lstUpdId = lstUpdId;
 		this.lstUpdNm = lstUpdNm;
 	}
-	
+
+
 	//getter setter
 	public String getCustNo() {
 		return custNo;
 	}
 	public void setCustNo(String custNo) {
 		this.custNo = custNo;
+	}
+	public String getCustNm() {
+		return custNm;
+	}
+	public void setCustNm(String custNm) {
+		this.custNm = custNm;
 	}
 	public String getChgDt() {
 		return chgDt;
@@ -93,6 +104,12 @@ public class CustHt {
 	public void setLstUpdDt(Date lstUpdDt) {
 		this.lstUpdDt = lstUpdDt;
 	}
+	public String getLstUpdDtFm() {
+		return lstUpdDtFm;
+	}
+	public void setLstUpdDtFm(String lstUpdDtFm) {
+		this.lstUpdDtFm = lstUpdDtFm;
+	}
 	public String getLstUpdId() {
 		return lstUpdId;
 	}
@@ -106,11 +123,13 @@ public class CustHt {
 		this.lstUpdNm = lstUpdNm;
 	}
 	
+	
 	//toString
 	@Override
 	public String toString() {
-		return "CustHt [custNo=" + custNo + ", chgDt=" + chgDt + ", chgSeq=" + chgSeq + ", chgCd=" + chgCd
-				+ ", chgBfCnt=" + chgBfCnt + ", chgAftCnt=" + chgAftCnt + ", fstRegDt=" + fstRegDt + ", fstUserId="
-				+ fstUserId + ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + ", lstUpdNm=" + lstUpdNm + "]";
+		return "CustHt [custNo=" + custNo + ", custNm=" + custNm + ", chgDt=" + chgDt + ", chgSeq=" + chgSeq
+				+ ", chgCd=" + chgCd + ", chgBfCnt=" + chgBfCnt + ", chgAftCnt=" + chgAftCnt + ", fstRegDt=" + fstRegDt
+				+ ", fstUserId=" + fstUserId + ", lstUpdDt=" + lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId="
+				+ lstUpdId + ", lstUpdNm=" + lstUpdNm + "]";
 	}
 }

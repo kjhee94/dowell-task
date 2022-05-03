@@ -15,6 +15,7 @@ public class Prt {
 	private String telNo;		//전화번호
 	private String mblNo;		//휴대폰번호
 	private String prtSsCd;		//거래처상태코드		- 10:정상 / 80:거래중지 / 90:해지
+	private String prtSsNm;		//거래처상태		- JOIN
 	private String mbzStDt;		//영업개시일자
 	private String stpDt;		//중지일자
 	private String cnclDt;		//해지일자
@@ -23,15 +24,15 @@ public class Prt {
 	private Date lstUpdDt;		//최종수정일자
 	private String lstUpdId;	//최종수정자
 	
+	
 	//생성자
 	public Prt() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Prt(String prtCd, String prtNm, int prtDtCd, String rpsvNm, String bsnNo, String zipNo, String addr,
-			String addrDtl, String telNo, String mblNo, String prtSsCd, String mbzStDt, String stpDt, String cnclDt,
-			Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdId) {
-		super();
+			String addrDtl, String telNo, String mblNo, String prtSsCd, String prtSsNm, String mbzStDt, String stpDt,
+			String cnclDt, Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdId) {
 		this.prtCd = prtCd;
 		this.prtNm = prtNm;
 		this.prtDtCd = prtDtCd;
@@ -43,6 +44,7 @@ public class Prt {
 		this.telNo = telNo;
 		this.mblNo = mblNo;
 		this.prtSsCd = prtSsCd;
+		this.prtSsNm = prtSsNm;
 		this.mbzStDt = mbzStDt;
 		this.stpDt = stpDt;
 		this.cnclDt = cnclDt;
@@ -51,7 +53,8 @@ public class Prt {
 		this.lstUpdDt = lstUpdDt;
 		this.lstUpdId = lstUpdId;
 	}
-	
+
+
 	//getter setter
 	public String getPrtCd() {
 		return prtCd;
@@ -119,6 +122,12 @@ public class Prt {
 	public void setPrtSsCd(String prtSsCd) {
 		this.prtSsCd = prtSsCd;
 	}
+	public String getPrtSsNm() {
+		return prtSsNm;
+	}
+	public void setPrtSsNm(String prtSsNm) {
+		this.prtSsNm = prtSsNm;
+	}
 	public String getMbzStDt() {
 		return mbzStDt;
 	}
@@ -162,13 +171,14 @@ public class Prt {
 		this.lstUpdId = lstUpdId;
 	}
 	
+	
 	//toString
 	@Override
 	public String toString() {
 		return "Prt [prtCd=" + prtCd + ", prtNm=" + prtNm + ", prtDtCd=" + prtDtCd + ", rpsvNm=" + rpsvNm + ", bsnNo="
 				+ bsnNo + ", zipNo=" + zipNo + ", addr=" + addr + ", addrDtl=" + addrDtl + ", telNo=" + telNo
-				+ ", mblNo=" + mblNo + ", prtSsCd=" + prtSsCd + ", mbzStDt=" + mbzStDt + ", stpDt=" + stpDt
-				+ ", cnclDt=" + cnclDt + ", fstRegDt=" + fstRegDt + ", fstUserId=" + fstUserId + ", lstUpdDt="
-				+ lstUpdDt + ", lstUpdId=" + lstUpdId + "]";
+				+ ", mblNo=" + mblNo + ", prtSsCd=" + prtSsCd + ", prtSsNm=" + prtSsNm + ", mbzStDt=" + mbzStDt
+				+ ", stpDt=" + stpDt + ", cnclDt=" + cnclDt + ", fstRegDt=" + fstRegDt + ", fstUserId=" + fstUserId
+				+ ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + "]";
 	}
 }

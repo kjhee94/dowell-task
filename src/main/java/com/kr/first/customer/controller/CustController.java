@@ -34,9 +34,11 @@ public class CustController {
 	@RequestMapping(value = "/customer/selectOwnCust.do")
 	public ModelAndView selectOwnCust(@SessionAttribute User user, ModelAndView mav) {
 		
-		//세션에서 거래처코드와 사용자구분코드(본사/특약점)가져오기
+		//거래처코드와 사용자구분코드(본사/특약점)가져오기
 		String prtCd = user.getPrtCd();
+		String prtNm = user.getPrtNm();
 		int userDtCd = user.getUserDtCd();
+		log.info("사용자구분코드 : "+userDtCd);
 		
 		//오늘 날짜/일주일 전 날짜 가져오기
 		Calendar c = Calendar.getInstance();
@@ -47,16 +49,26 @@ public class CustController {
 		c.add(c.DATE, -7); //요일기준으로 -7 차이나는 날짜
 		String agoDate = sdf.format(c.getTime());
 		
-		//거래처코드와 사용자 구분코드 Hashmap에 넣기
+		//mapper에 보내기 위해 Hashmap에 넣기
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("prtCd", prtCd);
-		map.put("userDtCd", userDtCd);
+		if(userDtCd==2) {
+			map.put("prtCd", prtCd);
+		}
+		map.put("jsDtTo", todayDate);
+		map.put("jsDtFrom", agoDate);
 		
-		//소속고객 전체 목록 list에 담기
-		//ArrayList<Customer> list =  cService.selectOwnCust(map);
+		//소속 고객 전체  list에 담기
+		log.info("=================>>초기세팅(소속 고객 전체)");
+		ArrayList<Customer> list =  cService.selectSearchCust(map);
+		log.info("=================>>소속 고객 전체 조회 성공");
 		
 		//ModelAndView에 담아 return
-		//mav.addObject("list", list);
+		mav.addObject("list", list);
+		//검색내역 유지
+		if(userDtCd==2) {
+			mav.addObject("prtCd", prtCd);
+			mav.addObject("prtNm", prtNm);
+		}
 		mav.addObject("jsDtTo", todayDate);
 		mav.addObject("jsDtFrom", agoDate);
 		mav.setViewName("customer/custList");
@@ -64,29 +76,26 @@ public class CustController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectAllPrt.do")
-	public ModelAndView selectAllPrt(ModelAndView mav) {
-		
-		//거래처 전체 목록 list에 담기
-		ArrayList<Prt> list =  cService.selectAllPrt();
-		
-		//ModelAndView에 담아 return
-		mav.addObject("list", list);
-		mav.setViewName("customer/prtPop");
-		
-		return mav;
+	
+	@RequestMapping(value = "/customer/prtPop.do")
+	public String selectPrt() {
+		//팝업 오픈
+		return "customer/prtPop";
 	}
 	
-	@RequestMapping(value = "/customer/selectSearchPrt.do", method = RequestMethod.POST)
-	public ModelAndView selectSearchPrt(HttpServletRequest request, 
-										@RequestParam String keyword, 
-										ModelAndView mav) 
-	{
+	
+	@RequestMapping(value = "/customer/selectPrt.do", method = RequestMethod.POST)
+	public ModelAndView selectPrt(HttpServletRequest request, @RequestParam String keyword, ModelAndView mav) {
+		
+		log.info("검색어 : "+keyword);
+		
 		//거래처 검색 목록 list에 담기
-		ArrayList<Prt> list =  cService.selectSearchPrt(keyword);
+		log.info("=================>>거래처 팝업 검색 조회");
+		ArrayList<Prt> list = cService.selectPrt(keyword);
+		log.info("=================>>거래처 팝업 검색 조회 성공");
 		
 		//ModelAndView에 담아 return
-		mav.addObject("list", list);
+		mav.addObject("pList", list);
 		//검색내역 유지
 		mav.addObject("keyword", keyword);
 		mav.setViewName("customer/prtPop");
@@ -94,65 +103,56 @@ public class CustController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectAllCust.do")
-	public ModelAndView selectAllCust(ModelAndView mav) {
-		
-		//고객 전체 목록 list에 담기
-		ArrayList<Customer> list =  cService.selectAllCust();
-		
-		//ModelAndView에 담아 return
-		mav.addObject("list", list);
-		mav.setViewName("customer/custPop");
-		
-		return mav;
+	
+	@RequestMapping(value = "/customer/custPop.do")
+	public String selectCust() {
+		//팝업 오픈
+		return "customer/custPop";
 	}
 	
-	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.POST)
-	public ModelAndView selectSearchCust(HttpServletRequest request,
-										 @RequestParam String custNm,
-										 @RequestParam String mblNo,
-										 ModelAndView mav) 
-	{
-		//mapper에 보내기 위해 map에 넣기
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("custNm", custNm);
-		map.put("mblNo", mblNo);
+	
+	@RequestMapping(value = "/customer/selectCust.do", method = RequestMethod.POST)
+	public ModelAndView selectCust(HttpServletRequest request, Customer cust, ModelAndView mav) {
+
+		log.info("고객이름 : "+cust.getCustNm()+" or 핸드폰 번호 : "+cust.getMblNo());
 		
 		//고객 검색 목록 list에 담기
-		ArrayList<Customer> list =  cService.selectSearchCust(map);
+		log.info("=================>>고객 팝업 검색 조회");
+		ArrayList<Customer> list =  cService.selectCust(cust);
+		log.info("=================>>고객 팝업 검색 조회 성공");
 		
 		//ModelAndView에 담아 return
-		mav.addObject("list", list);
+		mav.addObject("cList", list);
 		//검색내역 유지
-		mav.addObject("custNm", custNm);
-		mav.addObject("mblNo", mblNo);
+		mav.addObject("custNm", cust.getCustNm());
+		mav.addObject("mblNo", cust.getMblNo());
 		mav.setViewName("customer/custPop");
 		
 		return mav;
 	}
 	
 	@RequestMapping(value = "/customer/selectCustHt.do")
-	public ModelAndView selectCustHt(HttpServletRequest request, 
-									 @RequestParam String custNo,  
-									 ModelAndView mav) 
-	{	
+	public ModelAndView selectCustHt(HttpServletRequest request, @RequestParam String custNo, ModelAndView mav) {	
+		
 		//고객 이름 가져오기
 		String custNm = cService.selectCustNm(custNo);
 		
 		//고객이력 목록 list에 담기
+		log.info("=================>>고객 이력 조회");
 		ArrayList<CustHt> list = cService.selectCustHt(custNo);
+		log.info("=================>>고객 이력 조회 성공");
 		
 		//ModelAndView에 담아 return
 		mav.addObject("custNo", custNo);
 		mav.addObject("custNm", custNm);
-		mav.addObject("list", list);
+		mav.addObject("hList", list);
 		mav.setViewName("customer/custHtPop");
 		
 		return mav;
 	}
 	
-	@RequestMapping(value = "/customer/selectFullSearchCust.do", method = RequestMethod.POST)
-	public ModelAndView selectFullSearchCust(HttpServletRequest request,
+	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.POST)
+	public ModelAndView selectSearchCust(HttpServletRequest request,
 											 @RequestParam String prtCd,
 											 @RequestParam String prtNm,
 											 @RequestParam String custNo,
@@ -175,7 +175,7 @@ public class CustController {
 		map.put("jsDtTo",rplJsDtTo);
 		
 		//고객 전체검색 목록 list에 담기
-		ArrayList<Customer> list = cService.selectFullSearchCust(map);
+		ArrayList<Customer> list = cService.selectSearchCust(map);
 		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);

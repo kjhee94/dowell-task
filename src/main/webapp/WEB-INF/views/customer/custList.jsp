@@ -92,9 +92,9 @@
 						<span class="custNo">고객번호</span>
 						<span class="custNm">고객이름</span>
 						<span class="mblNo">휴대폰번호</span>
-						<span class="custSs">고객상태</span>
+						<span class="custSsNm">고객상태</span>
 						<span class="jsDt">가입일자</span>
-						<span class="jnPrt">가입매장</span>
+						<span class="prtNm">가입매장</span>
 						<span class="firReg">등록자</span>
 						<span class="lstUpdDt">수정일자</span>
 					</div>
@@ -115,9 +115,9 @@
 										</button>
 									</span>
 									<span class="mblNo">${c.mblNo}</span>
-									<span class="custSs">${c.custSsNm}</span>
+									<span class="custSsNm">${c.custSsNm}</span>
 									<span class="jsDt">${c.jsDt}</span>
-									<span class="jnPrt">${c.jnPrtNm}</span>
+									<span class="prtNm">${c.prtNm}</span>
 									<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
 									<span class="lstUpdDt">${c.lstUpdDtFm}</span>
 								</div>
@@ -134,5 +134,7 @@
 		<!-- footer -->
 		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	</div>
+	
+	
 </body>
 </html>

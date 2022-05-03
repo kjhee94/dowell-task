@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/customer/selectSearchPrt.do" method="post">
+		<form action="/customer/selectPrt.do" method="post">
 			<div class="box-title">
 				<span class="main-title">매장조회</span>
 				<button id="resetPrtBtn" class="btn-reset" type="reset">
@@ -30,7 +30,7 @@
 					<input class="style-input" type="search" name="keyword" value="${requestScope.keyword}" autofocus>
 				</div>
 				<div class="area-btn">
-					<button type="submit">
+					<button type="submit" id="prtSearchBtn">
 						<span class="material-icons">search</span>
 					</button>
 				</div>
@@ -42,23 +42,30 @@
 				<span class="checkbox cb-prt">선택</span>
 				<span class="prtCd">매장코드</span>
 				<span class="prtNm">매장명</span>
-				<span class="prtSs">매장상태</span>
+				<span class="prtSsNm">매장상태</span>
 			</div>
 			<c:choose>
-				<c:when test="${!requestScope.list.isEmpty() }">
-					<c:forEach items="${requestScope.list }" var="p">
-						<div class="result-content result-prt-content">
-							<span class="checkbox cb-prt">
-								<input type="checkbox">
-							</span>
-							<span class="prtCd">${p.prtCd}</span>
-							<span class="prtNm">${p.prtNm}</span>
-							<span class="prtSs">${p.prtSsCd}</span>
-						</div>
-					</c:forEach>
+				<c:when test="${requestScope.pList!=null }">
+					<c:choose>
+						<c:when test="${!requestScope.pList.isEmpty()}">
+							<c:forEach items="${requestScope.pList }" var="pl">
+								<div class="result-content result-prt-content">
+									<span class="checkbox cb-prt">
+										<input type="checkbox">
+									</span>
+									<span class="prtCd">${pl.prtCd}</span>
+									<span class="prtNm">${pl.prtNm}</span>
+									<span class="prtSsNm">${pl.prtSsNm}</span>
+								</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p>해당하는 매장이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<p>해당하는 매장이 없습니다.</p>
+					<p>매장을 검색해주세요.</p>
 				</c:otherwise>
 			</c:choose>
 		</div>

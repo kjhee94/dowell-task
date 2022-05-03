@@ -16,7 +16,17 @@ $(function(){
 	//---------------------------------매장조회
 	//resetPrtBtn 클릭시 초기화
 	$('#resetPrtBtn').click(function(){
-		window.location.href = '/customer/selectAllPrt.do'
+		window.location.href = '/customer/prtPop.do'
+	});
+	
+	//검색어 없을시 alert
+	$('#prtSearchBtn').click(function(){
+		var keyword = $('input[name="keyword"]').val();
+		
+		if(keyword.length==0){
+			alert("검색어를 입력하세요.")
+			return false;
+		}
 	});
 	
 	//체크박스 단일선택
@@ -59,15 +69,21 @@ $(function(){
 	//---------------------------------고객조회
 	//resetCustBtn 클릭시 초기화
 	$('#resetCustBtn').click(function(){
-		window.location.href = '/customer/selectAllCust.do'
+		window.location.href = '/customer/custPop.do'
 	});
 	
-	//이름 2자 이상만 검색가능
+	//이름 2자 이상만 검색가능 & 검색어 모두 다 비어있을 경우 alert
 	$('button[type="submit"]').click(function(){
 		var custNm = $('input[name="custNm"]').val();
+		var mblNo = $('input[name="mblNo"]').val();
 		
 		if(custNm.length==1){
 			alert("이름은 2자 이상 검색이 가능합니다.")
+			return false;
+		}
+		
+		if(custNm.length==0 && mblNo.length==0){
+			alert("검색어를 입력하세요.")
 			return false;
 		}
 	});
