@@ -42,6 +42,15 @@
 		ORDER BY 1                                                                                                        	--고객번호 오름차순
 	</select>
 	
+	
+	<!-- 고객상태 조회 쿼리 -->
+	<select id="selectCustSs" resultType="cust">
+		SELECT DTL_CD AS CUSTSSCD, 
+			   DTL_CD_NM AS CUSTSSNM
+		FROM MA_CODE_DT 
+		WHERE CODE_CD='CUST_SS_CD'
+	</select>
+
 
 	<!-- 거래처 검색 쿼리 -->
 	<select id="selectPrt" parameterType="String" resultType="prt">
@@ -125,9 +134,9 @@
 		            THEN (SELECT D.DTL_CD_NM FROM MA_CODE_DT D WHERE D.DTL_CD=H.CHG_BF_CNT AND CODE_CD='POC_CD')		--세부코드명_스칼라쿼리 출력
 		        WHEN H.CHG_CD='MBL_NO' THEN 																			--변경항목이 'MBL_NO'일 때
 		            CASE 
-		                WHEN LENGTH(C.MBL_NO)=10 																		--휴대폰 번호가 10자리일 때 '000-000-0000'의 형식
+		                WHEN LENGTH(H.CHG_BF_CNT)=10 																	--휴대폰 번호가 10자리일 때 '000-000-0000'의 형식
 		                    THEN SUBSTR(H.CHG_BF_CNT,1,3)||'-'||SUBSTR(H.CHG_BF_CNT,4,3)||'-'||SUBSTR(H.CHG_BF_CNT,7)  
-		                WHEN LENGTH(C.MBL_NO)=11 																		--휴대폰 번호가 11자리일 때 '000-0000-0000'의 형식
+		                WHEN LENGTH(H.CHG_BF_CNT)=11 																	--휴대폰 번호가 11자리일 때 '000-0000-0000'의 형식
 		                    THEN SUBSTR(H.CHG_BF_CNT,1,3)||'-'||SUBSTR(H.CHG_BF_CNT,4,4)||'-'||SUBSTR(H.CHG_BF_CNT,8)
 		                ELSE '-'																						--예외: '-'의 형식으로 출력
 		            END

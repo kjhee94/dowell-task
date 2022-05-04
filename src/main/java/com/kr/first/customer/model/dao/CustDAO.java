@@ -23,6 +23,11 @@ public class CustDAO {
 	public ArrayList<Customer> selectSearchCust(Customer cust) {
 		return new ArrayList<Customer>(sqlSession.selectList("cust.selectSearchCust",cust));
 	}
+
+	//고객상태 조회 메소드
+	public ArrayList<Customer> selectCustSs() {
+		return new ArrayList<Customer>(sqlSession.selectList("cust.selectCustSs"));
+	}
 	
 	//거래처 검색 메소드
 	public ArrayList<Prt> selectPrt(String keyword) {
@@ -43,4 +48,5 @@ public class CustDAO {
 	public ArrayList<CustHt> selectCustHt(String custNo) {
 		return new ArrayList<CustHt>(sqlSession.selectList("cust.selectCustHt",custNo));
 	}
+
 }

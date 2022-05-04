@@ -8,8 +8,13 @@ $(function(){
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
 	//고객상태 설정
+	var prmCustSsCd = $('#prmCustSsCd').val();
 	
-	
+	if(prmCustSsCd=='') {//값이 없을 경우
+		$('#all').prop("checked",true);
+	}else {//값이 있을 경우
+		$('#'+prmCustSsCd+'').prop("checked",true);
+	}
 	
 	//input date 날짜 변경시 min max 변경
 	$('#jsDtTo').change(function(){

@@ -81,7 +81,7 @@
 		</div>
 		
 		<div class="box-btn">
-			<button class="btn-close">닫기</button>
+			<button id="closeBtn" class="btn-close">닫기</button>
 			<button class="btn-apply btn-cust-apply">적용</button>
 		</div>
 	</div>

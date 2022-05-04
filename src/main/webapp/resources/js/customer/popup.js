@@ -3,7 +3,7 @@
  */
 $(function(){
 	//닫기버튼 클릭시 창닫기
-	$('.btn-close').click(function(){
+	$('#closeBtn').click(function(){
 		window.close();
 	});
 	
@@ -11,7 +11,6 @@ $(function(){
 	$.fn.hasScrollBar = function() {
 		return (this.prop("scrollHeight") == 0 && this.prop("clientHeight") == 0) || (this.prop("scrollHeight") > this.prop("clientHeight"));
 	};
-	
 	if($('.result-content').hasScrollBar()){
 		$('.result-title').css('padding-right','16.5px');
 	}
@@ -37,7 +36,10 @@ $(function(){
 		}
 	});
 	
-	//체크박스 단일선택
+	//if(a!=null && a.isEmpty())
+	
+		
+		//체크박스 단일선택
 	$('.cb-prt>input').click(function(){
 		if($(this).prop('checked')){
 			$('.cb-prt>input').prop('checked',false);
@@ -45,7 +47,7 @@ $(function(){
 			
 			//값을 보내기 위해 임의의 속성에 값 넣어놓기
 			var prtCd = $(this).parent().next().text();
-			var prtNm = $(this).parent().next().next().text()
+			var prtNm = $(this).parent().next().next().text();
 			$('.btn-prt-apply').attr('data-prtcd',prtCd);
 			$('.btn-prt-apply').attr('data-prtnm',prtNm);
 		};
@@ -65,7 +67,7 @@ $(function(){
 	$('.one-prt-content').dblclick(function(){
 		//보낼값 변수값 지정
 		var prtCd = $(this).find('.prtCd').text();
-		var prtNm = $(this).find('.prtNm').text()
+		var prtNm = $(this).find('.prtNm').text();
 		
 		//값 적용하기
 		window.close();

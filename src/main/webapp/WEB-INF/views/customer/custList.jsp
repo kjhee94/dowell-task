@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/resources/common/include.css">
 <link rel="stylesheet" href="/resources/css/customer/custList.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/resources/common/common.js"></script>
+<script src="/resources/common/gnb.js"></script>
 <script src="/resources/js/customer/custList.js"></script>
 </head>
 <body>
@@ -64,30 +64,11 @@
 									고객상태
 								</span>
 								<div class="box-input-radio">
-									<c:if test="${requestScope.cust.custSsCd eq null}">
-										<label><input type="radio" name="custSsCd" value="all" checked>전체</label>
-										<label><input type="radio" name="custSsCd" value="10">정상</label>
-										<label><input type="radio" name="custSsCd" value="80">중지</label>
-										<label><input type="radio" name="custSsCd" value="90">해지</label>
-									</c:if>
-									<c:if test="${requestScope.cust.custSsCd eq '10'}">
-										<label><input type="radio" name="custSsCd" value="all">전체</label>
-										<label><input type="radio" name="custSsCd" value="10" checked>정상</label>
-										<label><input type="radio" name="custSsCd" value="80">중지</label>
-										<label><input type="radio" name="custSsCd" value="90">해지</label>
-									</c:if>
-									<c:if test="${requestScope.cust.custSsCd eq '80'}">
-										<label><input type="radio" name="custSsCd" value="all">전체</label>
-										<label><input type="radio" name="custSsCd" value="10">정상</label>
-										<label><input type="radio" name="custSsCd" value="80" checked>중지</label>
-										<label><input type="radio" name="custSsCd" value="90">해지</label>
-									</c:if>
-									<c:if test="${requestScope.cust.custSsCd eq '90'}">
-										<label><input type="radio" name="custSsCd" value="all">전체</label>
-										<label><input type="radio" name="custSsCd" value="10">정상</label>
-										<label><input type="radio" name="custSsCd" value="80">중지</label>
-										<label><input type="radio" name="custSsCd" value="90" checked>해지</label>
-									</c:if>
+									<input type="hidden" id="prmCustSsCd" value="${requestScope.cust.custSsCd}">
+									<label><input type="radio" name="custSsCd" id="all" value="all">전체</label>
+									<c:forEach items="${requestScope.dtList}" var="dt">
+										<label><input type="radio" name="custSsCd" id="${dt.custSsCd}" value="${dt.custSsCd}">${dt.custSsNm}</label>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="one-search">

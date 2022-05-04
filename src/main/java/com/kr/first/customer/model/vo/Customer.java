@@ -12,8 +12,13 @@ public class Customer {
 	private String mrrgDt;		//결혼기념일
 	private String pocCd;		//직업코드			- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
 	private String mblNo;		//휴대폰번호
+	private String fstMblNo;		//휴대폰번호
+	private String mdlMblNo;		//휴대폰번호
+	private String lstMblNo;		//휴대폰번호
 	private char psmtGrcCd;		//우편물수령코드		- H:자택 / O:직장
 	private String email;		//이메일 주소
+	private String emailId;		//이메일 주소
+	private String emailAddr;		//이메일 주소
 	private String zipCd;		//우편번호코드
 	private String addr;		//주소
 	private String addrDtl;		//상세주소

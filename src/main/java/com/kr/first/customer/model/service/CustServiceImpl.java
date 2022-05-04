@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kr.first.customer.model.dao.CustDAO;
 import com.kr.first.customer.model.vo.CustHt;
 import com.kr.first.customer.model.vo.Customer;
 import com.kr.first.customer.model.vo.Prt;
+import com.kr.first.user.model.vo.User;
 
 @Service
 public class CustServiceImpl implements CustService {
@@ -23,6 +25,12 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public ArrayList<Customer> selectSearchCust(Customer cust) {
 		return cDAO.selectSearchCust(cust);
+	}
+	
+	//고객상태 조회 메소드
+	@Override
+	public ArrayList<Customer> selectCustSs() {
+		return cDAO.selectCustSs();
 	}
 	
 	//거래처 검색 메소드

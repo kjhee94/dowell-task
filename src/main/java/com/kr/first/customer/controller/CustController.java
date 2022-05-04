@@ -62,8 +62,12 @@ public class CustController {
 		ArrayList<Customer> list =  cService.selectSearchCust(cust);
 		log.info("=================>>소속 고객 전체 조회 성공");
 		
+		//고객상태 조회 list에 담기(라디오버튼 생성)
+		ArrayList<Customer> dtList = cService.selectCustSs();
+		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
+		mav.addObject("dtList", dtList);
 		//검색내역 유지
 		mav.addObject("cust", cust);
 		mav.setViewName("customer/custList");
@@ -155,8 +159,12 @@ public class CustController {
 		ArrayList<Customer> list = cService.selectSearchCust(cust);
 		log.info("=================>>고객 전체 검색 조회 성공");
 		
+		//고객상태 조회 list에 담기(라디오버튼 생성)
+		ArrayList<Customer> dtList = cService.selectCustSs();
+		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
+		mav.addObject("dtList", dtList);
 		//검색내역 유지
 		mav.addObject("cust", cust);
 		mav.setViewName("customer/custList");
@@ -167,6 +175,6 @@ public class CustController {
 	@RequestMapping(value = "/customer/insertCust.do")
 	public String insertCust() {
 		//팝업 오픈
-		return "customer/custAdd";
+		return "customer/custAddPop";
 	}
 }

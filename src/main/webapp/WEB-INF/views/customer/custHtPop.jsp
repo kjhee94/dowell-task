@@ -61,7 +61,7 @@
 		</div>
 				
 		<div class="box-btn">
-			<button class="btn-close">닫기</button>
+			<button id="closeBtn" class="btn-close">닫기</button>
 		</div>
 	</div>
 </body>
