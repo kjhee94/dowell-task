@@ -34,40 +34,13 @@ public class CustController {
 	@RequestMapping(value = "/customer/selectOwnCust.do")
 	public ModelAndView selectOwnCust(@SessionAttribute User user, Customer cust, ModelAndView mav) {
 		
-		//거래처코드,거래처이름,사용자구분코드(본사/특약점)가져오기
-		String prtCd = user.getPrtCd();
-		String prtNm = user.getPrtNm();
-		int userDtCd = user.getUserDtCd();
-		log.info("사용자구분코드 : "+userDtCd);
-		
-		//날짜 default값 가져오기
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		//오늘날짜
-		String todayDate = sdf.format(c.getTime());
-		//일주일전
-		c.add(c.DATE, -7); //요일기준으로 -7 차이나는 날짜
-		String agoDate = sdf.format(c.getTime());
-		
-		//mapper에 보내기 위해 Customer객체에 넣기
-		if(userDtCd==2) {
-			cust.setPrtCd(prtCd);
-			cust.setPrtNm(prtNm);
-		}
-		cust.setJsDtTo(todayDate);
-		cust.setJsDtFrom(agoDate);
-		
 		//소속 고객 전체 목록 list에 담기
 		log.info("=================>>초기세팅(소속 고객 전체)");
 		ArrayList<Customer> list =  cService.selectSearchCust(cust);
 		log.info("=================>>소속 고객 전체 조회 성공");
 		
-		//고객상태 조회 list에 담기(라디오버튼 생성)
-		ArrayList<Customer> dtList = cService.selectCustSs();
-		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.addObject("dtList", dtList);
 		//검색내역 유지
 		mav.addObject("cust", cust);
 		mav.setViewName("customer/custList");
@@ -159,12 +132,8 @@ public class CustController {
 		ArrayList<Customer> list = cService.selectSearchCust(cust);
 		log.info("=================>>고객 전체 검색 조회 성공");
 		
-		//고객상태 조회 list에 담기(라디오버튼 생성)
-		ArrayList<Customer> dtList = cService.selectCustSs();
-		
 		//ModelAndView에 담아 return
 		mav.addObject("list", list);
-		mav.addObject("dtList", dtList);
 		//검색내역 유지
 		mav.addObject("cust", cust);
 		mav.setViewName("customer/custList");

@@ -12,7 +12,7 @@ header {
 	background-color: #114574;
 	position: fixed;
 }
-.logo {
+#logo {
 	width: 100%;
 	padding: 10%;
 }

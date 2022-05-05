@@ -47,14 +47,14 @@
 	justify-content: flex-end;
 	align-items: center;
 }
-.area-btn>button {
+.btn-search {
 	width: 35px;
 	height: 35px;
 	background-color: #114574;
 	border-radius: 50%;
 	cursor: pointer;
 }
-.area-btn>button>span {
+.btn-search>span {
 	width: 30px;
 	height: 30px;
 	font-size: 20px;

@@ -27,12 +27,6 @@ public class CustServiceImpl implements CustService {
 		return cDAO.selectSearchCust(cust);
 	}
 	
-	//고객상태 조회 메소드
-	@Override
-	public ArrayList<Customer> selectCustSs() {
-		return cDAO.selectCustSs();
-	}
-	
 	//거래처 검색 메소드
 	@Override
 	public ArrayList<Prt> selectPrt(String keyword) {

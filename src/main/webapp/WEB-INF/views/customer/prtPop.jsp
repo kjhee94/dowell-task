@@ -30,7 +30,7 @@
 					<input class="style-input" type="search" name="keyword" value="${requestScope.keyword}" autofocus>
 				</div>
 				<div class="area-btn">
-					<button type="submit" id="prtSearchBtn">
+					<button id="prtSearchBtn" class="btn-search" type="submit">
 						<span class="material-icons">search</span>
 					</button>
 				</div>
@@ -46,27 +46,20 @@
 			</div>
 			<div class="result-content">
 				<c:choose>
-					<c:when test="${requestScope.pList!=null }">
-						<c:choose>
-							<c:when test="${!requestScope.pList.isEmpty()}">
-								<c:forEach items="${requestScope.pList }" var="pl">
-									<div class="one-content one-prt-content">
-										<span class="checkbox cb-prt">
-											<input type="checkbox">
-										</span>
-										<span class="prtCd">${pl.prtCd}</span>
-										<span class="prtNm">${pl.prtNm}</span>
-										<span class="prtSsNm">${pl.prtSsNm}</span>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<p>해당하는 매장이 없습니다.</p>
-							</c:otherwise>
-						</c:choose>
+					<c:when test="${requestScope.pList!=null } && ${!requestScope.pList.isEmpty()}">
+						<c:forEach items="${requestScope.pList }" var="pl">
+							<div class="one-content one-prt-content">
+								<span class="checkbox cb-prt">
+									<input type="checkbox">
+								</span>
+								<span class="prtCd">${pl.prtCd}</span>
+								<span class="prtNm">${pl.prtNm}</span>
+								<span class="prtSsNm">${pl.prtSsNm}</span>
+							</div>
+						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<p>매장을 검색해주세요.</p>
+						<p>해당하는 매장이 없습니다.</p>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -74,7 +67,7 @@
 		
 		<div class="box-btn">
 			<button id="closeBtn" class="btn-close">닫기</button>
-			<button class="btn-apply btn-prt-apply">적용</button>
+			<button id="applyBtn" class="btn-apply btn-prt-apply">적용</button>
 		</div>
 	</div>
 </body>

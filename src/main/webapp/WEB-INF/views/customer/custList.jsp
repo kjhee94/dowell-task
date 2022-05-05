@@ -32,7 +32,7 @@
 							<span class="material-icons">restart_alt</span>
 						</button>
 						<c:if test="${sessionScope.user.userDtCd eq '2'}">
-							<button id="custAddBtn" type="button">신규등록</button>
+							<button id="custAddBtn" class="btn-add" type="button">신규등록</button>
 						</c:if>
 					</div>
 					
@@ -41,49 +41,53 @@
 							<div class="one-search">
 								<span class="search-title">매장</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="prtCd" value="${requestScope.cust.prtCd}" autofocus>
-									<button id="prtSearchBtn" type="button">
-										<span class="material-icons">search</span>
-									</button>
-									<input class="style-input" type="text" name="prtNm" value="${requestScope.cust.prtNm}">
+									<c:choose>
+										<c:when test="${sessionScope.user.userDtCd eq '2'}">
+											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" autofocus>
+											<button id="prtSearchBtn" class="btn-one-search" type="button">
+												<span class="material-icons">search</span>
+											</button>
+											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}">
+										</c:when>
+										<c:otherwise>
+											<input id="prtCd" class="style-input" type="text" name="prtCd" autofocus>
+											<button id="prtSearchBtn" class="btn-one-search" type="button">
+												<span class="material-icons">search</span>
+											</button>
+											<input id="prtNm" class="style-input" type="text" name="prtNm">
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input class="style-input" type="text" name="custNo" value="${requestScope.cust.custNo}">
-									<button id="custSearchBtn" type="button">
+									<input id="custNo" class="style-input" type="text" name="custNo">
+									<button id="custSearchBtn" class="btn-one-search" type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input class="style-input" type="text" name="custNm" value="${requestScope.cust.custNm}">
+									<input id="custNm" class="style-input" type="text" name="custNm">
 								</div>
 							</div>
 							<div class="one-search">
-								<span class="search-title">
-									<span class="required">*</span>
-									고객상태
-								</span>
+								<span class="search-title"><span class="required">*</span>고객상태</span>
 								<div class="box-input-radio">
-									<input type="hidden" id="prmCustSsCd" value="${requestScope.cust.custSsCd}">
-									<label><input type="radio" name="custSsCd" id="all" value="all">전체</label>
-									<c:forEach items="${requestScope.dtList}" var="dt">
-										<label><input type="radio" name="custSsCd" id="${dt.custSsCd}" value="${dt.custSsCd}">${dt.custSsNm}</label>
+									<label><input type="radio" name="custSsCd" id="all" value="all" checked>전체</label>
+									<c:forEach items="${requestScope.map.dtList}" var="dt">
+										<label><input type="radio" name="custSsCd" value="${dt.custSsCd}">${dt.custSsNm}</label>
 									</c:forEach>
 								</div>
 							</div>
 							<div class="one-search">
-								<span class="search-title">
-									<span class="required">*</span>
-									가입일자
-								</span>
+								<span class="search-title"><span class="required">*</span>가입일자</span>
 								<div class="box-input-date">
-									<input type="date" name="jsDtFrom" id="jsDtFrom" max="${requestScope.cust.jsDtTo}" value="${requestScope.cust.jsDtFrom}">
-									<input type="date" name="jsDtTo" id="jsDtTo" min="${requestScope.cust.jsDtFrom}" value="${requestScope.cust.jsDtTo}">
+									<input id="jsDtFrom" type="date" name="jsDtFrom" max="${requestScope.map.jsDtTo}" value="${requestScope.map.jsDtFrom}">
+									<input id="jsDtTo" type="date" name="jsDtTo" min="${requestScope.map.jsDtFrom}" value="${requestScope.map.jsDtTo}">
 								</div>
 							</div>
 						</div>
 						<div class="area-btn">
-							<button type="submit">
+							<button id="SearchBtn" class="btn-submit" type="submit">
 								<span class="material-icons">search</span>
 							</button>
 						</div>
@@ -108,13 +112,13 @@
 									<div class="one-content">
 										<span class="custNo">
 											<span>${c.custNo}</span>
-											<button class="btn-history" type="button">
+											<button class="btn-icon btn-history" type="button">
 												<span class="material-icons">list_alt</span>
 											</button>
 										</span>
 										<span class="custNm">
 											<span>${c.custNm}</span>
-											<button class="btn-detail" type="button">
+											<button class="btn-icon btn-update" type="button">
 												<span class="material-icons">list_alt</span>
 											</button>
 										</span>

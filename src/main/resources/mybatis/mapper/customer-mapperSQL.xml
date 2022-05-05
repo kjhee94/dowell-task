@@ -43,15 +43,6 @@
 	</select>
 	
 	
-	<!-- 고객상태 조회 쿼리 -->
-	<select id="selectCustSs" resultType="cust">
-		SELECT DTL_CD AS CUSTSSCD, 
-			   DTL_CD_NM AS CUSTSSNM
-		FROM MA_CODE_DT 
-		WHERE CODE_CD='CUST_SS_CD'
-	</select>
-
-
 	<!-- 거래처 검색 쿼리 -->
 	<select id="selectPrt" parameterType="String" resultType="prt">
 		SELECT 

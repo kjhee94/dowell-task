@@ -9,8 +9,8 @@
 </head>
 <body>
 	<script>
-		alert('${requestScope.msg}');
-		location.replace('${requestScope.location}');
+		alert('${requestScope.map.msg}');
+		location.replace('${requestScope.map.location}');
 	</script>
 </body>
 </html>

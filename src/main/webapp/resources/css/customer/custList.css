@@ -12,7 +12,7 @@
 }
 
 /*신규등록 버튼*/
-#custAddBtn {
+.btn-add {
 	width: 80px;
 	height: 40px;
 	border-radius: 10px;
@@ -70,13 +70,13 @@
 }
 
 /*매장,고객번호 검색 버튼*/
-.box-input-text>button {
+.btn-one-search {
 	width: 13%;
 	display: flex;
 	align-items: flex-start;
 	cursor: pointer;
 }
-.box-input-text>button>span {
+.btn-one-search>span {
 	width: 30px;
 	height: 30px;
 	border: 1px #c8c8c8 solid;
@@ -107,7 +107,7 @@ input[type="date"] {
 	justify-content: center;
 	align-items: center;
 }
-button[type="submit"] {
+.btn-submit {
 	width:70px;
 	height: 70px;
 	background-color: #114574;
@@ -115,7 +115,7 @@ button[type="submit"] {
 	color: #fff;
 	cursor: pointer;
 }
-button[type="submit"]>span {
+.btn-submit>span {
 	font-size: 30px;
 	color: #fff;
 	padding-top: 5px;
@@ -186,7 +186,7 @@ button[type="submit"]>span {
 }
 
 /*이력,상세 버튼*/
-.one-content>span>button {
+.btn-icon {
 	width: 25px;
 	height: 25px;
 	border: 1px #c8c8c8 solid;
@@ -196,7 +196,7 @@ button[type="submit"]>span {
 	right: 15px;
 	top: 18px;
 }
-.one-content>span>button>span {
+.btn-icon>span {
 	font-size: 18px;
 	padding-top: 3px;
 }

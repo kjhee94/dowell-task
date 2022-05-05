@@ -7,15 +7,6 @@ $(function(){
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
-	//고객상태 설정
-	var prmCustSsCd = $('#prmCustSsCd').val();
-	
-	if(prmCustSsCd=='') {//값이 없을 경우
-		$('#all').prop("checked",true);
-	}else {//값이 있을 경우
-		$('#'+prmCustSsCd+'').prop("checked",true);
-	}
-	
 	//input date 날짜 변경시 min max 변경
 	$('#jsDtTo').change(function(){
 		var jsDtTo = $('#jsDtTo').val();
@@ -51,14 +42,14 @@ $(function(){
 		window.open('/customer/custPop.do', '고객 조회', option);
 	});
 	
-	//updListBtn 클릭시 팝업 오픈
+	//btn-history 클릭시 팝업 오픈
 	$('.btn-history').click(function(){
 		var custNo = $(this).prev().text();
 		var option = 'width=1000, height=500, top=50, left=50, location=no';
 		window.open('/customer/selectCustHt.do?custNo='+custNo, '고객 이력', option);
 	});
 	
-	//prtSearchBtn 클릭시 팝업 오픈
+	//custAddBtn 클릭시 팝업 오픈
 	$('#custAddBtn').click(function(){
 		var option = 'width=450, height=500, top=50, left=50, location=no';
 		window.open('/customer/insertCust.do', '신규 고객 등록', option);

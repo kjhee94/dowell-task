@@ -12,9 +12,6 @@ public interface CustService {
 	//고객 전체 검색 메소드
 	ArrayList<Customer> selectSearchCust(Customer cust);
 	
-	//고객상태 조회 메소드
-	ArrayList<Customer> selectCustSs();
-
 	//거래처 검색 메소드(팝업)
 	ArrayList<Prt> selectPrt(String keyword);
 

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 		<header>
 			<div class="box-side">
-				<div class="logo">
+				<div id="logo">
 					<a href="/customer/selectOwnCust.do">
 						<img class="img-full" alt="로고이미지" src="/resources/images/logo_w.png">
 					</a>
