@@ -2,7 +2,7 @@ package com.kr.first.customer.model.vo;
 
 import java.util.Date;
 
-public class Prt {
+public class PrtVO {
 
 	private String prtCd;		//거래처코드
 	private String prtNm;		//거래처명
@@ -26,11 +26,11 @@ public class Prt {
 	
 	
 	//생성자
-	public Prt() {
+	public PrtVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Prt(String prtCd, String prtNm, int prtDtCd, String rpsvNm, String bsnNo, String zipNo, String addr,
+	public PrtVO(String prtCd, String prtNm, int prtDtCd, String rpsvNm, String bsnNo, String zipNo, String addr,
 			String addrDtl, String telNo, String mblNo, String prtSsCd, String prtSsNm, String mbzStDt, String stpDt,
 			String cnclDt, Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdId) {
 		this.prtCd = prtCd;

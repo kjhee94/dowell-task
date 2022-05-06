@@ -2,7 +2,7 @@ package com.kr.first.user.model.vo;
 
 import java.util.Date;
 
-public class User {
+public class UserVO {
 
 	private String userId;		//사용자ID
 	private String userNm;		//사용자명
@@ -20,11 +20,11 @@ public class User {
 	private String lstUpdId;	//최종수정자
 	
 	//생성자
-	public User() {
+	public UserVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(String userId, String userNm, int userDtCd, char useYN, String userPwd, String stDt, String edDt,
+	public UserVO(String userId, String userNm, int userDtCd, char useYN, String userPwd, String stDt, String edDt,
 			String prtCd, String prtNm, String pwdUpdDt, Date fstRegDt, String fstUserId, Date lstUpdCd, String lstUpdId) {
 		this.userId = userId;
 		this.userNm = userNm;

@@ -3,7 +3,7 @@
 <mapper namespace="cust">
 
 	<!-- 고객 전체 검색 쿼리 -->
-	<select id="selectSearchCust" parameterType="cust" resultType="cust">
+	<select id="selectSearchCust" parameterType="Map" resultType="cust">
 		SELECT
 		    C.CUST_NO AS CUSTNO,                                                                                          	--고객번호
 		    CASE                                                                                                          	--고객이름(마스킹처리)

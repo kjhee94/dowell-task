@@ -1,9 +1,8 @@
 package com.kr.first.customer.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,17 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.first.customer.model.service.CustService;
-import com.kr.first.customer.model.vo.CustHt;
-import com.kr.first.customer.model.vo.Customer;
-import com.kr.first.customer.model.vo.Prt;
-import com.kr.first.user.model.vo.User;
+import com.kr.first.customer.model.vo.CustHtVO;
+import com.kr.first.customer.model.vo.CustVO;
+import com.kr.first.customer.model.vo.PrtVO;
 
 @Controller
 public class CustController {
@@ -31,23 +30,18 @@ public class CustController {
 	@Autowired
 	private CustService cService;
 	
-	@RequestMapping(value = "/customer/selectOwnCust.do")
-	public ModelAndView selectOwnCust(@SessionAttribute User user, Customer cust, ModelAndView mav) {
+	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectSearchCust(@RequestBody Map<String, Object> map) {
 		
-		//소속 고객 전체 목록 list에 담기
-		log.info("=================>>초기세팅(소속 고객 전체)");
-		ArrayList<Customer> list =  cService.selectSearchCust(cust);
-		log.info("=================>>소속 고객 전체 조회 성공");
+		System.out.println(map);
 		
-		//ModelAndView에 담아 return
-		mav.addObject("list", list);
-		//검색내역 유지
-		mav.addObject("cust", cust);
-		mav.setViewName("customer/custList");
+		//고객 전체 검색 성공/실패에 따라 다른 값 map에 담기
+		HashMap<String, Object> resultMap = cService.selectSearchCust(map);
 		
-		return mav;
+		return resultMap;
+		
 	}
-	
 	
 	@RequestMapping(value = "/customer/prtPop.do")
 	public String selectPrt() {
@@ -63,7 +57,7 @@ public class CustController {
 		
 		//거래처 검색 목록 list에 담기
 		log.info("=================>>거래처 팝업 검색 조회");
-		ArrayList<Prt> list = cService.selectPrt(keyword);
+		ArrayList<PrtVO> list = cService.selectPrt(keyword);
 		log.info("=================>>거래처 팝업 검색 조회 성공");
 		
 		//ModelAndView에 담아 return
@@ -84,13 +78,13 @@ public class CustController {
 	
 	
 	@RequestMapping(value = "/customer/selectCust.do", method = RequestMethod.POST)
-	public ModelAndView selectCust(HttpServletRequest request, Customer cust, ModelAndView mav) {
+	public ModelAndView selectCust(HttpServletRequest request, CustVO cust, ModelAndView mav) {
 
 		log.info("고객이름 : "+cust.getCustNm()+" or 핸드폰 번호 : "+cust.getMblNo());
 		
 		//고객 검색 목록 list에 담기
 		log.info("=================>>고객 팝업 검색 조회");
-		ArrayList<Customer> list =  cService.selectCust(cust);
+		ArrayList<CustVO> list =  cService.selectCust(cust);
 		log.info("=================>>고객 팝업 검색 조회 성공");
 		
 		//ModelAndView에 담아 return
@@ -112,7 +106,7 @@ public class CustController {
 		
 		//고객이력 목록 list에 담기
 		log.info("=================>>고객 이력 조회");
-		ArrayList<CustHt> list = cService.selectCustHt(custNo);
+		ArrayList<CustHtVO> list = cService.selectCustHt(custNo);
 		log.info("=================>>고객 이력 조회 성공");
 		
 		//ModelAndView에 담아 return
@@ -120,23 +114,6 @@ public class CustController {
 		mav.addObject("custNm", custNm);
 		mav.addObject("hList", list);
 		mav.setViewName("customer/custHtPop");
-		
-		return mav;
-	}
-	
-	@RequestMapping(value = "/customer/selectSearchCust.do", method = RequestMethod.POST)
-	public ModelAndView selectSearchCust(HttpServletRequest request, Customer cust, ModelAndView mav) {
-		
-		//고객 전체 검색 목록 list에 담기
-		log.info("=================>>고객 전체 검색 조회");
-		ArrayList<Customer> list = cService.selectSearchCust(cust);
-		log.info("=================>>고객 전체 검색 조회 성공");
-		
-		//ModelAndView에 담아 return
-		mav.addObject("list", list);
-		//검색내역 유지
-		mav.addObject("cust", cust);
-		mav.setViewName("customer/custList");
 		
 		return mav;
 	}

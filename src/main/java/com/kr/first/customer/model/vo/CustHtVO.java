@@ -2,7 +2,7 @@ package com.kr.first.customer.model.vo;
 
 import java.util.Date;
 
-public class CustHt {
+public class CustHtVO {
 
 	private String custNo;		//고객번호
 	private String custNm;		//고객이름			- JOIN
@@ -20,11 +20,11 @@ public class CustHt {
 	
 	
 	//생성자
-	public CustHt() {
+	public CustHtVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CustHt(String custNo, String custNm, String chgDt, int chgSeq, String chgCd, String chgBfCnt,
+	public CustHtVO(String custNo, String custNm, String chgDt, int chgSeq, String chgCd, String chgBfCnt,
 			String chgAftCnt, Date fstRegDt, String fstUserId, Date lstUpdDt, String lstUpdDtFm, String lstUpdId,
 			String lstUpdNm) {
 		this.custNo = custNo;

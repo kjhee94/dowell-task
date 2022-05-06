@@ -105,36 +105,8 @@
 						<span class="firReg">등록자</span>
 						<span class="lstUpdDt">수정일자</span>
 					</div>
-					<div class="result-content">
-						<c:choose>
-							<c:when test="${!requestScope.list.isEmpty() }">
-								<c:forEach items="${requestScope.list }" var="c">
-									<div class="one-content">
-										<span class="custNo">
-											<span>${c.custNo}</span>
-											<button class="btn-icon btn-history" type="button">
-												<span class="material-icons">list_alt</span>
-											</button>
-										</span>
-										<span class="custNm">
-											<span>${c.custNm}</span>
-											<button class="btn-icon btn-update" type="button">
-												<span class="material-icons">list_alt</span>
-											</button>
-										</span>
-										<span class="mblNo">${c.mblNo}</span>
-										<span class="custSsNm">${c.custSsNm}</span>
-										<span class="jsDt">${c.jsDt}</span>
-										<span class="prtNm">${c.prtNm}</span>
-										<span class="firReg">${c.fstUserId} / ${c.fstUserNm}</span>
-										<span class="lstUpdDt">${c.lstUpdDtFm}</span>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<p>해당하는 고객이 없습니다.</p>
-							</c:otherwise>
-						</c:choose>
+					<div id="result" class="result-content">
+					
 					</div>
 				</div>
 			</div>

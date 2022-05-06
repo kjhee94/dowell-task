@@ -3,9 +3,9 @@
 <configuration>
 	<!-- 별칭 등록 -->
 	<typeAliases>
-		<typeAlias type="com.kr.first.user.model.vo.User" alias="user"/>
-		<typeAlias type="com.kr.first.customer.model.vo.Customer" alias="cust"/>
-		<typeAlias type="com.kr.first.customer.model.vo.Prt" alias="prt"/>
-		<typeAlias type="com.kr.first.customer.model.vo.CustHt" alias="custHt"/>
+		<typeAlias type="com.kr.first.user.model.vo.UserVO" alias="user"/>
+		<typeAlias type="com.kr.first.customer.model.vo.CustVO" alias="cust"/>
+		<typeAlias type="com.kr.first.customer.model.vo.PrtVO" alias="prt"/>
+		<typeAlias type="com.kr.first.customer.model.vo.CustHtVO" alias="custHt"/>
 	</typeAliases>
 </configuration>

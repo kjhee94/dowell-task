@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.first.user.model.service.UserService;
-import com.kr.first.user.model.vo.User;
+import com.kr.first.user.model.vo.UserVO;
 
 @Controller
 public class UserController {
@@ -27,18 +27,18 @@ public class UserController {
 	
 	//로그인
 	@RequestMapping(value = "/user/login.do", method = RequestMethod.POST)
-	public ModelAndView userLogin(HttpServletRequest request, User user, ModelAndView mav) {
+	public ModelAndView userLogin(HttpServletRequest request, UserVO user, ModelAndView mav) {
 		
-		//로그인 성공/실패에 따라 다른 값 map에 담아옴
+		//로그인 성공/실패에 따라 다른 값 map에 담기
 		HashMap<String, Object> map = uService.userLogin(user);
 		
 		if((boolean)map.get("result")) { //로그인에 성공했을 때
 			
-			log.info(((User)map.get("user")).getUserNm()+"님 로그인 성공");
+			log.info(((UserVO)map.get("user")).getUserNm()+"님 로그인 성공");
 			
 			//세션에 담기
 			HttpSession session = request.getSession();
-			session.setAttribute("user", (User)map.get("user"));
+			session.setAttribute("user", (UserVO)map.get("user"));
 			
 			//ModelAndView에 담아 return
 			mav.addObject("map", map);
@@ -57,7 +57,7 @@ public class UserController {
 	
 	//로그아웃
 	@RequestMapping(value="/user/logout.do",method=RequestMethod.GET)
-	public String userLogout(HttpSession session, @SessionAttribute User user) {
+	public String userLogout(HttpSession session, @SessionAttribute UserVO user) {
 		
 		//세션파기
 		session.invalidate();

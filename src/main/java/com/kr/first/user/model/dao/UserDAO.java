@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.kr.first.customer.model.vo.Customer;
-import com.kr.first.user.model.vo.User;
+import com.kr.first.customer.model.vo.CustVO;
+import com.kr.first.user.model.vo.UserVO;
 
 @Repository
 public class UserDAO {
@@ -18,13 +18,12 @@ public class UserDAO {
 	private SqlSessionTemplate sqlSession;
 
 	//로그인
-	public User selectLoginUser(User user) {
-		return sqlSession.selectOne("user.userLogin",user);
+	public UserVO selectLoginUser(UserVO user) throws Exception {
+		return sqlSession.selectOne("user.selectLoginUser",user);
 	}
 
 	//고객상태 조회
-	public ArrayList<Customer> selectCustSs() {
-		// TODO Auto-generated method stub
-		return new ArrayList<Customer>(sqlSession.selectList("user.selectCustSs"));
+	public ArrayList<CustVO> selectCustSs() throws Exception {
+		return new ArrayList<CustVO>(sqlSession.selectList("user.selectCustSs"));
 	}
 }
