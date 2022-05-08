@@ -4,7 +4,7 @@
 		<header>
 			<div class="box-side">
 				<div id="logo">
-					<a href="/customer/selectOwnCust.do">
+					<a href="/customer/custList.do">
 						<img class="img-full" alt="로고이미지" src="/resources/images/logo_w.png">
 					</a>
 				</div>
@@ -17,7 +17,7 @@
 								<span class="material-icons icon-arrow">navigate_next</span>
 							</div>
 							<ul class="lnb">
-								<li><a href="/customer/selectOwnCust.do">ㆍ 고객 조회</a></li>
+								<li><a href="/customer/custList.do">ㆍ 고객 조회</a></li>
 								<li><a href="#">ㆍ 고객 정보 조회</a></li>
 							</ul>
 						</li>

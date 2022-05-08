@@ -2,7 +2,6 @@ package com.kr.first.customer.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,33 @@ public class CustDAO {
 	@Qualifier(value = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 
+	//고객상태 조회
+	public ArrayList<CustVO> selectCustSs() throws Exception {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectCustSs"));
+	}
+	
 	//고객 전체 검색 메소드
-	public ArrayList<CustVO> selectSearchCust(Map<String, Object> map) throws Exception {
+	public ArrayList<CustVO> selectSearchCust(HashMap<String, Object> map) throws Exception {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectSearchCust",map));
 	}
 
 	//거래처 검색 메소드
-	public ArrayList<PrtVO> selectPrt(String keyword) {
+	public ArrayList<PrtVO> selectPrt(String keyword) throws Exception  {
 		return new ArrayList<PrtVO>(sqlSession.selectList("cust.selectPrt",keyword));
 	}
 
 	//고객 검색 메소드
-	public ArrayList<CustVO> selectCust(CustVO cust) {
-		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectCust",cust));
+	public ArrayList<CustVO> selectCust(HashMap<String, Object> map) throws Exception {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectCust",map));
 	}
 
 	//고객 이름 조회 메소드
-	public String selectCustNm(String custNo) {
+	public String selectCustNm(String custNo) throws Exception {
 		return sqlSession.selectOne("cust.selectCustNm",custNo);
 	}
 	
 	//고객 이력 조회 메소드
-	public ArrayList<CustHtVO> selectCustHt(String custNo) {
+	public ArrayList<CustHtVO> selectCustHt(String custNo) throws Exception {
 		return new ArrayList<CustHtVO>(sqlSession.selectList("cust.selectCustHt",custNo));
 	}
 

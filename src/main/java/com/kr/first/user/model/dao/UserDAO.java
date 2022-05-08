@@ -21,9 +21,4 @@ public class UserDAO {
 	public UserVO selectLoginUser(UserVO user) throws Exception {
 		return sqlSession.selectOne("user.selectLoginUser",user);
 	}
-
-	//고객상태 조회
-	public ArrayList<CustVO> selectCustSs() throws Exception {
-		return new ArrayList<CustVO>(sqlSession.selectList("user.selectCustSs"));
-	}
 }

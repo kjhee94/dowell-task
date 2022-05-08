@@ -10,101 +10,124 @@ $(function(){
 	var jsDtTo = $('#jsDtTo').val();
 	var jsDtFrom = $('#jsDtFrom').val();
 	
-	$('#jsDtTo').change(function(){
-		$('#jsDtFrom').attr('max',jsDtTo);
+	$('#jsDtTo').change(function(){ //jsDtTo의 값이 변경 될 때
+		$('#jsDtFrom').attr('max',jsDtTo); //jsDtFrom의 최댓값 jsDtTo로 변경 (그 이상의 값 선택 제한)
 	});
-	$('#jsDtFrom').change(function(){
-		$('#jsDtTo').attr('min',jsDtFrom);
-	});
-	
-	//처음 로드시 기본세팅 값
-	var params = {};
-	
-	params["prtCd"] = $("#prtCd").val();
-	params["prtNm"] = $("#prtNm").val();
-	params["custSsCd"] = $('input[type="radio"]:checked').val();
-	params["jsDtTo"] = jsDtTo;
-	params["jsDtFrom"] = jsDtFrom;
-	
-	$.ajax({
-		url : "/customer/selectSearchCust.do",
-		type : "post",
-		dataType : "json",
-		data: JSON.stringify(params),
-		success : function(data) {
-			
-			var $resultTag = $("#result");
-			
-			$.each(data, function(index,item){
-				var str = '<div class="one-content">'+
-						  '<span class="custNo">'+
-						  	'<span>'+item.custNo+'</span>'+
-						  	'<button class="btn-icon btn-history" type="button">'+
-						  		'<span class="material-icons">list_alt</span>'+
-							'</button>'+
-						  '</span>'+
-						  '<span class="custNm">'+
-						  	'<span>'+item.custNm+'</span>'+
-						  	'<button class="btn-icon btn-btn-update" type="button">'+
-						  		'<span class="material-icons">list_alt</span>'+
-							'</button>'+
-						  '</span>'+
-						  '<span class="mblNo">'+item.mblNo+'</span>'
-						  '<span class="custSsNm">'+item.custSsNm+'</span>'
-						  '<span class="jsDt">'+item.jsDt+'</span>'
-						  '<span class="prtNm">'+item.prtNm+'</span>'
-						  '<span class="firReg">'+item.firRegId+'</span>'
-						  '<span class="lstUpdDt">'+item.lstUpdDtFm+'</span>'
-						  '</div>';
-				
-				$resultTag.append(str);
-			});
-		},
-		error : function() {
-			console.log("ajax 통신 실패")
-			
-			var $resultTag = $("#result");
-			var str = '<p>해당하는 고객이 없습니다.</p>';
-			$resultTag.append(str);
-		}
+	$('#jsDtFrom').change(function(){ //jsDtFrom의 값이 변경 될 때
+		$('#jsDtTo').attr('min',jsDtFrom); //jsDtTo의 최솟값 jsDtFrom로 변경 (그 이하의 값 선택 제한)
 	});
 	
-	//스크롤바 생성시 result-title 늘리기
-	$.fn.hasScrollBar = function() {
-		return (this.prop("scrollHeight") == 0 && this.prop("clientHeight") == 0) || (this.prop("scrollHeight") > this.prop("clientHeight"));
-	};
-	if($('.result-content').hasScrollBar()){
-		$('.result-title').css('padding-right','16.5px');
+	//input date 이전 날짜가 이후 날짜보다 클 경우 검색 막기
+	if(jsDtTo<jsDtFrom){
+		alert("더 큰 날짜를 검색 할 수 없습니다.");
+		return false;
 	}
-});
+	
+	
+	//---------------------------------------처음 로드시 기본세팅 값
+	//함수 정의
+	$.selectSearchCust = function(){
+		//form 요소 직렬화
+		var form = $('#SearchCustForm').serialize();
+		
+		$.ajax({
+			url : "/customer/selectSearchCust.do",
+			type : "post",
+			async: true,
+			data: form,
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			dataType: "json",
+			success : function(data) {
+				//연결성공
+				var $resultTag = $("#result"); //데이터를 넣을 요소
+				//내용 초기화
+				$("#result").empty();
+				
+				if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
+					if(data["list"].length>0){ //조회 결과가 0명 이상일 때
+						$.each(data["list"], function(index,item){ //list 반복문
+							var str = '<div class="one-content">'+
+									  '<span class="custNo">'+
+									  	'<span>'+item.custNo+'</span>'+
+									  	'<button class="btn-icon btn-history" type="button">'+
+									  		'<span class="material-icons">list_alt</span>'+
+										'</button>'+
+									  '</span>'+
+									  '<span class="custNm">'+
+									  	'<span>'+item.custNm+'</span>'+
+									  	'<button class="btn-icon btn-btn-update" type="button">'+
+									  		'<span class="material-icons">list_alt</span>'+
+										'</button>'+
+									  '</span>'+
+									  '<span class="mblNo">'+item.mblNo+'</span>'+
+									  '<span class="custSsNm">'+item.custSsNm+'</span>'+
+									  '<span class="jsDt">'+item.jsDt+'</span>'+
+									  '<span class="prtNm">'+item.prtNm+'</span>'+
+									  '<span class="fstUser">'+item.fstUserId+' / '+item.fstUserNm+'</span>'+
+									  '<span class="lstUpdDt">'+item.lstUpdDtFm+'</span>'+
+									  '</div>';
+							$resultTag.append(str);
+						});
+						
+						//스크롤바 생성시 table 비율 맞추기
+						$.scrollBerTransform();
+						
+						//btn-history 클릭시 팝업 오픈
+						$('.btn-history').click(function(){
+							
+							var custNo = $(this).prev().text();
+							
+							var option = 'width=1000, height=500, top=50, left=50, location=no';
+							custHtPop = window.open('/customer/CustHtPop.do', '고객 이력', option);
+							
+							$(custHtPop.document).find("span[id='text']").css('color','red');
+						});
+						
+					}else {//조회 결과가 0명일 때
+						var str = '<p>해당하는 고객이 없습니다.</p>';
+						$resultTag.append(str);
+					}
+				}else { //비즈니스 로직중 에러가 났을 경우(catch)
+					//alert에 에러표시
+					alert("오류가 발생했습니다. 관리자에게 문의해주세요.\n("+data["msg"]+")")
+					
+					var str = '<p>해당하는 고객이 없습니다.</p>';
+					$resultTag.append(str);
+				}
+			},
+			error : function(request,status,error) {
+				//alert에 에러표시
+				alert("서버연결에 실패했습니다. 관리자에게 문의해주세요.\n("+request.status+" : "+error+")")
+				//console에 에러표시
+				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				
+				//연결실패
+				var $resultTag = $("#result");
+				//내용 초기화
+				$("#result").empty();
+				var str = '<p>해당하는 고객이 없습니다.</p>';
+				$resultTag.append(str);
+			}
+		});
+	}
+	$.selectSearchCust();
+	
+	
+	//---------------------------------------검색버튼 클릭시 세팅 값
+	$('#SearchBtn').click(function(){
+		//selectSearchCust 함수 실행
+		$.selectSearchCust();
+	});
+	
+	//prtSearchBtn 클릭시 팝업 오픈
+	$.popupOpen('#prtSearchBtn','450','/customer/prtPop.do','매장 조회');
 
-//resetBtn 클릭시 초기화
-$('#resetBtn').click(function(){
-	window.location.href = '/customer/selectOwnCust.do'
-});
+	//custSearchBtn 클릭시 팝업 오픈
+	$.popupOpen('#custSearchBtn','650','/customer/custPop.do','고객 조회');
 
-//prtSearchBtn 클릭시 팝업 오픈
-$('#prtSearchBtn').click(function(){
-	var option = 'width=450, height=500, top=50, left=50, location=no';
-	window.open('/customer/prtPop.do', '매장 조회', option);
-});
+	//custAddBtn 클릭시 팝업 오픈
+	$.popupOpen('#custAddBtn','450','/customer/insertCust.do','신규 고객 등록');
 
-//custSearchBtn 클릭시 팝업 오픈
-$('#custSearchBtn').click(function(){
-	var option = 'width=650, height=500, top=50, left=50, location=no';
-	window.open('/customer/custPop.do', '고객 조회', option);
+	//resetBtn 클릭시 초기화
+	$.reset('#resetBtn','/customer/custList.do');
 });
-
-//btn-history 클릭시 팝업 오픈
-$('.btn-history').click(function(){
-	var custNo = $(this).prev().text();
-	var option = 'width=1000, height=500, top=50, left=50, location=no';
-	window.open('/customer/selectCustHt.do?custNo='+custNo, '고객 이력', option);
-});
-
-//custAddBtn 클릭시 팝업 오픈
-$('#custAddBtn').click(function(){
-	var option = 'width=450, height=500, top=50, left=50, location=no';
-	window.open('/customer/insertCust.do', '신규 고객 등록', option);
-});
-

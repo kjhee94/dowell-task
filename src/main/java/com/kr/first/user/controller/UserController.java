@@ -29,11 +29,25 @@ public class UserController {
 	@RequestMapping(value = "/user/login.do", method = RequestMethod.POST)
 	public ModelAndView userLogin(HttpServletRequest request, UserVO user, ModelAndView mav) {
 		
-		//로그인 성공/실패에 따라 다른 값 map에 담기
-		HashMap<String, Object> map = uService.userLogin(user);
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		if((boolean)map.get("result")) { //로그인에 성공했을 때
+		try { //Exception 발생 구문 
+			//로그인 성공/실패에 따라 다른 값 map에 담기
+			map = uService.userLogin(user);
 			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.error("error : ", e);
+			
+			//map에 삽입
+			map.put("msg", "로그인에 실패했습니다. 관리자에게 문의해주세요.\\n("+e.getMessage()+")");
+			map.put("location", "/");
+			map.put("result", false);
+		} 
+		
+		//결과처리
+		if((boolean)map.get("result")) { //로그인에 성공했을 때
 			log.info(((UserVO)map.get("user")).getUserNm()+"님 로그인 성공");
 			
 			//세션에 담기
@@ -45,7 +59,6 @@ public class UserController {
 			mav.setViewName("customer/custList");
 			
 		} else { //로그인에 실패했을 때
-			
 			log.info("로그인 실패");
 			
 			//ModelAndView에 담아 return

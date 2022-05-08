@@ -1,27 +1,21 @@
 package com.kr.first.customer.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import com.kr.first.customer.model.vo.CustHtVO;
-import com.kr.first.customer.model.vo.CustVO;
-import com.kr.first.customer.model.vo.PrtVO;
 
 public interface CustService {
 
 	//고객 전체 검색 메소드
-	HashMap<String, Object> selectSearchCust(Map<String, Object> map);
+	HashMap<String, Object> selectSearchCust(HashMap<String, Object> map) throws Exception;
+	
+	//페이지 초기화(고객 상태 조회) 메소드
+	HashMap<String, Object> selectCustSs() throws Exception;
 	
 	//거래처 검색 메소드(팝업)
-	ArrayList<PrtVO> selectPrt(String keyword);
+	HashMap<String, Object> selectPrt(String keyword) throws Exception;
 
 	//고객 검색 메소드(팝업)
-	ArrayList<CustVO> selectCust(CustVO cust);
+	HashMap<String, Object> selectCust(HashMap<String, Object> map) throws Exception;
 
-	//고객 이름 조회 메소드(팝업)
-	String selectCustNm(String custNo);
-	
 	//고객 이력 조회 메소드(팝업)
-	ArrayList<CustHtVO> selectCustHt(String custNo);
+	HashMap<String, Object> selectCustHt(String custNo) throws Exception;
 }

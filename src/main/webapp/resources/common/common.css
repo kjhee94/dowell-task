@@ -13,6 +13,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 	color: #707070;
 	letter-spacing: -0.3px;
+	border-collapse : collapse;
 }
 
 /*페이지세로 가변적인 길이 유지*/

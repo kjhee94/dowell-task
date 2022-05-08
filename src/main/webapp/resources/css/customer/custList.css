@@ -129,7 +129,7 @@ input[type="date"] {
 .prtNm {width: 10%;}
 .custSsNm {width: 8%;}
 .mblNo {width: 13%}
-.firReg {width: 14%;}
+.fstUser {width: 14%;}
 .lstUpdDt {width: 17%;}
 
 /*텍스트 중앙 정렬*/
@@ -155,10 +155,12 @@ input[type="date"] {
 }
 .result-title>span:last-child {
 	border-right: 0;
+	vertical-align: middle;
 }
 
 /*테이블 내용*/
 .result-content {
+	width: 100%;
 	height: calc(100vh - 550px);
 	overflow: auto;
 }
@@ -167,6 +169,8 @@ input[type="date"] {
 	height: 60px;
 	line-height: 60px;
 	border-bottom: 1px #d9d9d9 solid;
+	display: flex;
+    justify-content: space-between;
 }
 .one-content:last-child {
 	border-bottom: 0;

@@ -14,7 +14,8 @@
 <link rel="stylesheet" href="/resources/css/customer/popup.css">
 <link rel="stylesheet" href="/resources/css/customer/custHt.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/resources/js/customer/popup.js"></script>
+<script src="/resources/common/common.js"></script>
+<!-- <script src="/resources/js/customer/custHtPop.js"></script> -->
 </head>
 <body>
 	<div class="container">
@@ -25,8 +26,9 @@
 		<div class="box-user">
 			<span class="search-title">고객</span>
 			<div class="box-info">
-				<input type="text" class="style-input" value="${requestScope.custNo}" readonly>
-				<input type="text" class="style-input" value="${requestScope.custNm}" readonly>
+				<input id="custCd" type="text" class="style-input" value="" readonly>
+				<input id="custNm" type="text" class="style-input" value="" readonly>
+				<span id="text">ㅗ</span>
 			</div>
 		</div>
 					
@@ -39,24 +41,8 @@
 				<span class="lstUpdId">수정자</span>
 				<span class="lstUpdDt">수정일시</span>
 			</div>
-			<div class="result-content">
-				<c:choose>
-					<c:when test="${!requestScope.hList.isEmpty() }">
-						<c:forEach items="${requestScope.hList }" var="h">
-							<div class="one-content">
-								<span class="chgDt">${h.chgDt}</span>
-								<span class="chgCd">${h.chgCd}</span>
-								<span class="chgBfCnt">${h.chgBfCnt}</span>
-								<span class="chgAftCnt">${h.chgAftCnt}</span>
-								<span class="lstUpdId">${h.lstUpdId} / ${h.lstUpdNm}</span>
-								<span class="lstUpdDt">${h.lstUpdDtFm}</span>
-							</div>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<p>변경내역이 없습니다.</p>
-					</c:otherwise>
-				</c:choose>	
+			<div id="result" class="result-content">
+				<p>변경내역이 없습니다.</p>
 			</div>
 		</div>
 				

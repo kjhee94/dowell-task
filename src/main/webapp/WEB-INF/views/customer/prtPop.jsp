@@ -12,30 +12,29 @@
 <link rel="stylesheet" href="/resources/common/common.css">
 <link rel="stylesheet" href="/resources/css/customer/popup.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="/resources/common/common.js"></script>
 <script src="/resources/js/customer/popup.js"></script>
 </head>
 <body>
 	<div class="container">
-		<form action="/customer/selectPrt.do" method="post">
-			<div class="box-title">
-				<span class="main-title">매장조회</span>
-				<button id="resetPrtBtn" class="btn-reset" type="reset">
-					<span class="material-icons">restart_alt</span>
+		<div class="box-title">
+			<span class="main-title">매장조회</span>
+			<button id="resetPrtBtn" class="btn-reset" type="reset">
+				<span class="material-icons">restart_alt</span>
+			</button>
+		</div>
+		
+		<div class="box-search">
+			<div class="area-input-prt">
+				<span class="search-title">매장</span>
+				<input id="keyword" class="style-input" type="search" name="keyword" autofocus>
+			</div>
+			<div class="area-btn">
+				<button id="prtSearchBtn" class="btn-search" type="button">
+					<span class="material-icons">search</span>
 				</button>
 			</div>
-			
-			<div class="box-search">
-				<div class="area-input-prt">
-					<span class="search-title">매장</span>
-					<input class="style-input" type="search" name="keyword" value="${requestScope.keyword}" autofocus>
-				</div>
-				<div class="area-btn">
-					<button id="prtSearchBtn" class="btn-search" type="submit">
-						<span class="material-icons">search</span>
-					</button>
-				</div>
-			</div>
-		</form>
+		</div>
 		
 		<div class="box-result">
 			<div class="result-title">
@@ -44,30 +43,14 @@
 				<span class="prtNm">매장명</span>
 				<span class="prtSsNm">매장상태</span>
 			</div>
-			<div class="result-content">
-				<c:choose>
-					<c:when test="${requestScope.pList!=null } && ${!requestScope.pList.isEmpty()}">
-						<c:forEach items="${requestScope.pList }" var="pl">
-							<div class="one-content one-prt-content">
-								<span class="checkbox cb-prt">
-									<input type="checkbox">
-								</span>
-								<span class="prtCd">${pl.prtCd}</span>
-								<span class="prtNm">${pl.prtNm}</span>
-								<span class="prtSsNm">${pl.prtSsNm}</span>
-							</div>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<p>해당하는 매장이 없습니다.</p>
-					</c:otherwise>
-				</c:choose>
+			<div id="result" class="result-content">
+				<p>매장을 검색해 주세요.</p>
 			</div>
 		</div>
 		
 		<div class="box-btn">
 			<button id="closeBtn" class="btn-close">닫기</button>
-			<button id="applyBtn" class="btn-apply btn-prt-apply">적용</button>
+			<button id="applyBtn" class="btn-apply">적용</button>
 		</div>
 	</div>
 </body>

@@ -15,7 +15,10 @@
 <link rel="stylesheet" href="/resources/css/customer/custList.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/gnb.js"></script>
+<script src="/resources/common/common.js"></script>
 <script src="/resources/js/customer/custList.js"></script>
+
+
 </head>
 <body>
 	<div id="wrap">
@@ -25,7 +28,7 @@
 		<!-- content -->
 		<div id="content">
 			<div class="container">
-				<form action="/customer/selectSearchCust.do" method="post">
+				<form id="SearchCustForm">
 					<div class="box-title">
 						<span class="main-title">고객조회</span>
 						<button id="resetBtn" class="btn-reset" type="reset">
@@ -87,7 +90,7 @@
 							</div>
 						</div>
 						<div class="area-btn">
-							<button id="SearchBtn" class="btn-submit" type="submit">
+							<button id="SearchBtn" class="btn-submit" type="button">
 								<span class="material-icons">search</span>
 							</button>
 						</div>
@@ -102,11 +105,11 @@
 						<span class="custSsNm">고객상태</span>
 						<span class="jsDt">가입일자</span>
 						<span class="prtNm">가입매장</span>
-						<span class="firReg">등록자</span>
+						<span class="fstUser">등록자</span>
 						<span class="lstUpdDt">수정일자</span>
 					</div>
 					<div id="result" class="result-content">
-					
+						<p>해당하는 고객이 없습니다.</p>
 					</div>
 				</div>
 			</div>

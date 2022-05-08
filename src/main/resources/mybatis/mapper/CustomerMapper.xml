@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cust">
+	<!-- 고객상태 조회 쿼리 -->
+	<select id="selectCustSs" resultType="cust">
+		SELECT DTL_CD AS CUSTSSCD, 
+			   DTL_CD_NM AS CUSTSSNM
+		FROM MA_CODE_DT 
+		WHERE CODE_CD='CUST_SS_CD'
+	</select>
+
 
 	<!-- 고객 전체 검색 쿼리 -->
-	<select id="selectSearchCust" parameterType="Map" resultType="cust">
+	<select id="selectSearchCust" parameterType="hashmap" resultType="cust">
 		SELECT
 		    C.CUST_NO AS CUSTNO,                                                                                          	--고객번호
 		    CASE                                                                                                          	--고객이름(마스킹처리)
@@ -18,13 +26,10 @@
 		        ELSE '-'                                                                                                  	--예외: '-'의 형식으로 출력
 		    END AS MBLNO,
 		    (SELECT D.DTL_CD_NM FROM MA_CODE_DT D WHERE D.DTL_CD=C.CUST_SS_CD AND CODE_CD='CUST_SS_CD') AS CUSTSSNM,      	--고객상태(세부코드명_스칼라쿼리)
-		    CASE                                                                                                          	--가입일자(하이픈처리)
-		        WHEN LENGTH(C.JS_DT)=8 THEN TO_CHAR(TO_DATE(C.JS_DT),'YYYY-MM-DD')                                        	--가입일자가 8자리일 때 'YYYY-MM-DD'의 형식
-		        ELSE '0000-00-00'                                                                                         	--예외: '0000-00-00'의 형식으로 출력
-		    END AS JSDT,
+		    SUBSTR(C.JS_DT,1,4)||'-'||SUBSTR(C.JS_DT,5,2)||'-'||SUBSTR(C.JS_DT,7) AS JSDT,                                  --가입일자(하이픈처리)
 		    P.PRT_NM AS PRTNM,                                                                                          	--가입매장이름(JOIN)
-		    C.FST_USER_ID AS FSTUSERID,                                                                                   	--최초등록자
-		    U.USER_NM AS FSTUSERNM,                                                                                       	--최초등록자이름(JOIN)
+		    C.FST_USER_ID AS FSTUSERID,																						--최초등록자
+		    U.USER_NM AS FSTUSERNM,                                                                   						--최초등록자이름(JOIN)
 		    TO_CHAR(C.LST_UPD_DT,'YYYY-MM-DD HH24MISS') AS LSTUPDDTFM                                                     	--최종수정일자(YYYY-MM-DD HH24MISS 형식)
 		FROM CS_CUST01_MT C																									--고객관리 테이블
 		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)                                                               	--고객관리,거래처관리 JOIN(PRT_CD)
@@ -56,7 +61,7 @@
 	
 	
 	<!-- 고객 검색 쿼리 -->
-	<select id="selectCust" parameterType="cust" resultType="cust">
+	<select id="selectCust" parameterType="hashmap" resultType="cust">
 		SELECT  
 		    C.CUST_NO AS CUSTNO,                                                                                        --고객번호
 		    C.CUST_NM AS CUSTNM,                                                                                        --고객이름

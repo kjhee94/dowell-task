@@ -6,40 +6,38 @@ public class CustVO {
 	
 	private String custNo;		//고객번호
 	private String custNm;		//고객명
-	private char sexCd;			//성별코드 			- M:남자 / F:여자
-	private int scalYn;			//양음력구분 		- 0:양력 / 1:음력
+	private char sexCd;			//성별코드 				- M:남자 / F:여자
+	private int scalYn;			//양음력구분 			- 0:양력 / 1:음력
 	private String brdyDt;		//생년월일
 	private String mrrgDt;		//결혼기념일
-	private String pocCd;		//직업코드			- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
+	private String pocCd;		//직업코드				- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
 	private String mblNo;		//휴대폰번호
 	private String fstMblNo;		//휴대폰번호
 	private String mdlMblNo;		//휴대폰번호
 	private String lstMblNo;		//휴대폰번호
-	private char psmtGrcCd;		//우편물수령코드		- H:자택 / O:직장
+	private char psmtGrcCd;		//우편물수령코드			- H:자택 / O:직장
 	private String email;		//이메일 주소
 	private String emailId;		//이메일 주소
 	private String emailAddr;		//이메일 주소
 	private String zipCd;		//우편번호코드
 	private String addr;		//주소
 	private String addrDtl;		//상세주소
-	private String custSsCd;	//고객상태코드		- 10:정상 / 80:중지 / 90:해지
-	private String custSsNm;	//고객상태이름		- JOIN
+	private String custSsCd;	//고객상태코드			- 10:정상 / 80:중지 / 90:해지
+	private String custSsNm;	//고객상태이름			- JOIN
 	private String cnclCnts;	//해지사유내용
 	private String prtCd;		//가입매장코드
-	private String prtNm;		//가입매장이름		- JOIN
-	private char emailRcvYn;	//이메일수신동의여부	- Y:동의 / N:미동의
-	private char smsRcvYn;		//SMS수신동의여부	- Y:동의 / N:미동의
-	private char tmRcvYn;		//TM수신동의여부	- Y:동의 / N:미동의
-	private char dmRcvYn;		//DM수신동의여부	- Y:동의 / N:미동의
+	private String prtNm;		//가입매장이름			- JOIN
+	private char emailRcvYn;	//이메일수신동의여부		- Y:동의 / N:미동의
+	private char smsRcvYn;		//SMS수신동의여부		- Y:동의 / N:미동의
+	private char tmRcvYn;		//TM수신동의여부		- Y:동의 / N:미동의
+	private char dmRcvYn;		//DM수신동의여부		- Y:동의 / N:미동의
 	private String fstJsDt;		//최초가입일자
 	private String jsDt;		//가입일자
-	private String jsDtFrom;	//가입일자(부터)
-	private String jsDtTo;		//가입일자(까지)
 	private String stpDt;		//중지일자
 	private String cnclDt;		//해지일자
 	private Date fstRegDt;		//최초등록일자
 	private String fstUserId;	//최초등록자(아이디)
-	private String fstUserNm;	//최초등록자(이름)	- JOIN
+	private String fstUserNm;	//최초등록자(이름)		- JOIN
 	private Date lstUpdDt;		//최종수정일자
 	private String lstUpdDtFm;	//최종수정일자포맷수정
 	private String lstUpdId;	//최종수정자
@@ -52,11 +50,12 @@ public class CustVO {
 	}
 	
 	public CustVO(String custNo, String custNm, char sexCd, int scalYn, String brdyDt, String mrrgDt, String pocCd,
-			String mblNo, char psmtGrcCd, String email, String zipCd, String addr, String addrDtl, String custSsCd,
-			String custSsNm, String cnclCnts, String jnPrtCd, String jnPrtNm, char emailRcvYn, char smsRcvYn,
-			char tmRcvYn, char dmRcvYn, String fstJsDt, String jsDt, String jsDtFrom, String jsDtTo, String stpDt,
-			String cnclDt, Date fstRegDt, String fstUserId, String fstUserNm, Date lstUpdDt, String lstUpdDtFm,
-			String lstUpdId) {
+			String mblNo, String fstMblNo, String mdlMblNo, String lstMblNo, char psmtGrcCd, String email,
+			String emailId, String emailAddr, String zipCd, String addr, String addrDtl, String custSsCd,
+			String custSsNm, String cnclCnts, String prtCd, String prtNm, char emailRcvYn, char smsRcvYn, char tmRcvYn,
+			char dmRcvYn, String fstJsDt, String jsDt, String stpDt, String cnclDt, Date fstRegDt, String fstUserId,
+			String fstUserNm, Date lstUpdDt, String lstUpdDtFm, String lstUpdId) {
+		super();
 		this.custNo = custNo;
 		this.custNm = custNm;
 		this.sexCd = sexCd;
@@ -65,24 +64,27 @@ public class CustVO {
 		this.mrrgDt = mrrgDt;
 		this.pocCd = pocCd;
 		this.mblNo = mblNo;
+		this.fstMblNo = fstMblNo;
+		this.mdlMblNo = mdlMblNo;
+		this.lstMblNo = lstMblNo;
 		this.psmtGrcCd = psmtGrcCd;
 		this.email = email;
+		this.emailId = emailId;
+		this.emailAddr = emailAddr;
 		this.zipCd = zipCd;
 		this.addr = addr;
 		this.addrDtl = addrDtl;
 		this.custSsCd = custSsCd;
 		this.custSsNm = custSsNm;
 		this.cnclCnts = cnclCnts;
-		this.prtCd = jnPrtCd;
-		this.prtNm = jnPrtNm;
+		this.prtCd = prtCd;
+		this.prtNm = prtNm;
 		this.emailRcvYn = emailRcvYn;
 		this.smsRcvYn = smsRcvYn;
 		this.tmRcvYn = tmRcvYn;
 		this.dmRcvYn = dmRcvYn;
 		this.fstJsDt = fstJsDt;
 		this.jsDt = jsDt;
-		this.jsDtFrom = jsDtFrom;
-		this.jsDtTo = jsDtTo;
 		this.stpDt = stpDt;
 		this.cnclDt = cnclDt;
 		this.fstRegDt = fstRegDt;
@@ -92,8 +94,8 @@ public class CustVO {
 		this.lstUpdDtFm = lstUpdDtFm;
 		this.lstUpdId = lstUpdId;
 	}
-
-
+	
+	
 	//getter setter
 	public String getCustNo() {
 		return custNo;
@@ -159,6 +161,30 @@ public class CustVO {
 		this.mblNo = mblNo;
 	}
 
+	public String getFstMblNo() {
+		return fstMblNo;
+	}
+
+	public void setFstMblNo(String fstMblNo) {
+		this.fstMblNo = fstMblNo;
+	}
+
+	public String getMdlMblNo() {
+		return mdlMblNo;
+	}
+
+	public void setMdlMblNo(String mdlMblNo) {
+		this.mdlMblNo = mdlMblNo;
+	}
+
+	public String getLstMblNo() {
+		return lstMblNo;
+	}
+
+	public void setLstMblNo(String lstMblNo) {
+		this.lstMblNo = lstMblNo;
+	}
+
 	public char getPsmtGrcCd() {
 		return psmtGrcCd;
 	}
@@ -173,6 +199,22 @@ public class CustVO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getEmailAddr() {
+		return emailAddr;
+	}
+
+	public void setEmailAddr(String emailAddr) {
+		this.emailAddr = emailAddr;
 	}
 
 	public String getZipCd() {
@@ -286,22 +328,6 @@ public class CustVO {
 	public void setJsDt(String jsDt) {
 		this.jsDt = jsDt;
 	}
-	
-	public String getJsDtFrom() {
-		return jsDtFrom;
-	}
-
-	public void setJsDtFrom(String jsDtFrom) {
-		this.jsDtFrom = jsDtFrom;
-	}
-
-	public String getJsDtTo() {
-		return jsDtTo;
-	}
-
-	public void setJsDtTo(String jsDtTo) {
-		this.jsDtTo = jsDtTo;
-	}
 
 	public String getStpDt() {
 		return stpDt;
@@ -371,14 +397,15 @@ public class CustVO {
 	//toString
 	@Override
 	public String toString() {
-		return "Customer [custNo=" + custNo + ", custNm=" + custNm + ", sexCd=" + sexCd + ", scalYn=" + scalYn
-				+ ", brdyDt=" + brdyDt + ", mrrgDt=" + mrrgDt + ", pocCd=" + pocCd + ", mblNo=" + mblNo + ", psmtGrcCd="
-				+ psmtGrcCd + ", email=" + email + ", zipCd=" + zipCd + ", addr=" + addr + ", addrDtl=" + addrDtl
-				+ ", custSsCd=" + custSsCd + ", custSsNm=" + custSsNm + ", cnclCnts=" + cnclCnts + ", prtCd="
-				+ prtCd + ", prtNm=" + prtNm + ", emailRcvYn=" + emailRcvYn + ", smsRcvYn=" + smsRcvYn
-				+ ", tmRcvYn=" + tmRcvYn + ", dmRcvYn=" + dmRcvYn + ", fstJsDt=" + fstJsDt + ", jsDt=" + jsDt
-				+ ", jsDtFrom=" + jsDtFrom + ", jsDtTo=" + jsDtTo + ", stpDt=" + stpDt + ", cnclDt=" + cnclDt
-				+ ", fstRegDt=" + fstRegDt + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt="
-				+ lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + "]";
+		return "CustVO [custNo=" + custNo + ", custNm=" + custNm + ", sexCd=" + sexCd + ", scalYn=" + scalYn
+				+ ", brdyDt=" + brdyDt + ", mrrgDt=" + mrrgDt + ", pocCd=" + pocCd + ", mblNo=" + mblNo + ", fstMblNo="
+				+ fstMblNo + ", mdlMblNo=" + mdlMblNo + ", lstMblNo=" + lstMblNo + ", psmtGrcCd=" + psmtGrcCd
+				+ ", email=" + email + ", emailId=" + emailId + ", emailAddr=" + emailAddr + ", zipCd=" + zipCd
+				+ ", addr=" + addr + ", addrDtl=" + addrDtl + ", custSsCd=" + custSsCd + ", custSsNm=" + custSsNm
+				+ ", cnclCnts=" + cnclCnts + ", prtCd=" + prtCd + ", prtNm=" + prtNm + ", emailRcvYn=" + emailRcvYn
+				+ ", smsRcvYn=" + smsRcvYn + ", tmRcvYn=" + tmRcvYn + ", dmRcvYn=" + dmRcvYn + ", fstJsDt=" + fstJsDt
+				+ ", jsDt=" + jsDt + ", stpDt=" + stpDt + ", cnclDt=" + cnclDt + ", fstRegDt=" + fstRegDt
+				+ ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdDtFm="
+				+ lstUpdDtFm + ", lstUpdId=" + lstUpdId + "]";
 	}
 }
