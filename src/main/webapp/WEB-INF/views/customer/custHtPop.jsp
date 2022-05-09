@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/resources/css/customer/custHt.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
-<!-- <script src="/resources/js/customer/custHtPop.js"></script> -->
+<script src="/resources/js/customer/custHtPop.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -28,7 +28,6 @@
 			<div class="box-info">
 				<input id="custCd" type="text" class="style-input" value="" readonly>
 				<input id="custNm" type="text" class="style-input" value="" readonly>
-				<span id="text">ㅗ</span>
 			</div>
 		</div>
 					

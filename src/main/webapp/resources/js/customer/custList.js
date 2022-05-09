@@ -6,22 +6,37 @@ $(function(){
 	var len = $('input[autofocus]').val().length;
 	$('input[autofocus]')[0].setSelectionRange(len, len);
 	
+	//input date 유효성 검사
 	//input date 날짜 변경시 min max 변경
-	var jsDtTo = $('#jsDtTo').val();
 	var jsDtFrom = $('#jsDtFrom').val();
+	var jsDtTo = $('#jsDtTo').val();
 	
-	$('#jsDtTo').change(function(){ //jsDtTo의 값이 변경 될 때
-		$('#jsDtFrom').attr('max',jsDtTo); //jsDtFrom의 최댓값 jsDtTo로 변경 (그 이상의 값 선택 제한)
+	$('#jsDtFrom').change(function(){ 		//FromDate의 값이 변경 될 때
+		$('#jsDtTo').attr('min',jsDtFrom);	//ToDate의 최솟값 FromDate로 변경 (그 이하의 값 선택 제한)
 	});
-	$('#jsDtFrom').change(function(){ //jsDtFrom의 값이 변경 될 때
-		$('#jsDtTo').attr('min',jsDtFrom); //jsDtTo의 최솟값 jsDtFrom로 변경 (그 이하의 값 선택 제한)
+	$('#jsDtTo').change(function(){ 		//ToDate의 값이 변경 될 때
+		$('#jsDtFrom').attr('max',jsDtTo); 	//FromDate의 최댓값 ToDate로 변경 (그 이상의 값 선택 제한)
 	});
 	
-	//input date 이전 날짜가 이후 날짜보다 클 경우 검색 막기
-	if(jsDtTo<jsDtFrom){
-		alert("더 큰 날짜를 검색 할 수 없습니다.");
-		return false;
-	}
+	//input date Enter시 유효성 alert 
+	$('#jsDtTo').keydown(function(keyNum){ 
+		if(keyNum.keyCode == 13){ 	//값변경 후 enter 
+			$.checkValidToDate('#jsDtTo','#jsDtFrom');
+		};
+	});
+	$('#jsDtFrom').keydown(function(keyNum){ 
+		if(keyNum.keyCode == 13){ 	//값변경 후 enter 
+			$.checkValidFromDate('#jsDtTo','#jsDtFrom');
+		};
+	});
+	
+	//input date Blur시 유효성 alert 
+	$('#jsDtTo').blur(function(){ 
+		$.checkValidToDate('#jsDtTo','#jsDtFrom');
+	});
+	$('#jsDtFrom').blur(function(){ 
+		$.checkValidFromDate('#jsDtTo','#jsDtFrom');
+	});
 	
 	
 	//---------------------------------------처음 로드시 기본세팅 값
@@ -80,7 +95,7 @@ $(function(){
 							var option = 'width=1000, height=500, top=50, left=50, location=no';
 							custHtPop = window.open('/customer/CustHtPop.do', '고객 이력', option);
 							
-							$(custHtPop.document).find("span[id='text']").css('color','red');
+							$(custHtPop.document).find("input[id='custCd']").val(custNo);
 						});
 						
 					}else {//조회 결과가 0명일 때

@@ -3,8 +3,8 @@
  */
 $(function(){
 	
-	var custNo = $('#custNo').val();
-	var data = {"custNo" : custNo};
+//	var custNo = $('#custNo').val();
+	var data = {"custNo" : "1000000010"};
 	
 	$.ajax({
 		url : "/customer/selectCustHt.do",

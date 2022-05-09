@@ -84,8 +84,8 @@
 							<div class="one-search">
 								<span class="search-title"><span class="required">*</span>가입일자</span>
 								<div class="box-input-date">
-									<input id="jsDtFrom" type="date" name="jsDtFrom" max="${requestScope.map.jsDtTo}" value="${requestScope.map.jsDtFrom}">
-									<input id="jsDtTo" type="date" name="jsDtTo" min="${requestScope.map.jsDtFrom}" value="${requestScope.map.jsDtTo}">
+									<input id="jsDtFrom" type="date" name="jsDtFrom" max="${requestScope.map.jsDtTo}" value="${requestScope.map.jsDtFrom}" required>
+									<input id="jsDtTo" type="date" name="jsDtTo" max="9999-12-31" min="${requestScope.map.jsDtFrom}" value="${requestScope.map.jsDtTo}" required>
 								</div>
 							</div>
 						</div>
