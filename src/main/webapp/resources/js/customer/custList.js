@@ -95,7 +95,8 @@ $(function(){
 							var option = 'width=1000, height=500, top=50, left=50, location=no';
 							custHtPop = window.open('/customer/CustHtPop.do', '고객 이력', option);
 							
-							$(custHtPop.document).find("input[id='custCd']").val(custNo);
+//							custHtPop.document.getElementById("cInput").value = document.getElementById("pInput").value;
+//							$(custHtPop.document).find("input[id='custCd']").val(custNo);
 						});
 						
 					}else {//조회 결과가 0명일 때

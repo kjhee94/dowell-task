@@ -31,14 +31,19 @@ $(function(){
 	
 	//ToDate 유효성 검사(FromDate보다 작은값 막기,날짜 오류 제어)
 	$.checkValidToDate = function(toSlt,fromSlt){
-//		if($.checkValidDate($(toSlt).val())==false){
-//			//alert('잘못된 형식의 날짜 입니다');
-//			
-//			//ToDate값 재설정
-//			var vDate = $(toSlt).val().split('-'); //-로 잘라서 가져오기		
-//			var y = parseInt(vDate[0], 10),
-//    			m = parseInt(vDate[1], 10),
-//    			d = parseInt(vDate[2], 10)
+		if($.checkValidDate($(toSlt).val())==false){
+			alert('잘못된 형식의 날짜 입니다');
+			
+			//ToDate값 재설정
+			var date = $(toSlt).val();
+			alert(date);
+			var sdate = date.split('-'); //-로 잘라서 가져오기	
+			alert(sdate);
+			
+			$(this).blur();
+//			var y = parseInt(sdate[0], 10),
+//    			m = parseInt(sdate[1], 10),
+//    			d = parseInt(sdate[2], 10);
 //		
 //			var rDate = new Date(y, m, 0).;		//각 월의 마지막 일로 리셋
 //			rDate.setMonth(rDate.getMonth()-1);	//월-1로 설정(해당 월의 마지막 날이어야 하기 때문)
@@ -46,7 +51,7 @@ $(function(){
 //			var fDate = $.getFormatDate(rDate); //date 포멧팅
 //			$(toSlt).val(fDate);
 //			
-//		}else 
+		}else 
 		if($(toSlt).val()<$(fromSlt).val()) { 		//ToDate가 FromDate보다 작을 때
 			alert("값은 "+$(fromSlt).val()+" 이후여야 합니다."); 	//alert
 			
@@ -61,10 +66,10 @@ $(function(){
 	
 	//FromDate 유효성 검사(ToDate보다 큰값 막기,날짜 오류 제어)
 	$.checkValidFromDate = function(toSlt,fromSlt){
-//		if($.checkValidDate($(fromSlt).val())==false){
-//			//alert('잘못된 형식의 날짜 입니다');
-//			
-//			//ToDate값 재설정
+		if($.checkValidDate($(fromSlt).val())==false){
+			//alert('잘못된 형식의 날짜 입니다');
+			
+			//ToDate값 재설정
 //			var vDate = $(fromSlt).val().split('-'); //-로 잘라서 가져오기		
 //			var y = parseInt(vDate[0], 10),
 //        		m = parseInt(vDate[1], 10),
@@ -75,8 +80,8 @@ $(function(){
 //			
 //			var fDate = $.getFormatDate(rDate); //date 포멧팅
 //			$(fromSlt).val(fDate);
-//			
-//		}else 
+			
+		}else 
 		if($(fromSlt).val()>$(toSlt).val()) { 		//FromDate가 ToDate보다 클 때
 			alert("값은 "+$(toSlt).val()+" 이전이여야 합니다."); 	//alert
 			
