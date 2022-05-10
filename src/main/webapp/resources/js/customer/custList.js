@@ -68,15 +68,15 @@ $(function(){
 						$.each(data["list"], function(index,item){ //list 반복문
 							var str = '<div class="one-content">'+
 									  '<span class="custNo">'+
-									  	'<span>'+item.custNo+'</span>'+
+									  	'<span id="custNo'+index+'">'+item.custNo+'</span>'+
 									  	'<button class="btn-icon" onclick="custHtPopOpen('+index+')" type="button">'+
 									  		'<span class="material-icons">list_alt</span>'+
 										'</button>'+
-										'<form id="hiddenForm'+index+'" method="post"><input type="hidden" name="custNo" value="'+item.custNo+'"></form>'+
+//										'<form id="hiddenForm'+index+'" method="post"><input type="hidden" name="custNo" value="'+item.custNo+'"></form>'+
 									  '</span>'+
 									  '<span class="custNm">'+
 									  	'<span>'+item.custNm+'</span>'+
-									  	'<button class="btn-icon btn-btn-update" type="button">'+
+									  	'<button class="btn-icon" onclick="custInfoOpen('+index+')" type="button">'+
 									  		'<span class="material-icons">list_alt</span>'+
 										'</button>'+
 									  '</span>'+
@@ -136,7 +136,7 @@ $(function(){
 	$.popupOpen('#custSearchBtn','650','/customer/custPop.do','고객 조회');
 
 	//custAddBtn 클릭시 팝업 오픈
-	$.popupOpen('#custAddBtn','450','/customer/insertCust.do','신규 고객 등록');
+	$.popupOpen('#custAddBtn','480','/customer/custAddPop.do','신규 고객 등록');
 
 	//resetBtn 클릭시 초기화
 	$.reset('#resetBtn','/customer/custList.do');
@@ -144,13 +144,23 @@ $(function(){
 
 //custHtPopOpen 함수 실행
 function custHtPopOpen(index) {
+	
+	var custNo = $("#custNo"+index).text();
 
 	var option = 'width=1000, height=500, top=50, left=50, location=no';
-	window.open('/customer/CustHtPop.do', 'custHtPopOpen', option);
+	window.open('/customer/custHtPop.do?custNo='+custNo, 'custHtPopOpen', option);
 	
 //	var hiddenForm = $("#hiddenForm"+index)
 //	
 //	hiddenForm.target="custHtPopOpen";
 //	hiddenForm.action="/customer/CustHtPop.do";
 //	hiddenForm.submit();
+}
+
+//custInfoOpen 함수 실행
+function custInfoOpen(index) {
+	
+	var custNo = $("#custNo"+index).text();
+
+	location.href='/customer/custInfo.do?custNo='+custNo;
 }

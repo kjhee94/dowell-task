@@ -31,6 +31,7 @@ $(function(){
 	
 	//Date 유효성 검사 후 날짜 변경
 	$.checkValidChangeDate = function(date1,date2,select){
+		
 		if($.checkValidDate(date1.val())==false){
 			alert('잘못된 형식의 날짜입니다');
 			

@@ -42,7 +42,7 @@ public class CustServiceImpl implements CustService {
 	
 	//페이지 초기화(고객 상태 조회) 메소드
 	@Override
-	public HashMap<String, Object> selectCustSs() throws Exception {
+	public HashMap<String, Object> custList() throws Exception {
 
 		//고객상태 조회 list(라디오버튼 생성)
 		log.info("=================>>고객상태 조회");

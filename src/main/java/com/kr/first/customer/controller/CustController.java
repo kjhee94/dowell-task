@@ -56,12 +56,12 @@ public class CustController {
 	
 	//페이지 초기화(고객 상태 조회) 메소드
 	@RequestMapping(value = "/customer/custList.do")
-	public ModelAndView selectCustSs(ModelAndView mav) {
+	public ModelAndView custList(ModelAndView mav) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		try { //Exception 발생 구문 
-			map = cService.selectCustSs();
+			map = cService.custList();
 			
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
@@ -159,7 +159,7 @@ public class CustController {
 //	}
 	
 	//고객 이력 팝업창 오픈(팝업_get)
-	@RequestMapping(value = "/customer/CustHtPop.do")
+	@RequestMapping(value = "/customer/custHtPop.do")
 	public ModelAndView selectCustHt(HttpServletRequest request , @RequestParam String custNo, ModelAndView mav) {
 		//팝업 오픈
 		log.info("고객번호 : "+custNo);
@@ -199,9 +199,44 @@ public class CustController {
 	}
 	
 	//고객등록 팝업창 오픈(팝업)
-	@RequestMapping(value = "/customer/insertCust.do")
-	public String insertCust() {
+	@RequestMapping(value = "/customer/custAddPop.do")
+	public String custAddPop() {
 		//팝업 오픈
 		return "customer/custAddPop";
+	}
+	
+	//고객 등록 메소드(팝업)
+	@ResponseBody
+	@RequestMapping(value = "/customer/insertCust.do")
+	public void insertCust() {	
+		
+//		log.info("고객번호 : "+custNo);
+//		
+//		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+//		
+//		try { //Exception 발생 구문 
+//			resultMap = cService.selectCustHt(custNo);
+//			
+//		} catch (Exception e) { //Exception 발생시 처리
+//			//Exception 로그
+//			//e.printStackTrace();
+//			log.info("=================>>고객 이력 조회 실패");
+//			log.error("error : ", e);
+//			
+//			//view단에 메세지 노출
+//			resultMap.put("msg", e.getMessage());
+//			resultMap.put("result",false);
+//		} 
+//		response.setContentType("text/html; charset=UTF-8");
+//		PrintWriter out = response.getWriter();
+//		//map->json
+//		new Gson().toJson(resultMap,out);
+	}
+	
+	//고객등록 팝업창 오픈(팝업)
+	@RequestMapping(value = "/customer/custInfo.do")
+	public String custInfo() {
+		//팝업 오픈
+		return "customer/custInfo";
 	}
 }

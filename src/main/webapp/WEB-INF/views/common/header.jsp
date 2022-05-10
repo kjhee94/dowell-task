@@ -18,7 +18,7 @@
 							</div>
 							<ul class="lnb">
 								<li><a href="/customer/custList.do">ㆍ 고객 조회</a></li>
-								<li><a href="#">ㆍ 고객 정보 조회</a></li>
+								<li><a href="/customer/custInfo.do">ㆍ 고객 정보 조회</a></li>
 							</ul>
 						</li>
 						<li>

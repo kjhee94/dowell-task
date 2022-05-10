@@ -8,7 +8,7 @@ public interface CustService {
 	HashMap<String, Object> selectSearchCust(HashMap<String, Object> map) throws Exception;
 	
 	//페이지 초기화(고객 상태 조회) 메소드
-	HashMap<String, Object> selectCustSs() throws Exception;
+	HashMap<String, Object> custList() throws Exception;
 	
 	//거래처 검색 메소드(팝업)
 	HashMap<String, Object> selectPrt(String keyword) throws Exception;

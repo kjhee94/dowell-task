@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/resources/css/customer/popup.css">
 <link rel="stylesheet" href="/resources/css/customer/custAdd.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/resources/js/customer/popup.js"></script>
+<script src="/resources/common/common.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -30,21 +30,7 @@
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>고객명</span>
 					<div class="box-input">
-						<input class="style-input" type="text" id="custNm" name="custNm" autofocus>
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>생년월일</span>
-					<div class="box-input">
-						<input class="style-input" type="date" name="brdyDt">
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>휴대폰번호</span>
-					<div class="box-input">
-						<input class="style-input mblNo" type="text" name="fstMblNo">
-						<input class="style-input mblNo" type="text" name="mdlMblNo">
-						<input class="style-input mblNo" type="text" name="lstMblNo">
+						<input class="style-input" type="text" id="custNm" name="custNm" placeholder="홍길동" autofocus>
 					</div>
 				</div>
 				<div class="one-input">
@@ -63,24 +49,38 @@
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>우편물 수령</span>
+					<span class="search-title"><span class="required">*</span>생년월일</span>
 					<div class="box-input">
+						<input class="style-input" type="date" name="brdyDt">
+					</div>
+				</div>
+				<div class="one-input">
+					<span class="search-title"><span class="required">*</span>휴대폰번호</span>
+					<div class="box-input">
+						<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010">
+						<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000">
+						<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000">
+					</div>
+				</div>
+				<div class="one-input">
+					<span class="search-title"><span class="required">*</span>이메일</span>
+					<div class="box-input">
+						<input class="style-input email" type="text" name="emailId" placeholder="ID">@
+						<input class="style-input email" type="text" name="emailAddr" placeholder="email.com">
+					</div>
+				</div>
+				<div class="one-input">
+					<span class="search-title"><span class="required">*</span>우편물 수령</span>
+					<div class="box-radio">
 						<label><input type="radio" name="psmtGrcCd" value="H" checked>자택</label>
 						<label><input type="radio" name="psmtGrcCd" value="O">직장</label>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title">이메일</span>
-					<div class="box-input">
-						<input class="style-input" type="text" class="email" name="emailId">
-						<input class="style-input" type="text" class="email" name="emailAddr">
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title">주소</span>
-					<div class="box-input">
-						<input class="style-input" type="text" name="addr">
-						<input class="style-input" type="text" name="addrDtl">
+					<span class="search-title addr-height">주소</span>
+					<div class="box-addr">
+						<input class="style-input addr" type="text" name="addr" placeholder="00시 00구 00동">
+						<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소">
 					</div>
 				</div>
 				
@@ -92,14 +92,14 @@
 				</div>
 				<div class="one-input">
 					<span class="search-title">성별</span>
-					<div class="box-input">
+					<div class="box-radio">
 						<label><input type="radio" name="sexCd" value="F" checked>여성</label>
 						<label><input type="radio" name="sexCd" value="M">남성</label>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title">생일</span>
-					<div class="box-input">
+					<div class="box-radio">
 						<label><input type="radio" name="scalYn" value="0" checked>양력</label>
 						<label><input type="radio" name="scalYn" value="1">음력</label>
 					</div>
@@ -115,21 +115,21 @@
 				<legend>수신동의 (통합)</legend>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>이메일 수신동의</span>
-					<div class="box-input">
+					<div class="box-radio">
 						<label><input type="radio" name="emailRcvYn" value="Y">예</label>
 						<label><input type="radio" name="emailRcvYn" value="N" checked>아니오</label>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>SMS 수신동의</span>
-					<div class="box-input">
+					<div class="box-radio">
 						<label><input type="radio" name="smsRcvYn" value="Y">예</label>
 						<label><input type="radio" name="smsRcvYn" value="N" checked>아니오</label>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>DM 수신동의</span>
-					<div class="box-input">
+					<div class="box-radio">
 						<label><input type="radio" name="dmRcvYn" value="Y">예</label>
 						<label><input type="radio" name="dmRcvYn" value="N" checked>아니오</label>
 					</div>

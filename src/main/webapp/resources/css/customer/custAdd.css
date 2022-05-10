@@ -2,12 +2,12 @@
 
 /*틀 설정*/
 .box-title {
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 fieldset {
 	width: 100%;
 	border: 1px #C8C8C8 solid; 
-	padding: 20px;
+	padding: 15px 25px;
 	margin-bottom: 20px;
 }
 legend {
@@ -22,9 +22,9 @@ legend {
 	align-items: center;
 }
 .search-title {
-	width: 40%;
+	width: 38%;
 	display: inline-block;
-	padding-right: 0;
+	padding: 0 0 0 10px;
 	float: left;
 	position: relative;
 }
@@ -32,12 +32,13 @@ legend {
 	padding-right: 5px;
 	position: absolute;
 	top: 4px;
+	left: 0;
 }
+/*input 입력*/
 .box-input {
-	width: 60%;
+	width: 63%;
 	font-size: 15px;
 	float: left;
-	
 	display: flex;
 	justify-content: space-between;
 }
@@ -45,14 +46,32 @@ legend {
 	width: 100%;
 	padding: 0 10px;
 }
-.mblNo {
+.box-input>.mblNo {
 	width: 30%;
-	position: 
 }
-.mblNo:first-child {
-	width: 25%;
+.box-input>.email {
+	width: 45%;
 }
-.mblNo:after {
-	content: "-";
-	display: block;
+/*addr 입력*/
+.addr-height {
+	height: 70px;
+}
+.box-addr {
+	width: 65%;
+	font-size: 15px;
+}
+.box-addr>.addr:first-child {
+	margin-bottom: 10px;
+}
+
+/*radio 입력*/
+.box-radio {
+	width: 40%;
+	font-size: 15px;
+	float: left;
+	display: flex;
+	justify-content: space-between;
+}
+input[type="radio"] {
+	margin-right: 10px;
 }
