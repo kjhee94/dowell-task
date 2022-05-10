@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -150,11 +151,23 @@ public class CustController {
 		new Gson().toJson(resultMap,out);
 	}
 	
-	//고객 이력 팝업창 오픈(팝업)
+	//고객 이력 팝업창 오픈(팝업_post)
+//	@RequestMapping(value = "/customer/CustHtPop.do")
+//	public String selectCustHt() {
+//		
+//		return "customer/custHtPop";
+//	}
+	
+	//고객 이력 팝업창 오픈(팝업_get)
 	@RequestMapping(value = "/customer/CustHtPop.do")
-	public String selectCustHt() {
+	public ModelAndView selectCustHt(HttpServletRequest request , @RequestParam String custNo, ModelAndView mav) {
 		//팝업 오픈
-		return "customer/custHtPop";
+		log.info("고객번호 : "+custNo);
+		
+		mav.addObject("custNo",custNo);
+		mav.setViewName("customer/custHtPop");
+		
+		return mav;
 	}
 	
 	//고객 이력 조회 메소드(팝업)
@@ -162,7 +175,7 @@ public class CustController {
 	@RequestMapping(value = "/customer/selectCustHt.do")
 	public void selectCustHt(@RequestParam String custNo, HttpServletResponse response) throws IOException {	
 		
-		log.info("고객코드 : "+custNo);
+		log.info("고객번호 : "+custNo);
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		

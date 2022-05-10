@@ -29,70 +29,39 @@ $(function(){
 	    return result;
 	}
 	
-	//ToDate 유효성 검사(FromDate보다 작은값 막기,날짜 오류 제어)
-	$.checkValidToDate = function(toSlt,fromSlt){
-		if($.checkValidDate($(toSlt).val())==false){
-			alert('잘못된 형식의 날짜 입니다');
+	//Date 유효성 검사 후 날짜 변경
+	$.checkValidChangeDate = function(date1,date2,select){
+		if($.checkValidDate(date1.val())==false){
+			alert('잘못된 형식의 날짜입니다');
 			
-			//ToDate값 재설정
-			var date = $(toSlt).val();
-			alert(date);
-			var sdate = date.split('-'); //-로 잘라서 가져오기	
-			alert(sdate);
+			var date = new Date(date2.val());										//Date형으로 변환
 			
-			$(this).blur();
-//			var y = parseInt(sdate[0], 10),
-//    			m = parseInt(sdate[1], 10),
-//    			d = parseInt(sdate[2], 10);
-//		
-//			var rDate = new Date(y, m, 0).;		//각 월의 마지막 일로 리셋
-//			rDate.setMonth(rDate.getMonth()-1);	//월-1로 설정(해당 월의 마지막 날이어야 하기 때문)
-//		
-//			var fDate = $.getFormatDate(rDate); //date 포멧팅
-//			$(toSlt).val(fDate);
-//			
-		}else 
-		if($(toSlt).val()<$(fromSlt).val()) { 		//ToDate가 FromDate보다 작을 때
-			alert("값은 "+$(fromSlt).val()+" 이후여야 합니다."); 	//alert
+			if(select==0) {
+				var resetDate = new Date(date.getFullYear(), date.getMonth(), 1);	//첫번쨰 날 가져오기
+			}else {
+				var resetDate = new Date(date.getFullYear(), date.getMonth()+1, 0);	//마지막 날 가져오기
+			}
 			
-			//ToDate값 재설정
-			var fDate = new Date($(fromSlt).val())			//FromDate Date형으로
-			fDate.setDate(fDate.getDate()+1)				//FromDate+1일
+			var formatDate = $.getFormatDate(resetDate);							//포멧
+			date1.val(formatDate);													//값변경
 			
-			var formatfDate = $.getFormatDate(fDate);
-			$(toSlt).val(formatfDate); 						//ToDate값 FromDate+1일로 설정
-		}		
-	}
-	
-	//FromDate 유효성 검사(ToDate보다 큰값 막기,날짜 오류 제어)
-	$.checkValidFromDate = function(toSlt,fromSlt){
-		if($.checkValidDate($(fromSlt).val())==false){
-			//alert('잘못된 형식의 날짜 입니다');
+		} else if(select==0 && date1.val()>date2.val()) {
+			alert("값은 "+date2.val()+" 이전이여야 합니다.");
 			
-			//ToDate값 재설정
-//			var vDate = $(fromSlt).val().split('-'); //-로 잘라서 가져오기		
-//			var y = parseInt(vDate[0], 10),
-//        		m = parseInt(vDate[1], 10),
-//        		d = parseInt(vDate[2], 10)
-//			
-//			var rDate = new Date(y, m, 0).;		//각 월의 마지막 일로 리셋
-//			rDate.setMonth(rDate.getMonth()-1);	//월-1로 설정(해당 월의 마지막 날이어야 하기 때문)
-//			
-//			var fDate = $.getFormatDate(rDate); //date 포멧팅
-//			$(fromSlt).val(fDate);
+			var date = new Date(date2.val());		//Date형으로 변환
+			date.setDate(date.getDate()-1);			//date-1일
+			var formatDate = $.getFormatDate(date);	//포멧
+			date1.val(formatDate);					//값변경
 			
-		}else 
-		if($(fromSlt).val()>$(toSlt).val()) { 		//FromDate가 ToDate보다 클 때
-			alert("값은 "+$(toSlt).val()+" 이전이여야 합니다."); 	//alert
+		}else if(select==1 && date1.val()<date2.val()) {
+			alert("값은 "+date2.val()+" 이후여야 합니다.");
 			
-			//FromDate값 재설정
-			var tDate = new Date($(toSlt).val());			//ToDate Date형으로
-			tDate.setDate(tDate.getDate()-1);				//ToDate-1일
-			
-			var formattDate = $.getFormatDate(tDate);
-			$(fromSlt).val(formattDate); 					//FromDate값 ToDate-1일로 설정
-		}		
-	}
+			var date = new Date(date2.val());		//Date형으로 변환
+			date.setDate(date.getDate()+1);			//date+1일
+			var formatDate = $.getFormatDate(date);	//포멧
+			date1.val(formatDate);					//값변경
+		}
+	};		
 	
 	//닫기버튼 클릭시 창닫기
 	$('#closeBtn').click(function(){

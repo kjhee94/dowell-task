@@ -8,35 +8,40 @@ $(function(){
 	
 	//input date 유효성 검사
 	//input date 날짜 변경시 min max 변경
-	var jsDtFrom = $('#jsDtFrom').val();
-	var jsDtTo = $('#jsDtTo').val();
-	
 	$('#jsDtFrom').change(function(){ 		//FromDate의 값이 변경 될 때
-		$('#jsDtTo').attr('min',jsDtFrom);	//ToDate의 최솟값 FromDate로 변경 (그 이하의 값 선택 제한)
+		var fromVal = $('#jsDtFrom').val();
+		$('#jsDtTo').attr('min',fromVal);	//ToDate의 최솟값 FromDate로 변경 (그 이하의 값 선택 제한)
 	});
 	$('#jsDtTo').change(function(){ 		//ToDate의 값이 변경 될 때
-		$('#jsDtFrom').attr('max',jsDtTo); 	//FromDate의 최댓값 ToDate로 변경 (그 이상의 값 선택 제한)
+		var toVal = $('#jsDtTo').val();
+		$('#jsDtFrom').attr('max',toVal); 	//FromDate의 최댓값 ToDate로 변경 (그 이상의 값 선택 제한)
 	});
 	
 	//input date Enter시 유효성 alert 
-	$('#jsDtTo').keydown(function(keyNum){ 
-		if(keyNum.keyCode == 13){ 	//값변경 후 enter 
-			$.checkValidToDate('#jsDtTo','#jsDtFrom');
-		};
-	});
+	var jsDtFrom = $('#jsDtFrom');
+	var jsDtTo = $('#jsDtTo');
+	
 	$('#jsDtFrom').keydown(function(keyNum){ 
-		if(keyNum.keyCode == 13){ 	//값변경 후 enter 
-			$.checkValidFromDate('#jsDtTo','#jsDtFrom');
+		if(keyNum.keyCode == 13){ 						//값변경 후 enter
+			$.checkValidChangeDate(jsDtFrom,jsDtTo,0); 	//유효성 체크
 		};
 	});
 	
+	$('#jsDtTo').keydown(function(keyNum){ 
+		if(keyNum.keyCode == 13){ 						//값변경 후 enter 
+			$.checkValidChangeDate(jsDtTo,jsDtFrom,1);	//유효성 체크
+		};
+	});
+	
+	$('#jsDtFrom').blur(function(){ 				//값변경 후 blur
+		$.checkValidChangeDate(jsDtFrom,jsDtTo,0);	//유효성 체크
+	});
+	
 	//input date Blur시 유효성 alert 
-	$('#jsDtTo').blur(function(){ 
-		$.checkValidToDate('#jsDtTo','#jsDtFrom');
+	$('#jsDtTo').blur(function(){ 					//값변경 후 blur
+		$.checkValidChangeDate(jsDtTo,jsDtFrom,1);	//유효성 체크
 	});
-	$('#jsDtFrom').blur(function(){ 
-		$.checkValidFromDate('#jsDtTo','#jsDtFrom');
-	});
+
 	
 	
 	//---------------------------------------처음 로드시 기본세팅 값
@@ -64,9 +69,10 @@ $(function(){
 							var str = '<div class="one-content">'+
 									  '<span class="custNo">'+
 									  	'<span>'+item.custNo+'</span>'+
-									  	'<button class="btn-icon btn-history" type="button">'+
+									  	'<button class="btn-icon" onclick="custHtPopOpen('+index+')" type="button">'+
 									  		'<span class="material-icons">list_alt</span>'+
 										'</button>'+
+										'<form id="hiddenForm'+index+'" method="post"><input type="hidden" name="custNo" value="'+item.custNo+'"></form>'+
 									  '</span>'+
 									  '<span class="custNm">'+
 									  	'<span>'+item.custNm+'</span>'+
@@ -86,18 +92,6 @@ $(function(){
 						
 						//스크롤바 생성시 table 비율 맞추기
 						$.scrollBerTransform();
-						
-						//btn-history 클릭시 팝업 오픈
-						$('.btn-history').click(function(){
-							
-							var custNo = $(this).prev().text();
-							
-							var option = 'width=1000, height=500, top=50, left=50, location=no';
-							custHtPop = window.open('/customer/CustHtPop.do', '고객 이력', option);
-							
-//							custHtPop.document.getElementById("cInput").value = document.getElementById("pInput").value;
-//							$(custHtPop.document).find("input[id='custCd']").val(custNo);
-						});
 						
 					}else {//조회 결과가 0명일 때
 						var str = '<p>해당하는 고객이 없습니다.</p>';
@@ -147,3 +141,16 @@ $(function(){
 	//resetBtn 클릭시 초기화
 	$.reset('#resetBtn','/customer/custList.do');
 });
+
+//custHtPopOpen 함수 실행
+function custHtPopOpen(index) {
+
+	var option = 'width=1000, height=500, top=50, left=50, location=no';
+	window.open('/customer/CustHtPop.do', 'custHtPopOpen', option);
+	
+//	var hiddenForm = $("#hiddenForm"+index)
+//	
+//	hiddenForm.target="custHtPopOpen";
+//	hiddenForm.action="/customer/CustHtPop.do";
+//	hiddenForm.submit();
+}

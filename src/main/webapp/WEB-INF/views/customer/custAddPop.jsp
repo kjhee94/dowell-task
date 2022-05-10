@@ -42,9 +42,9 @@
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>휴대폰번호</span>
 					<div class="box-input">
-						<input class="style-input" type="text" class="mblNo" name="fstMblNo">
-						<input class="style-input" type="text" class="mblNo" name="mdlMblNo">
-						<input class="style-input" type="text" class="mblNo" name="lstMblNo">
+						<input class="style-input mblNo" type="text" name="fstMblNo">
+						<input class="style-input mblNo" type="text" name="mdlMblNo">
+						<input class="style-input mblNo" type="text" name="lstMblNo">
 					</div>
 				</div>
 				<div class="one-input">

@@ -26,8 +26,8 @@
 		<div class="box-user">
 			<span class="search-title">고객</span>
 			<div class="box-info">
-				<input id="custCd" type="text" class="style-input" value="" readonly>
-				<input id="custNm" type="text" class="style-input" value="" readonly>
+				<input id="custNo" type="text" class="style-input" value="${requestScope.custNo}" readonly>
+				<input id="custNm" type="text" class="style-input" readonly>
 			</div>
 		</div>
 					

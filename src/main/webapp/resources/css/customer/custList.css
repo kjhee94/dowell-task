@@ -125,11 +125,11 @@ input[type="date"] {
 .box-result {
 	width: 100%;
 }
-.custNo, .custNm, .jsDt {width: 12%;}
-.prtNm {width: 10%;}
-.custSsNm {width: 8%;}
-.mblNo {width: 13%}
-.fstUser {width: 14%;}
+.custNo {width: 12%;}
+.custNm, .jsDt, .prtNm {width: 11%;}
+.custSsNm {width: 9%;}
+.mblNo {width: 12%}
+.fstUser {width: 15%;}
 .lstUpdDt {width: 17%;}
 
 /*텍스트 중앙 정렬*/
