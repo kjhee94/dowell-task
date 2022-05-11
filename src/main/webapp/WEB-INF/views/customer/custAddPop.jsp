@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/resources/css/customer/custAdd.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
+<script src="/resources/js/customer/custAddPop.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -30,22 +31,19 @@
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>고객명</span>
 					<div class="box-input">
-						<input class="style-input" type="text" id="custNm" name="custNm" placeholder="홍길동" autofocus>
+						<input class="style-input" type="text" id="custNm" name="custNm" placeholder="홍길동" autofocus autocomplete='off'>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>직업코드</span>
 					<div class="box-input">
 						<select name="pocCd" class="style-input">
-							<option selected>선택</option>
-							<option value="10">회사원</option>
-							<option value="20">공무원</option>
-							<option value="30">전문직</option>
-							<option value="40">군인</option>
-							<option value="50">주부</option>
-							<option value="90">연예인</option>
-							<option value="99">기타</option>
+							<option selected disabled>선택</option>
+							<c:forEach items="${requestScope.map.pList}" var="p" >
+								<option value="${p.pocCd}">${p.pocNm}</option>
+							</c:forEach>
 						</select>
+						<span class="material-icons select-arrow">expand_more</span>
 					</div>
 				</div>
 				<div class="one-input">
@@ -57,30 +55,31 @@
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>휴대폰번호</span>
 					<div class="box-input">
-						<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010">
-						<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000">
-						<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000">
+						<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010" autocomplete='off'>
+						<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
+						<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>이메일</span>
 					<div class="box-input">
-						<input class="style-input email" type="text" name="emailId" placeholder="ID">@
-						<input class="style-input email" type="text" name="emailAddr" placeholder="email.com">
+						<input class="style-input email" type="text" name="emailId" placeholder="ID" autocomplete='off'>@
+						<input class="style-input email" type="text" name="emailAddr" placeholder="email.com" autocomplete='off'>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>우편물 수령</span>
 					<div class="box-radio">
-						<label><input type="radio" name="psmtGrcCd" value="H" checked>자택</label>
-						<label><input type="radio" name="psmtGrcCd" value="O">직장</label>
+						<c:forEach items="${requestScope.map.gList}" var="g" varStatus="status">
+							<label><input id="psmtGrcCd${status.index}" type="radio" name="psmtGrcCd" value="${g.psmtGrcCd}">${g.psmtGrcNm}</label>
+						</c:forEach>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title addr-height">주소</span>
 					<div class="box-addr">
-						<input class="style-input addr" type="text" name="addr" placeholder="00시 00구 00동">
-						<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소">
+						<input class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
+						<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
 					</div>
 				</div>
 				
@@ -93,8 +92,9 @@
 				<div class="one-input">
 					<span class="search-title">성별</span>
 					<div class="box-radio">
-						<label><input type="radio" name="sexCd" value="F" checked>여성</label>
-						<label><input type="radio" name="sexCd" value="M">남성</label>
+						<c:forEach items="${requestScope.map.sList}" var="s" varStatus="status">
+							<label><input id="sexCd${status.index}" type="radio" name="sexCd" value="${s.sexCd}">${s.sexNm}</label>
+						</c:forEach>
 					</div>
 				</div>
 				<div class="one-input">
@@ -107,7 +107,8 @@
 				<div class="one-input">
 					<span class="search-title">매장</span>
 					<div class="box-input">
-						${sessionScope.user.prtCd} / ${sessionScope.user.prtNm}
+						<input class="style-input prt" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly>
+						<input class="style-input prt" type="text" name="prtNm" value="${sessionScope.user.prtNm}" readonly>
 					</div>
 				</div>
 			</fieldset>
@@ -139,7 +140,7 @@
 		
 		<div class="box-btn">
 			<button id="closeBtn" class="btn-close">닫기</button>
-			<button class="btn-apply btn-add-apply">등록</button>
+			<button id="applyBtn" class="btn-apply">등록</button>
 		</div>
 	</div>
 </body>

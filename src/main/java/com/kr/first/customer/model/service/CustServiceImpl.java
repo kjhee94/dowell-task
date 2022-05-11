@@ -40,7 +40,7 @@ public class CustServiceImpl implements CustService {
 		return resultMap;
 	}
 	
-	//페이지 초기화(고객 상태 조회) 메소드
+	//페이지 초기화(고객상태 상태코드명 조회) 메소드
 	@Override
 	public HashMap<String, Object> custList() throws Exception {
 
@@ -121,5 +121,34 @@ public class CustServiceImpl implements CustService {
 		resultMap.put("result",true);
 		
 		return resultMap;
+	}
+
+	//고객등록 팝업창 오픈 메소드
+	@Override
+	public HashMap<String, Object> custAddPop() {
+		//고객등록시 필요한 상태코드명 조회
+		
+		//직업코드 조회 list(select-option 생성)
+		log.info("=================>>직업 조회");
+		ArrayList<CustVO> pList = cDAO.selectPoc();
+		log.info("=================>>직업 조회 성공");
+		
+		//성별 조회 list(라디오버튼 생성)
+		log.info("=================>>성별 조회");
+		ArrayList<CustVO> sList = cDAO.selectSex();
+		log.info("=================>>성별 조회 성공");
+		
+		//우편물수령 조회 list(라디오버튼 생성)
+		log.info("=================>>우편물수령 조회");
+		ArrayList<CustVO> gList = cDAO.selectPsmtGrc();
+		log.info("=================>>우편물수령 조회 성공");
+		
+		//map에 삽입
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pList", pList);
+		map.put("sList", sList);
+		map.put("gList", gList);
+		
+		return map;
 	}
 }

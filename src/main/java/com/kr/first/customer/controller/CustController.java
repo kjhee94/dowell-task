@@ -200,9 +200,29 @@ public class CustController {
 	
 	//고객등록 팝업창 오픈(팝업)
 	@RequestMapping(value = "/customer/custAddPop.do")
-	public String custAddPop() {
-		//팝업 오픈
-		return "customer/custAddPop";
+	public ModelAndView custAddPop(ModelAndView mav) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			map = cService.custAddPop();
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.error("error : ", e);
+			
+			//map에 삽입
+			map.put("msg", "오류가 발생했습니다. 관리자에게 문의해주세요.\\n("+e.getMessage()+")");
+			map.put("location", "customer/custAddPop");
+			map.put("result", false);
+		} 
+		
+		//ModelAndView에 담아 return
+		mav.addObject("map", map);
+		mav.setViewName("customer/custAddPop");
+		
+		return mav;
 	}
 	
 	//고객 등록 메소드(팝업)

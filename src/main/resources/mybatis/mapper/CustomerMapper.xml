@@ -9,6 +9,29 @@
 		WHERE CODE_CD='CUST_SS_CD'		--공통코드가 'CUST_SS_CD'인 것만 조회
 	</select>
 
+	<!-- 직업 조회 쿼리 -->
+	<select id="selectPoc" resultType="cust">
+		SELECT DTL_CD AS POCCD, 	--세부코드
+			   DTL_CD_NM AS POCNM	--세부코드명
+		FROM MA_CODE_DT 			--코드상세 테이블
+		WHERE CODE_CD='POC_CD'		--공통코드가 'POC_CD'인 것만 조회
+	</select>
+	
+	<!-- 성별 조회 쿼리 -->
+	<select id="selectSex" resultType="cust">
+		SELECT DTL_CD AS SEXCD, 	--세부코드
+			   DTL_CD_NM AS SEXNM	--세부코드명
+		FROM MA_CODE_DT 			--코드상세 테이블
+		WHERE CODE_CD='SEX_CD'		--공통코드가 'SEX_CD'인 것만 조회
+	</select>
+	
+	<!-- 우편물수령코드 조회 쿼리 -->
+	<select id="selectPsmtGrc" resultType="cust">
+		SELECT DTL_CD AS PSMTGRCCD, 	--세부코드
+			   DTL_CD_NM AS PSMTGRCNM	--세부코드명
+		FROM MA_CODE_DT 				--코드상세 테이블
+		WHERE CODE_CD='PSMT_GRC_CD'		--공통코드가 'PSMT_GRC_CD'인 것만 조회
+	</select>
 
 	<!-- 고객 전체 검색 쿼리 -->
 	<select id="selectSearchCust" parameterType="hashmap" resultType="cust">
@@ -38,19 +61,19 @@
 		FROM CS_CUST01_MT C																									--고객관리 테이블
 		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)                                                               	--고객관리,거래처관리 JOIN(PRT_CD)
     		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)                                                           	--고객관리,사용자 JOIN(FST_USER_ID/USER_ID)
-		WHERE (C.JS_DT BETWEEN TO_DATE(#{jsDtFrom}) AND TO_DATE(#{jsDtTo}))                                               	--가입일자로 조회
+		WHERE 1=1
+		 	AND (C.JS_DT BETWEEN TO_DATE(#{jsDtFrom}) AND TO_DATE(#{jsDtTo}))                                               --가입일자로 조회
 			<if test="custSsCd!=null and !custSsCd.equals('all')">
-		      AND C.CUST_SS_CD = #{custSsCd}                                                                              	--고객상태코드로 조회
+		    AND C.CUST_SS_CD = #{custSsCd}                                                                              	--고객상태코드로 조회
 		    </if>
 		    <if test="prtCd!=null and !prtCd.isEmpty()">
-		      AND P.PRT_CD = #{prtCd}                                                                      				  	--매장코드로 조회
+		    AND P.PRT_CD = #{prtCd}                                                                      				  	--매장코드로 조회
 		    </if>
 		    <if test="custNo!=null and !custNo.isEmpty()">
-		      AND C.CUST_NO = #{custNo}                                                                                   	--고객번호로 조회
+		    AND C.CUST_NO = #{custNo}                                                                                   	--고객번호로 조회
 		    </if>
 		ORDER BY 1                                                                                                        	--고객번호 오름차순
 	</select>
-	
 	
 	<!-- 거래처 검색 쿼리 -->
 	<select id="selectPrt" parameterType="String" resultType="prt">
@@ -59,10 +82,10 @@
 		    PRT_NM AS PRTNM,                                                                                        --거래처명
 		    (SELECT D.DTL_CD_NM FROM MA_CODE_DT D WHERE D.DTL_CD=P.PRT_SS_CD AND CODE_CD='PRT_SS_CD') AS PRTSSNM    --거래처상태(세부코드명_스칼라쿼리)
 		FROM MA_PRT_MT P                                                                                            --거래처관리 테이블
-		WHERE PRT_DT_CD = 2                                     													--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
-		      AND (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')							--거래처코드 또는 거래처이름으로 조회 								
+		WHERE 1=1
+			AND PRT_DT_CD = 2                                     												--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
+		    AND (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')							--거래처코드 또는 거래처이름으로 조회 								
 	</select>
-	
 	
 	<!-- 고객 검색 쿼리 -->
 	<select id="selectCust" parameterType="hashmap" resultType="cust">
@@ -92,14 +115,12 @@
 		ORDER BY 1     																									--고객번호 오름차순
 	</select>
 	
-	
 	<!-- 고객이름 조회 쿼리 -->
 	<select id="selectCustNm" parameterType="String" resultType="String">
 		SELECT CUST_NM AS CUSTNM 	--고객이름
 		FROM CS_CUST01_MT 			--고객관리 테이블
 		WHERE CUST_NO = #{custNo}	--고객번호로 조회
 	</select>
-	
 	
 	<!-- 고객이력 조회 쿼리 -->
 	<select id="selectCustHt" parameterType="String" resultType="custHt">
@@ -207,5 +228,4 @@
 		WHERE H.CUST_NO = #{custNo}																																	--고객번호로 조회
 		ORDER BY 3 DESC, 10 DESC																																	--변경일자,일련번호 내림차순
 	</select>
-	
 </mapper>

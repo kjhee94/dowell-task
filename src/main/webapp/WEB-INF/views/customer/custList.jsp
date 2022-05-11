@@ -44,18 +44,18 @@
 								<div class="box-input-text">
 									<c:choose>
 										<c:when test="${sessionScope.user.userDtCd eq '2'}">
-											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" autofocus>
+											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" autofocus autocomplete='off'>
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}">
+											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autocomplete='off'>
 										</c:when>
 										<c:otherwise>
-											<input id="prtCd" class="style-input" type="text" name="prtCd" autofocus>
+											<input id="prtCd" class="style-input" type="text" name="prtCd" autofocus autocomplete='off'>
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input" type="text" name="prtNm">
+											<input id="prtNm" class="style-input" type="text" name="prtNm" autocomplete='off'>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -63,11 +63,11 @@
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input id="custNo" class="style-input" type="text" name="custNo">
+									<input id="custNo" class="style-input" type="text" name="custNo" autocomplete='off'>
 									<button id="custSearchBtn" class="btn-one-search" type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input id="custNm" class="style-input" type="text" name="custNm">
+									<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
 								</div>
 							</div>
 							<div class="one-search">
@@ -82,8 +82,8 @@
 							<div class="one-search">
 								<span class="search-title"><span class="required">*</span>가입일자</span>
 								<div class="box-input-date">
-									<input id="jsDtFrom" type="date" name="jsDtFrom" max="${requestScope.map.jsDtTo}" value="${requestScope.map.jsDtFrom}" required>
-									<input id="jsDtTo" type="date" name="jsDtTo" max="9999-12-31" min="${requestScope.map.jsDtFrom}" value="${requestScope.map.jsDtTo}" required>
+									<input id="jsDtFrom" type="date" name="jsDtFrom" max="${requestScope.map.jsDtTo}" value="${requestScope.map.jsDtFrom}">
+									<input id="jsDtTo" type="date" name="jsDtTo" max="9999-12-31" min="${requestScope.map.jsDtFrom}" value="${requestScope.map.jsDtTo}">
 								</div>
 							</div>
 						</div>

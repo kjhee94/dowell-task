@@ -2,15 +2,59 @@
  * 
  */
 $(function(){
-	//new Date 포맷변경(YYYY-MM-DD)
-	$.getFormatDate = function(date){
-	    var year = date.getFullYear();              //yyyy
-	    var month = (1 + date.getMonth());          //M
-	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	    var day = date.getDate();                   //d
-	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return  year + '-' + month + '-' + day;     //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	//keydown 이벤트시 유효성
+	$.checkValidKeydown = function(date1,date2,select) {
+		date1.keydown(function(keyNum){ 
+			if(keyNum.keyCode == 13){ 										//값변경 후 enter
+				if(select==0){
+					$.checkValidChangeDate(date1,date2,select); 	//유효성 체크
+				}else {
+					$.checkValidChangeDate(date1,date2,select); 	//유효성 체크
+				}
+			};
+		});
 	}
+	
+	//blur 이벤트시 유효성
+//	$.checkValidBlur = function(date1,date2,select) {
+//		date1.blur(function(){ 				//값변경 후 blur
+//			$.checkValidChangeDate(date1,date2,select);	//유효성 체크
+//		});
+//	}
+	
+	//Date 유효성 검사 후 날짜 변경
+	$.checkValidChangeDate = function(date1,date2,select){
+		if($.checkValidDate(date1.val())==false){
+			alert('잘못된 형식의 날짜입니다');
+			
+			var date = new Date(date2.val());										//Date형으로 변환
+			
+			if(select==0) {
+				var resetDate = new Date(date.getFullYear(), date.getMonth(), 1);	//첫번쨰 날 가져오기
+			}else {
+				var resetDate = new Date(date.getFullYear(), date.getMonth()+1, 0);	//마지막 날 가져오기
+			}
+			
+			var formatDate = $.getFormatDate(resetDate);							//포멧
+			date1.val(formatDate);													//값변경
+		} 
+		else if(select==0 && date1.val()>date2.val()) {
+			alert("값은 "+date2.val()+" 이전이여야 합니다.");
+			
+			var date = new Date(date2.val());		//Date형으로 변환
+			date.setDate(date.getDate()-1);			//date-1일
+			var formatDate = $.getFormatDate(date);	//포멧
+			date1.val(formatDate);					//값변경
+			
+		}else if(select==1 && date1.val()<date2.val()) {
+			alert("값은 "+date2.val()+" 이후여야 합니다.");
+			
+			var date = new Date(date2.val());		//Date형으로 변환
+			date.setDate(date.getDate()+1);			//date+1일
+			var formatDate = $.getFormatDate(date);	//포멧
+			date1.val(formatDate);					//값변경
+		}
+	};		
 	
 	//Date 유효성 검사(유효하지 않은 날짜)
 	$.checkValidDate = function(value) {
@@ -29,42 +73,17 @@ $(function(){
 	    return result;
 	}
 	
-	//Date 유효성 검사 후 날짜 변경
-	$.checkValidChangeDate = function(date1,date2,select){
-		
-		if($.checkValidDate(date1.val())==false){
-			alert('잘못된 형식의 날짜입니다');
-			
-			var date = new Date(date2.val());										//Date형으로 변환
-			
-			if(select==0) {
-				var resetDate = new Date(date.getFullYear(), date.getMonth(), 1);	//첫번쨰 날 가져오기
-			}else {
-				var resetDate = new Date(date.getFullYear(), date.getMonth()+1, 0);	//마지막 날 가져오기
-			}
-			
-			var formatDate = $.getFormatDate(resetDate);							//포멧
-			date1.val(formatDate);													//값변경
-			
-		} else if(select==0 && date1.val()>date2.val()) {
-			alert("값은 "+date2.val()+" 이전이여야 합니다.");
-			
-			var date = new Date(date2.val());		//Date형으로 변환
-			date.setDate(date.getDate()-1);			//date-1일
-			var formatDate = $.getFormatDate(date);	//포멧
-			date1.val(formatDate);					//값변경
-			
-		}else if(select==1 && date1.val()<date2.val()) {
-			alert("값은 "+date2.val()+" 이후여야 합니다.");
-			
-			var date = new Date(date2.val());		//Date형으로 변환
-			date.setDate(date.getDate()+1);			//date+1일
-			var formatDate = $.getFormatDate(date);	//포멧
-			date1.val(formatDate);					//값변경
-		}
-	};		
+	//new Date 포맷변경(YYYY-MM-DD)
+	$.getFormatDate = function(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;     //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	}
 	
-	//닫기버튼 클릭시 창닫기
+	//닫기버튼 클릭시 팝업닫기
 	$('#closeBtn').click(function(){
 		window.close();
 	});
@@ -105,6 +124,18 @@ $(function(){
 			};
 		});
 	}
+	
+	//체크 후 적용 버튼 클릭시 값 적용하기
+//	$.checkApply = function(data1, data2) {
+//		$('#applyBtn').click(function(){
+//			var data1 = $('input:checked').parent().parent().find('".'+data1+'"').text(); //체크된 행에서 data1 가져오기
+//			var data2 = $('input:checked').parent().parent().find('".'+data2+'"').text(); //체크된 행에서 data2 가져오기
+//			
+//			window.close();
+//			$(opener.document).find('"#'+data1+'"').val(data1); //부모창 data1 input에 삽입
+//			$(opener.document).find('"#'+data2+'"').val(data2); //부모창 data2 input에 삽입
+//		});
+//	}
 	
 	//키보드 Enter 이벤트
 	$.keydownEnter = function(selector,click){

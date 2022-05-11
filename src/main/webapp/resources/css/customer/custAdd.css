@@ -26,6 +26,7 @@ legend {
 	display: inline-block;
 	padding: 0 0 0 10px;
 	float: left;
+	font-size: 15px;
 	position: relative;
 }
 .required {
@@ -41,16 +42,28 @@ legend {
 	float: left;
 	display: flex;
 	justify-content: space-between;
+	position: relative;
 }
 .style-input {
 	width: 100%;
-	padding: 0 10px;
 }
 .box-input>.mblNo {
 	width: 30%;
 }
 .box-input>.email {
 	width: 45%;
+}
+.box-input>.prt {
+	width: 47%;
+}
+.select-arrow {
+	font-size: 18px;
+	position: absolute;
+	right: 15px;
+	top: 7px;
+}
+.box-input>select>option {
+	font-size: 14px;
 }
 /*addr 입력*/
 .addr-height {
@@ -67,11 +80,14 @@ legend {
 /*radio 입력*/
 .box-radio {
 	width: 40%;
-	font-size: 15px;
+	
 	float: left;
 	display: flex;
 	justify-content: space-between;
 }
 input[type="radio"] {
 	margin-right: 10px;
+}
+.box-radio>label {
+	font-size: 14px;
 }

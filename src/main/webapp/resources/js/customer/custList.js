@@ -8,7 +8,7 @@ $(function(){
 	
 	//input date 유효성 검사
 	//input date 날짜 변경시 min max 변경
-	$('#jsDtFrom').change(function(){ 		//FromDate의 값이 변경 될 때
+	$('#jsDtFrom').change(function(e){ 		//FromDate의 값이 변경 될 때
 		var fromVal = $('#jsDtFrom').val();
 		$('#jsDtTo').attr('min',fromVal);	//ToDate의 최솟값 FromDate로 변경 (그 이하의 값 선택 제한)
 	});
@@ -17,32 +17,12 @@ $(function(){
 		$('#jsDtFrom').attr('max',toVal); 	//FromDate의 최댓값 ToDate로 변경 (그 이상의 값 선택 제한)
 	});
 	
-	//input date Enter시 유효성 alert 
+	//date 유효성 alert 
 	var jsDtFrom = $('#jsDtFrom');
 	var jsDtTo = $('#jsDtTo');
 	
-	$('#jsDtFrom').keydown(function(keyNum){ 
-		if(keyNum.keyCode == 13){ 						//값변경 후 enter
-			$.checkValidChangeDate(jsDtFrom,jsDtTo,0); 	//유효성 체크
-		};
-	});
-	
-	$('#jsDtTo').keydown(function(keyNum){ 
-		if(keyNum.keyCode == 13){ 						//값변경 후 enter 
-			$.checkValidChangeDate(jsDtTo,jsDtFrom,1);	//유효성 체크
-		};
-	});
-	
-	$('#jsDtFrom').blur(function(){ 				//값변경 후 blur
-		$.checkValidChangeDate(jsDtFrom,jsDtTo,0);	//유효성 체크
-	});
-	
-	//input date Blur시 유효성 alert 
-	$('#jsDtTo').blur(function(){ 					//값변경 후 blur
-		$.checkValidChangeDate(jsDtTo,jsDtFrom,1);	//유효성 체크
-	});
-
-	
+	$.checkValidKeydown(jsDtFrom,jsDtTo,0);
+	$.checkValidKeydown(jsDtTo,jsDtFrom,1);
 	
 	//---------------------------------------처음 로드시 기본세팅 값
 	//함수 정의
@@ -65,6 +45,7 @@ $(function(){
 				
 				if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
 					if(data["list"].length>0){ //조회 결과가 0명 이상일 때
+						
 						$.each(data["list"], function(index,item){ //list 반복문
 							var str = '<div class="one-content">'+
 									  '<span class="custNo">'+
@@ -82,7 +63,7 @@ $(function(){
 									  '</span>'+
 									  '<span class="mblNo">'+item.mblNo+'</span>'+
 									  '<span class="custSsNm">'+item.custSsNm+'</span>'+
-									  '<span class="jsDt">'+item.jsDt+'</span>'+
+									  '<span id="jsDt'+index+'" class="jsDt">'+item.jsDt+'</span>'+
 									  '<span class="prtNm">'+item.prtNm+'</span>'+
 									  '<span class="fstUser">'+item.fstUserId+' / '+item.fstUserNm+'</span>'+
 									  '<span class="lstUpdDt">'+item.lstUpdDtFm+'</span>'+

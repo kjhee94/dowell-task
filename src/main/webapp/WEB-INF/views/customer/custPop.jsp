@@ -28,11 +28,11 @@
 			<div class="area-input">
 				<div class="one-input">
 					<span class="search-title">고객이름</span>
-					<input id="custNm" class="style-input" type="text" name="custNm" autofocus>
+					<input id="custNm" class="style-input" type="text" name="custNm" autofocus autocomplete='off'>
 				</div>
 				<div class="one-input">
 					<span class="search-title">핸드폰번호</span>
-					<input id="mblNo" class="style-input" type="text" name="mblNo">
+					<input id="mblNo" class="style-input" type="text" name="mblNo" autocomplete='off'>
 				</div>
 			</div>
 			<div class="area-btn">

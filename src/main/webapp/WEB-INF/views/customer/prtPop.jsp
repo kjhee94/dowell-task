@@ -27,7 +27,7 @@
 		<div class="box-search">
 			<div class="area-input-prt">
 				<span class="search-title">매장</span>
-				<input id="keyword" class="style-input" type="search" name="keyword" autofocus>
+				<input id="keyword" class="style-input" type="search" name="keyword" autofocus autocomplete='off'>
 			</div>
 			<div class="area-btn">
 				<button id="prtSearchBtn" class="btn-search" type="button">

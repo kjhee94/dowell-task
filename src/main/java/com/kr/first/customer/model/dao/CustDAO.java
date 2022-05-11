@@ -49,4 +49,19 @@ public class CustDAO {
 		return new ArrayList<CustHtVO>(sqlSession.selectList("cust.selectCustHt",custNo));
 	}
 
+	//직업 조회
+	public ArrayList<CustVO> selectPoc() {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectPoc"));
+	}
+
+	//성별 조회
+	public ArrayList<CustVO> selectSex() {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectSex"));
+	}
+
+	//우편물수령 조회
+	public ArrayList<CustVO> selectPsmtGrc() {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectPsmtGrc"));
+	}
+
 }
