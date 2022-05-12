@@ -64,4 +64,9 @@ public class CustDAO {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectPsmtGrc"));
 	}
 
+	//휴대폰번호 중복체크
+	public ArrayList<CustVO> selectmblNo(String mblNo) {
+		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectmblNo",mblNo));
+	}
+
 }

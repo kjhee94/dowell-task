@@ -44,7 +44,7 @@ $(function(){
 				
 			}else { //비즈니스 로직중 에러가 났을 경우(catch)
 				//alert에 에러표시
-				alert("오류가 발생했습니다. 관리자에게 문의해주세요.\n("+data["msg"]+")")
+				alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
 				
 				var str = '<p>변경내역이 없습니다.</p>';
 				$resultTag.append(str);
@@ -52,7 +52,7 @@ $(function(){
 		},
 		error : function(request,status,error) {
 			//alert에 에러표시
-			alert("서버연결에 실패했습니다. 관리자에게 문의해주세요.\n("+request.status+" : "+error+")")
+			alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 			//console에 에러표시
 			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			

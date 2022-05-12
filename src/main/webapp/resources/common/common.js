@@ -2,14 +2,14 @@
  * 
  */
 $(function(){
-	//keydown 이벤트시 유효성
+	//keydown 이벤트시 유효성 체크
 	$.checkValidKeydown = function(date1,date2,select) {
 		date1.keydown(function(keyNum){ 
 			if(keyNum.keyCode == 13){ 								//값변경 후 enter
 				if(select==0){
-					$.checkValidChangeDate(date1,date2,select); 	//유효성 체크
+					$.checkValidChangeDate(date1,date2,select); 	//jsDtFrom 유효성 체크
 				}else {
-					$.checkValidChangeDate(date1,date2,select); 	//유효성 체크
+					$.checkValidChangeDate(date1,date2,select); 	//jsDtTo 유효성 체크
 				}
 			};
 		});
@@ -20,18 +20,14 @@ $(function(){
 		if($.checkValidDate(date1.val())==false){
 			alert('잘못된 형식의 날짜입니다');
 			
-			var today = new Date();										//Date형으로 변환
-			var date2Val = new Date(date2.val());										//Date형으로 변환
-			
+			var date = new Date(date2.val());		//date2 Date형으로 변환
 			if(select==0) {
-				if(date2Val)
-				var resetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-7);	//첫번쨰 날 가져오기
+				date.setDate(date.getDate()-1)		//date-1일
 			}else {
-				var resetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());	//마지막 날 가져오기
+				date.setDate(date.getDate()+1);		//date+1일
 			}
-			
-			var formatDate = $.getFormatDate(resetDate);							//포맷
-			date1.val(formatDate);													//값변경
+			var formatDate = $.getFormatDate(date);	//포맷
+			date1.val(formatDate);					//값변경
 		} 
 		else if(select==0 && date1.val()>date2.val()) {
 			alert("값은 "+date2.val()+" 이전이여야 합니다.");

@@ -225,6 +225,33 @@ public class CustController {
 		return mav;
 	}
 	
+	//휴대폰번호 중복체크
+	@PostMapping(value = "/customer/mblNoCheck.do")
+	public void mblNoCheck(@RequestParam String mblNo, HttpServletResponse response) throws IOException {
+		
+		log.info("중복체크할 휴대폰 번호 : "+mblNo);
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = cService.mblNoCheck(mblNo);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>핸드폰 번호 조회 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		}
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
+	
 	//고객 등록 메소드(팝업)
 	@ResponseBody
 	@RequestMapping(value = "/customer/insertCust.do")

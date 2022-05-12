@@ -102,13 +102,14 @@
 					</div>
 					<div class="area-msg"></div>
 				</div>
-				<div class="one-input">
+				<div id="mrrgDt" class="one-input">
 					<div class="area-input">
 						<span class="input-title">결혼기념일</span>
 						<div class="box-input">
 							<input class="style-input" type="date" name="mrrgDt" max="9999-12-13">
 						</div>
 					</div>
+					<div class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">

@@ -21,4 +21,7 @@ public interface CustService {
 
 	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드
 	HashMap<String, Object> custAddPop();
+
+	//휴대폰번호 중복체크 메소드
+	HashMap<String, Object> mblNoCheck(String mblNo);
 }

@@ -228,4 +228,11 @@
 		WHERE H.CUST_NO = #{custNo}																																	--고객번호로 조회
 		ORDER BY 3 DESC, 10 DESC																																	--변경일자,일련번호 내림차순
 	</select>
+	
+	<select id="selectmblNo" parameterType="String" resultType="cust">
+		SELECT 
+			MBL_NO AS MBLNO
+		FROM CS_CUST01_MT
+		WHERE MBL_NO=#{MBLNO}
+	</select>
 </mapper>

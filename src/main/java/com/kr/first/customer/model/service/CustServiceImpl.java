@@ -127,7 +127,6 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public HashMap<String, Object> custAddPop() {
 		//고객등록시 필요한 상태코드명 조회
-		
 		//직업코드 조회 list(select-option 생성)
 		log.info("=================>>직업 조회");
 		ArrayList<CustVO> pList = cDAO.selectPoc();
@@ -150,5 +149,27 @@ public class CustServiceImpl implements CustService {
 		map.put("gList", gList);
 		
 		return map;
+	}
+
+	//휴대폰번호 중복체크 메소드
+	@Override
+	public HashMap<String, Object> mblNoCheck(String mblNo) {
+		//직업코드 조회 list(select-option 생성)
+		log.info("=================>>핸드폰 번호 조회");
+		ArrayList<CustVO> list = cDAO.selectmblNo(mblNo);
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(list.size()==0) {
+			log.info("=================>>핸드폰 번호 사용 가능");
+			resultMap.put("check","Y");
+		}else {
+			log.info("=================>>핸드폰 번호 사용 불가능(중복번호)");
+			resultMap.put("check","N");
+		}
+		resultMap.put("result",true);
+		
+		return resultMap;
 	}
 }
