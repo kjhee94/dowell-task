@@ -18,13 +18,16 @@ legend {
 .one-input {
 	width: 100%;
 	margin: 0 0 10px 0;
+}
+.area-input {
+	width: 100%;
 	display: flex;
 	align-items: center;
 }
-.search-title {
+.input-title {
 	width: 38%;
 	display: inline-block;
-	padding: 0 0 0 10px;
+	padding-left: 10px;
 	float: left;
 	font-size: 15px;
 	position: relative;
@@ -70,7 +73,7 @@ legend {
 	height: 70px;
 }
 .box-addr {
-	width: 65%;
+	width: 63%;
 	font-size: 15px;
 }
 .box-addr>.addr:first-child {
@@ -80,7 +83,6 @@ legend {
 /*radio 입력*/
 .box-radio {
 	width: 40%;
-	
 	float: left;
 	display: flex;
 	justify-content: space-between;
@@ -90,4 +92,14 @@ input[type="radio"] {
 }
 .box-radio>label {
 	font-size: 14px;
+}
+
+/*에러메세지*/
+.area-msg {
+	width: 63%;
+	display: none;
+	float: right;	
+	padding-top: 5px;
+	font-size: 13px;
+	color: coral;
 }

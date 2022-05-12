@@ -28,33 +28,7 @@ public class CustController {
 	@Autowired
 	private CustService cService;
 	
-	//고객 전체 검색 메소드
-	@ResponseBody
-	@PostMapping(value = "/customer/selectSearchCust.do")
-	public void selectSearchCust(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {
-		
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		try { //Exception 발생 구문 
-			resultMap = cService.selectSearchCust(map);
-			
-		} catch (Exception e) { //Exception 발생시 처리
-			//Exception 로그
-			//e.printStackTrace();
-			log.info("=================>>고객 전체 검색 조회 실패");
-			log.error("error : ", e);
-			
-			//view단에 오류메세지 노출
-			resultMap.put("msg", e.getMessage());
-			resultMap.put("result",false);
-		} 
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		//map->json
-		new Gson().toJson(resultMap,out);
-	}
-	
-	//페이지 초기화(고객 상태 조회) 메소드
+	//고객조회 페이지 초기세팅(고객상태 상태코드명 조회) 메소드
 	@RequestMapping(value = "/customer/custList.do")
 	public ModelAndView custList(ModelAndView mav) {
 		
@@ -79,6 +53,32 @@ public class CustController {
 		mav.setViewName("customer/custList");
 		
 		return mav;
+	}
+	
+	//고객 전체 검색 메소드
+	@ResponseBody
+	@PostMapping(value = "/customer/selectSearchCust.do")
+	public void selectSearchCust(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = cService.selectSearchCust(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 전체 검색 조회 실패");
+			log.error("error : ", e);
+			
+			//view단에 오류메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
 	}
 	
 	//거래처 팝업창 오픈(팝업)

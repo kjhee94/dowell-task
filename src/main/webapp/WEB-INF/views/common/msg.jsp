@@ -9,7 +9,9 @@
 </head>
 <body>
 	<script>
-		alert('${requestScope.map.msg}');
+		if(${requestScope.map.msg ne null} ){
+			alert('${requestScope.map.msg}');
+		};
 		location.replace('${requestScope.map.location}');
 	</script>
 </body>

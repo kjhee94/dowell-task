@@ -54,17 +54,14 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", (UserVO)map.get("user"));
 			
-			//ModelAndView에 담아 return
-			mav.addObject("map", map);
-			mav.setViewName("customer/custList");
-			
 		} else { //로그인에 실패했을 때
 			log.info("로그인 실패");
-			
-			//ModelAndView에 담아 return
-			mav.addObject("map", map);
-			mav.setViewName("common/msg");
 		}
+		
+		//ModelAndView에 담아 return
+		mav.addObject("map", map);
+		mav.setViewName("common/msg");
+		
 		return mav;
 	}
 	

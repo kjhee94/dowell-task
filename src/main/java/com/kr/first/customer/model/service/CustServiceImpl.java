@@ -23,24 +23,7 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private CustDAO cDAO;
 
-	//고객 전체 검색 메소드
-	@Override
-	public HashMap<String, Object> selectSearchCust(HashMap<String, Object> map) throws Exception {
-		
-		//고객 전체 검색 목록 list에 담기
-		log.info("=================>>고객 전체 검색 조회");
-		ArrayList<CustVO> list = cDAO.selectSearchCust(map);
-		log.info("=================>>고객 전체 검색 조회 성공");
-		
-		//반환할 객체 선언
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("list",list);
-		resultMap.put("result",true);
-		
-		return resultMap;
-	}
-	
-	//페이지 초기화(고객상태 상태코드명 조회) 메소드
+	//고객조회 페이지 초기세팅(고객상태 상태코드명 조회) 메소드
 	@Override
 	public HashMap<String, Object> custList() throws Exception {
 
@@ -65,6 +48,23 @@ public class CustServiceImpl implements CustService {
 		map.put("jsDtFrom", agoDate);
 		
 		return map;
+	}
+	
+	//고객 전체 검색 메소드
+	@Override
+	public HashMap<String, Object> selectSearchCust(HashMap<String, Object> map) throws Exception {
+		
+		//고객 전체 검색 목록 list에 담기
+		log.info("=================>>고객 전체 검색 조회");
+		ArrayList<CustVO> list = cDAO.selectSearchCust(map);
+		log.info("=================>>고객 전체 검색 조회 성공");
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list",list);
+		resultMap.put("result",true);
+		
+		return resultMap;
 	}
 	
 	//거래처 검색 메소드
@@ -123,7 +123,7 @@ public class CustServiceImpl implements CustService {
 		return resultMap;
 	}
 
-	//고객등록 팝업창 오픈 메소드
+	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드
 	@Override
 	public HashMap<String, Object> custAddPop() {
 		//고객등록시 필요한 상태코드명 조회

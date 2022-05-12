@@ -5,7 +5,7 @@ $(function(){
 	//keydown 이벤트시 유효성
 	$.checkValidKeydown = function(date1,date2,select) {
 		date1.keydown(function(keyNum){ 
-			if(keyNum.keyCode == 13){ 										//값변경 후 enter
+			if(keyNum.keyCode == 13){ 								//값변경 후 enter
 				if(select==0){
 					$.checkValidChangeDate(date1,date2,select); 	//유효성 체크
 				}else {
@@ -15,27 +15,22 @@ $(function(){
 		});
 	}
 	
-	//blur 이벤트시 유효성
-//	$.checkValidBlur = function(date1,date2,select) {
-//		date1.blur(function(){ 				//값변경 후 blur
-//			$.checkValidChangeDate(date1,date2,select);	//유효성 체크
-//		});
-//	}
-	
 	//Date 유효성 검사 후 날짜 변경
 	$.checkValidChangeDate = function(date1,date2,select){
 		if($.checkValidDate(date1.val())==false){
 			alert('잘못된 형식의 날짜입니다');
 			
-			var date = new Date(date2.val());										//Date형으로 변환
+			var today = new Date();										//Date형으로 변환
+			var date2Val = new Date(date2.val());										//Date형으로 변환
 			
 			if(select==0) {
-				var resetDate = new Date(date.getFullYear(), date.getMonth(), 1);	//첫번쨰 날 가져오기
+				if(date2Val)
+				var resetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-7);	//첫번쨰 날 가져오기
 			}else {
-				var resetDate = new Date(date.getFullYear(), date.getMonth()+1, 0);	//마지막 날 가져오기
+				var resetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());	//마지막 날 가져오기
 			}
 			
-			var formatDate = $.getFormatDate(resetDate);							//포멧
+			var formatDate = $.getFormatDate(resetDate);							//포맷
 			date1.val(formatDate);													//값변경
 		} 
 		else if(select==0 && date1.val()>date2.val()) {
@@ -43,7 +38,7 @@ $(function(){
 			
 			var date = new Date(date2.val());		//Date형으로 변환
 			date.setDate(date.getDate()-1);			//date-1일
-			var formatDate = $.getFormatDate(date);	//포멧
+			var formatDate = $.getFormatDate(date);	//포맷
 			date1.val(formatDate);					//값변경
 			
 		}else if(select==1 && date1.val()<date2.val()) {
@@ -51,7 +46,7 @@ $(function(){
 			
 			var date = new Date(date2.val());		//Date형으로 변환
 			date.setDate(date.getDate()+1);			//date+1일
-			var formatDate = $.getFormatDate(date);	//포멧
+			var formatDate = $.getFormatDate(date);	//포맷
 			date1.val(formatDate);					//값변경
 		}
 	};		
@@ -124,18 +119,6 @@ $(function(){
 			};
 		});
 	}
-	
-	//체크 후 적용 버튼 클릭시 값 적용하기
-//	$.checkApply = function(data1, data2) {
-//		$('#applyBtn').click(function(){
-//			var data1 = $('input:checked').parent().parent().find('".'+data1+'"').text(); //체크된 행에서 data1 가져오기
-//			var data2 = $('input:checked').parent().parent().find('".'+data2+'"').text(); //체크된 행에서 data2 가져오기
-//			
-//			window.close();
-//			$(opener.document).find('"#'+data1+'"').val(data1); //부모창 data1 input에 삽입
-//			$(opener.document).find('"#'+data2+'"').val(data2); //부모창 data2 input에 삽입
-//		});
-//	}
 	
 	//키보드 Enter 이벤트
 	$.keydownEnter = function(selector,click){

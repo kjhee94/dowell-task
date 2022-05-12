@@ -40,25 +40,9 @@ public class UserServiceImpl implements UserService {
 		if(u!=null) { //일치하는 회원이 있으면
 			log.info("=================>>로그인 회원 조회 성공");
 			
-			//고객상태 조회 list(라디오버튼 생성)
-			log.info("=================>>고객상태 조회");
-			ArrayList<CustVO> list = cDAO.selectCustSs();
-			log.info("=================>>고객상태 조회 성공");
-			
-			//가입날짜 조회 default값
-			Calendar c = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			//오늘날짜
-			String todayDate = sdf.format(c.getTime());
-			//일주일전
-			c.add(c.DATE, -7); //요일기준으로 -7 차이나는 날짜
-			String agoDate = sdf.format(c.getTime());
-			
 			//map에 삽입
 			map.put("user", u);
-			map.put("dtList", list);
-			map.put("jsDtTo", todayDate);
-			map.put("jsDtFrom", agoDate);
+			map.put("location", "/customer/custList.do");
 			map.put("result", true);
 			
 		} else { //일치하는 회원이 없으면

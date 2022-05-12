@@ -28,111 +28,145 @@
 			
 			<fieldset>
 				<legend>고객기본정보</legend>
-				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>고객명</span>
-					<div class="box-input">
-						<input class="style-input" type="text" id="custNm" name="custNm" placeholder="홍길동" autofocus autocomplete='off'>
+				<div id="custNm" class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>고객명</span>
+						<div class="box-input">
+							<input class="style-input" type="text" name="custNm" placeholder="홍길동" autofocus autocomplete='off'>
+						</div>
 					</div>
+					<div class="area-msg">야</div>
+				</div>
+				<div id="poc" class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>직업코드</span>
+						<div class="box-input">
+							<select name="pocCd" class="style-input">
+								<option selected disabled>선택</option>
+								<c:forEach items="${requestScope.map.pList}" var="p" >
+									<option value="${p.pocCd}">${p.pocNm}</option>
+								</c:forEach>
+							</select>
+							<span class="material-icons select-arrow">expand_more</span>
+						</div>
+					</div>
+					<div class="area-msg"></div>
+				</div>
+				<div id="brdyDt" class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>생년월일</span>
+						<div class="box-input">
+							<input class="style-input" type="date" name="brdyDt" max="9999-12-13">
+						</div>
+					</div>
+					<div class="area-msg"></div>
+				</div>
+				<div id="mblNo" class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>휴대폰번호</span>
+						<div class="box-input">
+							<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010" autocomplete='off'>
+							<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
+							<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
+						</div>
+					</div>
+					<div class="area-msg"></div>
+				</div>
+				<div id="email" class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>이메일</span>
+						<div class="box-input">
+							<input class="style-input email" type="text" name="emailId" placeholder="ID" autocomplete='off'>@
+							<input class="style-input email" type="text" name="emailAddr" placeholder="email.com" autocomplete='off'>
+						</div>
+					</div>
+					<div class="area-msg"></div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>직업코드</span>
-					<div class="box-input">
-						<select name="pocCd" class="style-input">
-							<option selected disabled>선택</option>
-							<c:forEach items="${requestScope.map.pList}" var="p" >
-								<option value="${p.pocCd}">${p.pocNm}</option>
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>우편물 수령</span>
+						<div class="box-radio">
+							<c:forEach items="${requestScope.map.gList}" var="g" varStatus="status">
+								<label><input id="psmtGrcCd${status.index}" type="radio" name="psmtGrcCd" value="${g.psmtGrcCd}">${g.psmtGrcNm}</label>
 							</c:forEach>
-						</select>
-						<span class="material-icons select-arrow">expand_more</span>
+						</div>
+					</div>
+				</div>
+				<div id="addr" class="one-input">
+					<div class="area-input">
+						<span class="input-title addr-height">주소</span>
+						<div class="box-addr">
+							<input class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
+							<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
+						</div>
+					</div>
+					<div class="area-msg"></div>
+				</div>
+				<div class="one-input">
+					<div class="area-input">
+						<span class="input-title">결혼기념일</span>
+						<div class="box-input">
+							<input class="style-input" type="date" name="mrrgDt" max="9999-12-13">
+						</div>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>생년월일</span>
-					<div class="box-input">
-						<input class="style-input" type="date" name="brdyDt">
+					<div class="area-input">
+						<span class="input-title">성별</span>
+						<div class="box-radio">
+							<c:forEach items="${requestScope.map.sList}" var="s" varStatus="status">
+								<label><input id="sexCd${status.index}" type="radio" name="sexCd" value="${s.sexCd}">${s.sexNm}</label>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>휴대폰번호</span>
-					<div class="box-input">
-						<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010" autocomplete='off'>
-						<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
-						<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
+					<div class="area-input">
+						<span class="input-title">생일</span>
+						<div class="box-radio">
+							<label><input type="radio" name="scalYn" value="0" checked>양력</label>
+							<label><input type="radio" name="scalYn" value="1">음력</label>
+						</div>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>이메일</span>
-					<div class="box-input">
-						<input class="style-input email" type="text" name="emailId" placeholder="ID" autocomplete='off'>@
-						<input class="style-input email" type="text" name="emailAddr" placeholder="email.com" autocomplete='off'>
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>우편물 수령</span>
-					<div class="box-radio">
-						<c:forEach items="${requestScope.map.gList}" var="g" varStatus="status">
-							<label><input id="psmtGrcCd${status.index}" type="radio" name="psmtGrcCd" value="${g.psmtGrcCd}">${g.psmtGrcNm}</label>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title addr-height">주소</span>
-					<div class="box-addr">
-						<input class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
-						<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
-					</div>
-				</div>
-				
-				<div class="one-input">
-					<span class="search-title">결혼기념일</span>
-					<div class="box-input">
-						<input class="style-input" type="date" name="mrrgDt">
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title">성별</span>
-					<div class="box-radio">
-						<c:forEach items="${requestScope.map.sList}" var="s" varStatus="status">
-							<label><input id="sexCd${status.index}" type="radio" name="sexCd" value="${s.sexCd}">${s.sexNm}</label>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title">생일</span>
-					<div class="box-radio">
-						<label><input type="radio" name="scalYn" value="0" checked>양력</label>
-						<label><input type="radio" name="scalYn" value="1">음력</label>
-					</div>
-				</div>
-				<div class="one-input">
-					<span class="search-title">매장</span>
-					<div class="box-input">
-						<input class="style-input prt" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly>
-						<input class="style-input prt" type="text" name="prtNm" value="${sessionScope.user.prtNm}" readonly>
+					<div class="area-input">
+						<span class="input-title">매장</span>
+						<div class="box-input">
+							<input class="style-input prt" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly>
+							<input class="style-input prt" type="text" name="prtNm" value="${sessionScope.user.prtNm}" readonly>
+						</div>
 					</div>
 				</div>
 			</fieldset>
+			
 			<fieldset>
 				<legend>수신동의 (통합)</legend>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>이메일 수신동의</span>
-					<div class="box-radio">
-						<label><input type="radio" name="emailRcvYn" value="Y">예</label>
-						<label><input type="radio" name="emailRcvYn" value="N" checked>아니오</label>
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>이메일 수신동의</span>
+						<div class="box-radio">
+							<label><input type="radio" name="emailRcvYn" value="Y">예</label>
+							<label><input type="radio" name="emailRcvYn" value="N" checked>아니오</label>
+						</div>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>SMS 수신동의</span>
-					<div class="box-radio">
-						<label><input type="radio" name="smsRcvYn" value="Y">예</label>
-						<label><input type="radio" name="smsRcvYn" value="N" checked>아니오</label>
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>SMS 수신동의</span>
+						<div class="box-radio">
+							<label><input type="radio" name="smsRcvYn" value="Y">예</label>
+							<label><input type="radio" name="smsRcvYn" value="N" checked>아니오</label>
+						</div>
 					</div>
 				</div>
 				<div class="one-input">
-					<span class="search-title"><span class="required">*</span>DM 수신동의</span>
-					<div class="box-radio">
-						<label><input type="radio" name="dmRcvYn" value="Y">예</label>
-						<label><input type="radio" name="dmRcvYn" value="N" checked>아니오</label>
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>DM 수신동의</span>
+						<div class="box-radio">
+							<label><input type="radio" name="dmRcvYn" value="Y">예</label>
+							<label><input type="radio" name="dmRcvYn" value="N" checked>아니오</label>
+						</div>
 					</div>
 				</div>
 			</fieldset>
