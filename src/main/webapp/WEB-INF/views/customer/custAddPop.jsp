@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div class="container">
-		<form action="" method="post">
+		<form id="custAddForm" method="post">
 			<div class="box-title">
 				<span class="main-title">신규고객등록</span>
 				<button id="resetCustAddBtn" class="btn-reset" type="reset">
@@ -56,7 +56,7 @@
 					<div class="area-input">
 						<span class="input-title"><span class="required">*</span>생년월일</span>
 						<div class="box-input">
-							<input class="style-input" type="date" name="brdyDt" max="9999-12-13">
+							<input class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
 					<div class="area-msg"></div>
@@ -65,9 +65,9 @@
 					<div class="area-input">
 						<span class="input-title"><span class="required">*</span>휴대폰번호</span>
 						<div class="box-input">
-							<input class="style-input mblNo" type="text" name="fstMblNo" maxlength="3" placeholder="010" autocomplete='off'>
-							<input class="style-input mblNo" type="text" name="mdlMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
-							<input class="style-input mblNo" type="text" name="lstMblNo" maxlength="4" placeholder="0000" autocomplete='off'>
+							<input id="fstMblNo" class="style-input mblNo" type="text" maxlength="3" placeholder="010" autocomplete='off'>
+							<input id="mdlMblNo" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
+							<input id="lstMblNo" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
 						</div>
 					</div>
 					<div class="area-msg"></div>
@@ -76,8 +76,8 @@
 					<div class="area-input">
 						<span class="input-title"><span class="required">*</span>이메일</span>
 						<div class="box-input">
-							<input class="style-input email" type="text" name="emailId" placeholder="ID" autocomplete='off'>@
-							<input class="style-input email" type="text" name="emailAddr" placeholder="email.com" autocomplete='off'>
+							<input id="emailId" class="style-input email" type="text" placeholder="ID" autocomplete='off'>@
+							<input id="emailAddr" class="style-input email" type="text" placeholder="email.com" autocomplete='off'>
 						</div>
 					</div>
 					<div class="area-msg"></div>
@@ -96,8 +96,8 @@
 					<div class="area-input">
 						<span class="input-title addr-height">주소</span>
 						<div class="box-addr">
-							<input class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
-							<input class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
+							<input id="addrBasic" class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
+							<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
 						</div>
 					</div>
 					<div class="area-msg"></div>
@@ -106,7 +106,7 @@
 					<div class="area-input">
 						<span class="input-title">결혼기념일</span>
 						<div class="box-input">
-							<input class="style-input" type="date" name="mrrgDt" max="9999-12-13">
+							<input class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
 					<div class="area-msg"></div>

@@ -6,11 +6,10 @@ $(function(){
 	//--------------------------------------------매장조회
 	$('#prtSearchBtn').click(function(){
 
-		var keyword = $('#keyword').val().trim(); //사용자가 검색한 값 공백 제거
+		var keyword = $('#keyword').val().trim(); 	//사용자가 검색한 값 공백 제거
 		var data = {"keyword" : keyword};
 		
-		//검색어가 비어있을 경우 alert
-		if(keyword.length==0){ //keyword의 길이가 0일 때
+		if(keyword.length==0){ 						//keyword의 길이가 0일 때(검색어가 비어있을 경우)
 			alert("검색어를 입력하세요.")
 			return false;
 		}
@@ -27,8 +26,8 @@ $(function(){
 				var $resultTag = $("#result"); 	//데이터를 넣을 요소
 				$("#result").empty(); 			//내용 초기화
 				
-				if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
-					if(data["list"].length>0){ //조회 결과가 0개 이상일 때
+				if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+					if(data["list"].length>0){	//조회 결과가 0개 이상일 때
 						$.each(data["list"], function(index,item){ //list 반복문
 							var str = '<div class="one-content">'+
 									  '<span class="checkbox cb-prt">'+
@@ -60,8 +59,8 @@ $(function(){
 						//행 더블클릭시 값 적용하기
 						$('.one-content').dblclick(function(){
 							//보낼값 변수값 지정
-							var prtCd = $(this).find('.prtCd').text(); //클릭한 행에서 prtCd 가져오기
-							var prtNm = $(this).find('.prtNm').text(); //클릭한 행에서 prtNm 가져오기
+							var prtCd = $(this).find('.prtCd').text(); 	//클릭한 행에서 prtCd 가져오기
+							var prtNm = $(this).find('.prtNm').text(); 	//클릭한 행에서 prtNm 가져오기
 							
 							//값 적용하기
 							window.close();
@@ -134,8 +133,8 @@ $(function(){
 				var $resultTag = $("#result");	//데이터를 넣을 요소
 				$("#result").empty(); 			//내용 초기화
 				
-				if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
-					if(data["list"].length>0){ //조회 결과가 0개 이상일 때
+				if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+					if(data["list"].length>0){	//조회 결과가 0개 이상일 때
 						$.each(data["list"], function(index,item){ //list 반복문
 							
 							var str = '<div class="one-content one-prt-content">'+

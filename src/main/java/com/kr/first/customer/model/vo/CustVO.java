@@ -12,7 +12,7 @@ public class CustVO {
 	private String brdyDt;		//생년월일
 	private String mrrgDt;		//결혼기념일
 	private String pocCd;		//직업코드				- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
-	private String pocNm;		//직업코드				- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
+	private String pocNm;		//직업코드명			- 10:학생 / 20:회사원 / 30:공무원 / 40: 전문직 / 50: 군인 / 60: 주부 / 90:연예인 / 99:기타
 	private String mblNo;		//휴대폰번호
 	private String psmtGrcCd;	//우편물수령코드			- H:자택 / O:직장
 	private String psmtGrcNm;	//우편물수령			- JOIN

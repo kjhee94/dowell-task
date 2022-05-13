@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kr.first.customer.model.service.CustService;
+import com.kr.first.user.model.vo.UserVO;
 
 @Controller
 public class CustController {
@@ -252,32 +255,35 @@ public class CustController {
 		new Gson().toJson(resultMap,out);
 	}
 	
-	//고객 등록 메소드(팝업)
+	//고객 등록(팝업)
 	@ResponseBody
-	@RequestMapping(value = "/customer/insertCust.do")
-	public void insertCust() {	
+	@PostMapping(value = "/customer/insertCust.do")
+	public void insertCust(@RequestParam HashMap<String,Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
 		
-//		log.info("고객번호 : "+custNo);
-//		
-//		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-//		
-//		try { //Exception 발생 구문 
-//			resultMap = cService.selectCustHt(custNo);
-//			
-//		} catch (Exception e) { //Exception 발생시 처리
-//			//Exception 로그
-//			//e.printStackTrace();
-//			log.info("=================>>고객 이력 조회 실패");
-//			log.error("error : ", e);
-//			
-//			//view단에 메세지 노출
-//			resultMap.put("msg", e.getMessage());
-//			resultMap.put("result",false);
-//		} 
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		//map->json
-//		new Gson().toJson(resultMap,out);
+		//세션 ID 가져오기(map에 넣기)
+		String userId = user.getUserId();
+		map.put("userId", userId);
+		log.info("userId : "+userId);
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = cService.insertCust(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 등록 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
 	}
 	
 	//고객등록 팝업창 오픈(팝업)

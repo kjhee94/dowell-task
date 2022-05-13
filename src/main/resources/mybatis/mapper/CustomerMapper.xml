@@ -105,11 +105,8 @@
 			<when test="mblNo.isEmpty()">
 				AND CUST_NM LIKE '%'||#{custNm}||'%'																	--고객이름으로 조회
 			</when>
-			<when test="custNm.isEmpty()">
-				AND MBL_NO LIKE '%'||#{mblNo}||'%'																		--휴대폰번호로 조회
-			</when>
 			<otherwise>
-				AND CUST_NM LIKE '%'||#{custNm}||'%' AND MBL_NO LIKE '%'||#{mblNo}||'%'									--고객이름,핸드폰번호를 동시에 조회
+				AND CUST_NM LIKE '%'||#{custNm}||'%' AND MBL_NO = #{mblNo}												--고객이름,핸드폰번호를 동시에 조회
 			</otherwise>
 		</choose>
 		ORDER BY 1     																									--고객번호 오름차순
@@ -235,4 +232,60 @@
 		FROM CS_CUST01_MT
 		WHERE MBL_NO=#{MBLNO}
 	</select>
+	
+	<insert id="insertCust" parameterType="hashmap">
+		INSERT INTO CS_CUST01_MT ( 
+		    CUST_NO,						--고객번호
+		    CUST_NM,						--고객이름
+		    SEX_CD,							--성별코드
+		    SCAL_YN,						--양음력구분
+		    BRDY_DT,						--생년월일
+		    MRRG_DT,						--결혼기념일
+		    POC_CD,							--직업코드
+		    MBL_NO,							--휴대폰번호
+		    PSMT_GRC_CD,					--우편물수령코드
+		    EMAIL,							--이메일주소
+		    ADDR,							--주소
+		    ADDR_DTL,						--상세주소
+		    CUST_SS_CD,						--고객상태코드
+		    JN_PRT_CD,						--가입매장코드
+		    EMAIL_RCV_YN,					--이메일수신동의여부
+		    SMS_RCV_YN,						--SMS수신동의여부
+		    TM_RCV_YN,						--TM수신동의여부
+		    DM_RCV_YN,						--DM수신동의여부
+		    FST_JS_DT,						--최초가입일자
+		    JS_DT,							--가입일자
+		    FST_REG_DT,						--최초등록일자
+		    FST_USER_ID,					--최초등록자
+		    LST_UPD_DT,						--최종수정일자
+		    LST_UPD_ID) 					--최종수정자
+		VALUES (
+		    (SELECT 						--현재 고객번호 맨끝+1
+		        MAX(CUST_NO)+1 
+		    FROM CS_CUST01_MT),
+		    #{custNm},						--입력한 고객이름
+		    #{sexCd},						--선택한 성별코드
+		    #{scalYn},						--선택한 양음력구분
+		    #{brdyDt},						--입력한 생년월일
+		    #{mrrgDt},						--입력한 결혼기념일
+		    #{pocCd},						--선택한 직업코드
+		    #{mblNo},						--입력한 휴대폰번호
+		    #{psmtGrcCd},					--선택한 우편물수령코드
+		    #{email},						--입력한 이메일 주소
+		    #{addr},						--입력한 주소
+		    #{addrDtl},						--입력한 상세주소
+		    '10',							--고객상태코드 default(정상)
+		    #{prtCd},						--입력한 가입매장코드
+		    #{emailRcvYn},					--선택한 이메일수신동의여부
+		    #{smsRcvYn},					--선택한 SMS수신동의여부
+		    'N',							--TM수신동의여부 default('N')
+		    #{dmRcvYn},						--DM수신동의여부
+		    TO_CHAR(SYSDATE,'YYYYMMDD'),	--최초가입일자 default(sysdate)
+		    TO_CHAR(SYSDATE,'YYYYMMDD'),	--가입일자 default(sysdate)
+		    SYSDATE,						--최초등록일자 (sysdate)
+		    #{userId}, 						--세션 아이디
+		    SYSDATE,						--최종수정일자 (sysdate)
+		    #{userId} 						--세션 아이디
+		)
+	</insert>
 </mapper>

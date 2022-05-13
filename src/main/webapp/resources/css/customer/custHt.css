@@ -24,10 +24,17 @@
 .result-content {
 	height: calc(100vh - 285px);
 }
+.one-content>span.chgBfCnt,
+.one-content>span.chgAftCnt,
+.one-content>span.lstUpdId {
+	text-align: left;
+}
 
-.chgDt,.chgCd {width: 12%;}
-.chgBfCnt,.chgAftCnt,.lstUpdDt {width: 19%;}
-.lstUpdId {width: 17%;}
+.chgDt,.chgCd {width: 14%;}
+.chgBfCnt,.chgAftCnt,.lstUpdId {width: 17%;}
+.lstUpdDt {width: 19%;}
+
+
 
 .one-content {
 	cursor: auto;

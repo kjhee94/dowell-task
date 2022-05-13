@@ -19,9 +19,12 @@ public interface CustService {
 	//고객 이력 조회 메소드(팝업)
 	HashMap<String, Object> selectCustHt(String custNo) throws Exception;
 
-	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드
-	HashMap<String, Object> custAddPop();
+	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드(팝업)
+	HashMap<String, Object> custAddPop() throws Exception;
 
 	//휴대폰번호 중복체크 메소드
-	HashMap<String, Object> mblNoCheck(String mblNo);
+	HashMap<String, Object> mblNoCheck(String mblNo) throws Exception;
+
+	//고객 등록 메소드(팝업)
+	HashMap<String, Object> insertCust(HashMap<String, Object> map) throws Exception;
 }

@@ -50,23 +50,27 @@ public class CustDAO {
 	}
 
 	//직업 조회
-	public ArrayList<CustVO> selectPoc() {
+	public ArrayList<CustVO> selectPoc() throws Exception {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectPoc"));
 	}
 
 	//성별 조회
-	public ArrayList<CustVO> selectSex() {
+	public ArrayList<CustVO> selectSex() throws Exception {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectSex"));
 	}
 
 	//우편물수령 조회
-	public ArrayList<CustVO> selectPsmtGrc() {
+	public ArrayList<CustVO> selectPsmtGrc() throws Exception {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectPsmtGrc"));
 	}
 
 	//휴대폰번호 중복체크
-	public ArrayList<CustVO> selectmblNo(String mblNo) {
+	public ArrayList<CustVO> selectmblNo(String mblNo) throws Exception {
 		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectmblNo",mblNo));
+	}
+
+	public int insertCust(HashMap<String, Object> map) throws Exception {
+		return sqlSession.insert("cust.insertCust", map);
 	}
 
 }

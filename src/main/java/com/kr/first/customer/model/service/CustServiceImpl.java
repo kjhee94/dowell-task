@@ -125,7 +125,7 @@ public class CustServiceImpl implements CustService {
 
 	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드
 	@Override
-	public HashMap<String, Object> custAddPop() {
+	public HashMap<String, Object> custAddPop() throws Exception {
 		//고객등록시 필요한 상태코드명 조회
 		//직업코드 조회 list(select-option 생성)
 		log.info("=================>>직업 조회");
@@ -153,7 +153,7 @@ public class CustServiceImpl implements CustService {
 
 	//휴대폰번호 중복체크 메소드
 	@Override
-	public HashMap<String, Object> mblNoCheck(String mblNo) {
+	public HashMap<String, Object> mblNoCheck(String mblNo) throws Exception {
 		//직업코드 조회 list(select-option 생성)
 		log.info("=================>>핸드폰 번호 조회");
 		ArrayList<CustVO> list = cDAO.selectmblNo(mblNo);
@@ -167,6 +167,28 @@ public class CustServiceImpl implements CustService {
 		}else {
 			log.info("=================>>핸드폰 번호 사용 불가능(중복번호)");
 			resultMap.put("check","N");
+		}
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
+
+	//고객 등록 메소드(팝업)
+	@Override
+	public HashMap<String, Object> insertCust(HashMap<String, Object> map) throws Exception {
+		//고객 등록 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>고객 등록");
+		int result = cDAO.insertCust(map);
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(result>0) {	//등록 성공
+			log.info("=================>>고객 등록 성공");
+			resultMap.put("seccessYN","Y");
+		}else {	//등록 실패
+			log.info("=================>>고객 등록 실패");
+			resultMap.put("seccessYN","N");
 		}
 		resultMap.put("result",true);
 		

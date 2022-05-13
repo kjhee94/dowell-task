@@ -17,7 +17,10 @@ legend {
 /*입력영역*/
 .one-input {
 	width: 100%;
-	margin: 0 0 10px 0;
+	margin: 0 0 15px 0;
+}
+fieldset>.one-input:last-child {
+	margin-bottom: 10px;
 }
 .area-input {
 	width: 100%;
