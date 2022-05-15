@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +32,11 @@ public class CustController {
 	@Autowired
 	private CustService cService;
 	
-	//고객조회 페이지 초기세팅(고객상태 상태코드명 조회) 메소드
+	//고객조회 페이지 초기세팅 메소드
 	@RequestMapping(value = "/customer/custList.do")
-	public ModelAndView custList(ModelAndView mav) {
+	public ModelAndView custList(ModelAndView mav, HttpServletResponse response) throws IOException {
+		
+		log.info("고객조회 페이지");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -43,12 +46,13 @@ public class CustController {
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
+			log.info("=================>>상태코드명 조회 실패");
 			log.error("error : ", e);
 			
-			//map에 삽입
-			map.put("msg", "오류가 발생했습니다. 관리자에게 문의해주세요.\\n("+e.getMessage()+")");
-			map.put("location", "customer/custList");
-			map.put("result", false);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>alert('오류가 발생했습니다. 관리자에게 문의해주세요.');</script>");
+			out.flush();
 		} 
 		
 		//ModelAndView에 담아 return
@@ -88,6 +92,7 @@ public class CustController {
 	@RequestMapping(value = "/customer/prtPop.do")
 	public String selectPrt() {
 		//팝업 오픈
+		log.info("거래처 검색 팝업 오픈");
 		return "customer/prtPop";
 	}
 	
@@ -123,6 +128,7 @@ public class CustController {
 	@RequestMapping(value = "/customer/custPop.do")
 	public String selectCust() {
 		//팝업 오픈
+		log.info("고객 검색 팝업 오픈");
 		return "customer/custPop";
 	}
 	
@@ -165,6 +171,7 @@ public class CustController {
 	@RequestMapping(value = "/customer/custHtPop.do")
 	public ModelAndView selectCustHt(HttpServletRequest request , @RequestParam String custNo, ModelAndView mav) {
 		//팝업 오픈
+		log.info("고객이력 팝업 오픈");
 		log.info("고객번호 : "+custNo);
 		
 		mav.addObject("custNo",custNo);
@@ -201,9 +208,11 @@ public class CustController {
 		new Gson().toJson(resultMap,out);
 	}
 	
-	//고객등록 팝업창 오픈(팝업)
+	//고객등록 팝업창  초기세팅 메소드(팝업)
 	@RequestMapping(value = "/customer/custAddPop.do")
-	public ModelAndView custAddPop(ModelAndView mav) {
+	public ModelAndView custAddPop(ModelAndView mav, HttpServletResponse response) throws IOException {
+		
+		log.info("고객등록 팝업 오픈");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -213,12 +222,13 @@ public class CustController {
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
+			log.info("=================>>상태코드명 조회 실패");
 			log.error("error : ", e);
 			
-			//map에 삽입
-			map.put("msg", "오류가 발생했습니다. 관리자에게 문의해주세요.\\n("+e.getMessage()+")");
-			map.put("location", "customer/custAddPop");
-			map.put("result", false);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>alert('오류가 발생했습니다. 관리자에게 문의해주세요.');</script>");
+			out.flush();
 		} 
 		
 		//ModelAndView에 담아 return
@@ -228,16 +238,21 @@ public class CustController {
 		return mav;
 	}
 	
-	//휴대폰번호 중복체크
+	//휴대폰번호 중복체크 메소드
 	@PostMapping(value = "/customer/mblNoCheck.do")
-	public void mblNoCheck(@RequestParam String mblNo, HttpServletResponse response) throws IOException {
+	public void mblNoCheck(@RequestParam(value="custNo", required=false) String custNo, @RequestParam String mblNo, HttpServletResponse response) throws IOException {
 		
+		log.info("고객번호 : "+custNo);
 		log.info("중복체크할 휴대폰 번호 : "+mblNo);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custNo", custNo);
+		map.put("mblNo", mblNo);
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		try { //Exception 발생 구문 
-			resultMap = cService.mblNoCheck(mblNo);
+			resultMap = cService.mblNoCheck(map);
 			
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
@@ -255,7 +270,7 @@ public class CustController {
 		new Gson().toJson(resultMap,out);
 	}
 	
-	//고객 등록(팝업)
+	//고객 등록 메소드(팝업)
 	@ResponseBody
 	@PostMapping(value = "/customer/insertCust.do")
 	public void insertCust(@RequestParam HashMap<String,Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
@@ -286,10 +301,63 @@ public class CustController {
 		new Gson().toJson(resultMap,out);
 	}
 	
-	//고객등록 팝업창 오픈(팝업)
+	//고객 정보 조회 페이지 오픈 메소드
 	@RequestMapping(value = "/customer/custInfo.do")
-	public String custInfo() {
-		//팝업 오픈
-		return "customer/custInfo";
+	public ModelAndView custInfo(@RequestParam(value="custNo", required=false) String custNo, ModelAndView mav, HttpServletResponse response) throws IOException {
+		
+		log.info("고객정보조회 페이지");
+		log.info("고객번호 : "+custNo);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			//로그인 성공/실패에 따라 다른 값 map에 담기
+			map = cService.custInfo(custNo);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>상태코드명 조회 실패");
+			log.error("error : ", e);
+			
+			//ModelAndView에 담아 return
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>alert('오류가 발생했습니다. 관리자에게 문의해주세요.');</script>");
+			out.flush();
+		} 
+		
+		mav.addObject("map", map);
+		mav.setViewName("customer/custInfo");
+		return mav;
 	}
+	
+	//고객 정보 조회 메소드
+	@ResponseBody
+	@PostMapping(value = "/customer/selectOneCust.do")
+	public void selectOneCust(@RequestParam String custNo, HttpServletResponse response) throws IOException {	
+		
+		log.info("고객번호 : "+custNo);
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = cService.selectOneCust(custNo);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 정보 조회 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
+		
 }

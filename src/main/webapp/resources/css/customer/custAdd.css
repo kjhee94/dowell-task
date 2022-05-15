@@ -2,6 +2,7 @@
 
 /*틀 설정*/
 .box-title {
+	height: 20px;
 	margin-bottom: 20px;
 }
 fieldset {
@@ -41,6 +42,7 @@ fieldset>.one-input:last-child {
 	top: 4px;
 	left: 0;
 }
+
 /*input 입력*/
 .box-input {
 	width: 63%;

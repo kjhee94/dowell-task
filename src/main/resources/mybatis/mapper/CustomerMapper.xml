@@ -83,8 +83,8 @@
 		    (SELECT D.DTL_CD_NM FROM MA_CODE_DT D WHERE D.DTL_CD=P.PRT_SS_CD AND CODE_CD='PRT_SS_CD') AS PRTSSNM    --거래처상태(세부코드명_스칼라쿼리)
 		FROM MA_PRT_MT P                                                                                            --거래처관리 테이블
 		WHERE 1=1
-			AND PRT_DT_CD = 2                                     												--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
-		    AND (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')							--거래처코드 또는 거래처이름으로 조회 								
+			AND PRT_DT_CD = 2                                     													--거래처구분코드 '2'만 조회 - 1:본사 / 2:매장
+		    AND (PRT_CD LIKE '%'||#{keyword}||'%' OR PRT_NM LIKE '%'||#{keyword}||'%')								--거래처코드 또는 거래처이름으로 조회 								
 	</select>
 	
 	<!-- 고객 검색 쿼리 -->
@@ -226,15 +226,25 @@
 		ORDER BY 3 DESC, 10 DESC																																	--변경일자,일련번호 내림차순
 	</select>
 	
-	<select id="selectmblNo" parameterType="String" resultType="cust">
+	<select id="selectmblNo" parameterType="hashmap" resultType="String">
 		SELECT 
-			MBL_NO AS MBLNO
-		FROM CS_CUST01_MT
-		WHERE MBL_NO=#{MBLNO}
+			<choose>
+				<when test="custNo!=null and !custNo.isEmpty()">
+				CASE
+			        WHEN CUST_NO!=#{custNo, jdbcType=VARCHAR} THEN MBL_NO
+			        ELSE 'MINE'
+			    END AS MBLNO
+				</when>
+				<otherwise>
+				MBL_NO AS MBLNO
+				</otherwise>
+			</choose>
+		FROM CS_CUST01_MT								--고객관리 테이블
+		WHERE MBL_NO=#{mblNo}							--휴대폰번호로 조회
 	</select>
 	
 	<insert id="insertCust" parameterType="hashmap">
-		INSERT INTO CS_CUST01_MT ( 
+		INSERT INTO CS_CUST01_MT ( 			--고객관리 테이블
 		    CUST_NO,						--고객번호
 		    CUST_NM,						--고객이름
 		    SEX_CD,							--성별코드
@@ -288,4 +298,56 @@
 		    #{userId} 						--세션 아이디
 		)
 	</insert>
+	
+	<select id="selectOneCust" parameterType="String" resultType="cust">
+		SELECT 
+		    C.CUST_NM AS CUSTNM,																						--고객명
+		    C.SEX_CD AS SEXCD,																							--성별코드
+		    C.POC_CD AS POCCD,																							--직업코드
+		    TO_CHAR(TO_DATE(C.BRDY_DT),'YYYY-MM-DD') AS BRDYDT,															--생년월일
+		    C.SCAL_YN AS SCALYN,																						--양음력구분
+		    TO_CHAR(TO_DATE(C.MRRG_DT),'YYYY-MM-DD') AS MRRYDT,															--결혼기념일
+		    CASE																										--휴대폰번호
+		        WHEN LENGTH(C.MBL_NO)=10 THEN SUBSTR(C.MBL_NO,1,3)||'-'||SUBSTR(C.MBL_NO,4,3)||'-'||SUBSTR(C.MBL_NO,7)  --휴대폰 번호가 10자리일 때 '000-***-0000'의 형식
+		        WHEN LENGTH(C.MBL_NO)=11 THEN SUBSTR(C.MBL_NO,1,3)||'-'||SUBSTR(C.MBL_NO,4,4)||'-'||SUBSTR(C.MBL_NO,8)  --휴대폰 번호가 11자리일 때 '000-****-0000'의 형식 
+		        ELSE '-'
+		    END AS MBLNO,
+		    C.EMAIL,																									--이메일
+		    C.PSMT_GRC_CD AS PSMTGRCCD,																					--우편물 수령코드
+		    C.ADDR,																										--주소
+		    C.ADDR_DTL AS ADDRDTL,																						--상세주소
+		    C.JN_PRT_CD AS PRTCD,																						--가입매장코드
+		    P.PRT_NM AS PRTNM,																							--가입매장이름
+		    C.CUST_SS_CD AS CUSTSSCD,																					--고객상태코드
+		    TO_CHAR(TO_DATE(C.FST_JS_DT),'YYYY-MM-DD') AS FSTJSDT,														--최초가입일자
+		    TO_CHAR(TO_DATE(C.JS_DT),'YYYY-MM-DD') AS JSDT,																--가입일자
+		    TO_CHAR(TO_DATE(C.STP_DT),'YYYY-MM-DD') AS STPDT,															--중지일자
+		    TO_CHAR(TO_DATE(C.CNCL_DT),'YYYY-MM-DD') AS CNCLDT,															--해지일자
+		    C.CNCL_CNTS AS CNCLCNTS,																					--해지사유
+		    NVL(TO_CHAR((SELECT SUM(CASE 																					--총구매금액_스칼라쿼리 출력
+					            	WHEN SAL_TP_CD='SAL' THEN 1*TOT_SAL_AMT												--판매일시 금액*1
+					            	WHEN SAL_TP_CD='RTN' THEN -1*TOT_SAL_AMT											--반품일시 금액*(-1)
+					            	ELSE TOT_SAL_AMT
+					        	END)
+					FROM CS_SAL01_MT
+					WHERE CUST_NO=#{custNo}),'FM999,999,999'),0) AS TOTLPRSAMT,											--포맷변경(소수점 추가)
+		    NVL(TO_CHAR((SELECT SUM(CASE 																					--당월구매금액_스칼라쿼리 출력
+									WHEN SAL_TP_CD='SAL' THEN 1*TOT_SAL_AMT												--판매일시 금액*1
+									WHEN SAL_TP_CD='RTN' THEN -1*TOT_SAL_AMT											--반품일시 금액*(-1)
+									ELSE TOT_SAL_AMT
+								END)
+					FROM CS_SAL01_MT
+					WHERE CUST_NO=#{custNo}
+						AND SAL_DT BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)),'FM999,999,999'),0) AS PRSAMTMTH,	--포맷변경(소수점 추가)
+		    NVL((SELECT 
+		    		TO_CHAR(TO_DATE(MAX(SAL_DT)),'YYYY-MM-DD') 
+		    	FROM CS_SAL01_MT 
+		    	WHERE CUST_NO=#{custNo}),0) AS LSTPRSDT,																--최종구매일_스칼라쿼리 출력
+		    C.EMAIL_RCV_YN AS EMAILRCVYN,																				--이메일수신동의여부
+		    C.SMS_RCV_YN AS SMSRCVYN,																					--SMS수신동의여부
+		    C.DM_RCV_YN AS DMRCVYN																						--DM수신동의여부
+		FROM CS_CUST01_MT C																								--고객관리 테이블
+		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)																--고객관리,거래처관리 JOIN(PRT_CD)
+		WHERE CUST_NO=#{custNo}																							--회원번호로 조회
+	</select>
 </mapper>

@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="/resources/common/include.css">
 <link rel="stylesheet" href="/resources/css/customer/custList.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/resources/common/gnb.js"></script>
 <script src="/resources/common/common.js"></script>
-
+<script src="/resources/common/gnb.js"></script>
+<script src="/resources/js/customer/custList.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -26,18 +26,18 @@
 		<!-- content -->
 		<div id="content">
 			<div class="container">
-				<form id="SearchCustForm">
-					<div class="box-title">
-						<span class="main-title">고객조회</span>
-						<button id="resetBtn" class="btn-reset" type="reset">
-							<span class="material-icons">restart_alt</span>
-						</button>
-						<c:if test="${sessionScope.user.userDtCd eq '2'}">
-							<button id="custAddBtn" class="btn-add" type="button">신규등록</button>
-						</c:if>
-					</div>
+				<div class="box-title">
+					<span class="main-title">고객조회</span>
+					<button id="resetBtn" class="btn-reset" type="reset">
+						<span class="material-icons">restart_alt</span>
+					</button>
+					<c:if test="${sessionScope.user.userDtCd eq '2'}">
+						<button id="custAddBtn" class="btn-add" type="button">신규등록</button>
+					</c:if>
+				</div>
 					
-					<div class="box-search">
+				<div class="box-search">
+					<form id="SearchCustForm">
 						<div class="area-input">
 							<div class="one-search">
 								<span class="search-title">매장</span>
@@ -87,13 +87,15 @@
 								</div>
 							</div>
 						</div>
+						
 						<div class="area-btn">
 							<button id="SearchBtn" class="btn-submit" type="button">
 								<span class="material-icons">search</span>
 							</button>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
+				
 				
 				<div class="box-result">
 					<div class="result-title">
@@ -116,8 +118,5 @@
 		<!-- footer -->
 		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	</div>
-	
-	
-	<script src="/resources/js/customer/custList.js"></script>
 </body>
 </html>

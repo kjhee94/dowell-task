@@ -8,12 +8,12 @@ $(function(){
 	
 	//------------------------------------유효성 검사
 	//이름 유효성 검사
-	$('#custNm input').blur(function(){ 
+	$('#custNmInfo').blur(function(){ 
 		$.checkNameValid();
 	});
 	
 	//직업코드 유효성 검사
-	$('#poc select').blur(function(){ 
+	$('#pocCd').blur(function(){ 
 		$.checkPocValid();
 	});
 	
@@ -21,19 +21,19 @@ $(function(){
 	var date = new Date();					//오늘 날짜
 	var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
 
-	$('#brdyDt input').attr('max',today);	//오늘 이후 생일 설정 불가
+	$('#brdyDt').attr('max',today);	//오늘 이후 생일 설정 불가
 	
-	$('#brdyDt input').blur(function(){ 
+	$('#brdyDt').blur(function(){ 
 		$.checkBrdyDtValid(today);
 	});
 	
 	//핸드폰 유효성 검사
-	$('#lstMblNo').blur(function(){ 
+	$('#mblNo2').blur(function(){ 
 		$.checkMblNoValid();
 	});
 	
 	//이메일 유효성 검사
-	$('#emailAddr').blur(function(){ 
+	$('#email1').blur(function(){ 
 		$.checkEmailValid();
 	});
 	
@@ -43,9 +43,9 @@ $(function(){
 	});
 	
 	//결혼기념일 유효성 검사
-//	$('#mrrgDt input').blur(function(){ 
-//		$.checkMrrgDtValid();
-//	});
+	$('#mrrgDt').blur(function(){ 
+		$.checkMrrgDtValid();
+	});
 	
 	//등록버튼 클릭 시
 	$("#applyBtn").click(function(){
@@ -56,26 +56,27 @@ $(function(){
 		$.checkMblNoValid();
 		$.checkEmailValid();
 		$.checkAddrValid();
+		$.checkMrrgDtValid();
 		
 		if($('.area-msg').css('display')=='none'){				//유효성 검사 통과시(유효성이 통과되면 메세지 박스 display:none상태)
 			if(confirm("신규고객을 등록하시겠습니까?")){					//더블체크
 				
 				//휴대폰번호 조합
-				var fstMblNo = $('#fstMblNo').val().trim();		//사용자가 입력한 값 공백 제거
-				var mdlMblNo = $('#mdlMblNo').val().trim();		//사용자가 입력한 값 공백 제거
-				var lstMblNo = $('#lstMblNo').val().trim();		//사용자가 입력한 값 공백 제거
-				var mblNo =  fstMblNo+mdlMblNo+lstMblNo;		//합치기
+				var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
+				var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
+				var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
+				var mblNo =  mblNo0+mblNo1+mblNo2;			//합치기
 				
 				//이메일 주소 조합
-				var emailId = $('#emailId').val().trim();		//사용자가 입력한 값 공백 제거
-				var emailAddr = $('#emailAddr').val().trim();	//사용자가 입력한 값 공백 제거
-				var email =  emailId+'@'+emailAddr;				//합치기(@포함)
+				var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
+				var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
+				var email =  email0+'@'+email1;				//합치기(@포함)
 				
 				//날짜 포맷변경
-				var brdyDtOrg = $('#brdyDt input').val();		//기존값
+				var brdyDtOrg = $('#brdyDt').val();				//기존값
 				var brdyDt = brdyDtOrg.replace(/\-/g,'');		//특수문자 제외
 				
-				var mrrgDtOrg = $('#mrrgDt input').val();		//기존값
+				var mrrgDtOrg = $('#mrrgDt').val();				//기존값
 				var mrrgDt = mrrgDtOrg.replace(/\-/g,'');		//특수문자 제외
 				
 				//form 요소 직렬화

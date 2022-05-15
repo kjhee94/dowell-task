@@ -65,12 +65,17 @@ public class CustDAO {
 	}
 
 	//휴대폰번호 중복체크
-	public ArrayList<CustVO> selectmblNo(String mblNo) throws Exception {
-		return new ArrayList<CustVO>(sqlSession.selectList("cust.selectmblNo",mblNo));
+	public String selectmblNo(HashMap<String, Object> map) throws Exception {
+		return sqlSession.selectOne("cust.selectmblNo",map);
 	}
 
+	//고객 등록
 	public int insertCust(HashMap<String, Object> map) throws Exception {
 		return sqlSession.insert("cust.insertCust", map);
 	}
 
+	//고객 정보 조회
+	public CustVO selectOneCust(String custNo) {
+		return sqlSession.selectOne("cust.selectOneCust",custNo);
+	}
 }

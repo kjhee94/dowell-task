@@ -23,7 +23,7 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private CustDAO cDAO;
 
-	//고객조회 페이지 초기세팅(고객상태 상태코드명 조회) 메소드
+	//고객조회 페이지 초기세팅 메소드
 	@Override
 	public HashMap<String, Object> custList() throws Exception {
 
@@ -123,9 +123,12 @@ public class CustServiceImpl implements CustService {
 		return resultMap;
 	}
 
-	//고객등록 팝업창 오픈(직업,성별,우편물수령 상태코드명 조회) 메소드
+	//고객등록 팝업창  초기세팅 메소드
 	@Override
 	public HashMap<String, Object> custAddPop() throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
 		//고객등록시 필요한 상태코드명 조회
 		//직업코드 조회 list(select-option 생성)
 		log.info("=================>>직업 조회");
@@ -143,7 +146,6 @@ public class CustServiceImpl implements CustService {
 		log.info("=================>>우편물수령 조회 성공");
 		
 		//map에 삽입
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("pList", pList);
 		map.put("sList", sList);
 		map.put("gList", gList);
@@ -153,16 +155,19 @@ public class CustServiceImpl implements CustService {
 
 	//휴대폰번호 중복체크 메소드
 	@Override
-	public HashMap<String, Object> mblNoCheck(String mblNo) throws Exception {
+	public HashMap<String, Object> mblNoCheck(HashMap<String, Object> map) throws Exception {
 		//직업코드 조회 list(select-option 생성)
 		log.info("=================>>핸드폰 번호 조회");
-		ArrayList<CustVO> list = cDAO.selectmblNo(mblNo);
+		String result = cDAO.selectmblNo(map);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
-		if(list.size()==0) {
+		if(result==null) {
 			log.info("=================>>핸드폰 번호 사용 가능");
+			resultMap.put("check","Y");
+		}else if(result.equals("MINE")) {
+			log.info("=================>>핸드폰 번호 사용 가능(기존 내 번호)");
 			resultMap.put("check","Y");
 		}else {
 			log.info("=================>>핸드폰 번호 사용 불가능(중복번호)");
@@ -190,6 +195,61 @@ public class CustServiceImpl implements CustService {
 			log.info("=================>>고객 등록 실패");
 			resultMap.put("seccessYN","N");
 		}
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
+
+	//고객 정보 조회  페이지 초기세팅 메소드
+	@Override
+	public HashMap<String, Object> custInfo(String custNo) throws Exception {
+		
+		//고객 정보 조회시 필요한 상태코드명 조회
+		//성별 조회 list(라디오버튼 생성)
+		log.info("=================>>성별 조회");
+		ArrayList<CustVO> sList = cDAO.selectSex();
+		log.info("=================>>성별 조회 성공");
+		
+		//직업코드 조회 list(select-option 생성)
+		log.info("=================>>직업 조회");
+		ArrayList<CustVO> pList = cDAO.selectPoc();
+		log.info("=================>>직업 조회 성공");
+		
+		//우편물수령 조회 list(라디오버튼 생성)
+		log.info("=================>>우편물수령 조회");
+		ArrayList<CustVO> gList = cDAO.selectPsmtGrc();
+		log.info("=================>>우편물수령 조회 성공");
+		
+		//고객상태 조회 list(라디오버튼 생성)
+		log.info("=================>>고객상태 조회");
+		ArrayList<CustVO> cList = cDAO.selectCustSs();
+		log.info("=================>>고객상태 조회 성공");
+		
+		//map에 삽입
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("custNo", custNo);
+		map.put("sList", sList);
+		map.put("pList", pList);
+		map.put("gList", gList);
+		map.put("cList", cList);
+		
+		return map;
+	}
+
+	//고객 정보 조회 메소드
+	@Override
+	public HashMap<String, Object> selectOneCust(String custNo) {
+		
+		//고객이력 목록 list에 담기
+		log.info("=================>>고객 정보 조회");
+		CustVO cust = cDAO.selectOneCust(custNo);
+		log.info("=================>>고객 정보 조회 성공");
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("cust",cust);
+		resultMap.put("custNm",cust.getCustNm());
 		resultMap.put("result",true);
 		
 		return resultMap;

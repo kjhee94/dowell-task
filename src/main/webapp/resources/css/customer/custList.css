@@ -29,9 +29,12 @@
 	height: 150px;
 	padding: 20px;
 	border: 1px #C8C8C8 solid; 
+	margin-bottom: 20px;
+}
+.box-search>form {
+	height: 100%;
 	display: flex;
 	justify-content: center;
-	margin-bottom: 20px;
 }
 .area-input {
 	width: 90%;

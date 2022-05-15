@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+/*네비게이션 고정*/
+#gnb>li:nth-child(1)>.lnb {
+	display: block;
+}
+#gnb>li:nth-child(1)>.lnb>li:nth-child(2) {
+	background-color: #012840;
+}
+#gnb>li:nth-child(1)>.lnb>li:nth-child(2)>a {
+	color: #fff;
+}
+
+/*검색 영역*/
+.box-search {
+	width: 100%;
+	height: 100px;
+	padding: 20px;
+	border: 1px #C8C8C8 solid; 
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+}
+.box-search>form {
+	width: 60%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/*검색 요소*/
+.area-search-input {
+	width: 80%;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+.search-title {
+	display: inline-block;
+	width: 25%;
+	text-align: right;
+}
+
+/*고객번호 input*/
+.box-input-text {
+	width: 75%;
+	display: flex;
+	justify-content: flex-start;
+}
+.box-input-text>input {
+	width: 45%;
+}
+.box-input-text>input:first-child {
+	width: 42%;
+	margin-left: 5%;
+}
+
+/*고객번호 검색 버튼*/
+.btn-one-search {
+	width: 15%;
+	display: flex;
+	align-items: flex-start;
+	cursor: pointer;
+}
+.btn-one-search>span {
+	width: 30px;
+	height: 30px;
+	border: 1px #c8c8c8 solid;
+	padding-top: 2px;
+}
+
+/*최종검색 버튼*/
+.area-btn {
+	width: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btn-submit {
+	width: 50px;
+	height: 50px;
+	background-color: #114574;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+}
+.btn-submit>span {
+	font-size: 25px;
+	color: #fff;
+	padding-top: 5px;
+}
+
+/*결과영역(공통)*/
+fieldset {
+	width: 100%;
+	border: 1px #C8C8C8 solid; 
+	padding: 20px 100px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+legend {
+	padding: 0 10px;
+}
+
+/*입력 영역(공통)*/
+.area-input {
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+.input-title {
+	padding-left: 10px;
+	float: left;
+	font-size: 15px;
+	position: relative;
+}
+.required {
+	padding-right: 5px;
+	position: absolute;
+	top: 4px;
+	left: 0;
+}
+.box-input {
+	font-size: 15px;
+	float: left;
+	display: flex;
+	justify-content: space-between;
+}
+.style-input {
+	width: 100%;
+}
+
+/*radio 입력*/
+.box-radio {
+	display: flex;
+	justify-content: space-between;
+}
+input[type="radio"] {
+	margin-right: 10px;
+}
+.box-radio>label {
+	font-size: 15px;
+}
+
+
+
+/*항목2개*/
+.column-two {
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+}
+.column-two>.one-input {
+	width: 85%;
+	margin: 0 0 20px 0;
+}
+.column-two>.one-input:last-child {
+	margin-bottom: 10px;
+}
+.column-two:last-child {
+	align-items: flex-end;
+}
+
+/*입력 영역(항목 2개))*/
+.column-two .input-title {
+	width: 35%;
+}
+.column-two .box-input {
+	width: 65%;
+	position: relative;
+}
+.select-arrow {
+	font-size: 18px;
+	position: absolute;
+	right: 15px;
+	top: 7px;
+}
+.box-input>select>option {
+	font-size: 14px;
+}
+.box-input>.mblNo {
+	margin-right: 10px;
+}
+.box-input>.mblNo:last-of-type {
+	margin-right: 0;
+}
+.box-input>.email {
+	width: 45%;
+}
+
+/*prt 영역*/
+.box-input>.prt {
+	width: 40%;
+}
+.box-input>.prt:first-child {
+	width: 45%;
+}
+
+/*addr 영역*/
+.addr-height {
+	height: 70px;
+}
+.box-addr {
+	width: 65%;
+	font-size: 15px;
+}
+.box-addr>.addr:first-child {
+	margin-bottom: 10px;
+}
+
+/*고객상태 라디오*/
+.box-radio {
+	width: 40%
+}
+.box-custss {
+	width: 63%;
+}
+
+/*핸드폰 체크버튼*/
+.btn-check {
+	display: flex;
+	align-items: flex-start;
+	cursor: pointer;
+}
+.btn-check>span {
+	width: 30px;
+	height: 30px;
+	border: 1px #c8c8c8 solid;
+	padding-top: 2px;
+	color: #9BDF30;
+}
+
+
+
+/*항목 3개*/
+.column-three {
+	padding-bottom: 30px
+}
+.column-three>.one-input {
+	width: 30%;
+}
+.column-three .area-input {
+	justify-content: space-between;
+}
+.column-three .input-title {
+	width: 45%;
+	margin-right: 20px;
+}
+.column-three input {
+	text-align: right;
+}
+.column-three .box-radio {
+	width: 60%;
+}
+
+
+/*버튼 영역*/
+.box-btn {
+	text-align: right;
+	margin-top: 30px;
+}
+.box-btn>button {
+	width: 150px;
+	height: 50px;
+	line-height: 50px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.btn-golist {
+	margin-right: 15px;
+	border: 1px #c8c8c8 solid;
+}
+.btn-golist>a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+.btn-save {
+	background-color: #114574;
+	color: #fff;
+}
+
+/*에러메세지*/
+.area-msg {
+	width: 65%;
+	display: none;
+	float: right;	
+	padding-top: 8px;
+	font-size: 13px;
+	color: coral;
+}

@@ -39,6 +39,9 @@ public class CustVO {
 	private Date lstUpdDt;		//최종수정일자
 	private String lstUpdDtFm;	//최종수정일자포맷수정
 	private String lstUpdId;	//최종수정자
+	private String totlPrsAmt;	//총구매금액
+	private String prsAmtMth;	//당월구매금액
+	private String lstPrsDt;	//최종구매일
 	
 	
 	//생성자
@@ -51,7 +54,8 @@ public class CustVO {
 			String addr, String addrDtl, String custSsCd, String custSsNm, String cnclCnts, String prtCd, String prtNm,
 			char emailRcvYn, char smsRcvYn, char tmRcvYn, char dmRcvYn, String fstJsDt, String jsDt, String stpDt,
 			String cnclDt, Date fstRegDt, String fstUserId, String fstUserNm, Date lstUpdDt, String lstUpdDtFm,
-			String lstUpdId) {
+			String lstUpdId, String totlPrsAmt, String prsAmtMth, String lstPrsDt) {
+		super();
 		this.custNo = custNo;
 		this.custNm = custNm;
 		this.sexCd = sexCd;
@@ -87,8 +91,10 @@ public class CustVO {
 		this.lstUpdDt = lstUpdDt;
 		this.lstUpdDtFm = lstUpdDtFm;
 		this.lstUpdId = lstUpdId;
+		this.totlPrsAmt = totlPrsAmt;
+		this.prsAmtMth = prsAmtMth;
+		this.lstPrsDt = lstPrsDt;
 	}
-	
 	
 	//getter setter
 	public String getCustNo() {
@@ -301,6 +307,24 @@ public class CustVO {
 	public void setLstUpdId(String lstUpdId) {
 		this.lstUpdId = lstUpdId;
 	}
+	public String getTotlPrsAmt() {
+		return totlPrsAmt;
+	}
+	public void setTotlPrsAmt(String totlPrsAmt) {
+		this.totlPrsAmt = totlPrsAmt;
+	}
+	public String getPrsAmtMth() {
+		return prsAmtMth;
+	}
+	public void setPrsAmtMth(String prsAmtMth) {
+		this.prsAmtMth = prsAmtMth;
+	}
+	public String getLstPrsDt() {
+		return lstPrsDt;
+	}
+	public void setLstPrsDt(String lstPrsDt) {
+		this.lstPrsDt = lstPrsDt;
+	}
 	
 	//toString
 	@Override
@@ -313,6 +337,7 @@ public class CustVO {
 				+ ", emailRcvYn=" + emailRcvYn + ", smsRcvYn=" + smsRcvYn + ", tmRcvYn=" + tmRcvYn + ", dmRcvYn="
 				+ dmRcvYn + ", fstJsDt=" + fstJsDt + ", jsDt=" + jsDt + ", stpDt=" + stpDt + ", cnclDt=" + cnclDt
 				+ ", fstRegDt=" + fstRegDt + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt="
-				+ lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + "]";
+				+ lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + ", totlPrsAmt=" + totlPrsAmt
+				+ ", prsAmtMth=" + prsAmtMth + ", lstPrsDt=" + lstPrsDt + "]";
 	}
 }
