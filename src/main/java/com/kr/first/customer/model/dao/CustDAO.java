@@ -2,6 +2,7 @@ package com.kr.first.customer.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,15 @@ public class CustDAO {
 	}
 
 	//고객 정보 조회
-	public CustVO selectOneCust(String custNo) {
+	public CustVO selectOneCust(String custNo) throws Exception {
 		return sqlSession.selectOne("cust.selectOneCust",custNo);
+	}
+
+	public int insertCustHt(Map<String, Object> paramMap) throws Exception {
+		return sqlSession.insert("cust.insertCustHt", paramMap);
+	}
+	
+	public int updateCust(Map<String, Object> map) throws Exception {
+		return sqlSession.update("cust.updateCust", map);
 	}
 }

@@ -1,6 +1,7 @@
 package com.kr.first.customer.model.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface CustService {
 
@@ -32,5 +33,8 @@ public interface CustService {
 	HashMap<String, Object> custInfo(String custNo) throws Exception;
 
 	//고객 정보 조회 메소드
-	HashMap<String, Object> selectOneCust(String custNo);
+	HashMap<String, Object> selectOneCust(String custNo) throws Exception;
+
+	//고객 정보 수정  메소드
+	HashMap<String, Object> updateCust(Map<String, Object> map) throws Exception;
 }

@@ -104,7 +104,7 @@ $(function(){
 	//---------------------------------------유효성 검사
 	//이름 유효성 검사
 	$('#custNmInfo').blur(function(){ 
-		
+		$.checkNameValid();
 	});
 	
 	//생일  유효성 검사
@@ -140,134 +140,143 @@ $(function(){
 	
 	//---------------------------------------정보 업데이트
 	//변경내역 객체에 담기
-	let map = new Map();
+	
+	const cngData = [];
+	const map = new Map();
 	
 	//변경내역 객체화
-	$.iptChgSet = function(selector){
-		$(selector).change(function(){
-			$.checkNameValid();
-			
-			var key = $(this).attr("name");
-			var value = $(this).val().trim();
-			map.set(key,value);
-		});
-	}
-	$.dtChgSet = function(selector){
-		$(selector).change(function(){
-			var key = $(this).attr("name");
-			var value = $(this).val().replace(/\-/g,'');
-			map.set(key,value);
-		});
-	}
-	$.sltChgSet = function(){
-		$('select').change(function(){
-			var key = $(this).attr("name");
-			var value = $('option:selected').attr("value");
-			map.set(key,value);
-		});
-	}
-	$.ckdChgSet = function(selector){
-		$(selector).change(function(){
-			var key = $(this).attr("name");
-			var value = $(this).attr("value");
-			map.set(key,value);
-		});
-	}
-	$.mblChgSet = function(selector){
-		$(selector).change(function(){
-			$('#checkMblNo>span').css("color","coral");
-			
-			var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
-			var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
-			var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
-			var mblNo =  mblNo0+mblNo1+mblNo2;			//합치기
-			
-			var key = "mblNo";
-			var value = mblNo;
-			map.set(key,value);
-		});
-	}
-	$.emlChgSet = function(selector){
-		$(selector).change(function(){
-			var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
-			var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
-			var email =  email0+'@'+email1;				//합치기(@포함)
-			
-			var key = "email";
-			var value = email;
-			map.set(key,value);
-		});
-	}
-	
-	$.iptChgSet('#custNmInfo');				//고객명
-	$.iptChgSet('input[name=sexCd]');		//성별
-	$.sltChgSet();							//직업코드
-	$.dtChgSet('#brdyDt');					//생년월일
-	$.iptChgSet('input[name=scalYn]');		//생일
-	$.dtChgSet('#mrrgDt');					//결혼기념일
-	$.mblChgSet('input[id^=mblNo]');		//휴대폰번호
-	$.emlChgSet('input[id^=email]');		//이메일
-	$.iptChgSet('input[name=psmtGrcCd]');	//우편물수령
-	$.iptChgSet('#addr');					//주소
-	$.iptChgSet('#addrDtl');				//상세주소
-	$.iptChgSet('#prtCd');					//가입매장
-	$.iptChgSet('#cnclCnts');				//해지사유
-	$.iptChgSet('input[name=custSsCd]');	//고객상태
-	$.iptChgSet('input[name=emailRcvYn]');	//이메일수신동의
-	$.iptChgSet('input[name=smsRcvYn]');	//sms수신동의
-	$.iptChgSet('input[name=dmRcvYn]');		//dm수신동의
+	$('#custNmInfo').change(function(){
+		var value = $(this).val().trim();
+		map.set("custNm",value);
+	});
+	$('input[name=sexCd]').change(function(){
+		var value = $(this).val();
+		map.set("sexCd",value);
+	});
+	$('select').change(function(){
+		var value = $('option:selected').attr("value");
+		map.set("pocCd",value);
+	});
+	$('#brdyDt').change(function(){
+		var value = $(this).val().replace(/\-/g,'');
+		map.set('brdyDt',value);
+	});
+	$('input[name=scalYn]').change(function(){
+		var value = $(this).val();
+		map.set("scalYn",value);
+	});
+	$('#mrrgDt').change(function(){
+		var value = $(this).val().replace(/\-/g,'');
+		map.set('mrrgDt',value);
+	});
+	$('input[id^=mblNo]').change(function(){
+		$('#checkMblNo>span').css("color","coral");
+		
+		var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
+		var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
+		var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
+		var value =  mblNo0+mblNo1+mblNo2;			//합치기
+		
+		map.set("mblNo",value);
+	});
+	$('input[id^=email]').change(function(){
+		var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
+		var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
+		var value = email0+'@'+email1;				//합치기(@포함)
+		
+		map.set("email",value);
+	});
+	$('input[name=psmtGrcCd]').change(function(){
+		var value = $(this).val();
+		map.set("psmtGrcCd",value);
+	});
+	$('#addr').change(function(){
+		var value = $(this).val().trim();
+		map.set("addr",value);
+	});
+	$('#addrDtl').change(function(){
+		var value = $(this).val().trim();
+		map.set("addrDtl",value);
+	});
+	$('#cnclCnts').change(function(){
+		var value = $(this).val().trim();
+		map.set("cnclCnts",value);
+	});
+	$('input[name=custSsCd]').change(function(){
+		var value = $(this).val();
+		map.set("custSsCd",value);
+	});
+	$('input[name=emailRcvYn]').change(function(){
+		var value = $(this).val();
+		map.set("emailRcvYn",value);
+	});
+	$('input[name=smsRcvYn]').change(function(){
+		var value = $(this).val();
+		map.set("smsRcvYn",value);
+	});
+	$('input[name=dmRcvYn]').change(function(){
+		var value = $(this).val();
+		map.set("dmRcvYn",value);
+	});
 	
 	
 	$('#updateBtn').click(function(){
-		
 		//전체 유효성 검사 진행
 		$.checkNameValid();
-		$.checkBrdyDtValid(today);
+		$.checkBrdyDtValid();
 		$.checkEmailValid();
 		$.checkAddrValid();
 		$.checkMrrgDtValid();
 		if($("#custSsCd2").is(':checked')){
 			$.checkcCntsValid();
 		}
-		// && $('#checkMblNo>span').css("color")=="#9BDF30"
-		if($('div[id$="Msg"]').css('display')=='none'){	//유효성 검사 통과시(유효성이 통과되면 메세지 박스 display:none상태)
-			if(confirm("고객정보를 수정하시겠습니까?")){															//더블체크
-				
-				$.ajax({
-					url : "/customer/updateCust.do",
-					type : "post",
-					async: true,
-					data: map,
-					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-					dataType: "json",
-					success : function(data) {
-						//연결성공
-						if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
-							if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
-								alert("수정이 완료되었습니다.");
-								window.close();
-							}else {//데이터 삽입 실패
-								alert("수정 실패. 관리자에게 문의해 주세요");
+		
+		if($.checkAllUpd){
+			if(map.size>0){	
+				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
+					
+					map.set("custNo",$('#custNo').val());
+					const obj = Object.fromEntries(map)
+					console.log(obj);
+					
+					$.ajax({
+						url : "/customer/updateCust.do",
+						type : "post",
+						async: true,
+						data: obj,
+						dataType: "json",
+						success : function(data) {
+							//연결성공
+							if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
+								if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
+									alert("수정이 완료되었습니다.");
+									location.reload();
+								}else {//데이터 삽입 실패
+									alert("수정 실패. 관리자에게 문의해 주세요");
+								}
+							}else { //비즈니스 로직중 에러가 났을 경우(catch)
+								//alert에 에러표시
+								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")");
 							}
-						}else { //비즈니스 로직중 에러가 났을 경우(catch)
+						},
+						error : function(request,status,error) {
 							//alert에 에러표시
-							alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")");
+							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+							//console에 에러표시
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
-					},
-					error : function(request,status,error) {
-						//alert에 에러표시
-						alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
-						//console에 에러표시
-						//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-			}else{
-				return false;
+					});
+				}else{
+					return false;
+				}
+			}else {
+				alert("변경내역이 없습니다.");
 			}
 		}else {
 			alert("입력 내용을 다시 확인해 주세요");
 			return false;
 		}
+			
 	});
 	
 	

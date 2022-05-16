@@ -2,7 +2,11 @@ package com.kr.first.customer.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -359,5 +364,49 @@ public class CustController {
 		//map->json
 		new Gson().toJson(resultMap,out);
 	}
+	
+	
+	//고객 정보 수정 메소드(팝업)
+	@ResponseBody
+	@PostMapping(value = "/customer/updateCust.do")
+	public void insertCust(@RequestParam Map<String, Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
 		
+		//세션 ID 가져오기
+		String userId = user.getUserId();
+		log.info("userId : "+userId);
+		map.put("userId", userId);
+		
+		//고객번호 가져오기
+//		String custNo = (String)map.get("custNo");
+//		map.remove("custNo");
+		
+//		List<String> kList = new ArrayList<String>(map.keySet());
+//		List<Object> vList = new ArrayList<Object>(map.values());
+//		
+//		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+//		paramMap.put("userId", userId);
+//		paramMap.put("custNo", custNo);
+//		paramMap.put("kList", kList);
+//		paramMap.put("vList", vList);
+
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = cService.updateCust(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 수정 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
 }

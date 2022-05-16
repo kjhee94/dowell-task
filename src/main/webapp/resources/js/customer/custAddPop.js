@@ -24,7 +24,7 @@ $(function(){
 	$('#brdyDt').attr('max',today);	//오늘 이후 생일 설정 불가
 	
 	$('#brdyDt').blur(function(){ 
-		$.checkBrdyDtValid(today);
+		$.checkBrdyDtValid();
 	});
 	
 	//핸드폰 유효성 검사
@@ -52,14 +52,14 @@ $(function(){
 		//전체 유효성 검사 진행
 		$.checkNameValid();
 		$.checkPocValid();
-		$.checkBrdyDtValid(today);
+		$.checkBrdyDtValid();
 		$.checkMblNoValid();
 		$.checkEmailValid();
 		$.checkAddrValid();
 		$.checkMrrgDtValid();
 		
-		if($('.area-msg').css('display')=='none'){				//유효성 검사 통과시(유효성이 통과되면 메세지 박스 display:none상태)
-			if(confirm("신규고객을 등록하시겠습니까?")){					//더블체크
+		if($.checkAllAdd()){								//유효성 검사 통과시(유효성이 통과되면 메세지 박스 display:none상태)
+			if(confirm("신규고객을 등록하시겠습니까?")){				//더블체크
 				
 				//휴대폰번호 조합
 				var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
@@ -120,6 +120,7 @@ $(function(){
 			}
 		}else {
 			alert("입력 내용을 다시 확인해 주세요")
+			$('html').scrollTop(0);
 			return false;
 		}
 	})

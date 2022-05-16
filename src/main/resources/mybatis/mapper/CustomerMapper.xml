@@ -321,8 +321,8 @@
 		    C.CUST_SS_CD AS CUSTSSCD,																					--고객상태코드
 		    TO_CHAR(TO_DATE(C.FST_JS_DT),'YYYY-MM-DD') AS FSTJSDT,														--최초가입일자
 		    TO_CHAR(TO_DATE(C.JS_DT),'YYYY-MM-DD') AS JSDT,																--가입일자
-		    TO_CHAR(TO_DATE(C.STP_DT),'YYYY-MM-DD') AS STPDT,															--중지일자
-		    TO_CHAR(TO_DATE(C.CNCL_DT),'YYYY-MM-DD') AS CNCLDT,															--해지일자
+		    NVL(TO_CHAR(TO_DATE(C.STP_DT),'YYYY-MM-DD'),'-') AS STPDT,													--중지일자
+		    NVL(TO_CHAR(TO_DATE(C.CNCL_DT),'YYYY-MM-DD'),'-') AS CNCLDT,												--해지일자
 		    C.CNCL_CNTS AS CNCLCNTS,																					--해지사유
 		    NVL(TO_CHAR((SELECT SUM(CASE 																					--총구매금액_스칼라쿼리 출력
 					            	WHEN SAL_TP_CD='SAL' THEN 1*TOT_SAL_AMT												--판매일시 금액*1
@@ -342,7 +342,7 @@
 		    NVL((SELECT 
 		    		TO_CHAR(TO_DATE(MAX(SAL_DT)),'YYYY-MM-DD') 
 		    	FROM CS_SAL01_MT 
-		    	WHERE CUST_NO=#{custNo}),0) AS LSTPRSDT,																--최종구매일_스칼라쿼리 출력
+		    	WHERE CUST_NO=#{custNo}),'-') AS LSTPRSDT,																--최종구매일_스칼라쿼리 출력
 		    C.EMAIL_RCV_YN AS EMAILRCVYN,																				--이메일수신동의여부
 		    C.SMS_RCV_YN AS SMSRCVYN,																					--SMS수신동의여부
 		    C.DM_RCV_YN AS DMRCVYN																						--DM수신동의여부
@@ -350,4 +350,189 @@
 		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)																--고객관리,거래처관리 JOIN(PRT_CD)
 		WHERE CUST_NO=#{custNo}																							--회원번호로 조회
 	</select>
+	
+	<insert id="insertCustHt" parameterType="hashmap">
+		INSERT ALL 
+		<if test="custNm!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'CUST_NM',
+		                			  (SELECT CUST_NM FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{custNm},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="sexCd!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'SEX_CD',
+		                			  (SELECT SEX_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{sexCd},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="brdyDt!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'BRDY_DT',
+		                			  (SELECT BRDY_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{brdyDt},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="pocCd!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'POC_CD',
+		                			  (SELECT POC_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{pocCd},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="mblNo!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'MBL_NO',
+		                			  (SELECT MBL_NO FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{mblNo},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="custSsCd!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'CUST_SS_CD',
+		                			  (SELECT CUST_SS_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{custSsCd},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="prtCd!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'JN_PRT_CD',
+		                			  (SELECT JN_PRT_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{prtCd},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="stpDt!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'STP_DT',
+		                			  (SELECT STP_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{stpDt},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		<if test="cnclDt!=null">
+		    INTO SD_CUST01_HT VALUES (#{custNo},
+		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
+		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
+		                			  'CNCL_DT',
+		                			  (SELECT CNCL_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
+		                			  #{sexCd},
+		                			  SYSDATE,
+		               			   	  #{userId}, 
+		                			  SYSDATE,
+		                			  #{userId})
+		</if>
+		SELECT * 
+		FROM DUAL;
+	</insert>
+	
+	<update id="updateCust" parameterType="hashmap">
+		UPDATE CS_CUST01_MT SET 								--고객관리 테이블
+		      CUST_NO = #{custNo}								--고객번호
+		      <if test="custNm!=null and !custNm.isEmpty()">
+		      , CUST_NM = #{custNm}								--고객이름
+		      </if>
+		      <if test="sexCd!=null and !sexCd.isEmpty()">
+		      , SEX_CD = #{sexCd}								--성별
+		      </if>
+		      <if test="scalYn!=null and !scalYn.isEmpty()">
+		      , SCAL_YN = #{scalYn}
+		      </if>
+		      <if test="brdyDt!=null and !brdyDt.isEmpty()">
+		      , BRDY_DT = #{brdyDt}
+		      </if>
+		      <if test="mrrgDt!=null and !mrrgDt.isEmpty()">
+		      , MRRG_DT = #{mrrgDt}
+		      </if>
+		      <if test="pocCd!=null and !pocCd.isEmpty()">
+		      , POC_CD = #{pocCd}
+		      </if>
+		      <if test="mblNo!=null and !mblNo.isEmpty()">
+		      , MBL_NO = #{mblNo}
+		      </if>
+		      <if test="psmtGrcCd!=null and !psmtGrcCd.isEmpty()">
+		      , PSMT_GRC_CD = #{psmtGrcCd}
+		      </if>
+		      <if test="email!=null and !email.isEmpty()">
+		      , EMAIL = #{email}
+		      </if>
+		      <if test="addr!=null and !addr.isEmpty()">
+		      , ADDR = #{addr}
+		      </if>
+		      <if test="addrDtl!=null and !addrDtl.isEmpty()">
+		      , ADDR_DTL = #{addrDtl}
+		      </if>
+		      <if test="prtCd!=null and !prtCd.isEmpty()">
+		      , JN_PRT_CD = #{prtCd}
+		      </if>
+		      <if test="emailRcvYn!=null and !emailRcvYn.isEmpty()">
+		      , EMAIL_RCV_YN = #{emailRcvYn}
+		      </if>
+		      <if test="smsRcvYn!=null and !smsRcvYn.isEmpty()">
+		      , SMS_RCV_YN = #{smsRcvYn}
+		      </if>
+		      <if test="dmRcvYn!=null and !dmRcvYn.isEmpty()">
+		      , DM_RCV_YN = #{dmRcvYn}
+		      </if>
+		      <if test="custSsCd!=null and !custSsCd.isEmpty()">
+				<choose>
+					<when test="custSsCd.equals('10') ">
+					, CUST_SS_CD = #{custSsCd}
+					, JS_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
+					, STP_DT = NULL
+					, CNCL_DT = NULL
+					, CNCL_CNTS = NULL
+					</when>
+					<when test="custSsCd.equals('80') ">
+					, CUST_SS_CD = #{custSsCd}
+					, STP_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
+					</when>
+					<otherwise>
+					, CUST_SS_CD = #{custSsCd}
+					, CNCL_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
+					, CNCL_CNTS = #{cnclCnts}
+					</otherwise>
+				</choose>
+		      </if>
+		WHERE CUST_NO = #{custNo}
+	</update>
 </mapper>

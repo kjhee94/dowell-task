@@ -142,6 +142,5 @@ function custHtPopOpen(index) {
 function custInfoOpen(index) {
 	
 	var custNo = $("#custNo"+index).text();
-
 	location.href='/customer/custInfo.do?custNo='+custNo;
 }

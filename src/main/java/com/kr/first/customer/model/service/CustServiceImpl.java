@@ -4,11 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kr.first.customer.model.dao.CustDAO;
 import com.kr.first.customer.model.vo.CustHtVO;
@@ -239,7 +242,7 @@ public class CustServiceImpl implements CustService {
 
 	//고객 정보 조회 메소드
 	@Override
-	public HashMap<String, Object> selectOneCust(String custNo) {
+	public HashMap<String, Object> selectOneCust(String custNo) throws Exception {
 		
 		//고객이력 목록 list에 담기
 		log.info("=================>>고객 정보 조회");
@@ -250,6 +253,35 @@ public class CustServiceImpl implements CustService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cust",cust);
 		resultMap.put("custNm",cust.getCustNm());
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
+
+	//고객 정보 수정  메소드
+	@Transactional
+	@Override
+	public HashMap<String, Object> updateCust(Map<String, Object> map) throws Exception {
+		
+		//고객 이력 추가 결과 int에 담기(1:성공 / 0:실패)
+		//log.info("=================>>고객 이력 등록");
+		//int resultInsert = cDAO.insertCustHt(paramMap);
+		
+		//고객 등록 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>고객 정보 수정");
+		int resultUpdate = cDAO.updateCust(map);
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		// resultInsert>0
+		if(resultUpdate>0) {	//등록 성공
+			log.info("=================>>고객 정보 수정 성공");
+			resultMap.put("seccessYN","Y");
+		}else {	//등록 실패
+			log.info("=================>>고객 정보 수정 실패");
+			resultMap.put("seccessYN","N");
+		}
 		resultMap.put("result",true);
 		
 		return resultMap;
