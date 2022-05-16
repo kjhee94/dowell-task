@@ -472,63 +472,63 @@
 		      , CUST_NM = #{custNm}								--고객이름
 		      </if>
 		      <if test="sexCd!=null and !sexCd.isEmpty()">
-		      , SEX_CD = #{sexCd}								--성별
+		      , SEX_CD = #{sexCd}								--성별코드
 		      </if>
 		      <if test="scalYn!=null and !scalYn.isEmpty()">
-		      , SCAL_YN = #{scalYn}
+		      , SCAL_YN = #{scalYn}								--양음력구분
 		      </if>
 		      <if test="brdyDt!=null and !brdyDt.isEmpty()">
-		      , BRDY_DT = #{brdyDt}
+		      , BRDY_DT = #{brdyDt}								--생년월일
 		      </if>
 		      <if test="mrrgDt!=null and !mrrgDt.isEmpty()">
-		      , MRRG_DT = #{mrrgDt}
+		      , MRRG_DT = #{mrrgDt}								--결혼기념일
 		      </if>
 		      <if test="pocCd!=null and !pocCd.isEmpty()">
-		      , POC_CD = #{pocCd}
+		      , POC_CD = #{pocCd}								--직업코드
 		      </if>
 		      <if test="mblNo!=null and !mblNo.isEmpty()">
-		      , MBL_NO = #{mblNo}
+		      , MBL_NO = #{mblNo}								--휴대폰번호
 		      </if>
 		      <if test="psmtGrcCd!=null and !psmtGrcCd.isEmpty()">
-		      , PSMT_GRC_CD = #{psmtGrcCd}
+		      , PSMT_GRC_CD = #{psmtGrcCd}						--우편물수령코드
 		      </if>
 		      <if test="email!=null and !email.isEmpty()">
-		      , EMAIL = #{email}
+		      , EMAIL = #{email}								--이메일
 		      </if>
 		      <if test="addr!=null and !addr.isEmpty()">
-		      , ADDR = #{addr}
+		      , ADDR = #{addr}									--주소
 		      </if>
 		      <if test="addrDtl!=null and !addrDtl.isEmpty()">
-		      , ADDR_DTL = #{addrDtl}
+		      , ADDR_DTL = #{addrDtl}							--상세주소
 		      </if>
 		      <if test="prtCd!=null and !prtCd.isEmpty()">
-		      , JN_PRT_CD = #{prtCd}
+		      , JN_PRT_CD = #{prtCd}							--가입매장
 		      </if>
 		      <if test="emailRcvYn!=null and !emailRcvYn.isEmpty()">
-		      , EMAIL_RCV_YN = #{emailRcvYn}
+		      , EMAIL_RCV_YN = #{emailRcvYn}					--이메일수신동의여부
 		      </if>
 		      <if test="smsRcvYn!=null and !smsRcvYn.isEmpty()">
-		      , SMS_RCV_YN = #{smsRcvYn}
+		      , SMS_RCV_YN = #{smsRcvYn}						--sms수신동의여부
 		      </if>
 		      <if test="dmRcvYn!=null and !dmRcvYn.isEmpty()">
-		      , DM_RCV_YN = #{dmRcvYn}
+		      , DM_RCV_YN = #{dmRcvYn}							--dm수신동의여부
 		      </if>
 		      <if test="custSsCd!=null and !custSsCd.isEmpty()">
 				<choose>
-					<when test="custSsCd.equals('10') ">
-					, CUST_SS_CD = #{custSsCd}
-					, JS_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
-					, STP_DT = NULL
-					, CNCL_DT = NULL
-					, CNCL_CNTS = NULL
+					<when test="custSsCd.equals('10') ">		--고객상태코드 정상으로 변경
+					, CUST_SS_CD = #{custSsCd}					--고객상태코드
+					, JS_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		--가입일자 오늘로 변경
+					, STP_DT = NULL								--중지일자 초기화
+					, CNCL_DT = NULL							--해지일자 초기화
+					, CNCL_CNTS = NULL							--해지사유 초기화
 					</when>
-					<when test="custSsCd.equals('80') ">
-					, CUST_SS_CD = #{custSsCd}
-					, STP_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
+					<when test="custSsCd.equals('80') ">		--고객상태코드 중지로 변경
+					, CUST_SS_CD = #{custSsCd}					--고객상태코드
+					, STP_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		--해지일자 오늘
 					</when>
-					<otherwise>
-					, CUST_SS_CD = #{custSsCd}
-					, CNCL_DT = TO_CHAR(SYSDATE,'YYYYMMDD')
+					<otherwise>									--고객상태코드 해지로 변경
+					, CUST_SS_CD = #{custSsCd}					--고객상태코드
+					, CNCL_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		
 					, CNCL_CNTS = #{cnclCnts}
 					</otherwise>
 				</choose>

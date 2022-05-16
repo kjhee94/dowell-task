@@ -53,7 +53,6 @@ $(function(){
 									  	'<button class="btn-icon" onclick="custHtPopOpen('+index+')" type="button">'+
 									  		'<span class="material-icons">list_alt</span>'+
 										'</button>'+
-//										'<form id="hiddenForm'+index+'" method="post"><input type="hidden" name="custNo" value="'+item.custNo+'"></form>'+
 									  '</span>'+
 									  '<span class="custNm">'+
 									  	'<span>'+item.custNm+'</span>'+
@@ -130,12 +129,6 @@ function custHtPopOpen(index) {
 
 	var option = 'width=1000, height=500, top=50, left=50, location=no';
 	window.open('/customer/custHtPop.do?custNo='+custNo, 'custHtPopOpen', option);
-	
-//	var hiddenForm = $("#hiddenForm"+index)
-//	
-//	hiddenForm.target="custHtPopOpen";
-//	hiddenForm.action="/customer/CustHtPop.do";
-//	hiddenForm.submit();
 }
 
 //custInfoOpen 함수 실행

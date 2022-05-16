@@ -264,8 +264,8 @@ public class CustServiceImpl implements CustService {
 	public HashMap<String, Object> updateCust(Map<String, Object> map) throws Exception {
 		
 		//고객 이력 추가 결과 int에 담기(1:성공 / 0:실패)
-		//log.info("=================>>고객 이력 등록");
-		//int resultInsert = cDAO.insertCustHt(paramMap);
+		log.info("=================>>고객 이력 등록");
+		int resultInsert = cDAO.insertCustHt(map);
 		
 		//고객 등록 결과 int에 담기(1:성공 / 0:실패)
 		log.info("=================>>고객 정보 수정");

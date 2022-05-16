@@ -377,9 +377,6 @@ $(function(){
         if(!$.checkNameValid()) {
             return false;
         }
-        else if(!$.checkPocValid()) {
-            return false;
-        }
         else if(!$.checkBrdyDtValid()) {
             return false;
         }
@@ -407,14 +404,29 @@ $(function(){
 		if(checkCustSs=='10'){
 			$('#custSsCd2').attr("disabled",true);
 			$('#custSsCd2').parent().css("color","#c8c8c8");
+			$('#custSsCd1').attr("disabled",false);
+			$('#custSsCd1').parent().css("color","#707070");
+			$('#custSsCd0').attr("disabled",false);
+			$('#custSsCd0').parent().css("color","#707070");
 		}else if(checkCustSs=='90'){
 			$('#custSsCd1').attr("disabled",true);
 			$('#custSsCd1').parent().css("color","#c8c8c8");
+			$('#custSsCd2').attr("disabled",false);
+			$('#custSsCd2').parent().css("color","#707070");
+			$('#custSsCd0').attr("disabled",false);
+			$('#custSsCd0').parent().css("color","#707070");
 			$('#cnclCnts').attr("readonly",false);
 			$("#custNmInfo").attr("readonly",true);
 			$("#mblNo0").attr("readonly",true);
 			$("#mblNo1").attr("readonly",true);
 			$("#mblNo2").attr("readonly",true);
+		}else {
+			$('#custSsCd0').attr("disabled",false);
+			$('#custSsCd0').parent().css("color","#707070");
+			$('#custSsCd2').attr("disabled",false);
+			$('#custSsCd2').parent().css("color","#707070");
+			$('#custSsCd1').attr("disabled",false);
+			$('#custSsCd1').parent().css("color","#707070");
 		}
 		
 		if(custSsCd=='80'){
