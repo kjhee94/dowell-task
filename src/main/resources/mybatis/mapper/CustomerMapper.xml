@@ -271,8 +271,8 @@
 		    LST_UPD_ID) 					--최종수정자
 		VALUES (
 		    (SELECT 						--현재 고객번호 맨끝+1
-		        MAX(CUST_NO)+1 
-		    FROM CS_CUST01_MT),
+				NVL(MAX(CUST_NO),0)+1 
+			FROM CS_CUST01_MT),
 		    #{custNm},						--입력한 고객이름
 		    #{sexCd},						--선택한 성별코드
 		    #{scalYn},						--선택한 양음력구분
@@ -307,11 +307,7 @@
 		    TO_CHAR(TO_DATE(C.BRDY_DT),'YYYY-MM-DD') AS BRDYDT,															--생년월일
 		    C.SCAL_YN AS SCALYN,																						--양음력구분
 		    TO_CHAR(TO_DATE(C.MRRG_DT),'YYYY-MM-DD') AS MRRYDT,															--결혼기념일
-		    CASE																										--휴대폰번호
-		        WHEN LENGTH(C.MBL_NO)=10 THEN SUBSTR(C.MBL_NO,1,3)||'-'||SUBSTR(C.MBL_NO,4,3)||'-'||SUBSTR(C.MBL_NO,7)  --휴대폰 번호가 10자리일 때 '000-***-0000'의 형식
-		        WHEN LENGTH(C.MBL_NO)=11 THEN SUBSTR(C.MBL_NO,1,3)||'-'||SUBSTR(C.MBL_NO,4,4)||'-'||SUBSTR(C.MBL_NO,8)  --휴대폰 번호가 11자리일 때 '000-****-0000'의 형식 
-		        ELSE '-'
-		    END AS MBLNO,
+		    C.MBL_NO AS MBLNO,																							--휴대폰번호
 		    C.EMAIL,																									--이메일
 		    C.PSMT_GRC_CD AS PSMTGRCCD,																					--우편물 수령코드
 		    C.ADDR,																										--주소
@@ -353,167 +349,38 @@
 	
 	<insert id="insertCustHt" parameterType="hashmap">
 		INSERT ALL 
-		<if test="custNm!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'CUST_NM',
-		                			  (SELECT CUST_NM FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{custNm},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="sexCd!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'SEX_CD',
-		                			  (SELECT SEX_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{sexCd},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="brdyDt!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'BRDY_DT',
-		                			  (SELECT BRDY_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{brdyDt},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="pocCd!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'POC_CD',
-		                			  (SELECT POC_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{pocCd},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="mblNo!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'MBL_NO',
-		                			  (SELECT MBL_NO FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{mblNo},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="custSsCd!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'CUST_SS_CD',
-		                			  (SELECT CUST_SS_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{custSsCd},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="prtCd!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'JN_PRT_CD',
-		                			  (SELECT JN_PRT_CD FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{prtCd},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="stpDt!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'STP_DT',
-		                			  (SELECT STP_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{stpDt},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		<if test="cnclDt!=null">
-		    INTO SD_CUST01_HT VALUES (#{custNo},
-		                			  TO_CHAR(SYSDATE,'YYYYMMDD'),
-		                			  NVL((SELECT MAX(CHG_SEQ) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1),
-		                			  'CNCL_DT',
-		                			  (SELECT CNCL_DT FROM CS_CUST01_MT WHERE CUST_NO=#{custNo}),
-		                			  #{sexCd},
-		                			  SYSDATE,
-		               			   	  #{userId}, 
-		                			  SYSDATE,
-		                			  #{userId})
-		</if>
-		SELECT * 
-		FROM DUAL;
+		<foreach collection="infoChgMap" item="item" index="index" open="INTO SD_CUST01_HT VALUES" separator="" close="SELECT * FROM DUAL">
+	        (#{custNo},
+	         TO_CHAR(SYSDATE,'YYYYMMDD'),
+	         NVL((SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1) + #{index},
+	         #{htList.chgCd},
+	         #{htList.chgBfCnt},
+	         #{htList.chgAftCnt},
+	         SYSDATE,
+	         #{userId}, 
+	         SYSDATE,
+	         #{userId})
+  		</foreach>
 	</insert>
 	
 	<update id="updateCust" parameterType="hashmap">
 		UPDATE CS_CUST01_MT SET 								--고객관리 테이블
 		      CUST_NO = #{custNo}								--고객번호
-		      <if test="custNm!=null and !custNm.isEmpty()">
 		      , CUST_NM = #{custNm}								--고객이름
-		      </if>
-		      <if test="sexCd!=null and !sexCd.isEmpty()">
 		      , SEX_CD = #{sexCd}								--성별코드
-		      </if>
-		      <if test="scalYn!=null and !scalYn.isEmpty()">
 		      , SCAL_YN = #{scalYn}								--양음력구분
-		      </if>
-		      <if test="brdyDt!=null and !brdyDt.isEmpty()">
 		      , BRDY_DT = #{brdyDt}								--생년월일
-		      </if>
-		      <if test="mrrgDt!=null and !mrrgDt.isEmpty()">
 		      , MRRG_DT = #{mrrgDt}								--결혼기념일
-		      </if>
-		      <if test="pocCd!=null and !pocCd.isEmpty()">
 		      , POC_CD = #{pocCd}								--직업코드
-		      </if>
-		      <if test="mblNo!=null and !mblNo.isEmpty()">
 		      , MBL_NO = #{mblNo}								--휴대폰번호
-		      </if>
-		      <if test="psmtGrcCd!=null and !psmtGrcCd.isEmpty()">
 		      , PSMT_GRC_CD = #{psmtGrcCd}						--우편물수령코드
-		      </if>
-		      <if test="email!=null and !email.isEmpty()">
 		      , EMAIL = #{email}								--이메일
-		      </if>
-		      <if test="addr!=null and !addr.isEmpty()">
 		      , ADDR = #{addr}									--주소
-		      </if>
-		      <if test="addrDtl!=null and !addrDtl.isEmpty()">
 		      , ADDR_DTL = #{addrDtl}							--상세주소
-		      </if>
-		      <if test="prtCd!=null and !prtCd.isEmpty()">
 		      , JN_PRT_CD = #{prtCd}							--가입매장
-		      </if>
-		      <if test="emailRcvYn!=null and !emailRcvYn.isEmpty()">
 		      , EMAIL_RCV_YN = #{emailRcvYn}					--이메일수신동의여부
-		      </if>
-		      <if test="smsRcvYn!=null and !smsRcvYn.isEmpty()">
 		      , SMS_RCV_YN = #{smsRcvYn}						--sms수신동의여부
-		      </if>
-		      <if test="dmRcvYn!=null and !dmRcvYn.isEmpty()">
 		      , DM_RCV_YN = #{dmRcvYn}							--dm수신동의여부
-		      </if>
-		      <if test="custSsCd!=null and !custSsCd.isEmpty()">
 				<choose>
 					<when test="custSsCd.equals('10') ">		--고객상태코드 정상으로 변경
 					, CUST_SS_CD = #{custSsCd}					--고객상태코드
@@ -532,7 +399,6 @@
 					, CNCL_CNTS = #{cnclCnts}
 					</otherwise>
 				</choose>
-		      </if>
 		WHERE CUST_NO = #{custNo}
 	</update>
 </mapper>

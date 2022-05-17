@@ -21,7 +21,7 @@ $(function(){
 	var date = new Date();					//오늘 날짜
 	var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
 
-	$('#brdyDt').attr('max',today);	//오늘 이후 생일 설정 불가
+	$('#brdyDt').attr('max',today);			//오늘 이후 생일 설정 불가
 	
 	$('#brdyDt').blur(function(){ 
 		$.checkBrdyDtValid();

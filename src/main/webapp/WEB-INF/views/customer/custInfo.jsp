@@ -32,24 +32,22 @@
 					</button>
 				</div>
 				<div class="box-search">
-					<form id=" ">
-						<div class="area-search-input">
-							<span class="search-title">고객번호</span>
-							<div class="box-input-text">
-								<input id="custNo" class="style-input" type="text" name="custNo" value="${requestScope.map.custNo}" autofocus autocomplete='off'>
-								<button id="custSearchBtn" class="btn-one-search" type="button">
-									<span class="material-icons">search</span>
-								</button>
-								<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
-							</div>
-						</div>
-						
-						<div class="area-btn">
-							<button id="SearchBtn" class="btn-submit" type="button">
+					<div class="area-search-input">
+						<span class="search-title">고객번호</span>
+						<div class="box-input-text">
+							<input id="custNo" class="style-input" type="text" name="custNo" value="${requestScope.map.custNo}" autofocus autocomplete='off'>
+							<button id="custSearchBtn" class="btn-one-search" type="button">
 								<span class="material-icons">search</span>
 							</button>
+							<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
 						</div>
-					</form>
+					</div>
+					
+					<div class="area-btn">
+						<button id="SearchBtn" class="btn-submit" type="button">
+							<span class="material-icons">search</span>
+						</button>
+					</div>
 				</div>
 				
 				<div class="box-result">
@@ -64,7 +62,7 @@
 											<input id="custNmInfo" class="style-input" type="text" name="custNm" placeholder="홍길동" autocomplete='off'>
 										</div>
 									</div>
-									<!-- <div id="custNmMsg" class="area-msg"></div> -->
+									<div id="custNmMsg" class="area-msg"></div>
 								</div>
 								<div class="one-input">
 									<div class="area-input">
@@ -73,7 +71,7 @@
 											<input id="brdyDt" class="style-input" type="date" name="brdyDt" max="9999-12-13">
 										</div>
 									</div>
-									<!-- <div id="brdyDtMsg" class="area-msg"></div> -->
+									<div id="brdyDtMsg" class="area-msg"></div>
 								</div>
 								<div class="one-input">
 									<div class="area-input">
@@ -101,7 +99,7 @@
 											<input id="mrrgDt" class="style-input" type="date" name="mrrgDt" max="9999-12-13">
 										</div>
 									</div>
-									<!-- <div id="mrrgDtMsg" class="area-msg"></div> -->
+									<div id="mrrgDtMsg" class="area-msg"></div>
 								</div>
 								
 								<div class="one-input">
@@ -117,7 +115,7 @@
 											<span class="material-icons select-arrow">expand_more</span>
 										</div>
 									</div>
-									<!-- <div id="pocMsg" class="area-msg"></div> -->
+									<div id="pocMsg" class="area-msg"></div>
 								</div>
 								
 								<div class="one-input">
@@ -127,22 +125,23 @@
 											<input id="mblNo0" class="style-input mblNo" type="text" maxlength="3" placeholder="010" autocomplete='off'>
 											<input id="mblNo1" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
 											<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
+											<input id="mblNo" type="hidden" name="mblNo">
 											<button id="checkMblNo" class="btn-check" type="button">
 												<span class="material-icons">done</span>
 											</button>
 										</div>
 									</div>
-									<!-- <div id="mblNoMsg" class="area-msg"></div> -->
+									<div id="mblNoMsg" class="area-msg"></div>
 								</div>
 								<div class="one-input">
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>가입매장</span>
 										<div class="box-input">
-											<input id="prtCd" class="style-input prt" type="text" name="prtCd">
+											<input id="prtCd" class="style-input prt" type="text" name="prtNo">
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input prt" type="text" name="prtNm" autocomplete='off'>
+											<input id="prtNm" class="style-input prt" type="text" autocomplete='off'>
 										</div>
 									</div>
 								</div>
@@ -162,9 +161,10 @@
 										<div class="box-input">
 											<input id="email0" class="style-input email" type="text" placeholder="ID" autocomplete='off'>@
 											<input id="email1" class="style-input email" type="text" placeholder="email.com" autocomplete='off'>
+											<input id="email" type="hidden" name="email">
 										</div>
 									</div>
-									<!-- <div id="emailMsg" class="area-msg"></div> -->
+									<div id="emailMsg" class="area-msg"></div>
 								</div>
 							</div>
 							
@@ -177,7 +177,7 @@
 											<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
 										</div>
 									</div>
-									<!-- <div id="addrMsg" class="area-msg"></div> -->
+									<div id="addrMsg" class="area-msg"></div>
 								</div>
 								
 								<div class="one-input">
@@ -293,7 +293,29 @@
 							</div>
 						</fieldset>
 					</form>
-					
+					<form id="bfCntForm">
+						<input id="bfCustNm" type="hidden" name="CUST_NM">
+						<input id="bfBrdyDt" type="hidden" name="BRDY_DT">
+						<input id="bfSexCd" type="hidden" name="SEX_CD">
+						<input id="bfMrrgDt" type="hidden" name="MRRG_DT">
+						<input id="bfScalYn" type="hidden" name="SCAL_YN">
+						<input id="bfPocCd" type="hidden" name="POC_CD">
+						<input id="bfMblNo" type="hidden" name="MBL_NO">
+						<input id="bfPrtCd" type="hidden" name="JN_PRT_CD">
+						<input id="bfPsmtGrcCd" type="hidden" name="PSMT_GRC_CD">
+						<input id="bfEmail" type="hidden" name="EMAIL">
+						<input id="bfAddr" type="hidden" name="ADDR">
+						<input id="bfAddrDtl" type="hidden" name="ADDR_DTL">
+						<input id="bfCustSsCd" type="hidden" name="CUST_SS_CD">
+						<input id="bfFstJsDt" type="hidden" name="FST_JS_DT">
+						<input id="bfJsDt" type="hidden" name="JS_DT">
+						<input id="bfStpDt" type="hidden" name="STP_DT">
+						<input id="bfCnclDt" type="hidden" name="CNCL_DT">
+						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
+						<input id="bfEmailRcvYn" type="hidden" name="EMAIL_RCV_YN">
+						<input id="bfSmsRcvYn" type="hidden" name="SMS_RCV_YN">
+						<input id="bfDmRcvYn" type="hidden" name="DM_RCV_YN">
+					</form>
 					<div class="box-btn">
 						<button class="btn-golist"><a href="/customer/custList.do">목록</a></button>
 						<c:if test="${sessionScope.user.userDtCd eq '2'}">

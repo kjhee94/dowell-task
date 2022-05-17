@@ -115,7 +115,7 @@ $(function(){
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 
 	//custAddBtn 클릭시 팝업 오픈
-	$.popupOpen($('#custAddBtn'),'800','640','/customer/custAddPop.do','custAddPop');
+	$.popupOpen($('#custAddBtn'),'850','640','/customer/custAddPop.do','custAddPop');
 
 	//resetBtn 클릭시 초기화
 	$.reset($('#resetBtn'),'/customer/custList.do');

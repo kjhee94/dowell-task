@@ -20,9 +20,9 @@
 	<div class="container">
 		<div class="box-title">
 			<span class="main-title">신규고객등록</span>
-			<!-- <button id="resetCustAddBtn" class="btn-reset" type="reset">
+			<button id="resetCustAddBtn" class="btn-reset" type="reset">
 				<span class="material-icons">restart_alt</span>
-			</button> -->
+			</button>
 		</div>
 		
 		<form id="custAddForm" method="post">
@@ -35,7 +35,7 @@
 							<input id="custNmInfo" class="style-input" type="text" name="custNm" autofocus autocomplete='off'>
 						</div>
 					</div>
-					<!-- <div id="custNmMsg" class="area-msg"></div> -->
+					<div id="custNmMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -50,7 +50,7 @@
 							<span class="material-icons select-arrow">expand_more</span>
 						</div>
 					</div>
-					<!-- <div id="pocMsg" class="area-msg"></div> -->
+					<div id="pocMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -59,7 +59,7 @@
 							<input id="brdyDt" class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
-					<!-- <div id="brdyDtMsg" class="area-msg"></div> -->
+					<div id="brdyDtMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -80,7 +80,7 @@
 							<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" autocomplete='off'>
 						</div>
 					</div>
-					<!-- <div id="mblNoMsg" class="area-msg"></div> -->
+					<div id="mblNoMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -109,7 +109,7 @@
 							<input id="email1" class="style-input email" type="text" autocomplete='off'>
 						</div>
 					</div>
-					<!-- <div id="emailMsg" class="area-msg"></div> -->
+					<div id="emailMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input row-addr">
 					<div class="area-input">
@@ -119,7 +119,7 @@
 							<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" autocomplete='off'>
 						</div>
 					</div>
-					<!-- <div id="addrMsg" class="area-msg"></div> -->
+					<div id="addrMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -128,7 +128,7 @@
 							<input id="mrrgDt" class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
-					<!-- <div id="mrrgDtMsg" class="area-msg"></div> -->
+					<div id="mrrgDtMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -172,7 +172,6 @@
 				</div>
 			</fieldset>
 		</form>
-		
 		<div class="box-btn">
 			<button id="closeBtn" class="btn-close">닫기</button>
 			<button id="applyBtn" class="btn-apply">등록</button>

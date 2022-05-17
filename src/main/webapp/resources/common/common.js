@@ -193,7 +193,6 @@ $(function(){
 		}else if(custNm.length==1){						//이름 1자 일 때
 			msg.css('display','block');
 			msg.text('2자 이상 입력해 주세요.');
-			$('#custNmInfo').val("");					//입력창 리셋
 			return false;
 		}else {
 			msg.css('display','none');
@@ -335,7 +334,7 @@ $(function(){
 	//이메일 유효성 검사
 	$.checkEmailValid = function(){
 		var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
-		var email1 = $('#email1').val().trim();	//사용자가 입력한 값 공백 제거
+		var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
 		var msg = $('#emailMsg');
 		
 		if(email0.length==0 || email1.length==0){	//모두 입력이 되지 않았을 때
