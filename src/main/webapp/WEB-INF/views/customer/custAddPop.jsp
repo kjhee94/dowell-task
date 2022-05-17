@@ -20,9 +20,9 @@
 	<div class="container">
 		<div class="box-title">
 			<span class="main-title">신규고객등록</span>
-			<button id="resetCustAddBtn" class="btn-reset" type="reset">
+			<!-- <button id="resetCustAddBtn" class="btn-reset" type="reset">
 				<span class="material-icons">restart_alt</span>
-			</button>
+			</button> -->
 		</div>
 		
 		<form id="custAddForm" method="post">
@@ -32,20 +32,10 @@
 					<div class="area-input">
 						<span class="input-title"><span class="required">*</span>고객명</span>
 						<div class="box-input">
-							<input id="custNmInfo" class="style-input" type="text" name="custNm" placeholder="홍길동" autofocus autocomplete='off'>
+							<input id="custNmInfo" class="style-input" type="text" name="custNm" autofocus autocomplete='off'>
 						</div>
 					</div>
-					<div id="custNmMsg" class="area-msg"></div>
-				</div>
-				<div class="one-input">
-					<div class="area-input">
-						<span class="input-title">성별</span>
-						<div class="box-radio">
-							<c:forEach items="${requestScope.map.sList}" var="s" varStatus="status">
-								<label><input id="sexCd${status.index}" type="radio" name="sexCd" value="${s.sexCd}">${s.sexNm}</label>
-							</c:forEach>
-						</div>
-					</div>
+					<!-- <div id="custNmMsg" class="area-msg"></div> -->
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -60,7 +50,7 @@
 							<span class="material-icons select-arrow">expand_more</span>
 						</div>
 					</div>
-					<div id="pocMsg" class="area-msg"></div>
+					<!-- <div id="pocMsg" class="area-msg"></div> -->
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -69,7 +59,28 @@
 							<input id="brdyDt" class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
-					<div id="brdyDtMsg" class="area-msg"></div>
+					<!-- <div id="brdyDtMsg" class="area-msg"></div> -->
+				</div>
+				<div class="one-input">
+					<div class="area-input">
+						<span class="input-title">성별</span>
+						<div class="box-radio">
+							<c:forEach items="${requestScope.map.sList}" var="s" varStatus="status">
+								<label><input id="sexCd${status.index}" type="radio" name="sexCd" value="${s.sexCd}">${s.sexNm}</label>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+				<div class="one-input">
+					<div class="area-input">
+						<span class="input-title"><span class="required">*</span>휴대폰번호</span>
+						<div class="box-input">
+							<input id="mblNo0" class="style-input mblNo" type="text" maxlength="3" autocomplete='off'>
+							<input id="mblNo1" class="style-input mblNo" type="text" maxlength="4" autocomplete='off'>
+							<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" autocomplete='off'>
+						</div>
+					</div>
+					<!-- <div id="mblNoMsg" class="area-msg"></div> -->
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -79,27 +90,6 @@
 							<label><input type="radio" name="scalYn" value="1">음력</label>
 						</div>
 					</div>
-				</div>
-				<div class="one-input">
-					<div class="area-input">
-						<span class="input-title"><span class="required">*</span>휴대폰번호</span>
-						<div class="box-input">
-							<input id="mblNo0" class="style-input mblNo" type="text" maxlength="3" placeholder="010" autocomplete='off'>
-							<input id="mblNo1" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
-							<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
-						</div>
-					</div>
-					<div id="mblNoMsg" class="area-msg"></div>
-				</div>
-				<div class="one-input">
-					<div class="area-input">
-						<span class="input-title"><span class="required">*</span>이메일</span>
-						<div class="box-input">
-							<input id="email0" class="style-input email" type="text" placeholder="ID" autocomplete='off'>@
-							<input id="email1" class="style-input email" type="text" placeholder="email.com" autocomplete='off'>
-						</div>
-					</div>
-					<div id="emailMsg" class="area-msg"></div>
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -113,13 +103,23 @@
 				</div>
 				<div class="one-input">
 					<div class="area-input">
-						<span class="input-title addr-height">주소</span>
-						<div class="box-addr">
-							<input id="addr" class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
-							<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
+						<span class="input-title"><span class="required">*</span>이메일</span>
+						<div class="box-input">
+							<input id="email0" class="style-input email" type="text" autocomplete='off'>@
+							<input id="email1" class="style-input email" type="text" autocomplete='off'>
 						</div>
 					</div>
-					<div id="addrMsg" class="area-msg"></div>
+					<!-- <div id="emailMsg" class="area-msg"></div> -->
+				</div>
+				<div class="one-input row-addr">
+					<div class="area-input">
+						<span class="input-title">주소</span>
+						<div class="box-addr">
+							<input id="addr" class="style-input addr" type="text" name="addr" autocomplete='off'>
+							<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" autocomplete='off'>
+						</div>
+					</div>
+					<!-- <div id="addrMsg" class="area-msg"></div> -->
 				</div>
 				<div class="one-input">
 					<div class="area-input">
@@ -128,7 +128,7 @@
 							<input id="mrrgDt" class="style-input" type="date" max="9999-12-13">
 						</div>
 					</div>
-					<div id="mrrgDtMsg" class="area-msg"></div>
+					<!-- <div id="mrrgDtMsg" class="area-msg"></div> -->
 				</div>
 				<div class="one-input">
 					<div class="area-input">

@@ -139,5 +139,8 @@ select::-ms-expand{
 
 /*필수입력 표시*/
 .required {
+	padding-right: 5px;
 	color: #C22B12;
+	position: absolute;
+	top: 4px;
 }

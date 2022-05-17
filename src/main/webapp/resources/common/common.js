@@ -2,61 +2,49 @@
  * 
  */
 $(function(){
+	
+	//input 내에서 focus를 value 끝으로 이동
+	$.focusEnd = function(){
+		var len = $('input[autofocus]').val().length;
+		$('input[autofocus]')[0].setSelectionRange(len, len);
+	}
+	
 	//keydown 이벤트시 날짜 유효성 체크
 	$.checkValidKeydown = function(date1,date2,select) {
 		date1.keydown(function(keyNum){ 
-			if(keyNum.keyCode == 13){ 								//값변경 후 enter
-				if(select==0){
-					$.checkValidChangeDate(date1,date2,select); 	//jsDtFrom 유효성 체크
-				}else {
-					$.checkValidChangeDate(date1,date2,select); 	//jsDtTo 유효성 체크
-				}
+			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
+				$.checkValidChangeDate(date1,date2,select);
 			};
 		});
 	}
 	
-	//blur 이벤트시  날짜 유효성 체크	
-//	$.checkValidBlur = function(date1,date2,select) {			//blur이벤트
-//		date1.blur(function(){ 
-//			if(select==0){										//select=0이면 date1이 jsDtFrom
-//				$.checkValidChangeDate(date1,date2,select); 	//jsDtFrom 유효성 체크
-//			}else {
-//				$.checkValidChangeDate(date1,date2,select); 	//jsDtTo 유효성 체크
-//			}
-//		});
-//	}
-	
 	//Date 유효성 검사 후 날짜 변경
 	$.checkValidChangeDate = function(date1,date2,select){
-		if($.checkValidDate(date1.val())==false){			//날짜 유효성 체크 실패시
-			alert('잘못된 형식의 날짜입니다');
-			
-			var date = new Date(date2.val());				//date2 Date형으로 변환
-			if(select==0) {									//select=0이면 date1이 jsDtFrom
-				date.setDate(date.getDate()-1)				//date-1일
-			}else {											//select=0이면 date1이 jsDtFrom
-				date.setDate(date.getDate()+1);				//date+1일
-			}
-			var formatDate = $.getFormatDate(date);			//포맷
-			date1.val(formatDate);							//값변경
+		if($.checkValidDate(date1.val())==false){			//날짜 유효성 검사 실패시
+//			alert('잘못된 형식의 날짜입니다');
+			$.alertChangeDate("잘못된 형식의 날짜입니다",date2,date1,select);
 		} 
 		else if(select==0 && date1.val()>date2.val()) {		//select=0이면 date1이 jsDtFrom
-			alert("값은 "+date2.val()+" 이전이여야 합니다.");
-			
-			var date = new Date(date2.val());				//Date형으로 변환
-			date.setDate(date.getDate()-1);					//date-1일
-			var formatDate = $.getFormatDate(date);			//포맷
-			date1.val(formatDate);							//값변경
+			$.alertChangeDate("값은 "+date2.val()+" 이전이여야 합니다.",date2,date1,select);
 			
 		}else if(select==1 && date1.val()<date2.val()) {	//select=1이면 date1이 jsDtTo
-			alert("값은 "+date2.val()+" 이후여야 합니다.");
-			
-			var date = new Date(date2.val());				//Date형으로 변환
-			date.setDate(date.getDate()+1);					//date+1일
-			var formatDate = $.getFormatDate(date);			//포맷
-			date1.val(formatDate);							//값변경
+			$.alertChangeDate("값은 "+date2.val()+" 이후여야 합니다.",date2,date1,select);
 		}
-	};		
+	};
+	
+	//alert 후 날짜 재설정 
+	$.alertChangeDate = function(msg,date2,date1,select){
+		alert(msg);
+		
+		var date = new Date(date2.val());				//Date형으로 변환
+		if(select==0) {									//select=0이면 date1이 jsDtFrom
+			date.setDate(date.getDate()-1);				//date-1일
+		}else {											//select=1이면 date1이 jsDtTo
+			date.setDate(date.getDate()+1);				//date+1일
+		}
+		var formatDate = $.getFormatDate(date);			//포맷
+		date1.val(formatDate);							//값변경
+	}
 	
 	//Date 유효성 검사(유효하지 않은 날짜)
 	$.checkValidDate = function(value) {
@@ -103,16 +91,16 @@ $(function(){
 	}
 	
 	//popup 오픈 함수
-	$.popupOpen = function(selector,width,url,name){
-		$(selector).click(function(){
-			var option = 'width='+width+', height=500, top=50, left=50, location=no';
+	$.popupOpen = function(selector,width,height,url,name){
+		selector.click(function(){
+			var option = 'width='+width+', height='+height+', top=50, left=50, location=no';
 			window.open(url, name, option);
 		});
 	}
 	
 	//reset 함수
 	$.reset = function(selector,url){
-		$(selector).click(function(){
+		selector.click(function(){
 			window.location.href = url;	//새로고침
 		});
 	}
@@ -127,14 +115,70 @@ $(function(){
 		});
 	}
 	
+	//적용 버튼 클릭시 체크박스 값 적용하기
+	$.clickBtnApply = function(classCode,className,idCode,idName){
+		$('#applyBtn').click(function(){
+			if($('.checkbox>input').is(":checked")){	//체크된 것이 있을 때
+				//보낼값 변수값 지정
+				var code = $('input:checked').parent().parent().find(classCode).text(); //체크된 행에서 prtCd 가져오기
+				var name = $('input:checked').parent().parent().find(className).text(); //체크된 행에서 prtNm 가져오기
+
+				window.close();
+				//값 적용하기
+				$(opener.document).find(idCode).val(code);	//부모창 custNo input에 삽입
+				$(opener.document).find(idName).val(name);	//부모창 custNm input에 삽입
+			}
+		});
+	}
+	
+	//행 더블클릭시 값 적용하기
+	$.dblclickApply = function(classCode,className,idCode,idName){
+		$('.one-content').dblclick(function(){
+			//보낼값 변수값 지정
+			var code = $(this).find(classCode).text(); 	//클릭한 행에서 code 가져오기
+			var name = $(this).find(className).text(); 	//클릭한 행에서 nams 가져오기
+				
+			window.close();
+			//값 적용하기
+			$(opener.document).find(idCode).val(code);	//부모창 code input에 삽입
+			$(opener.document).find(idName).val(name);	//부모창 name input에 삽입	
+		});
+	}
+
+	//체크박스 공통함수
+	$.allPopSearchFunc = function(classCode,className,idCode,idName){
+		//스크롤바 생성 변형 함수
+		$.scrollBerTransform();
+		
+		//체크박스 단일선택
+		$.oneCheck();
+		
+		//행 더블클릭시 값 적용하기
+		$.clickBtnApply(classCode,className,idCode,idName)
+		
+		//행 더블클릭시 값 적용하기
+		$.dblclickApply(classCode,className,idCode,idName)
+	}
+	
+	//체크 없이 적용했을 때
+	$.nonCheckApply = function(){
+		$('#applyBtn').click(function(){
+			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
+				alert('체크박스를 선택해 주세요.');
+			}
+		});
+	}
+	
 	//키보드 Enter 이벤트
 	$.keydownEnter = function(selector,click){
-		$(selector).keydown(function(keyNum){	//현재의 키보드의 입력값을 keyNum으로 받음 
+		selector.keydown(function(keyNum){		//현재의 키보드의 입력값을 keyNum으로 받음 
 			if(keyNum.keyCode == 13){ 			//keydown으로 발생한 keyNum의 숫자체크 : 숫자가 enter의 아스키코드 13과 같으면 
-				$(click).click(); 				//기존에 정의된 클릭함수를 호출 
+				click.click(); 					//기존에 정의된 클릭함수를 호출 
 			};
 		});
 	}
+	
+	
 	
 	//------------------------------------회원등록 유효성 검사
 	//이름 유효성 검사

@@ -6,14 +6,16 @@ $(function(){
 	//--------------------------------------------매장조회
 	$('#prtSearchBtn').click(function(){
 
-		var keyword = $('#keyword').val().trim(); 	//사용자가 검색한 값 공백 제거
+		var keyword = $('#keyword').val().trim(); //사용자가 검색한 값 공백 제거
 		var data = {"keyword" : keyword};
 		
-		if(keyword.length==0){ 						//keyword의 길이가 0일 때(검색어가 비어있을 경우)
+		//keyword의 길이가 0일 때(검색어가 비어있을 경우)
+		if(keyword.length==0){ 						
 			alert("검색어를 입력하세요.")
 			return false;
 		}
 		
+		//매장 팝업 검색 ajax
 		$.ajax({
 			url : "/customer/selectPrt.do",
 			type : "post",
@@ -40,39 +42,13 @@ $(function(){
 							$resultTag.append(str);
 						});
 						
-						//스크롤바 생성시 table 비율 맞추기
-						$.scrollBerTransform();
-						
-						//체크박스 단일선택
-						$.oneCheck();
-						
-						//체크 후 적용 버튼 클릭시 값 적용하기
-						$('#applyBtn').click(function(){
-							var prtCd = $('input:checked').parent().parent().find('.prtCd').text(); //체크된 행에서 prtCd 가져오기
-							var prtNm = $('input:checked').parent().parent().find('.prtNm').text(); //체크된 행에서 prtNm 가져오기
-							
-							window.close();
-							$(opener.document).find('#prtCd').val(prtCd); //부모창 prtCd input에 삽입
-							$(opener.document).find('#prtNm').val(prtNm); //부모창 prtNm input에 삽입
-						});
-						
-						//행 더블클릭시 값 적용하기
-						$('.one-content').dblclick(function(){
-							//보낼값 변수값 지정
-							var prtCd = $(this).find('.prtCd').text(); 	//클릭한 행에서 prtCd 가져오기
-							var prtNm = $(this).find('.prtNm').text(); 	//클릭한 행에서 prtNm 가져오기
-							
-							//값 적용하기
-							window.close();
-							$(opener.document).find('#prtCd').val(prtCd); //부모창 prtCd input에 삽입
-							$(opener.document).find('#prtNm').val(prtNm); //부모창 prtNm input에 삽입
-						});
+						//팝업 공통 함수 묶어서(체크박스나 Apply 관련)
+						$.allPopSearchFunc('.prtCd','.prtNm','#prtCd','#prtNm');
 						
 					}else {//조회 결과가 0개일 때
 						var str = '<p>해당하는 매장이 없습니다.</p>';
 						$resultTag.append(str);
 					}
-					
 				}else { //비즈니스 로직중 에러가 났을 경우(catch)
 					//alert에 에러표시
 					alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
@@ -82,26 +58,31 @@ $(function(){
 				}
 			},
 			error : function(request,status,error) {
+				//연결실패
 				//alert에 에러표시
 				alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 				//console에 에러표시
 				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				
-				//연결실패
 				var $resultTag = $("#result");
 				//내용 초기화
 				$("#result").empty();
+				
 				var str = '<p>해당하는 매장이 없습니다.</p>';
 				$resultTag.append(str);
 			}
 		});
 	});
 	
+	//체크 없이 적용했을 때
+	$.nonCheckApply();
+	
 	//키보드 Enter 이벤트
-	$.keydownEnter('#keyword','#prtSearchBtn');
+	$.keydownEnter($('#keyword'),$('#prtSearchBtn'));
 	
 	//resetPrtBtn 클릭시 초기화
-	$.reset('#resetPrtBtn','/customer/prtPop.do')
+	$.reset($('#resetPrtBtn'),'/customer/prtPop.do')
+	
 	
 	
 	//--------------------------------------------고객조회
@@ -116,11 +97,13 @@ $(function(){
 			alert("이름은 2자 이상 검색이 가능합니다.")
 			return false;
 		}
-		if(custNm.length==0 && mblNo.length==0){ //custNm, mblNo가 비어있을 경우
+		//custNm, mblNo가 비어있을 경우
+		if(custNm.length==0 && mblNo.length==0){ 
 			alert("검색어를 입력하세요.")
 			return false;
 		}
 		
+		//고객 팝업 검색 ajax
 		$.ajax({
 			url : "/customer/selectCust.do",
 			type : "post",
@@ -149,39 +132,13 @@ $(function(){
 							$resultTag.append(str);
 						});
 						
-						//스크롤바 생성시 table 비율 맞추기
-						$.scrollBerTransform();
-						
-						//체크박스 단일선택
-						$.oneCheck();
-						
-						//적용 버튼 클릭시 값 적용하기
-						$('#applyBtn').click(function(){
-							var custNo = $('input:checked').parent().parent().find('.custNo').text();	//체크된 행에서 custNo 가져오기
-							var custNm = $('input:checked').parent().parent().find('.custNm').text();	//체크된 행에서 custNm 가져오기
-							
-							window.close();
-							$(opener.document).find('#custNo').val(custNo);	//부모창 custNo input에 삽입
-							$(opener.document).find('#custNm').val(custNm);	//부모창 custNm input에 삽입
-						});
-						
-						//행 더블클릭
-						$('.one-prt-content').dblclick(function(){
-							//보낼값 변수값 지정
-							var custNo = $(this).find('.custNo').text();	//클릭한 행에서 custNo 가져오기
-							var custNm = $(this).find('.custNm').text();	//클릭한 행에서 custNm 가져오기
-							
-							//값 적용하기
-							window.close();
-							$(opener.document).find('#custNo').val(custNo);	//부모창 custNo input에 삽입
-							$(opener.document).find('#custNm').val(custNm);	//부모창 custNm input에 삽입
-						});
+						//팝업 공통 함수 묶어서(체크박스나 Apply 관련)
+						$.allPopSearchFunc('.custNo','.custNm','#custNo','#custNm');
 						
 					}else { //조회 결과가 0개일 때
 						var str = '<p>해당하는 고객이 없습니다.</p>';
 						$resultTag.append(str);
 					}
-					
 				}else { //비즈니스 로직중 에러가 났을 경우(catch)
 					//alert에 에러표시
 					alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
@@ -200,16 +157,20 @@ $(function(){
 				var $resultTag = $("#result");
 				//내용 초기화
 				$("#result").empty();
+				
 				var str = '<p>해당하는 고객이 없습니다.</p>';
 				$resultTag.append(str);
 			}
 		});
 	});
 	
-	//키보드 Enter 이벤트
-	$.keydownEnter('#custNm','#custSearchBtn');
-	$.keydownEnter('#mblNo','#custSearchBtn');
+	//체크 없이 적용했을 때
+	$.nonCheckApply();
+	
+	//키보드 Enter 이벤트(Enter시 바로 검색)
+	$.keydownEnter($('#custNm'),$('#custSearchBtn'));
+	$.keydownEnter($('#mblNo'),$('#custSearchBtn'));
 	
 	//resetPrtBtn 클릭시 초기화
-	$.reset('#resetCustBtn','/customer/custPop.do')
+	$.reset($('#resetCustBtn'),'/customer/custPop.do')
 });

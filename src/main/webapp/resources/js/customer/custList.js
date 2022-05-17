@@ -2,9 +2,9 @@
  * 
  */
 $(function(){
-	//input 내에서 focus를 value 끝으로 이동
-	var len = $('input[autofocus]').val().length;
-	$('input[autofocus]')[0].setSelectionRange(len, len);
+	
+	//autofocus된 input 내에서 focus를 value 끝으로 이동
+	$.focusEnd();
 	
 	//input date 유효성 검사
 	//input date 날짜 변경시 min max 변경
@@ -18,18 +18,16 @@ $(function(){
 	});
 	
 	//date 유효성 alert 
-	var jsDtFrom = $('#jsDtFrom');
-	var jsDtTo = $('#jsDtTo');
-	
-	$.checkValidKeydown(jsDtFrom,jsDtTo,0);
-	$.checkValidKeydown(jsDtTo,jsDtFrom,1);
+	$.checkValidKeydown($('#jsDtFrom'),$('#jsDtTo'),0);
+	$.checkValidKeydown($('#jsDtTo'),$('#jsDtFrom'),1);
 	
 	//---------------------------------------처음 로드시 기본세팅 값
-	//함수 정의
+	//함수 정의(검색시 재호출하기 위해)
 	$.selectSearchCust = function(){
 		//form 요소 직렬화
 		var form = $('#SearchCustForm').serialize();
 		
+		//회원 조회 ajax
 		$.ajax({
 			url : "/customer/selectSearchCust.do",
 			type : "post",
@@ -86,15 +84,16 @@ $(function(){
 				}
 			},
 			error : function(request,status,error) {
+				//연결실패
 				//alert에 에러표시
 				alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 				//console에 에러표시
 				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				
-				//연결실패
 				var $resultTag = $("#result");
 				//내용 초기화
 				$("#result").empty();
+				
 				var str = '<p>해당하는 고객이 없습니다.</p>';
 				$resultTag.append(str);
 			}
@@ -105,33 +104,33 @@ $(function(){
 	
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
-		//selectSearchCust 함수 실행
+		//함수 재실행
 		$.selectSearchCust();
 	});
 	
 	//prtSearchBtn 클릭시 팝업 오픈
-	$.popupOpen('#prtSearchBtn','450','/customer/prtPop.do','매장 조회');
+	$.popupOpen($('#prtSearchBtn'),'450','500','/customer/prtPop.do','prtPopOpen');
 
 	//custSearchBtn 클릭시 팝업 오픈
-	$.popupOpen('#custSearchBtn','650','/customer/custPop.do','고객 조회');
+	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 
 	//custAddBtn 클릭시 팝업 오픈
-	$.popupOpen('#custAddBtn','480','/customer/custAddPop.do','신규 고객 등록');
+	$.popupOpen($('#custAddBtn'),'800','640','/customer/custAddPop.do','custAddPop');
 
 	//resetBtn 클릭시 초기화
-	$.reset('#resetBtn','/customer/custList.do');
+	$.reset($('#resetBtn'),'/customer/custList.do');
 });
 
-//custHtPopOpen 함수 실행
+//custHtPopOpen 함수 실행(ajax에서 append된 값)
 function custHtPopOpen(index) {
 	
 	var custNo = $("#custNo"+index).text();
-
+	
 	var option = 'width=1000, height=500, top=50, left=50, location=no';
 	window.open('/customer/custHtPop.do?custNo='+custNo, 'custHtPopOpen', option);
 }
 
-//custInfoOpen 함수 실행
+//custInfoOpen 함수 실행(ajax에서 append된 값)
 function custInfoOpen(index) {
 	
 	var custNo = $("#custNo"+index).text();

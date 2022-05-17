@@ -6,6 +6,7 @@ $(function(){
 	var custNo = $('#custNo').val();
 	var data = {"custNo" : custNo};
 	
+	//고객 이력 조회 ajax
 	$.ajax({
 		url : "/customer/selectCustHt.do",
 		type : "post",
@@ -51,15 +52,16 @@ $(function(){
 			}
 		},
 		error : function(request,status,error) {
+			//연결실패
 			//alert에 에러표시
 			alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 			//console에 에러표시
 			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			
-			//연결실패
 			var $resultTag = $("#result");
 			//내용 초기화
 			$("#result").empty();
+			//연결실패
 			var str = '<p>변경내역이 없습니다.</p>';
 			$resultTag.append(str);
 		}

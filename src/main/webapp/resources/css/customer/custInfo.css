@@ -95,7 +95,7 @@
 fieldset {
 	width: 100%;
 	border: 1px #C8C8C8 solid; 
-	padding: 20px 100px;
+	padding: 15px 25px 10px;
 	margin-bottom: 20px;
 	display: flex;
 	justify-content: space-between;

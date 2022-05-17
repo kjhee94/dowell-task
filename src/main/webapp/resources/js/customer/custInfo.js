@@ -2,6 +2,10 @@
  * 
  */
 $(function(){
+	
+	//input 내에서 focus를 value 끝으로 이동
+	$.focusEnd();
+	
 	//---------------------------------------처음 로드시 기본세팅 값
 	$.selectOneCust = function(){
 		var custNo = $('#custNo').val();
@@ -68,12 +72,107 @@ $(function(){
 						//고객상태 제한
 						$.custSsCdLimit(data.cust["custSsCd"]);
 						
+						//변경 전 값 저장
+						var chgBfCnt = $('#updateCustInfo').serializeArray();
+						
+						//업데이트 버튼 클릭 시 
+						$('#updateBtn').click(function(){
+							//전체 유효성 검사 진행
+//							$.checkNameValid();
+//							$.checkBrdyDtValid();
+//							$.checkEmailValid();
+//							$.checkAddrValid();
+//							$.checkMrrgDtValid();
+//							if($("#custSsCd2").is(':checked')){
+//								$.checkcCntsValid();
+//							}
+							if($.checkAllUpd){
+								if(map.size>0){	
+									if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
+										
+										//변경 후 값 저장
+										var chgAftCnt = $('#updateCustInfo').serializeArray();
+										
+										//변경 코드  배열에 담기
+										var chgCd = new Array();
+										var chgCd = ['CUST_NO','BRDY_DT','SEX_CD','SCAL_YN','MRRG_DT','POC_CD','MBL_NO','PRT_CD','PSMT_GRC_CD','EMAIL','ADDR','ADDR_DTL',
+													 'CUST_SS_CD','FST_JS_DT','JS_DT','STP_DT','CNCL_DT','CNCL_CNTS','EMAIL_RCV_YN','SMS_RCV_YN','DM_RCV_YN'];
+
+										//회원 정보를 넣을 Array 생성(수정과 이력추가에 사용)
+										var info = new Array();
+										
+										for(var i=0; i<chgCd.length(); i++){
+											var arr = [ chgAftCnt[], 'Ipsum', 'Dolor' ]
+										}
+										
+										
+										
+										
+										map.set("custNo",$('#custNo').val());
+										const obj = Object.fromEntries(map)
+										console.log(obj);
+										
+										$.ajax({
+											url : "/customer/updateCust.do",
+											type : "post",
+											async: true,
+											data: obj,
+											dataType: "json",
+											success : function(data) {
+												//연결성공
+												if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
+													if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
+														alert("수정이 완료되었습니다.");
+														location.reload();
+													}else {//데이터 삽입 실패
+														alert("수정 실패. 관리자에게 문의해 주세요");
+													}
+												}else { //비즈니스 로직중 에러가 났을 경우(catch)
+													//alert에 에러표시
+													alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")");
+												}
+											},
+											error : function(request,status,error) {
+												//alert에 에러표시
+												alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+												//console에 에러표시
+												console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+											}
+										});
+									}else{
+										return false;
+									}
+								}
+//							else {
+//									alert("변경내역이 없습니다.");
+//								}
+							else {
+								alert("입력 내용을 다시 확인해 주세요");
+								return false;
+							}
+								
+						});
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					}else { //비즈니스 로직중 에러가 났을 경우(catch)
 						//alert에 에러표시
 						alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
 					}
 				},
 				error : function(request,status,error) {
+					//연결실패
 					//alert에 에러표시
 					alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 					//console에 에러표시
@@ -84,24 +183,26 @@ $(function(){
 	}
 	$.selectOneCust();
 	
-	
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
-		if(map.size>0){
-			if(confirm("변경사항이 있습니다. 계속 진행하시겠습니까?")){	
-				//selectSearchCust 함수 실행
-				$.selectOneCust();
-			}else{
-				return false;
-			}
-		}else{
+//		if(map.size>0){
+//			if(confirm("변경사항이 있습니다. 계속 진행하시겠습니까?")){	
+//				//selectSearchCust 함수 실행
+//				$.selectOneCust();
+//			}else{
+//				return false;
+//			}
+//		}else{
 			//selectSearchCust 함수 실행
 			$.selectOneCust();
-		}
+//		}
 	});
 	
 	
+	
+	
 	//---------------------------------------유효성 검사
+
 	//이름 유효성 검사
 	$('#custNmInfo').blur(function(){ 
 		$.checkNameValid();
@@ -139,152 +240,104 @@ $(function(){
 	
 	
 	//---------------------------------------정보 업데이트
-	//변경내역 객체에 담기
-	
-	const cngData = [];
-	const map = new Map();
-	
-	//변경내역 객체화
-	$('#custNmInfo').change(function(){
-		var value = $(this).val().trim();
-		map.set("custNm",value);
-	});
-	$('input[name=sexCd]').change(function(){
-		var value = $(this).val();
-		map.set("sexCd",value);
-	});
-	$('select').change(function(){
-		var value = $('option:selected').attr("value");
-		map.set("pocCd",value);
-	});
-	$('#brdyDt').change(function(){
-		var value = $(this).val().replace(/\-/g,'');
-		map.set('brdyDt',value);
-	});
-	$('input[name=scalYn]').change(function(){
-		var value = $(this).val();
-		map.set("scalYn",value);
-	});
-	$('#mrrgDt').change(function(){
-		var value = $(this).val().replace(/\-/g,'');
-		map.set('mrrgDt',value);
-	});
-	$('input[id^=mblNo]').change(function(){
-		$('#checkMblNo>span').css("color","coral");
-		
-		var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
-		var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
-		var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
-		var value =  mblNo0+mblNo1+mblNo2;			//합치기
-		
-		map.set("mblNo",value);
-	});
-	$('input[id^=email]').change(function(){
-		var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
-		var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
-		var value = email0+'@'+email1;				//합치기(@포함)
-		
-		map.set("email",value);
-	});
-	$('input[name=psmtGrcCd]').change(function(){
-		var value = $(this).val();
-		map.set("psmtGrcCd",value);
-	});
-	$('#addr').change(function(){
-		var value = $(this).val().trim();
-		map.set("addr",value);
-	});
-	$('#addrDtl').change(function(){
-		var value = $(this).val().trim();
-		map.set("addrDtl",value);
-	});
-	$('#cnclCnts').change(function(){
-		var value = $(this).val().trim();
-		map.set("cnclCnts",value);
-	});
-	$('input[name=custSsCd]').change(function(){
-		var value = $(this).val();
-		map.set("custSsCd",value);
-	});
-	$('input[name=emailRcvYn]').change(function(){
-		var value = $(this).val();
-		map.set("emailRcvYn",value);
-	});
-	$('input[name=smsRcvYn]').change(function(){
-		var value = $(this).val();
-		map.set("smsRcvYn",value);
-	});
-	$('input[name=dmRcvYn]').change(function(){
-		var value = $(this).val();
-		map.set("dmRcvYn",value);
-	});
 	
 	
-	$('#updateBtn').click(function(){
-		//전체 유효성 검사 진행
-		$.checkNameValid();
-		$.checkBrdyDtValid();
-		$.checkEmailValid();
-		$.checkAddrValid();
-		$.checkMrrgDtValid();
-		if($("#custSsCd2").is(':checked')){
-			$.checkcCntsValid();
-		}
-		
-		if($.checkAllUpd){
-			if(map.size>0){	
-				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
-					
-					map.set("custNo",$('#custNo').val());
-					const obj = Object.fromEntries(map)
-					console.log(obj);
-					
-					$.ajax({
-						url : "/customer/updateCust.do",
-						type : "post",
-						async: true,
-						data: obj,
-						dataType: "json",
-						success : function(data) {
-							//연결성공
-							if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
-								if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
-									alert("수정이 완료되었습니다.");
-									location.reload();
-								}else {//데이터 삽입 실패
-									alert("수정 실패. 관리자에게 문의해 주세요");
-								}
-							}else { //비즈니스 로직중 에러가 났을 경우(catch)
-								//alert에 에러표시
-								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")");
-							}
-						},
-						error : function(request,status,error) {
-							//alert에 에러표시
-							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
-							//console에 에러표시
-							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-						}
-					});
-				}else{
-					return false;
-				}
-			}else {
-				alert("변경내역이 없습니다.");
-			}
-		}else {
-			alert("입력 내용을 다시 확인해 주세요");
-			return false;
-		}
-			
-	});
+//	
+//	
+//	map.set("brdyDtBf",data["brdyDt"]);
+//	map.set("brdyDtCd","BRDY_DT");
+//	map.set("sexCdBf",data["sexCd"]);
+//	map.set("sexCdCd","SEX_CD");
+//	map.set("scalYnBf",data["scalYn"]);
+//	map.set("scalYnCd","SCAL_YN");
+//	map.set("mrrgDtBf",data["mrrgDt"]);
+//	map.set("mrrgDtCd","MRRG_DT");
+//	map.set("pocCdBf",data["mrrgDt"]);
+//	map.set("pocCdCd","MRRG_DT");
+	
+	
+	
+	//변경후내용 map에 담기
+//	$('#custNmInfo').change(function(){
+//		var value = $(this).val().trim();
+//		map.set("custNm",value);
+//	});
+//	$('input[name=sexCd]').change(function(){
+//		var value = $(this).val();
+//		map.set("sexCd",value);
+//	});
+//	$('select').change(function(){
+//		var value = $('option:selected').attr("value");
+//		map.set("pocCd",value);
+//	});
+//	$('#brdyDt').change(function(){
+//		var value = $(this).val().replace(/\-/g,'');
+//		map.set('brdyDt',value);
+//	});
+//	$('input[name=scalYn]').change(function(){
+//		var value = $(this).val();
+//		map.set("scalYn",value);
+//	});
+//	$('#mrrgDt').change(function(){
+//		var value = $(this).val().replace(/\-/g,'');
+//		map.set('mrrgDt',value);
+//	});
+//	$('input[id^=mblNo]').change(function(){
+//		$('#checkMblNo>span').css("color","coral");
+//		
+//		var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
+//		var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
+//		var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
+//		var value =  mblNo0+mblNo1+mblNo2;			//합치기
+//		
+//		map.set("mblNo",value);
+//	});
+//	$('input[id^=email]').change(function(){
+//		var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
+//		var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
+//		var value = email0+'@'+email1;				//합치기(@포함)
+//		
+//		map.set("email",value);
+//	});
+//	$('input[name=psmtGrcCd]').change(function(){
+//		var value = $(this).val();
+//		map.set("psmtGrcCd",value);
+//	});
+//	$('#addr').change(function(){
+//		var value = $(this).val().trim();
+//		map.set("addr",value);
+//	});
+//	$('#addrDtl').change(function(){
+//		var value = $(this).val().trim();
+//		map.set("addrDtl",value);
+//	});
+//	$('#cnclCnts').change(function(){
+//		var value = $(this).val().trim();
+//		map.set("cnclCnts",value);
+//	});
+//	$('input[name=custSsCd]').change(function(){
+//		var value = $(this).val();
+//		map.set("custSsCd",value);
+//	});
+//	$('input[name=emailRcvYn]').change(function(){
+//		var value = $(this).val();
+//		map.set("emailRcvYn",value);
+//	});
+//	$('input[name=smsRcvYn]').change(function(){
+//		var value = $(this).val();
+//		map.set("smsRcvYn",value);
+//	});
+//	$('input[name=dmRcvYn]').change(function(){
+//		var value = $(this).val();
+//		map.set("dmRcvYn",value);
+//	});
 	
 	
 	//prtSearchBtn 클릭시 팝업 오픈
-	$.popupOpen('#prtSearchBtn','450','/customer/prtPop.do','매장 조회');
+	$.popupOpen($('#prtSearchBtn'),'450','500','/customer/prtPop.do','prtPopOpen');
 
 	//custSearchBtn 클릭시 팝업 오픈
-	$.popupOpen('#custSearchBtn','650','/customer/custPop.do','고객 조회');
+	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 	
 	//resetBtn 클릭시 초기화
 	var custNo = $('#custNo').val();
