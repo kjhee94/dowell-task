@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kr.first.customer.model.service.CustService;
 import com.kr.first.user.model.vo.UserVO;
+
+import net.sf.json.JSONException;
 
 @Controller
 public class CustController {
@@ -369,26 +375,13 @@ public class CustController {
 	//고객 정보 수정 메소드(팝업)
 	@ResponseBody
 	@PostMapping(value = "/customer/updateCust.do")
-	public void insertCust(@RequestParam Map<String, Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
+	public void insertCust(@RequestParam Map<String, Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException, ParseException {	
 		
 		//세션 ID 가져오기
 		String userId = user.getUserId();
 		log.info("userId : "+userId);
 		map.put("userId", userId);
 		
-		//고객번호 가져오기
-//		String custNo = (String)map.get("custNo");
-//		map.remove("custNo");
-		
-//		List<String> kList = new ArrayList<String>(map.keySet());
-//		List<Object> vList = new ArrayList<Object>(map.values());
-//		
-//		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-//		paramMap.put("userId", userId);
-//		paramMap.put("custNo", custNo);
-//		paramMap.put("kList", kList);
-//		paramMap.put("vList", vList);
-
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		try { //Exception 발생 구문 

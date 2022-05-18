@@ -22,16 +22,13 @@ legend {
 .one-input {
 	width: 46.2%;
 	height: 30px;
-	margin: 0 0 25px 0;
-}
-
-.area-input {
-	width: 100%;
+	margin: 0 0 15px 0;
 	display: flex;
 	align-items: center;
 }
+
 .input-title {
-	width: 38%;
+	width: 40%;
 	display: inline-block;
 	padding-left: 10px;
 	float: left;
@@ -44,7 +41,7 @@ legend {
 
 /*input 입력*/
 .box-input {
-	width: 63%;
+	width: 70%;
 	font-size: 15px;
 	float: left;
 	display: flex;
@@ -55,7 +52,20 @@ legend {
 	width: 100%;
 }
 .box-input>.mblNo {
-	width: 30%;
+	width: 25%;
+}
+/*핸드폰 체크버튼*/
+.btn-check {
+	display: flex;
+	align-items: flex-start;
+	cursor: pointer;
+}
+.btn-check>span {
+	width: 30px;
+	height: 30px;
+	border: 1px #c8c8c8 solid;
+	padding-top: 2px;
+	color: #9BDF30;
 }
 .box-input>.email {
 	width: 45%;
@@ -77,10 +87,10 @@ legend {
 	width: 100%;
 }
 .row-addr .input-title {
-	width: 17.3%;
+	width: 16.7%;
 }
 .box-addr {
-	width: 82.7%;
+	width: 82.3%;
 	display: flex;
 	justify-content: space-between;
 }

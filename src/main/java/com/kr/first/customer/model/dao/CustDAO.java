@@ -80,8 +80,8 @@ public class CustDAO {
 		return sqlSession.selectOne("cust.selectOneCust",custNo);
 	}
 
-	public int insertCustHt(Map<String, Object> paramMap) throws Exception {
-		return sqlSession.insert("cust.insertCustHt", paramMap);
+	public int insertCustHt(Map<String, Object> map) throws Exception {
+		return sqlSession.insert("cust.insertCustHt", map);
 	}
 	
 	public int updateCust(Map<String, Object> map) throws Exception {

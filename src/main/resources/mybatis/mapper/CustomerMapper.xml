@@ -349,13 +349,13 @@
 	
 	<insert id="insertCustHt" parameterType="hashmap">
 		INSERT ALL 
-		<foreach collection="infoChgMap" item="item" index="index" open="INTO SD_CUST01_HT VALUES" separator="" close="SELECT * FROM DUAL">
+		<foreach collection="custHtData" item="item" index="index" open="INTO SD_CUST01_HT VALUES" separator="" close="SELECT * FROM DUAL">
 	        (#{custNo},
 	         TO_CHAR(SYSDATE,'YYYYMMDD'),
 	         NVL((SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1) + #{index},
-	         #{htList.chgCd},
-	         #{htList.chgBfCnt},
-	         #{htList.chgAftCnt},
+	         #{item.chgCd},
+	         #{item.chgBfCnt},
+	         #{item.chgAftCnt},
 	         SYSDATE,
 	         #{userId}, 
 	         SYSDATE,

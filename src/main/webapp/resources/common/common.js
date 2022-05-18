@@ -184,34 +184,24 @@ $(function(){
 	//이름 유효성 검사
 	$.checkNameValid = function() {
 		var custNm = $('#custNmInfo').val().trim();		//사용자가 입력한 값 공백 제거
-		var msg =  $('#custNmMsg');
 		
 		if(custNm.length==0){							//이름을 입력하지 않았을 때
-			msg.css('display','block');
-			msg.text('이름을 입력해 주세요.');
-			return false;
+			$.validFalse('이름을 입력해 주세요.','#custNmInfo');
 		}else if(custNm.length==1){						//이름 1자 일 때
-			msg.css('display','block');
-			msg.text('2자 이상 입력해 주세요.');
-			return false;
+			$.validFalse('2자 이상 입력해 주세요.','#custNmInfo');
 		}else {
-			msg.css('display','none');
-			return true;
+			$.validTrue('#custNmInfo');
 		}
 	}
 	
 	//직업코드 유효성 검사
 	$.checkPocValid = function() {
 		var first = $('select>option:selected');	//option의 첫번째 요소
-		var msg = $('#pocMsg');
 		
 		if(first.text()=='선택'){						//첫번째 요소가 선택 되었을 때 (value 값이 없을 때)
-			msg.css('display','block');
-			msg.text('직업을 선택해 주세요.');
-			return false;
+			$.validFalse('직업을 선택해 주세요.','select');
 		}else {
-			msg.css('display','none');
-			return true;
+			$.validTrue('select');
 		}
 	}
 	
@@ -221,21 +211,15 @@ $(function(){
 		var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
 		
 		var brdyDt = $('#brdyDt').val();		//사용자가 입력한 값
-		var msg = $('#brdyDtMsg');
 		
 		if($.checkValidDate(brdyDt)==false){	//입력한 값이 날짜 유효성 체크 실패일 때
-			msg.css('display','block');
-			msg.text('잘못된 형식의 날짜입니다.');
+			$.validFalse('잘못된 형식의 날짜입니다.','#brdyDt');
 			$('#brdyDt').val("");				//입력창 리셋
-			return false;
 		}else if(brdyDt>today){					//입력한 값이 오늘보다 클 때
-			msg.css('display','block');
-			msg.text('오늘날짜 이전으로 입력해 주세요.');
+			$.validFalse('오늘날짜 이전으로 입력해 주세요.','#brdyDt');
 			$('#brdyDt').val("");				//입력창 리셋
-			return false;
 		}else {
-			msg.css('display','none');
-			return true;
+			$.validTrue('select');
 		}
 	}
 	
@@ -318,7 +302,7 @@ $(function(){
 					});
 				}
 			}
-		}else if(mblNo0.length==0 && mblNo1.length==0 && mblNo2.length==0){		//핸드폰 번호를 입력하지 않았을 때
+		}else if(mblNo0.length==0 && mblNo1.length==0 && mblNo2.length==0){				//핸드폰 번호를 입력하지 않았을 때
 			msg.css('display','block');
 			msg.text('휴대폰 번호를 입력해 주세요.')
 			checkBtn.css("color","coral")
@@ -377,19 +361,18 @@ $(function(){
 //		}
 	}
 	
-	//해지사유 유효성 검사
-	$.checkcCntsValid = function() {
-		var cnclCnts = $('#cnclCnts').val();			//사용자가 입력한 값
-		var msg =  $('#cCntsMsg');
-		
-		if(cnclCnts.length==0){							//해지사유를 입력하지 않았을 때
-			msg.css('display','block');
-			msg.text('해지사유를 입력해 주세요.');
-			return false;
-		}else {
-			msg.css('display','none');
-			return true;
-		}
+	$.validFalse = function(msg,selector){
+		alert(msg);
+		$(selector).css("border",'2px solid coral');
+		setTimeout(function(){ 
+			$(selector).focus(); 
+		}, 10)
+		return false;
+	}
+	
+	$.validTrue = function(selector){
+		$($(selector)).css("border",'1px solid #c8c8c8');
+		return true;
 	}
 	
 	$.checkAllAdd = function() {
@@ -432,9 +415,6 @@ $(function(){
         else if(!$.checkMrrgDtValid()) {
             return false;
         }
-        else if($("#custSsCd2").is(':checked') || !checkcCntsValid()) {
-			return false;
-		}
         return true;
     }
 

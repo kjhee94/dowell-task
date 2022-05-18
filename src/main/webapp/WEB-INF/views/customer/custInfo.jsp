@@ -59,7 +59,7 @@
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>고객명</span>
 										<div class="box-input">
-											<input id="custNmInfo" class="style-input" type="text" name="custNm" placeholder="홍길동" autocomplete='off'>
+											<input id="custNmInfo" class="style-input" type="text" name="custNm" autocomplete='off'>
 										</div>
 									</div>
 									<div id="custNmMsg" class="area-msg"></div>
@@ -122,9 +122,9 @@
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>휴대폰번호</span>
 										<div class="box-input">
-											<input id="mblNo0" class="style-input mblNo" type="text" maxlength="3" placeholder="010" autocomplete='off'>
-											<input id="mblNo1" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
-											<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" placeholder="0000" autocomplete='off'>
+											<input id="mblNo0" class="style-input mblNo" type="text" maxlength="3" autocomplete='off'>
+											<input id="mblNo1" class="style-input mblNo" type="text" maxlength="4" autocomplete='off'>
+											<input id="mblNo2" class="style-input mblNo" type="text" maxlength="4" autocomplete='off'>
 											<input id="mblNo" type="hidden" name="mblNo">
 											<button id="checkMblNo" class="btn-check" type="button">
 												<span class="material-icons">done</span>
@@ -159,8 +159,8 @@
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>이메일</span>
 										<div class="box-input">
-											<input id="email0" class="style-input email" type="text" placeholder="ID" autocomplete='off'>@
-											<input id="email1" class="style-input email" type="text" placeholder="email.com" autocomplete='off'>
+											<input id="email0" class="style-input email" type="text" autocomplete='off'>@
+											<input id="email1" class="style-input email" type="text" autocomplete='off'>
 											<input id="email" type="hidden" name="email">
 										</div>
 									</div>
@@ -173,8 +173,8 @@
 									<div class="area-input">
 										<span class="input-title addr-height">주소</span>
 										<div class="box-addr">
-											<input id="addr" class="style-input addr" type="text" name="addr" placeholder="기본주소" autocomplete='off'>
-											<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" placeholder="상세주소" autocomplete='off'>
+											<input id="addr" class="style-input addr" type="text" name="addr" autocomplete='off'>
+											<input id="addrDtl" class="style-input addr" type="text" name="addrDtl" autocomplete='off'>
 										</div>
 									</div>
 									<div id="addrMsg" class="area-msg"></div>
@@ -208,6 +208,14 @@
 								</div>
 								<div class="one-input">
 									<div class="area-input">
+										<span class="input-title">해지사유</span>
+										<div class="box-input">
+											<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly>
+										</div>
+									</div>
+								</div>
+								<div class="one-input">
+									<div class="area-input">
 										<span class="input-title">중지일자</span>
 										<div class="box-input">
 											<input id="stpDt" class="style-input" type="text" name="stpDt" readonly>
@@ -221,15 +229,6 @@
 											<input id="cnclDt" class="style-input" type="text" name="cnclDt" readonly>
 										</div>
 									</div>
-								</div>
-								<div class="one-input">
-									<div class="area-input">
-										<span class="input-title">해지사유</span>
-										<div class="box-input">
-											<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly>
-										</div>
-									</div>
-									<div id="cCntsMsg" class="area-msg"></div>
 								</div>
 							</div>
 						</fieldset>
@@ -297,8 +296,8 @@
 						<input id="bfCustNm" type="hidden" name="CUST_NM">
 						<input id="bfBrdyDt" type="hidden" name="BRDY_DT">
 						<input id="bfSexCd" type="hidden" name="SEX_CD">
-						<input id="bfMrrgDt" type="hidden" name="MRRG_DT">
 						<input id="bfScalYn" type="hidden" name="SCAL_YN">
+						<input id="bfMrrgDt" type="hidden" name="MRRG_DT">
 						<input id="bfPocCd" type="hidden" name="POC_CD">
 						<input id="bfMblNo" type="hidden" name="MBL_NO">
 						<input id="bfPrtCd" type="hidden" name="JN_PRT_CD">
@@ -309,9 +308,9 @@
 						<input id="bfCustSsCd" type="hidden" name="CUST_SS_CD">
 						<input id="bfFstJsDt" type="hidden" name="FST_JS_DT">
 						<input id="bfJsDt" type="hidden" name="JS_DT">
+						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfStpDt" type="hidden" name="STP_DT">
 						<input id="bfCnclDt" type="hidden" name="CNCL_DT">
-						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfEmailRcvYn" type="hidden" name="EMAIL_RCV_YN">
 						<input id="bfSmsRcvYn" type="hidden" name="SMS_RCV_YN">
 						<input id="bfDmRcvYn" type="hidden" name="DM_RCV_YN">

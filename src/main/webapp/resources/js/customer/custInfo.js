@@ -65,9 +65,9 @@ $(function(){
 						$('#lstPrsDt').val(data.cust["lstPrsDt"]);							//최종구매일
 						
 						//수신동의
-						$('input[value='+data.cust["emailRcvYn"]+']').attr('checked',true);	//이메일수신동의
-						$('input[value='+data.cust["smsRcvYn"]+']').attr('checked',true);	//sms수신동의
-						$('input[value='+data.cust["dmRcvYn"]+']').attr('checked',true);	//dm수신동의
+						$('input[name="emailRcvYn"][value='+data.cust["emailRcvYn"]+']').attr('checked',true);	//이메일수신동의
+						$('input[name="smsRcvYn"][value='+data.cust["smsRcvYn"]+']').attr('checked',true);	//sms수신동의
+						$('input[name="dmRcvYn"][value='+data.cust["dmRcvYn"]+']').attr('checked',true);	//dm수신동의
 						
 						//변경 전 값 저장
 						$('#bfCustNm').val(data.cust["custNm"])
@@ -119,18 +119,26 @@ $(function(){
 	
 	
 	//---------------------------------------검색버튼 클릭시 세팅 값
+	//input에 변화 감지
+	var changResult = true; 	//변화가 없는 초기 상태
+	
+	$('#updateCustInfo input').change(function(){	//변화가 있을 시
+		changResult = false;	//false로 변환
+	});
+	
 	$('#SearchBtn').click(function(){
-//		if(map.size>0){
-//			if(confirm("변경사항이 있습니다. 계속 진행하시겠습니까?")){	
-//				//selectSearchCust 함수 실행
-//				$.selectOneCust();
-//			}else{
-//				return false;
-//			}
-//		}else{
+		if(changResult){
 			//selectSearchCust 함수 실행
 			$.selectOneCust();
-//		}
+		}else{
+			if(confirm("변경사항이 있습니다. 계속 진행하시겠습니까?")){	
+				//selectSearchCust 함수 실행
+				$.selectOneCust();
+			}else{
+				return false;
+			}
+			
+		}
 	});
 	
 	
@@ -165,15 +173,8 @@ $(function(){
 		$.checkMrrgDtValid();
 	});
 	
-	//해지사유 유효성 검사
-	$('#cnclCnts').blur(function(){ 
-		$.checkcCntsValid();
-	});
-	
 	
 	//---------------------------------------정보 업데이트
-	
-	
 	$('#updateBtn').click(function(){
 		//전체 유효성 검사 진행
 		$.checkNameValid();
@@ -181,77 +182,78 @@ $(function(){
 		$.checkEmailValid();
 		$.checkAddrValid();
 		$.checkMrrgDtValid();
-		if($("#custSsCd2").is(':checked')){
-			$.checkcCntsValid();
-		}
 		
-		if($.checkAllUpd){ 		//유효성 검사가 참이면
-			
-			var mblNo0 = $('#mblNo0').val().trim();	//사용자가 입력한 값 공백 제거
-			var mblNo1 = $('#mblNo1').val().trim();	//사용자가 입력한 값 공백 제거
-			var mblNo2 = $('#mblNo2').val().trim();	//사용자가 입력한 값 공백 제거
-			var mblNo = mblNo0+mblNo1+mblNo2;
+		if($.checkAllUpd){ 	//유효성 검사가 참이면
+			var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
+			var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
+			var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
+			var mblNo = mblNo0+mblNo1+mblNo2;			//변경 후 값 합쳐서 저장
 			$('#mblNo').val(mblNo);
 			
 			var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
 			var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
-			var email = email0+'@'+email1;
+			var email = email0+'@'+email1;				//변경 후 값 합쳐서 저장
 			$('#email').val(email);
 			
-			var bfObj = new FormData(document.getElementById('bfCntForm'));
-			var aftObj = new FormData(document.getElementById('updateCustInfo'));
+			//변경전 form 객체
+			var bfObj = $('#bfCntForm').serializeArray();
+			//변경후 form 객체
+			var aftObj = $('#updateCustInfo').serializeArray();
 			
+			//--------------------------ajax로 배열1(변경이력에 사용할 [변경코드,변경전내용,변경후내용])
+			var cHtArr = new Array();
 			
-			if($.checkAllUpd){	 	//map.size>0
-				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
-
-					
-
-					var chgCd = new Array();
-					for (var key of bfObj.keys()) {
-						chgCd.push(key);
-					}
-					var chgBfCnt = new Array();
-					for (var values of bfObj.values()) {
-						chgBfCnt.push(values);
-					}
-					var chgAftCnt = new Array();
-					for (var values of aftObj.values()) {
-						chgAftCnt.push(values);
-					}
-					
-					var info = new Array();
-					
-//					for(var i=0; i<chgCd.length; i++){
-//						var arr = [ chgCd[i], chgBfCnt[i], chgAftCnt[i] ]
-//						info.push(arr);
-//					}
-					
-					var formData = [];
-					
-					for(var i=0; i<chgCd.length; i++){
-						var formData = new FormDate();
-						
-						formData.append('chgCd',chgCd[i]);
-						formData.append('chgBfCnt',chgBfCnt[i]);
-						formData.append('chgAftCnt',chgAftCnt[i]);
-						info.push(arr);
-					};
+			for(var i=0; i<bfObj.length; i++){			//총 input 갯수만큼 for문 실행
+			
+				var map = new Map();					//map로 받기
 				
-//					
-//					console.log(formData[0].get("chgCd"));
-//					console.log(formData[1].get("chgCd"));
-//					console.log(formData[2].get("chgCd"));
-//					console.log(formData[3].get("chgCd"));
-//					console.log(formData[4].get("chgCd"));
-					
-					
+				map.set('chgCd',bfObj[i].name);			//ex)key: chgCd / value : CUST_NM
+				map.set('chgBfCnt',bfObj[i].value);		//ex)key: chgBfCnt / value : 홍길동
+				map.set('chgAftCnt',aftObj[i].value);	//ex)key: chgAftCnt / value : 홍길똥
+				
+				//Map->Json
+				const mapData = Object.fromEntries(map)
+				cHtArr.push(mapData);					//배열에 넣기
+			}
+			//array 문자화
+			var cHtArrstr = JSON.stringify(cHtArr)
+			
+			//--------------------------ajax로 배열2(수정에 사용할 [변경항목,변경내용])
+			var cUpdArr = new Array();
+			
+			for(var i=0; i<bfObj.length; i++){				//총 input 갯수만큼 for문 실행
+				var map = new Map();						//map로 받기
+				
+				map.set(aftObj[i].name,aftObj[i].value);	//ex)key: custNm / value : 홍길똥
+				
+				//Map->Json
+				const mapData = Object.fromEntries(map)
+				cUpdArr.push(mapData);						//배열에 넣기
+			}
+			//array 문자화
+			var cUpdArrstr = JSON.stringify(cUpdArr)
+			
+			///--------------------------배열 Map에 넣어서 전달
+			var info = new Map();
+			info.set('custHtData',cHtArrstr);
+			info.set('custUpdData',cUpdArrstr);
+			info.set("custNo",$('#custNo').val());
+			
+			//Map->Json
+			const infoData = Object.fromEntries(info);
+			
+			console.log(infoData);
+			
+			if(changResult){	//변경내역이 없으면
+				alert("변경내역이 없습니다.");
+			}else {				//변경내역이 있으면
+				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
 					
 					$.ajax({
 						url : "/customer/updateCust.do",
 						type : "post",
 						async: true,
-						data: info,
+						data: infoData,
 						dataType: "json",
 						success : function(data) {
 							//연결성공
@@ -277,14 +279,11 @@ $(function(){
 				}else{
 					return false;
 				}
-			}else {
-				alert("변경내역이 없습니다.");
 			}
 		}else {
 			alert("입력 내용을 다시 확인해 주세요");
 			return false;
 		}
-		
 	});
 	
 	
