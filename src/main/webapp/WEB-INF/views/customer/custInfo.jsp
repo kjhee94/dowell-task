@@ -68,7 +68,8 @@
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>생년월일</span>
 										<div class="box-input">
-											<input id="brdyDt" class="style-input" type="date" name="brdyDt" max="9999-12-13">
+											<input id="brdyDt" class="style-input" type="date" max="9999-12-13">
+											<input id="brdyDtRpc" type="hidden" name="brdyDt">
 										</div>
 									</div>
 									<div id="brdyDtMsg" class="area-msg"></div>
@@ -96,7 +97,8 @@
 									<div class="area-input">
 										<span class="input-title">결혼기념일</span>
 										<div class="box-input">
-											<input id="mrrgDt" class="style-input" type="date" name="mrrgDt" max="9999-12-13">
+											<input id="mrrgDt" class="style-input" type="date" max="9999-12-13">
+											<input id="mrrgDtRpc" type="hidden" name="mrrgDt">
 										</div>
 									</div>
 									<div id="mrrgDtMsg" class="area-msg"></div>
@@ -137,7 +139,7 @@
 									<div class="area-input">
 										<span class="input-title"><span class="required">*</span>가입매장</span>
 										<div class="box-input">
-											<input id="prtCd" class="style-input prt" type="text" name="prtNo">
+											<input id="prtCd" class="style-input prt" type="text" name="prtCd">
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>

@@ -347,58 +347,59 @@
 		WHERE CUST_NO=#{custNo}																							--회원번호로 조회
 	</select>
 	
-	<insert id="insertCustHt" parameterType="hashmap">
-		INSERT ALL 
-		<foreach collection="custHtData" item="item" index="index" open="INTO SD_CUST01_HT VALUES" separator="" close="SELECT * FROM DUAL">
-	        (#{custNo},
-	         TO_CHAR(SYSDATE,'YYYYMMDD'),
-	         NVL((SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1) + #{index},
-	         #{item.chgCd},
-	         #{item.chgBfCnt},
-	         #{item.chgAftCnt},
-	         SYSDATE,
-	         #{userId}, 
-	         SYSDATE,
-	         #{userId})
-  		</foreach>
-	</insert>
-	
 	<update id="updateCust" parameterType="hashmap">
-		UPDATE CS_CUST01_MT SET 								--고객관리 테이블
-		      CUST_NO = #{custNo}								--고객번호
-		      , CUST_NM = #{custNm}								--고객이름
-		      , SEX_CD = #{sexCd}								--성별코드
-		      , SCAL_YN = #{scalYn}								--양음력구분
-		      , BRDY_DT = #{brdyDt}								--생년월일
-		      , MRRG_DT = #{mrrgDt}								--결혼기념일
-		      , POC_CD = #{pocCd}								--직업코드
-		      , MBL_NO = #{mblNo}								--휴대폰번호
-		      , PSMT_GRC_CD = #{psmtGrcCd}						--우편물수령코드
-		      , EMAIL = #{email}								--이메일
-		      , ADDR = #{addr}									--주소
-		      , ADDR_DTL = #{addrDtl}							--상세주소
-		      , JN_PRT_CD = #{prtCd}							--가입매장
-		      , EMAIL_RCV_YN = #{emailRcvYn}					--이메일수신동의여부
-		      , SMS_RCV_YN = #{smsRcvYn}						--sms수신동의여부
-		      , DM_RCV_YN = #{dmRcvYn}							--dm수신동의여부
-				<choose>
-					<when test="custSsCd.equals('10') ">		--고객상태코드 정상으로 변경
-					, CUST_SS_CD = #{custSsCd}					--고객상태코드
-					, JS_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		--가입일자 오늘로 변경
-					, STP_DT = NULL								--중지일자 초기화
-					, CNCL_DT = NULL							--해지일자 초기화
-					, CNCL_CNTS = NULL							--해지사유 초기화
+		UPDATE CS_CUST01_MT SET 									--고객관리 테이블
+		      CUST_NO = #{custNo}									--고객번호
+		      , CUST_NM = #{cUpdData.custNm}						--고객이름
+		      , SEX_CD = #{cUpdData.sexCd}							--성별코드
+		      , SCAL_YN = #{cUpdData.scalYn}						--양음력구분
+		      , BRDY_DT = #{cUpdData.brdyDt}						--생년월일
+		      , MRRG_DT = #{cUpdData.mrrgDt}						--결혼기념일
+		      , POC_CD = #{cUpdData.pocCd}							--직업코드
+		      , MBL_NO = #{cUpdData.mblNo}							--휴대폰번호
+		      , PSMT_GRC_CD = #{cUpdData.psmtGrcCd}					--우편물수령코드
+		      , EMAIL = #{cUpdData.email}							--이메일
+		      , ADDR = #{cUpdData.addr}								--주소
+		      , ADDR_DTL = #{cUpdData.addrDtl}						--상세주소
+		      , JN_PRT_CD = #{cUpdData.prtCd}						--가입매장
+		      , EMAIL_RCV_YN = #{cUpdData.emailRcvYn}				--이메일수신동의여부
+		      , SMS_RCV_YN = #{cUpdData.smsRcvYn}					--sms수신동의여부
+		      , DM_RCV_YN = #{cUpdData.dmRcvYn}						--dm수신동의여부
+		      <if test="cUpdData.custSsCd!=null and !cUpdData.custSsCd.isEmpty()">
+		      	<choose>
+					<when test="cUpdData.custSsCd.equals('10') ">	--고객상태코드 정상으로 변경
+					, CUST_SS_CD = #{cUpdData.custSsCd}				--고객상태코드
+					, JS_DT = TO_CHAR(SYSDATE,'YYYYMMDD')			--가입일자 오늘로 변경
+					, STP_DT = NULL									--중지일자 초기화
+					, CNCL_DT = NULL								--해지일자 초기화
+					, CNCL_CNTS = NULL								--해지사유 초기화
 					</when>
-					<when test="custSsCd.equals('80') ">		--고객상태코드 중지로 변경
-					, CUST_SS_CD = #{custSsCd}					--고객상태코드
-					, STP_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		--해지일자 오늘
+					<when test="cUpdData.custSsCd.equals('80') ">	--고객상태코드 중지로 변경
+					, CUST_SS_CD = #{cUpdData.custSsCd}				--고객상태코드
+					, STP_DT = TO_CHAR(SYSDATE,'YYYYMMDD')			--중지일자 오늘
 					</when>
-					<otherwise>									--고객상태코드 해지로 변경
-					, CUST_SS_CD = #{custSsCd}					--고객상태코드
-					, CNCL_DT = TO_CHAR(SYSDATE,'YYYYMMDD')		
-					, CNCL_CNTS = #{cnclCnts}
+					<otherwise>										--고객상태코드 해지로 변경
+					, CUST_SS_CD = #{cUpdData.custSsCd}				--고객상태코드
+					, CNCL_DT = TO_CHAR(SYSDATE,'YYYYMMDD')			--해지일자 오늘
+					, CNCL_CNTS = #{cUpdData.cnclCnts}				--해지사유 
 					</otherwise>
 				</choose>
-		WHERE CUST_NO = #{custNo}
+		      </if>
+		WHERE CUST_NO = #{custNo}									--회원번호로 조회
 	</update>
+	
+	<insert id="insertCustHt" parameterType="hashmap">
+		<foreach collection="cHtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
+			INTO SD_CUST01_HT VALUES (#{custNo},
+								      TO_CHAR(SYSDATE,'YYYYMMDD'),
+								      NVL((SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1) + #{index},
+								      #{item.chgCd},
+								      #{item.chgBfCnt},
+								      #{item.chgAftCnt},
+								      SYSDATE,
+								      #{userId}, 
+								      SYSDATE,
+								      #{userId})
+  		</foreach>
+	</insert>
 </mapper>

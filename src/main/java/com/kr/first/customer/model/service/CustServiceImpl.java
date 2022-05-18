@@ -262,78 +262,26 @@ public class CustServiceImpl implements CustService {
 
 	//고객 정보 수정  메소드
 	@Override
-//	@Transactional(rollbackFor = {Exception.class})
+	@Transactional(rollbackFor = {Exception.class})
 	public HashMap<String, Object> updateCust(Map<String, Object> map) throws Exception {
 		
-		//json 파싱 작업
-		//-----------------------------------업데이트시 사용할 List
-		//String->JSONArray형으로 변환
-		JSONArray array1 = (JSONArray)map.get("custUpdData");
-		
-		//새로 담을 list 생성
-		List<Map<String, Object>> custUpdList = new ArrayList<Map<String, Object>>();
-		
-		//JSONArray 형태의 값을 가져와 JSONObject로 풀어주기
-        if(array1.size()>0) {
-        	for(int i=0; i<array1.size(); i++){
-		          
-		        JSONObject obj = (JSONObject)array1.get(i);						//JSONObject로 파싱
-//		        System.out.print(obj.get("custNm"));
-		        
-//		        Map<String, Object> updMap = new HashMap<String, Object>();		//Map 객체 생성
-//		        updMap.put(, obj.get("chgCd"));									//Map에 데이터 넣기
-		        custUpdList.add(obj);										//Map List에 넣기
-		    }
-        }
-        
-        System.out.println(custUpdList);
-	    
-        //-----------------------------------이력조회시 사용할 Map
-        Map<String, Object> custHtMap = new HashMap<String, Object>();
-	  
-	    //String->JSONArray형으로 변환
-        JSONArray array2 = (JSONArray)map.get("custHtData");
-		
-		//새로 담을 list 생성
-		List<Map<String, Object>> custHtList = new ArrayList<Map<String, Object>>();
-		
-	    if(array2.size()>0) {
-	    	for(int i=0; i<array2.size(); i++){
-		        //JSONArray 형태의 값을 가져와 JSONObject 로 풀어준다.    
-		        JSONObject obj = (JSONObject)array2.get(i);
-		                
-		        Map<String, Object> htMap = new HashMap<String, Object>();
-		            
-		        htMap.put("chgCd", obj.get("chgCd"));
-		        htMap.put("chgBfCnt", obj.get("chgBfCnt"));
-		        htMap.put("chgAftCnt", obj.get("chgAftCnt"));
-		            
-		        custHtList.add(custHtMap);
-		    }
-	    }
-	    custHtMap.put("custHtList", custHtList);
-	    custHtMap.put("custNo", map.get("custNo"));
-	    custHtMap.put("userId", map.get("userId"));
-	    
-	    System.out.println(custHtMap);
-		
-//		//고객 등록 결과 int에 담기(1:성공 / 0:실패)
-//		log.info("=================>>고객 정보 수정");
-//		int resultUpdate = cDAO.updateCust(map);
+		//고객 수정 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>고객 정보 수정");
+		int resultUpdate = cDAO.updateCust(map);
 		
 		//고객 이력 추가 결과 int에 담기(1:성공 / 0:실패)
-//		log.info("=================>>고객 이력 등록");
-//		int resultInsert = cDAO.insertCustHt(map);
-		//resultUpdate>0 && 
+		log.info("=================>>고객 이력 등록");
+		int resultInsert = cDAO.insertCustHt(map);
+		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-//		if(resultInsert>0) {	//등록 성공
-//			log.info("=================>>고객 정보 수정 성공");
-//			resultMap.put("seccessYN","Y");
-//		}else {	//등록 실패
-//			log.info("=================>>고객 정보 수정 실패");
-//			resultMap.put("seccessYN","N");
-//		}
+		if(resultUpdate>0 && resultInsert>0) {	//등록 성공
+			log.info("=================>>고객 정보 수정 성공");
+			resultMap.put("seccessYN","Y");
+		}else {	//수정 실패
+			log.info("=================>>고객 정보 수정 실패");
+			resultMap.put("seccessYN","N");
+		}
 		resultMap.put("result",true);
 		
 		return resultMap;

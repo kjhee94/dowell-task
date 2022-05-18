@@ -375,12 +375,16 @@ public class CustController {
 	//고객 정보 수정 메소드(팝업)
 	@ResponseBody
 	@PostMapping(value = "/customer/updateCust.do")
-	public void insertCust(@RequestParam Map<String, Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException, ParseException {	
-		
+	public void insertCust(@RequestBody Map<String,Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException, ParseException {	
 		//세션 ID 가져오기
 		String userId = user.getUserId();
 		log.info("userId : "+userId);
 		map.put("userId", userId);
+		
+		log.info("cUpdData : "+map.get("cUpdData"));
+		log.info("cHtData : "+map.get("cHtData"));
+		
+//		System.out.println(map.get("cHtData").getClass().getSimpleName());
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		

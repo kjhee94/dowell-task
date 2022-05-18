@@ -184,6 +184,7 @@ $(function(){
 		$.checkMrrgDtValid();
 		
 		if($.checkAllUpd){ 	//유효성 검사가 참이면
+			//value값 정돈
 			var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
 			var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
 			var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
@@ -195,54 +196,59 @@ $(function(){
 			var email = email0+'@'+email1;				//변경 후 값 합쳐서 저장
 			$('#email').val(email);
 			
+			var brdyDt = $('#brdyDt').val();			//생년월일 가져오기
+			var brdyDtRpc =	brdyDt.replace(/\-/g,"");		//'-'제거
+			$('#brdyDtRpc').val(brdyDtRpc);				//값 저장
+			
+			var mrrgDt = $('#mrrgDt').val();			//결혼기념일 가져오기
+			var mrrgDtRpc =	mrrgDt.replace(/\-/g,"");		//'-'제거
+			$('#mrrgDtRpc').val(mrrgDtRpc);				//값 저장
+			
 			//변경전 form 객체
 			var bfObj = $('#bfCntForm').serializeArray();
 			//변경후 form 객체
 			var aftObj = $('#updateCustInfo').serializeArray();
 			
+			//--------------------------ajax로 배열2(수정에 사용할 [변경항목,변경내용])
+			var formData = new FormData(document.getElementById('updateCustInfo'));
+			var cUpObj={};
+			for(var pair of formData.entries()) {
+				cUpObj[pair[0]] = pair[1];
+			}
+			console.log('수정 객체 : '+JSON.stringify(cUpObj));
+			
 			//--------------------------ajax로 배열1(변경이력에 사용할 [변경코드,변경전내용,변경후내용])
 			var cHtArr = new Array();
 			
-			for(var i=0; i<bfObj.length; i++){			//총 input 갯수만큼 for문 실행
+			//변경된 항목 몇개인지 구하기
+			var count = 0;
 			
-				var map = new Map();					//map로 받기
-				
-				map.set('chgCd',bfObj[i].name);			//ex)key: chgCd / value : CUST_NM
-				map.set('chgBfCnt',bfObj[i].value);		//ex)key: chgBfCnt / value : 홍길동
-				map.set('chgAftCnt',aftObj[i].value);	//ex)key: chgAftCnt / value : 홍길똥
-				
-				//Map->Json
-				const mapData = Object.fromEntries(map)
-				cHtArr.push(mapData);					//배열에 넣기
+			for(var i=0; i<bfObj.length; i++){
+				if(bfObj[i].value!=aftObj[i].value){
+					count = count+1;
+				}
 			}
-			//array 문자화
-			var cHtArrstr = JSON.stringify(cHtArr)
+			//console.log(count);
 			
-			//--------------------------ajax로 배열2(수정에 사용할 [변경항목,변경내용])
-			var cUpdArr = new Array();
-			
-			for(var i=0; i<bfObj.length; i++){				//총 input 갯수만큼 for문 실행
-				var map = new Map();						//map로 받기
-				
-				map.set(aftObj[i].name,aftObj[i].value);	//ex)key: custNm / value : 홍길똥
-				
-				//Map->Json
-				const mapData = Object.fromEntries(map)
-				cUpdArr.push(mapData);						//배열에 넣기
+			for(var i=0; i<count; i++){		//총 input 갯수만큼 for문 실행
+				if(bfObj[i].value!=aftObj[i].value){
+					var cHtObj = {
+							chgCd : bfObj[i].name,			//ex)key: chgCd / value : CUST_NM
+							chgBfCnt : bfObj[i].value,		//ex)key: chgBfCnt / value : 홍길동
+							chgAftCnt : aftObj[i].value,	//ex)key: chgAftCnt / value : 홍길똥
+						}
+				}
+				cHtArr.push(cHtObj);
 			}
-			//array 문자화
-			var cUpdArrstr = JSON.stringify(cUpdArr)
+			console.log('변경이력 배열 : '+JSON.stringify(cHtArr));
 			
-			///--------------------------배열 Map에 넣어서 전달
-			var info = new Map();
-			info.set('custHtData',cHtArrstr);
-			info.set('custUpdData',cUpdArrstr);
-			info.set("custNo",$('#custNo').val());
-			
-			//Map->Json
-			const infoData = Object.fromEntries(info);
-			
-			console.log(infoData);
+			//--------------------------ajax에 보낼 전체 데이터
+			var allObj = {
+					cUpdData : cUpObj,
+					cHtData : cHtArr,
+					custNo : $('#custNo').val()
+			}
+			//console.log('전체 데이터 : '+allObj)
 			
 			if(changResult){	//변경내역이 없으면
 				alert("변경내역이 없습니다.");
@@ -252,8 +258,8 @@ $(function(){
 					$.ajax({
 						url : "/customer/updateCust.do",
 						type : "post",
-						async: true,
-						data: infoData,
+						contentType: "application/json; charset=UTF-8",
+						data : JSON.stringify(allObj),
 						dataType: "json",
 						success : function(data) {
 							//연결성공
@@ -273,7 +279,7 @@ $(function(){
 							//alert에 에러표시
 							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
 							//console에 에러표시
-							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					});
 				}else{
@@ -296,6 +302,6 @@ $(function(){
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 	
 	//resetBtn 클릭시 초기화
-	var custNo = $('#custNo').val();
-	$.reset('#resetBtn','/customer/custInfo.do?custNo='+custNo);
+//	var custNo = $('#custNo').val();
+//	$.reset($('#resetBtn'),'/customer/custInfo.do?custNo='+custNo);
 });
