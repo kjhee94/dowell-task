@@ -2,7 +2,6 @@
  * 
  */
 $(function(){
-	
 	//input 내에서 focus를 value 끝으로 이동
 	$.focusEnd = function(){
 		var len = $('input[autofocus]').val().length;
@@ -13,7 +12,7 @@ $(function(){
 	$.checkValidKeydown = function(date1,date2,select) {
 		date1.keydown(function(keyNum){ 
 			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
-				$.checkValidChangeDate(date1,date2,select);
+				$.checkValidChangeDate(date1,date2,select);	//날짜 유효성 체크
 			};
 		});
 	}
@@ -21,7 +20,6 @@ $(function(){
 	//Date 유효성 검사 후 날짜 변경
 	$.checkValidChangeDate = function(date1,date2,select){
 		if($.checkValidDate(date1.val())==false){			//날짜 유효성 검사 실패시
-//			alert('잘못된 형식의 날짜입니다');
 			$.alertChangeDate("잘못된 형식의 날짜입니다",date2,date1,select);
 		} 
 		else if(select==0 && date1.val()>date2.val()) {		//select=0이면 date1이 jsDtFrom
@@ -42,7 +40,7 @@ $(function(){
 		}else {											//select=1이면 date1이 jsDtTo
 			date.setDate(date.getDate()+1);				//date+1일
 		}
-		var formatDate = $.getFormatDate(date);			//포맷
+		var formatDate = $.getFormatDate(date);		//포맷
 		date1.val(formatDate);							//값변경
 	}
 	
@@ -63,7 +61,7 @@ $(function(){
 	    return result;
 	}
 	
-	//new Date 포맷변경(YYYY-MM-DD)
+	//date 포맷변경(YYYY-MM-DD)
 	$.getFormatDate = function(date){
 	    var year = date.getFullYear();              	//yyyy
 	    var month = (1 + date.getMonth());          	//M
@@ -71,6 +69,16 @@ $(function(){
 	    var day = date.getDate();                   	//d
 	    day = day >= 10 ? day : '0' + day;          	//day 두자리로 저장
 	    return  year + '-' + month + '-' + day;     	//'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	}
+	
+	//date 포맷변경(YYYYMMDD)
+	$.getFormatDateY = function(date){
+	    var year = date.getFullYear();              	//yyyy
+	    var month = (1 + date.getMonth());          	//M
+	    month = month >= 10 ? month : '0' + month;  	//month 두자리로 저장
+	    var day = date.getDate();                   	//d
+	    day = day >= 10 ? day : '0' + day;          	//day 두자리로 저장
+	    return  year + month + day;     				//yyyymmdd 형태 생성 가능
 	}
 	
 	//닫기버튼 클릭시 팝업닫기
@@ -86,7 +94,7 @@ $(function(){
 		if($('.result-content').hasScrollBar()) { 				//결과값이 많아 tbody에 스크롤바가 생길 경우
 			$('.result-title').css('padding-right','16.5px'); 	//th의 tr에 스크롤바 넓이의 padding 추가  
 		}else {
-			$('.result-title').css('padding-right','0');
+			$('.result-title').css('padding-right','0');		//스크롤바가 없는경우 padding 0
 		}
 	}
 	
@@ -145,7 +153,7 @@ $(function(){
 		});
 	}
 
-	//체크박스 공통함수
+	//popup 검색 공통함수
 	$.allPopSearchFunc = function(classCode,className,idCode,idName){
 		//스크롤바 생성 변형 함수
 		$.scrollBerTransform();
@@ -165,6 +173,7 @@ $(function(){
 		$('#applyBtn').click(function(){
 			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
 				alert('체크박스를 선택해 주세요.');
+				return false;
 			}
 		});
 	}
@@ -185,149 +194,76 @@ $(function(){
 	$.checkNameValid = function() {
 		var custNm = $('#custNmInfo').val().trim();		//사용자가 입력한 값 공백 제거
 		
-		if(custNm.length==0){							//이름을 입력하지 않았을 때
-			$.validFalse('이름을 입력해 주세요.','#custNmInfo');
-		}else if(custNm.length==1){						//이름 1자 일 때
-			$.validFalse('2자 이상 입력해 주세요.','#custNmInfo');
+		if(custNm.length==1){							//이름 1자 일 때
+			$.validResult('F','고객명은 2자 이상 입력해 주세요.','#custNmInfo');
 		}else {
-			$.validTrue('#custNmInfo');
-		}
-	}
-	
-	//직업코드 유효성 검사
-	$.checkPocValid = function() {
-		var first = $('select>option:selected');	//option의 첫번째 요소
-		
-		if(first.text()=='선택'){						//첫번째 요소가 선택 되었을 때 (value 값이 없을 때)
-			$.validFalse('직업을 선택해 주세요.','select');
-		}else {
-			$.validTrue('select');
+			$.validResult('T','None','#custNmInfo');
 		}
 	}
 	
 	//생일 유효성 검사
 	$.checkBrdyDtValid = function() {
-		var date = new Date();					//오늘 날짜
-		var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
+		var date = new Date();							//오늘 날짜
+		var today = $.getFormatDate(date);				//포맷팅된 오늘 날짜
 		
-		var brdyDt = $('#brdyDt').val();		//사용자가 입력한 값
+		var brdyDt = $('#brdyDt').val();				//사용자가 입력한 값
 		
-		if($.checkValidDate(brdyDt)==false){	//입력한 값이 날짜 유효성 체크 실패일 때
-			$.validFalse('잘못된 형식의 날짜입니다.','#brdyDt');
-			$('#brdyDt').val("");				//입력창 리셋
-		}else if(brdyDt>today){					//입력한 값이 오늘보다 클 때
-			$.validFalse('오늘날짜 이전으로 입력해 주세요.','#brdyDt');
-			$('#brdyDt').val("");				//입력창 리셋
+		if($.checkValidDate(brdyDt)==false){			//입력한 값이 날짜 유효성 체크 실패일 때
+			$.validResult('F','None','#brdyDt');
+			$('#brdyDt').val("");						//입력창 리셋
+		}else if(brdyDt>today){							//입력한 값이 오늘보다 클 때
+			$.validResult('F','미래일자는 입력이 불가능 합니다','#brdyDt');
+			$('#brdyDt').val("");						//입력창 리셋
 		}else {
-			$.validTrue('select');
+			$.validResult('T','None','#brdyDt');
 		}
 	}
 	
 	//핸드폰 유효성 검사
-	$.checkMblNoValid = function(orgMblNo0,orgMblNo1,orgMblNo2){
+	$.checkMblNoValid = function(select){
 		var mblNo0 = $('#mblNo0').val().trim();	//사용자가 입력한 값 공백 제거
 		var mblNo1 = $('#mblNo1').val().trim();	//사용자가 입력한 값 공백 제거
 		var mblNo2 = $('#mblNo2').val().trim();	//사용자가 입력한 값 공백 제거
-		var msg = $('#mblNoMsg');
+		var mblNo = mblNo0+mblNo1+mblNo2;		//합친 형태
 		var checkBtn = $('#checkMblNo>span');
 		
-		if(/^[0-9]{3}/.test(mblNo0) && /^[0-9]{3,4}/.test(mblNo1) && /^[0-9]{4}/.test(mblNo2)){	//올바른 자릿수일 때
-			
-			var fullMblNo = mblNo0+mblNo1+mblNo2;			//합친 형태
-			var pattern = /^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/;	//자릿수 정규화식
-			var result =  pattern.test(fullMblNo);			//정규화 결과값
-			
-			if(result) {																//올바른 날짜식일 때
-				if(result && (fullMblNo=='0000000000' || fullMblNo=='00000000000')){	//000-000-0000 || 000-0000-0000 일 때
-					msg.css('display','block');
-					msg.text('사용할 수 없는 번호 입니다.');
-					checkBtn.css("color","coral")
-					
-					//입력창 리셋
-					$('#mblNo0').val(orgMblNo0);
-					$('#mblNo1').val(orgMblNo1);
-					$('#mblNo2').val(orgMblNo2);
-	
-					if(custNo==null){
-						$('#mblNo0').val("");
-						$('#mblNo1').val("");
-						$('#mblNo2').val("");
-					}
-					return false;
-				}else {																	//자릿수도 맟고 날짜식도 맞고 0으로 구성되지 않은 번호 중에서
-					var custNo = $('#custNo').val();
-					$.ajax({															//중복된 핸드폰 번호 찾기
-						url:"/customer/mblNoCheck.do",
-						type:"post",
-						async: true,
-						data:{"mblNo":fullMblNo,"custNo":custNo},
-						dataType: "json",
-						success: function(data){
-							var msg = $('#mblNoMsg');
-							
-							if(data["result"]) { 										//정상적으로 데이터가 왔을 경우(try)
-								if(data["check"]=="Y"){ 								//중복체크 결과 사용 가능일 때
-									msg.css('display','none');
-									checkBtn.css("color","#9BDF30")
-									return true;
-								}else {													//중복체크 결과 중복일 때
-									msg.css('display','block');
-									msg.text('사용중인 핸드폰 번호입니다.')
-									checkBtn.css("color","coral")
-									
-									//입력창 리셋
-									$('#mblNo0').val(orgMblNo0);
-									$('#mblNo1').val(orgMblNo1);
-									$('#mblNo2').val(orgMblNo2);
-									
-									if(custNo==null){
-										$('#mblNo0').val("");
-										$('#mblNo1').val("");
-										$('#mblNo2').val("");
-									}
-									return false;
-								}
+		if(/^[0-9]{3}[0-9]{3,4}[0-9]{4}/.test(mblNo)){			//올바른 자릿수일 때
+			if(mblNo=='0000000000' || mblNo=='00000000000'){	//0으로 구성된 번호 일 때(해지고객 번호)
+				$.validResult('F','핸드폰 번호 000-000-0000 or 000-0000-0000\n사용할 수 없는 번호 입니다','#mblNo0','#mblNo1','#mblNo2',select);
+			}else {												//자릿수도 맟고 0으로 구성되지 않은 번호 중에서
+				var custNo = $('#custNo').val();
+				
+				$.ajax({										//중복된 핸드폰 번호 찾기
+					url:"/customer/mblNoCheck.do",
+					type:"post",
+					async: true,
+					data:{"mblNo":mblNo,"custNo":custNo},
+					dataType: "json",
+					success: function(data){
+						if(data["result"]) { 					//정상적으로 데이터가 왔을 경우(try)
+							if(data["check"]=="Y"){ 			//중복체크 결과 사용 가능일 때
+								$.validResult('T','사용 가능한 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
+							}else {								//중복체크 결과 중복일 때
+								$.validResult('F','사용중인 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
 							}
-							else { 														//비즈니스 로직중 에러가 났을 경우(catch)
-								//alert에 에러표시
-								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
-							}
-						},
-						error: function(){
-							//alert에 에러표시
-							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
-							//console에 에러표시
-							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
-					});
-				}
+						else { 									//비즈니스 로직중 에러가 났을 경우(catch)
+							//alert에 에러표시
+							alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
+						}
+					},
+					error: function(){
+						//alert에 에러표시
+						alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+						//console에 에러표시
+						//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
 			}
 		}else if(mblNo0.length==0 && mblNo1.length==0 && mblNo2.length==0){				//핸드폰 번호를 입력하지 않았을 때
-			msg.css('display','block');
-			msg.text('휴대폰 번호를 입력해 주세요.')
-			checkBtn.css("color","coral")
-			return false;
-		}else {																			//(3)-(3,4)-(4)의 자릿수가 아닐 때
-			msg.css('display','block');
-			msg.text('숫자 10자 또는 11자로 입력해 주세요.');
-			checkBtn.css("color","coral")
-			return false;
-		}
-	}
-	
-	//이메일 유효성 검사
-	$.checkEmailValid = function(){
-		var email0 = $('#email0').val().trim();		//사용자가 입력한 값 공백 제거
-		var email1 = $('#email1').val().trim();		//사용자가 입력한 값 공백 제거
-		var msg = $('#emailMsg');
-		
-		if(email0.length==0 || email1.length==0){	//모두 입력이 되지 않았을 때
-			msg.css('display','block');
-			msg.text('이메일을 입력해 주세요.');
-			return false;
-		}else {
-			msg.css('display','none');
-			return true;
+			$.validResult('F','휴대폰 번호를 입력해 주세요.','#mblNo0','#mblNo1','#mblNo2');
+		}else {													//(3)-(3,4)-(4)의 자릿수가 아닐 때
+			$.validResult('F','숫자 10자 또는 11자로 입력해 주세요.','#mblNo0','#mblNo1','#mblNo2');
 		}
 	}
 	
@@ -335,46 +271,66 @@ $(function(){
 	$.checkAddrValid = function(){
 		var addr = $('#addr').val().trim();				//사용자가 입력한 값 공백 제거
 		var addrDtl = $('#addrDtl').val().trim();		//사용자가 입력한 값 공백 제거
-		var msg = $('#addrMsg');
 		
-		if((addr.length==0 && addrDtl.length!=0)||(addr.length!=0 && addrDtl.length==0)){	//하나만 채워져 있는 경우
-			msg.css('display','block');
-			msg.text('주소를 모두 입력해주세요.');
-			return false;
+		if(addr.length==0 && addrDtl.length!=0){	//하나만 채워져 있는 경우
+			$.validResult('F','주소를 모두 입력해주세요.','#addr','#addrDtl');
+		}else if(addr.length!=0 && addrDtl.length==0) {
+			$.validResult('F','주소를 모두 입력해주세요.','#addrDtl','#addr');
 		}else {
-			msg.css('display','none');
-			return true;
+			$.validResult('T','None','#addr','#addrDtl');
 		}
 	}
 	
 	//결혼기념일 유효성 검사
 	$.checkMrrgDtValid = function(){
-//		var mrrgDt = $('#mrrgDt').val();		//사용자가 입력한 값
-//		var msg = $('#mrrgDtMsg');
-//		
-//		if($.checkValidDate(mrrgDt)==false){	//입력한 값이 유효성  체크 실패일 때
-//			msg.css('display','block');
-//			msg.text('잘못된 형식의 날짜입니다');
-//			$('#mrrgDt').val("");
-//		}else {
-//			msg.css('display','none');
-//		}
+		var mrrgDt = $('#mrrgDt').val();		//사용자가 입력한 값
+		var msg = $('#mrrgDtMsg');
+		
+		if($.checkValidDate(mrrgDt)==false){	//입력한 값이 유효성  체크 실패일 때
+			$('#mrrgDt').val("");
+		}
 	}
 	
-	$.validFalse = function(msg,selector){
-		alert(msg);
-		$(selector).css("border",'2px solid coral');
-		setTimeout(function(){ 
-			$(selector).focus(); 
-		}, 10)
-		return false;
+	//유효성 결과
+	$.validResult = function(result,msg,selector1,selector2,selector3,select){
+		if(result=='F'){
+			if(msg!='None'){
+				alert(msg);
+			}
+			$(selector1).css("border",'2px solid coral');
+			$(selector2).css("border",'2px solid coral');
+			$(selector3).css("border",'2px solid coral');
+			setTimeout(function(){ 
+				$(selector1).focus(); 
+			}, 10)
+			
+			if(select!=null){
+				if(select='insert'){
+					$(selector1).val("");
+					$(selector2).val("");
+					$(selector3).val("");
+				}else if(select='update') {
+					var mblNo = $('#bfMblNo').val();
+					$.eachMblNoPut(mblNo);
+				}
+				$('#checkMblNo>span').css("color","coral");
+			}
+			return false;
+		}else if(result=='T'){
+			if(msg!='None'){
+				alert(msg);
+			}
+			$(selector1).css("border",'1px solid #c8c8c8');
+			$(selector2).css("border",'1px solid #c8c8c8');
+			$(selector3).css("border",'1px solid #c8c8c8');
+			if(select!=null){
+				$('#checkMblNo>span').css("color","#9BDF30");
+			}
+			return true;
+		}
 	}
 	
-	$.validTrue = function(selector){
-		$($(selector)).css("border",'1px solid #c8c8c8');
-		return true;
-	}
-	
+	//유효성 전체검사
 	$.checkAllAdd = function() {
         if(!$.checkNameValid()) {
             return false;
@@ -417,135 +373,154 @@ $(function(){
         }
         return true;
     }
-
 	
-	//고객상태 제한
+	//핸드폰번호 쪼개서 넣기
+	$.eachMblNoPut = function(mblNo){
+		if(mblNo.length==10){
+			$('#mblNo0').val(mblNo.substr(0, 3));
+			$('#mblNo1').val(mblNo.substr(3, 3));
+			$('#mblNo2').val(mblNo.substr(6, 4));
+		}else if (mblNo.length==11){
+			$('#mblNo0').val(mblNo.substr(0, 3));
+			$('#mblNo1').val(mblNo.substr(3, 4));
+			$('#mblNo2').val(mblNo.substr(7, 4));
+		}
+	}
+	
+	//고객상태에 따라 비활성화
 	$.custSsCdLimit = function(custSsCd){
-		//고객상태에 따라 선택 제한
+		//현재 선택된 value 값에 따른 비활성화 설정
 		var checkCustSs = $('input[id^="custSsCd"]:checked').val();
 		
-		if(checkCustSs=='10'){
-			$('#custSsCd2').attr("disabled",true);
-			$('#custSsCd2').parent().css("color","#c8c8c8");
-			$('#custSsCd1').attr("disabled",false);
-			$('#custSsCd1').parent().css("color","#707070");
-			$('#custSsCd0').attr("disabled",false);
-			$('#custSsCd0').parent().css("color","#707070");
-		}else if(checkCustSs=='90'){
-			$('#custSsCd1').attr("disabled",true);
-			$('#custSsCd1').parent().css("color","#c8c8c8");
-			$('#custSsCd2').attr("disabled",false);
-			$('#custSsCd2').parent().css("color","#707070");
-			$('#custSsCd0').attr("disabled",false);
-			$('#custSsCd0').parent().css("color","#707070");
-			$('#cnclCnts').attr("readonly",false);
-			$("#custNmInfo").attr("readonly",true);
-			$("#mblNo0").attr("readonly",true);
-			$("#mblNo1").attr("readonly",true);
-			$("#mblNo2").attr("readonly",true);
-		}else {
-			$('#custSsCd0').attr("disabled",false);
-			$('#custSsCd0').parent().css("color","#707070");
-			$('#custSsCd2').attr("disabled",false);
-			$('#custSsCd2').parent().css("color","#707070");
-			$('#custSsCd1').attr("disabled",false);
-			$('#custSsCd1').parent().css("color","#707070");
+		if(checkCustSs=='10'){					//정상이 선택되어 있는 경우
+			$.radioState('#custSsCd0','A');		//정상 활성화
+			$.radioState('#custSsCd1','A');		//중지 활성화
+			$.radioState('#custSsCd2','D');		//해지 비활성화
+		}else if(checkCustSs=='80'){			//중지가 선택되어 있는  경우
+			$.radioState('#custSsCd0','A');		//정상 활성화
+			$.radioState('#custSsCd1','A');		//중지 활성화
+			$.radioState('#custSsCd2','A');		//해지 활성화
+		}else {									//해지가 선택되어 있는  경우
+			$.radioState('#custSsCd0','A');		//정상 활성화
+			$.radioState('#custSsCd1','D');		//중지 비활성화
+			$.radioState('#custSsCd2','A');		//해지 활성화
+			$.cancelReadonlyOn();				//해지일때 input readonly 설정
 		}
 		
+		//버튼을 선택할 경우 세팅 설정
 		if(custSsCd=='80'){
-			var owmNm = $("#custNmInfo").val();
-			
-			var ownMblNo0 = $("#mblNo0").val();
-			var ownMblNo1 = $("#mblNo1").val();
-			var ownMblNo2 = $("#mblNo2").val();
-			
-			//해지버튼이 클릭되었을 때 해지사유 활성화
+			//중지에서 해지로 변경되었을때
 			$('input[id=custSsCd2]').on('click', function() {
 				if($(this).is(':checked')) {
-					$('#cnclCnts').attr("readonly",false);
+					$.cancelOnclickSetting('cancel');
 					$('#cnclCnts').focus();
-				
-					$("#custNmInfo").attr("readonly",true);
-					$("#mblNo0").attr("readonly",true);
-					$("#mblNo1").attr("readonly",true);
-					$("#mblNo2").attr("readonly",true);
-					
-					$("#custNmInfo").val("해지고객");
-					$("#mblNo0").val("000");
-					$("#mblNo1").val("0000");
-					$("#mblNo2").val("0000");
-					
-					$.checkNameValid();
-					$('#mblNoMsg').css('display','none');
-					$('#checkMblNo>span').css("color","#9BDF30");
 				}
 			});
-			//중지버튼 클릭시 해지사유 비활성화
-			$('input[id=custSsCd1]').on('click', function() {
-				if($(this).is(':checked')) {
-					$('#cnclCnts').attr("readonly",true);
-					$('#cCntsMsg').css("display","none")
-					
-					$("#custNmInfo").attr("readonly",false);
-					$("#mblNo0").attr("readonly",false);
-					$("#mblNo1").attr("readonly",false);
-					$("#mblNo2").attr("readonly",false);
-					
-					$("#custNmInfo").val(owmNm);
-					$("#mblNo0").val(ownMblNo0);
-					$("#mblNo1").val(ownMblNo1);
-					$("#mblNo2").val(ownMblNo2);
-				}
-			});
-			//정상버튼 클릭시 해지사유 비활성화
+			//중지에서 정상으로 변경되었을때
 			$('input[id=custSsCd0]').on('click', function() {
 				if($(this).is(':checked')) {
-					$('#cnclCnts').attr("readonly",true);
-					$('#cCntsMsg').css("display","none")
+					$.cancelOnclickSetting('restore');
+				}
+			});
+			//다시 중지로 돌아올 경우
+			$('input[id=custSsCd1]').on('click', function() {
+				if($(this).is(':checked')) {
+					$.cancelOnclickSetting('restore');
 				}
 			});
 		}else if(custSsCd=='90') {
-			//정상버튼 클릭시 
+			//해지에서 정상으로 변경되었을때
 			$('input[id=custSsCd0]').on('click', function() {
 				if($(this).is(':checked')) {
-					$('#cnclCnts').attr("readonly",true);
-					$('#cCntsMsg').css("display","none")
-					
-					$("#custNmInfo").attr("readonly",false);
-					$("#mblNo0").attr("readonly",false);
-					$("#mblNo1").attr("readonly",false);
-					$("#mblNo2").attr("readonly",false);
-					
-					$("#custNmInfo").val("");
-					$("#mblNo0").val("");
-					$("#mblNo1").val("");
-					$("#mblNo2").val("");
-					
-					$.checkNameValid();
-					$.checkMblNoValid();
+					$.cancelOnclickSetting('rename');
 				}
 			});
-			//해지버튼이 선택되었을 때 해지사유 활성화
+			//다시 해지로 돌아올 경우
 			$('input[id=custSsCd2]').on('click', function() {
 				if($(this).is(':checked')) {
-					$('#cnclCnts').attr("readonly",false);
-					$("#custNmInfo").attr("readonly",true);
-					$("#mblNo0").attr("readonly",true);
-					$("#mblNo1").attr("readonly",true);
-					$("#mblNo2").attr("readonly",true);
-					
-					$("#custNmInfo").val("해지고객");
-					$("#mblNo0").val("000");
-					$("#mblNo1").val("0000");
-					$("#mblNo2").val("0000");
-					
-					$.checkNameValid();
-					$('#mblNoMsg').css('display','none');
-					$('#checkMblNo>span').css("color","#9BDF30");
+					$.cancelOnclickSetting('cancel');
 				};
 			});
 		};
 	}
 	
+	//라디오버튼 비활성화/활성화
+	$.radioState = function(selector,state){
+		if(state=='D'){										//라디오 버튼 비활성화
+			$(selector).attr("disabled",true);				//버튼 선택불가능
+			$(selector).parent().css("color","#c8c8c8");	//색상 연하게
+		}else {												//라디오 버튼 활성화
+			$(selector).attr("disabled",false);				//버튼 선택가능
+			$(selector).parent().css("color","#707070");	//색상 원상복구
+		}
+	}
+
+	//해지일 때 readonly 설정
+	$.cancelReadonlyOn = function(){
+		$('#cnclCnts').attr("readonly",false);				//해지사유 활성화
+		$("#custNmInfo").attr("readonly",true);				//고객이름 비활성화
+		$("#mblNo0").attr("readonly",true);					//핸드폰 번호 비활성화
+		$("#mblNo1").attr("readonly",true);
+		$("#mblNo2").attr("readonly",true);
+	};
 	
+	//해지가 아닐 때 readonly 설정
+	$.cancelReadonlyOff = function(){
+		$('#cnclCnts').attr("readonly",true);				//해지사유 비활성화
+		$("#custNmInfo").attr("readonly",false);			//고객이름 활성화
+		$("#mblNo0").attr("readonly",false);				//핸드폰 번호 활성화
+		$("#mblNo1").attr("readonly",false);
+		$("#mblNo2").attr("readonly",false);
+	};
+	
+	//해지일 경우 세팅
+	$.cancelOnclickSetting = function(select){
+		if(select=='cancel'){									//해지로 변경
+			$.cancelReadonlyOn();								//해지일 때 readonly 설정
+			$("#custNmInfo").val("해지고객");						//고객이름 -> 해지고객
+			var mblNo = $('#bfMblNo').val().replace(/\d/g,'0')	//휴대폰 번호 0으로 바꾸기
+			$.eachMblNoPut(mblNo);
+			$.checkMblNoBtnOff();								//핸드폰 조회 이벤트 막기
+		}else if(select=='restore'){							//해지에서 돌아갈 때
+			$.cancelReadonlyOff();								//해지가 아닐 때 readonly 설정
+			$('#cnclCnts').val("");
+			$("#custNmInfo").val($('#bfCustNm').val());			//고객이름 -> 변경전 데이터
+			var mblNo = $('#bfMblNo').val();					//핸드폰 번호 -> 변경전 데이터
+			$.eachMblNoPut(mblNo);
+			$.checkMblNoBtnOn('restore');						//핸드폰 조회 이벤트 재생성
+		}else if(select=='rename'){								//정보 재설정이 필요할 때
+			$.cancelReadonlyOff();								//해지가 아닐 때 readonly 설정
+			$("#custNmInfo").val("");							//이름과 핸드폰번호 value값 지우기
+			$('#mblNo0').val("");
+			$('#mblNo1').val("");
+			$('#mblNo2').val("");
+			$.checkMblNoBtnOn('rename');						//핸드폰 조회 이벤트 재생성
+		}
+	}
+	
+	//핸드폰 조회 이벤트 막기
+	$.checkMblNoBtnOff = function(){
+		$('#checkMblNo>span').css("color","#707070");		//아이콘 색상 무채색
+		$('#checkMblNo').css('cursor','default');			//커서 기본
+		$("#checkMblNo").off("click");						//이벤트 끄기
+	}
+	
+	//핸드폰 조회 이벤트 재생성
+	$.checkMblNoBtnOn = function(select){
+		if(select=='restore'){
+			$('#checkMblNo>span').css("color","#9BDF30");		//아이콘 색상 초록
+			$('#checkMblNo').css('cursor','pointer');			//커서 손가락
+			$('#checkMblNo').on('click', function(){ 			//이밴트 생성
+				var mblNo = $('#bfMblNo').val()
+				$.checkMblNoValid(mblNo);
+			});
+		}else if(select=='rename'){
+			$('#checkMblNo>span').css("color","#9BDF30");		//아이콘 색상 초록
+			$('#checkMblNo').css('cursor','pointer');			//커서 손가락
+			$('#checkMblNo').on('click', function(){ 			//이밴트 생성
+				$.checkMblNoValid();
+			});
+		}
+		
+	}
 });

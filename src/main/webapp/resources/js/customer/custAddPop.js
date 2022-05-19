@@ -12,11 +12,6 @@ $(function(){
 		$.checkNameValid();
 	});
 	
-	//직업코드 유효성 검사
-	$('#pocCd').blur(function(){ 
-		$.checkPocValid();
-	});
-	
 	//생일  유효성 검사
 	var date = new Date();					//오늘 날짜
 	var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
@@ -28,17 +23,12 @@ $(function(){
 	});
 	
 	//핸드폰 유효성 검사
-	$('#mblNo2').blur(function(){ 
-		$.checkMblNoValid();
-	});
-	
-	//이메일 유효성 검사
-	$('#email1').blur(function(){ 
-		$.checkEmailValid();
+	$('#checkMblNo').on('click', function(){ 
+		$.checkMblNoValid('insert');
 	});
 	
 	//주소 유효성 검사
-	$('#addrDtl').blur(function(){ 
+	$('#addr').blur(function(){ 
 		$.checkAddrValid();
 	});
 	

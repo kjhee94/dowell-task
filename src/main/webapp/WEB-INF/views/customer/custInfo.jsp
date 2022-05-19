@@ -220,7 +220,8 @@
 									<div class="area-input">
 										<span class="input-title">중지일자</span>
 										<div class="box-input">
-											<input id="stpDt" class="style-input" type="text" name="stpDt" readonly>
+											<input id="stpDt" class="style-input" type="text" readonly>
+											<input id="stpDtDB" type="hidden" name="stpDt">
 										</div>
 									</div>
 								</div>
@@ -228,7 +229,8 @@
 									<div class="area-input">
 										<span class="input-title">해지일자</span>
 										<div class="box-input">
-											<input id="cnclDt" class="style-input" type="text" name="cnclDt" readonly>
+											<input id="cnclDt" class="style-input" type="text" readonly>
+											<input id="cnclDtDB" type="hidden" name="cnclDt">
 										</div>
 									</div>
 								</div>

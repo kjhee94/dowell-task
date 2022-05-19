@@ -92,11 +92,6 @@ $(function(){
 						$('#bfSmsRcvYn').val(data.cust["smsRcvYn"])
 						$('#bfDmRcvYn').val(data.cust["dmRcvYn"])
 						
-						//핸드폰 유효성 검사
-						$('#checkMblNo').on('click', function(){ 
-							$.checkMblNoValid(mblNo[0],mblNo[1],mblNo[2]);
-						});
-						
 						//고객상태 제한
 						$.custSsCdLimit(data.cust["custSsCd"]);
 						
@@ -158,6 +153,11 @@ $(function(){
 		$.checkBrdyDtValid(today);
 	});
 	
+	//핸드폰 유효성 검사
+	$('#checkMblNo').on('click', function(){ 
+		$.checkMblNoValid('update');
+	});
+	
 	//이메일 유효성 검사
 	$('#email1').blur(function(){ 
 		$.checkEmailValid();
@@ -197,11 +197,11 @@ $(function(){
 			$('#email').val(email);
 			
 			var brdyDt = $('#brdyDt').val();			//생년월일 가져오기
-			var brdyDtRpc =	brdyDt.replace(/\-/g,"");		//'-'제거
+			var brdyDtRpc =	brdyDt.replace(/\-/g,"");	//'-'제거
 			$('#brdyDtRpc').val(brdyDtRpc);				//값 저장
 			
 			var mrrgDt = $('#mrrgDt').val();			//결혼기념일 가져오기
-			var mrrgDtRpc =	mrrgDt.replace(/\-/g,"");		//'-'제거
+			var mrrgDtRpc =	mrrgDt.replace(/\-/g,"");	//'-'제거
 			$('#mrrgDtRpc').val(mrrgDtRpc);				//값 저장
 			
 			//변경전 form 객체
@@ -228,7 +228,7 @@ $(function(){
 					count = count+1;
 				}
 			}
-			//console.log(count);
+			console.log(count);
 			
 			for(var i=0; i<count; i++){		//총 input 갯수만큼 for문 실행
 				if(bfObj[i].value!=aftObj[i].value){
@@ -256,7 +256,7 @@ $(function(){
 				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
 					
 					$.ajax({
-						url : "/customer/updateCust.do",
+//						url : "/customer/updateCust.do",
 						type : "post",
 						contentType: "application/json; charset=UTF-8",
 						data : JSON.stringify(allObj),

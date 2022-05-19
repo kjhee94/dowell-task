@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/resources/common/common.css">
-<link rel="stylesheet" href="/resources/css/customer/popup.css">
 <link rel="stylesheet" href="/resources/css/customer/custAdd.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
@@ -20,9 +19,9 @@
 	<div class="container">
 		<div class="box-title">
 			<span class="main-title">신규고객등록</span>
-			<button id="resetCustAddBtn" class="btn-reset" type="reset">
+			<!-- <button id="resetCustAddBtn" class="btn-reset" type="reset">
 				<span class="material-icons">restart_alt</span>
-			</button>
+			</button> -->
 		</div>
 		
 		<form id="custAddForm" method="post">

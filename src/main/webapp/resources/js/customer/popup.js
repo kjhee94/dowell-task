@@ -164,9 +164,6 @@ $(function(){
 		});
 	});
 	
-	//체크 없이 적용했을 때
-	$.nonCheckApply();
-	
 	//키보드 Enter 이벤트(Enter시 바로 검색)
 	$.keydownEnter($('#custNm'),$('#custSearchBtn'));
 	$.keydownEnter($('#mblNo'),$('#custSearchBtn'));

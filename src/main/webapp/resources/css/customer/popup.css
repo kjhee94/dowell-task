@@ -125,26 +125,6 @@
 	border-right: 0;
 }
 
-/*닫기,적용 버튼 */
-.box-btn {
-	text-align: center;
-}
-.box-btn>button {
-	width: 80px;
-	height: 40px;
-	line-height: 40px;
-	border-radius: 5px;
-	cursor: pointer;
-}
-.btn-close {
-	margin-right: 15px;
-	border: 1px #c8c8c8 solid;
-}
-.btn-apply {
-	background-color: #114574;
-	color: #fff;
-}
-
 /*결과가 없을 때*/
 .result-content>p {
 	height: 55px;

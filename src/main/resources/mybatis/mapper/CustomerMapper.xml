@@ -392,7 +392,7 @@
 		<foreach collection="cHtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
 			INTO SD_CUST01_HT VALUES (#{custNo},
 								      TO_CHAR(SYSDATE,'YYYYMMDD'),
-								      NVL((SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),1) + #{index},
+								      (SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},
 								      #{item.chgCd},
 								      #{item.chgBfCnt},
 								      #{item.chgAftCnt},
