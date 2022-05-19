@@ -3,6 +3,11 @@
  */
 $(function(){
 	
+//	if($('#custNm').val()==""){
+//		var option = 'width=650, height=500, top=50, left=50, location=no';
+//		window.open('/customer/custPop.do', 'custPopOpen', option);
+//	}
+	
 	//input 내에서 focus를 value 끝으로 이동
 	$.focusEnd();
 	
@@ -126,64 +131,31 @@ $(function(){
 			//selectSearchCust 함수 실행
 			$.selectOneCust();
 		}else{
-			if(confirm("변경사항이 있습니다. 계속 진행하시겠습니까?")){	
+			if(confirm("수정된 내역이 있습니다.\n변경내역이 사라지는데 그래도 하시겠습니까?")){	
 				//selectSearchCust 함수 실행
 				$.selectOneCust();
 			}else{
 				return false;
 			}
-			
 		}
 	});
 	
-	
 	//---------------------------------------유효성 검사
-	//이름 유효성 검사
-	$('#custNmInfo').blur(function(){ 
-		$.checkNameValid();
+	$('#mblNo0').change(function(){	//변화가 있을 시
+		$('#checkMblNo>span').css("color","#FF5E4D");
+	});
+	$('#mblNo1').change(function(){	//변화가 있을 시
+		$('#checkMblNo>span').css("color","#FF5E4D");
+	});
+	$('#mblNo2').change(function(){	//변화가 있을 시
+		$('#checkMblNo>span').css("color","#FF5E4D");
 	});
 	
-	//생일  유효성 검사
-	var date = new Date();					//오늘 날짜
-	var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
-
-	$('#brdyDt').attr('max',today);			//오늘 이후 생일 설정 불가
+	$.validEvent('update');
 	
-	$('#brdyDt').blur(function(){ 
-		$.checkBrdyDtValid(today);
-	});
-	
-	//핸드폰 유효성 검사
-	$('#checkMblNo').on('click', function(){ 
-		$.checkMblNoValid('update');
-	});
-	
-	//이메일 유효성 검사
-	$('#email1').blur(function(){ 
-		$.checkEmailValid();
-	});
-	
-	//주소 유효성 검사
-	$('#addrDtl').blur(function(){ 
-		$.checkAddrValid();
-	});
-	
-	//결혼기념일 유효성 검사
-	$('#mrrgDt').blur(function(){ 
-		$.checkMrrgDtValid();
-	});
-	
-	
-	//---------------------------------------정보 업데이트
+	//업데이트 버튼 클릭시
 	$('#updateBtn').click(function(){
-		//전체 유효성 검사 진행
-		$.checkNameValid();
-		$.checkBrdyDtValid();
-		$.checkEmailValid();
-		$.checkAddrValid();
-		$.checkMrrgDtValid();
-		
-		if($.checkAllUpd){ 	//유효성 검사가 참이면
+		if($.checkAll()){ 	//유효성 검사가 참이면
 			//value값 정돈
 			var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
 			var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
@@ -286,14 +258,8 @@ $(function(){
 					return false;
 				}
 			}
-		}else {
-			alert("입력 내용을 다시 확인해 주세요");
-			return false;
 		}
 	});
-	
-	
-	
 	
 	//prtSearchBtn 클릭시 팝업 오픈
 	$.popupOpen($('#prtSearchBtn'),'450','500','/customer/prtPop.do','prtPopOpen');
@@ -302,6 +268,6 @@ $(function(){
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 	
 	//resetBtn 클릭시 초기화
-//	var custNo = $('#custNo').val();
-//	$.reset($('#resetBtn'),'/customer/custInfo.do?custNo='+custNo);
+	var custNo = $('#custNo').val();
+	$.reset($('#resetBtn'),'/customer/custInfo.do?custNo='+custNo);
 });

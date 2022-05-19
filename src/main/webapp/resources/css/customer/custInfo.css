@@ -31,7 +31,6 @@
 
 /*검색 요소*/
 .area-search-input {
-	width: 80%;
 	display: flex;
 	align-items: center;
 	float: left;
@@ -98,42 +97,55 @@ fieldset {
 	padding: 15px 25px 10px;
 	margin-bottom: 20px;
 	display: flex;
-	justify-content: space-between;
+	column-gap: 30px;
+	flex-wrap: wrap;
 }
 legend {
 	padding: 0 10px;
 }
 
 /*입력 영역(공통)*/
-.area-input {
-	width: 100%;
+.one-input {
+	width: 31.5%;
+	height: 30px;
+	margin: 0 0 15px 0;
 	display: flex;
 	align-items: center;
 }
+.row-margin {
+	margin-right: 34.3%;
+}
 .input-title {
+	width: 35%;
 	padding-left: 10px;
 	float: left;
 	font-size: 15px;
 	position: relative;
 }
 .required {
-	padding-right: 5px;
-	position: absolute;
-	top: 4px;
 	left: 0;
 }
+
+/*input 입력*/
 .box-input {
+	width: 65%;
 	font-size: 15px;
 	float: left;
 	display: flex;
 	justify-content: space-between;
+	position: relative;
 }
 .style-input {
 	width: 100%;
+	padding: 0 10px;
+}
+input[type="date"]{
+	padding: 0 10px;
 }
 
-/*radio 입력*/
+/*radio 영역*/
 .box-radio {
+	width: 50%;
 	display: flex;
 	justify-content: space-between;
 }
@@ -144,33 +156,7 @@ input[type="radio"] {
 	font-size: 15px;
 }
 
-
-
-/*항목2개*/
-.column-two {
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-}
-.column-two>.one-input {
-	width: 85%;
-	margin: 0 0 20px 0;
-}
-.column-two>.one-input:last-child {
-	margin-bottom: 10px;
-}
-.column-two:last-child {
-	align-items: flex-end;
-}
-
-/*입력 영역(항목 2개))*/
-.column-two .input-title {
-	width: 35%;
-}
-.column-two .box-input {
-	width: 65%;
-	position: relative;
-}
+/*select 영역*/
 .select-arrow {
 	font-size: 18px;
 	position: absolute;
@@ -180,42 +166,10 @@ input[type="radio"] {
 .box-input>select>option {
 	font-size: 14px;
 }
+
+/*mblNo 영역*/
 .box-input>.mblNo {
-	margin-right: 10px;
-}
-.box-input>.mblNo:last-of-type {
-	margin-right: 0;
-}
-.box-input>.email {
-	width: 45%;
-}
-
-/*prt 영역*/
-.box-input>.prt {
-	width: 40%;
-}
-.box-input>.prt:first-child {
-	width: 45%;
-}
-
-/*addr 영역*/
-.addr-height {
-	height: 70px;
-}
-.box-addr {
-	width: 65%;
-	font-size: 15px;
-}
-.box-addr>.addr:first-child {
-	margin-bottom: 10px;
-}
-
-/*고객상태 라디오*/
-.box-radio {
-	width: 40%
-}
-.box-custss {
-	width: 63%;
+	width: 27%;
 }
 
 /*핸드폰 체크버튼*/
@@ -232,29 +186,38 @@ input[type="radio"] {
 	color: #9BDF30;
 }
 
+/*prt 영역*/
+.box-input>.prt {
+	width: 42.6%;
+}
 
-
-/*항목 3개*/
-.column-three {
-	padding-bottom: 30px
-}
-.column-three>.one-input {
-	width: 30%;
-}
-.column-three .area-input {
-	justify-content: space-between;
-}
-.column-three .input-title {
+/*email 영역*/
+.box-input>.email {
 	width: 45%;
-	margin-right: 20px;
-}
-.column-three input {
-	text-align: right;
-}
-.column-three .box-radio {
-	width: 60%;
 }
 
+/*addr 영역*/
+.row-addr {
+	width: 100%;
+}
+.row-addr .input-title {
+	width: 11.1%;
+}
+.box-addr {
+	width: 88.9%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 15px;
+}
+.box-addr>input {
+	width: 49.7%;
+	display: inline-block;
+}
+
+/*고객상태 라디오*/
+.box-custss {
+	width: 65%;
+}
 
 /*버튼 영역*/
 .box-btn {
@@ -280,14 +243,4 @@ input[type="radio"] {
 .btn-save {
 	background-color: #114574;
 	color: #fff;
-}
-
-/*에러메세지*/
-.area-msg {
-	width: 65%;
-	display: none;
-	float: right;	
-	padding-top: 8px;
-	font-size: 13px;
-	color: coral;
 }

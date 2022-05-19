@@ -7,50 +7,13 @@ $(function(){
 	$('#psmtGrcCd0').attr("checked",true);	//자택 체크
 	
 	//------------------------------------유효성 검사
-	//이름 유효성 검사
-	$('#custNmInfo').blur(function(){ 
-		$.checkNameValid();
-	});
 	
-	//생일  유효성 검사
-	var date = new Date();					//오늘 날짜
-	var today = $.getFormatDate(date);		//포맷팅된 오늘 날짜
-
-	$('#brdyDt').attr('max',today);			//오늘 이후 생일 설정 불가
-	
-	$('#brdyDt').blur(function(){ 
-		$.checkBrdyDtValid();
-	});
-	
-	//핸드폰 유효성 검사
-	$('#checkMblNo').on('click', function(){ 
-		$.checkMblNoValid('insert');
-	});
-	
-	//주소 유효성 검사
-	$('#addr').blur(function(){ 
-		$.checkAddrValid();
-	});
-	
-	//결혼기념일 유효성 검사
-	$('#mrrgDt').blur(function(){ 
-		$.checkMrrgDtValid();
-	});
+	$.validEvent('insert');
 	
 	//등록버튼 클릭 시
 	$("#applyBtn").click(function(){
-		//전체 유효성 검사 진행
-		$.checkNameValid();
-		$.checkPocValid();
-		$.checkBrdyDtValid();
-		$.checkMblNoValid();
-		$.checkEmailValid();
-		$.checkAddrValid();
-		$.checkMrrgDtValid();
-		
-		if($.checkAllAdd()){								//유효성 검사 통과시(유효성이 통과되면 메세지 박스 display:none상태)
+		if($.checkAll()){									//유효성 검사 통과시
 			if(confirm("신규고객을 등록하시겠습니까?")){				//더블체크
-				
 				//휴대폰번호 조합
 				var mblNo0 = $('#mblNo0').val().trim();		//사용자가 입력한 값 공백 제거
 				var mblNo1 = $('#mblNo1').val().trim();		//사용자가 입력한 값 공백 제거
@@ -108,10 +71,6 @@ $(function(){
 			}else{
 				return false;
 			}
-		}else {
-			alert("입력 내용을 다시 확인해 주세요")
-			$('html').scrollTop(0);
-			return false;
 		}
 	})
 });
