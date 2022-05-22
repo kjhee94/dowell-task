@@ -39,7 +39,7 @@
 							<button id="custSearchBtn" class="btn-one-search" type="button">
 								<span class="material-icons">search</span>
 							</button>
-							<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
+							<input id="custNm" class="style-input" type="text" autocomplete='off'>
 						</div>
 					</div>
 					
@@ -57,14 +57,15 @@
 							<div class="one-input">
 								<span class="input-title"><span class="required">*</span>고객명</span>
 								<div class="box-input">
-									<input id="custNmInfo" class="style-input" type="text" name="custNm" autocomplete='off'>
+									<input id="custNmInfo" class="style-input" type="text" autocomplete='off'>
+									<input id="custNmMdf" type="hidden" name="custNm">
 								</div>
 							</div>
 							<div class="one-input">
 								<span class="input-title"><span class="required">*</span>생년월일</span>
 								<div class="box-input">
 									<input id="brdyDt" class="style-input" type="date" max="9999-12-13">
-									<input id="brdyDtRpc" type="hidden" name="brdyDt">
+									<input id="brdyDtMdf" type="hidden" name="brdyDt">
 								</div>
 							</div>
 							<div class="one-input">
@@ -86,7 +87,7 @@
 								<span class="input-title">결혼기념일</span>
 								<div class="box-input">
 									<input id="mrrgDt" class="style-input" type="date" max="9999-12-13">
-									<input id="mrrgDtRpc" type="hidden" name="mrrgDt">
+									<input id="mrrgDtMdf" type="hidden" name="mrrgDt">
 								</div>
 							</div>
 							<div class="one-input">
