@@ -232,7 +232,6 @@ input[type="radio"] {
 	cursor: pointer;
 }
 .btn-golist {
-	margin-right: 15px;
 	border: 1px #c8c8c8 solid;
 }
 .btn-golist>a {
@@ -241,6 +240,7 @@ input[type="radio"] {
 	height: 100%;
 }
 .btn-save {
+	margin-left: 15px;
 	background-color: #114574;
 	color: #fff;
 }

@@ -3,10 +3,20 @@
  */
 $(function(){
 	
-//	if($('#custNm').val()==""){
-//		var option = 'width=650, height=500, top=50, left=50, location=no';
-//		window.open('/customer/custPop.do', 'custPopOpen', option);
-//	}
+	//본사일때 input 비활성화
+	var userDtCd = $('#userDtCd').val();
+	if(userDtCd=='1'){
+		$('#updateCustInfo input[type="text"]').attr("readonly",true);
+		$('#updateCustInfo input[type="date"]').attr("readonly",true);
+		$('#updateCustInfo input[type="radio"]').attr("disabled",true);
+		$('#updateCustInfo select').attr("disabled",true);
+		$('#updateCustInfo select').css("background-color","#d9d9d9");
+		$('#checkMblNo>span').css("color","#707070");		//아이콘 색상 무채색
+		$('#checkMblNo').css('cursor','default');			//커서 기본
+		$("#checkMblNo").removeAttr("id");					//이벤트 끄기
+		$('#prtSearchBtn').css('cursor','default');			//커서 기본
+		$('#prtSearchBtn').removeAttr("id");				//이벤트 끄기
+	}
 	
 	//input 내에서 focus를 value 끝으로 이동
 	$.focusEnd();
@@ -99,10 +109,9 @@ $(function(){
 						$('input[name="dmRcvYn"][value='+data.cust["dmRcvYn"]+']').prop('checked',true);		//dm수신동의
 						
 						//고객상태 제한
-						$.custSsCdLimit(data.cust["custSsCd"]);
-						
-//						var bfObj = $('#bfCntForm').serializeArray();
-//						console.log(bfObj);
+						if(userDtCd=='2'){
+							$.custSsCdLimit(data.cust["custSsCd"]);
+						}
 						
 					}else { //비즈니스 로직중 에러가 났을 경우(catch)
 						//alert에 에러표시
@@ -129,7 +138,6 @@ $(function(){
 	$('#updateCustInfo input').change(function(){	//변화가 있을 시
 		changResult = false;	//false로 변환
 	});
-	//alert(changResult);
 	
 	$('#SearchBtn').click(function(){
 		//매장코드가 바뀌었을떄 포함
@@ -166,6 +174,7 @@ $(function(){
 			var mblNo2 = $('#mblNo2').val().trim();		//사용자가 입력한 값 공백 제거
 			var mblNo = mblNo0+mblNo1+mblNo2;			//변경 후 값 합쳐서 저장
 			
+			//고객상태에 따른 가입일자/중지일자/해지일자 적용
 			if(bfCustSsCd=='10'){
 				if(aftCustSsCd=='80'){
 					$('#custNmMdf').val(custNm);					//기본이름 저장

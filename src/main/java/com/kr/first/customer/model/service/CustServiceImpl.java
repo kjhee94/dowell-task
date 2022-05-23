@@ -270,13 +270,12 @@ public class CustServiceImpl implements CustService {
 		int resultUpdate = cDAO.updateCust(map);
 		
 		//고객 이력 추가 결과 int에 담기(1:성공 / 0:실패)
-//		log.info("=================>>고객 이력 등록");
-//		int resultInsert = cDAO.insertCustHt(map);
+		log.info("=================>>고객 이력 등록");
+		int resultInsert = cDAO.insertCustHt(map);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		if(resultUpdate>0) {	//등록 성공
-//			 && resultInsert>0
+		if(resultUpdate>0 && resultInsert>0) {	//등록 성공		 
 			log.info("=================>>고객 정보 수정 성공");
 			resultMap.put("seccessYN","Y");
 		}else {	//수정 실패

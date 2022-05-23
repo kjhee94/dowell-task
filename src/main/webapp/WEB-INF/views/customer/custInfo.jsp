@@ -51,6 +51,7 @@
 				</div>
 				
 				<div class="box-result">
+					<input id="userDtCd" type="hidden" value="${sessionScope.user.userDtCd}">
 					<form id="updateCustInfo">
 						<fieldset>
 							<legend>고객기본정보</legend>
@@ -159,7 +160,6 @@
 								<span class="input-title">최초가입일자</span>
 								<div class="box-input">
 									<input id="fstJsDt" class="style-input" type="text" readonly>
-									<!-- <input id="fstJsDtMdf" type="hidden" name="fstJsDt"> -->
 								</div>
 							</div>
 							<div class="one-input">
@@ -253,7 +253,6 @@
 						<input id="bfAddr" type="hidden" name="ADDR">
 						<input id="bfAddrDtl" type="hidden" name="ADDR_DTL">
 						<input id="bfCustSsCd" type="hidden" name="CUST_SS_CD">
-						<!-- <input id="bfFstJsDt" type="hidden" name="FST_JS_DT"> -->
 						<input id="bfJsDt" type="hidden" name="JS_DT">
 						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfStpDt" type="hidden" name="STP_DT">
