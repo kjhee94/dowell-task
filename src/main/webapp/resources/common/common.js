@@ -71,16 +71,6 @@ $(function(){
 	    return  year + '-' + month + '-' + day;     	//'-' 추가하여 yyyy-mm-dd 형태 생성 가능
 	}
 	
-	//date 포맷변경(YYYYMMDD)
-	$.getFormatDateY = function(date){
-	    var year = date.getFullYear();              	//yyyy
-	    var month = (1 + date.getMonth());          	//M
-	    month = month >= 10 ? month : '0' + month;  	//month 두자리로 저장
-	    var day = date.getDate();                   	//d
-	    day = day >= 10 ? day : '0' + day;          	//day 두자리로 저장
-	    return  year + month + day;     				//yyyymmdd 형태 생성 가능
-	}
-	
 	//닫기버튼 클릭시 팝업닫기
 	$('#closeBtn').click(function(){
 		window.close();
@@ -187,6 +177,13 @@ $(function(){
 		});
 	}
 	
+	//날짜 하이픈 제거
+	$.RmvHyp = function(date,selector){
+		if(date!=null && date!='-'){
+			var dateRpc = date.replace(/\-/g,"");	//'-'제거
+			$(selector).val(dateRpc);
+		}
+	}
 	
 	
 	//-------------------------------------------------------------------유효성 검사
@@ -488,10 +485,10 @@ $(function(){
 	//고객상태에 따라 비활성화
 	$.custSsCdLimit = function(custSsCd){
 		//현재 선택된 value 값에 따른 비활성화 설정
-		var custSsCd = $('input[id^="custSsCd"]:checked').val();
+		var custSsCdState = $('input[id^="custSsCd"]:checked').val();
 		var checkBtnColor = $('#checkMblNo>span').css("color");
 		
-		if(custSsCd=='10'){					//정상이 선택되어 있는 경우
+		if(custSsCdState=='10'){				//정상이 선택되어 있는 경우
 //			alert("초기정상선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','A');		//중지 활성화
@@ -501,7 +498,7 @@ $(function(){
 				$.checkMblNoBtn('on');			//휴대폰번호 조회 이벤트 재생성
 				$('#checkMblNo>span').css("color","#9BDF30");
 			}
-		}else if(custSsCd=='80'){			//중지가 선택되어 있는  경우
+		}else if(custSsCdState=='80'){			//중지가 선택되어 있는  경우
 //			alert("초기중지선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','A');		//중지 활성화
@@ -511,7 +508,7 @@ $(function(){
 				$.checkMblNoBtn('on');			//휴대폰번호 조회 이벤트 재생성
 				$('#checkMblNo>span').css("color","#9BDF30");
 			}
-		}else if(custSsCd=='90') {			//해지가 선택되어 있는  경우
+		}else if(custSsCdState=='90') {			//해지가 선택되어 있는  경우
 //			alert("초기해지선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','D');		//중지 비활성화

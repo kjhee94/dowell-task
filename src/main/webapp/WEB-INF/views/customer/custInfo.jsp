@@ -158,13 +158,15 @@
 							<div class="one-input">
 								<span class="input-title">최초가입일자</span>
 								<div class="box-input">
-									<input id="fstJsDt" class="style-input" type="text" name="fstJsDt" readonly>
+									<input id="fstJsDt" class="style-input" type="text" readonly>
+									<!-- <input id="fstJsDtMdf" type="hidden" name="fstJsDt"> -->
 								</div>
 							</div>
 							<div class="one-input">
 								<span class="input-title">가입일자</span>
 								<div class="box-input">
-									<input id="jsDt" class="style-input" type="text" name="jsDt" readonly>
+									<input id="jsDt" class="style-input" type="text" readonly>
+									<input id="jsDtMdf" type="hidden" name="jsDt">
 								</div>
 							</div>
 							<div class="one-input">
@@ -177,14 +179,14 @@
 								<span class="input-title">중지일자</span>
 								<div class="box-input">
 									<input id="stpDt" class="style-input" type="text" readonly>
-									<input id="stpDtDB" type="hidden" name="stpDt">
+									<input id="stpDtMdf" type="hidden" name="stpDt">
 								</div>
 							</div>
 							<div class="one-input">
 								<span class="input-title">해지일자</span>
 								<div class="box-input">
 									<input id="cnclDt" class="style-input" type="text" readonly>
-									<input id="cnclDtDB" type="hidden" name="cnclDt">
+									<input id="cnclDtMdf" type="hidden" name="cnclDt">
 								</div>
 							</div>
 						</fieldset>
@@ -251,7 +253,7 @@
 						<input id="bfAddr" type="hidden" name="ADDR">
 						<input id="bfAddrDtl" type="hidden" name="ADDR_DTL">
 						<input id="bfCustSsCd" type="hidden" name="CUST_SS_CD">
-						<input id="bfFstJsDt" type="hidden" name="FST_JS_DT">
+						<!-- <input id="bfFstJsDt" type="hidden" name="FST_JS_DT"> -->
 						<input id="bfJsDt" type="hidden" name="JS_DT">
 						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfStpDt" type="hidden" name="STP_DT">

@@ -304,9 +304,9 @@
 		    C.CUST_NM AS CUSTNM,																						--고객명
 		    C.SEX_CD AS SEXCD,																							--성별코드
 		    C.POC_CD AS POCCD,																							--직업코드
-		    TO_CHAR(TO_DATE(C.BRDY_DT),'YYYY-MM-DD') AS BRDYDT,															--생년월일
+		    TO_CHAR(TO_DATE(C.BRDY_DT)) AS BRDYDT,																		--생년월일
 		    C.SCAL_YN AS SCALYN,																						--양음력구분
-		    TO_CHAR(TO_DATE(C.MRRG_DT),'YYYY-MM-DD') AS MRRYDT,															--결혼기념일
+		    TO_CHAR(TO_DATE(C.MRRG_DT)) AS MRRYDT,																		--결혼기념일
 		    C.MBL_NO AS MBLNO,																							--휴대폰번호
 		    C.EMAIL,																									--이메일
 		    C.PSMT_GRC_CD AS PSMTGRCCD,																					--우편물 수령코드
@@ -315,10 +315,10 @@
 		    C.JN_PRT_CD AS PRTCD,																						--가입매장코드
 		    P.PRT_NM AS PRTNM,																							--가입매장이름
 		    C.CUST_SS_CD AS CUSTSSCD,																					--고객상태코드
-		    TO_CHAR(TO_DATE(C.FST_JS_DT),'YYYY-MM-DD') AS FSTJSDT,														--최초가입일자
-		    TO_CHAR(TO_DATE(C.JS_DT),'YYYY-MM-DD') AS JSDT,																--가입일자
-		    NVL(TO_CHAR(TO_DATE(C.STP_DT),'YYYY-MM-DD'),'-') AS STPDT,													--중지일자
-		    NVL(TO_CHAR(TO_DATE(C.CNCL_DT),'YYYY-MM-DD'),'-') AS CNCLDT,												--해지일자
+		    TO_CHAR(TO_DATE(C.FST_JS_DT)) AS FSTJSDT,																	--최초가입일자
+		    TO_CHAR(TO_DATE(C.JS_DT)) AS JSDT,																			--가입일자
+		    NVL(TO_CHAR(TO_DATE(C.STP_DT)),'-') AS STPDT,																		--중지일자
+		    NVL(TO_CHAR(TO_DATE(C.CNCL_DT)),'-') AS CNCLDT,																		--해지일자
 		    C.CNCL_CNTS AS CNCLCNTS,																					--해지사유
 		    NVL(TO_CHAR((SELECT SUM(CASE 																					--총구매금액_스칼라쿼리 출력
 					            	WHEN SAL_TP_CD='SAL' THEN 1*TOT_SAL_AMT												--판매일시 금액*1
@@ -336,7 +336,7 @@
 					WHERE CUST_NO=#{custNo}
 						AND SAL_DT BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)),'FM999,999,999'),0) AS PRSAMTMTH,	--포맷변경(소수점 추가)
 		    NVL((SELECT 
-		    		TO_CHAR(TO_DATE(MAX(SAL_DT)),'YYYY-MM-DD') 
+		    		TO_CHAR(TO_DATE(MAX(SAL_DT))) 
 		    	FROM CS_SAL01_MT 
 		    	WHERE CUST_NO=#{custNo}),'-') AS LSTPRSDT,																--최종구매일_스칼라쿼리 출력
 		    C.EMAIL_RCV_YN AS EMAILRCVYN,																				--이메일수신동의여부
@@ -353,8 +353,8 @@
 		      , CUST_NM = #{cUpdData.custNm}						--고객이름
 		      , SEX_CD = #{cUpdData.sexCd}							--성별코드
 		      , SCAL_YN = #{cUpdData.scalYn}						--양음력구분
-		      , BRDY_DT = #{cUpdData.brdyDt}						--생년월일
-		      , MRRG_DT = #{cUpdData.mrrgDt}						--결혼기념일
+		      , BRDY_DT = TO_CHAR(#{cUpdData.brdyDt},'YYYYMMDD')	--생년월일
+		      , MRRG_DT = TO_CHAR(#{cUpdData.mrrgDt},'YYYYMMDD')	--결혼기념일
 		      , POC_CD = #{cUpdData.pocCd}							--직업코드
 		      , MBL_NO = #{cUpdData.mblNo}							--휴대폰번호
 		      , PSMT_GRC_CD = #{cUpdData.psmtGrcCd}					--우편물수령코드
@@ -392,10 +392,16 @@
 		<foreach collection="cHtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
 			INTO SD_CUST01_HT VALUES (#{custNo},
 								      TO_CHAR(SYSDATE,'YYYYMMDD'),
-								      (SELECT NVL(MAX(CHG_SEQ),1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},
+								      (SELECT NVL(MAX(CHG_SEQ)+1,1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},
 								      #{item.chgCd},
-								      #{item.chgBfCnt},
-								      #{item.chgAftCnt},
+								      CASE 
+								      	WHEN LENGTH(REPLACE(#{item.chgBfCnt},'-',''))=8 THEN REPLACE(#{item.chgBfCnt},'-','')
+								      	ELSE #{item.chgBfCnt}
+								      END,
+								      CASE 
+								      	WHEN LENGTH(REPLACE(#{item.chgAftCnt},'-',''))=8 THEN REPLACE(#{item.chgAftCnt},'-','')
+								      	ELSE #{item.chgAftCnt}
+								      END,
 								      SYSDATE,
 								      #{userId}, 
 								      SYSDATE,
