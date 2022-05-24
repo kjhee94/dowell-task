@@ -80,7 +80,7 @@ public class CustDAO {
 		return sqlSession.selectOne("cust.selectOneCust",custNo);
 	}
 
-	//고객정보 수정
+	//고객 정보 수정
 	public int updateCust(Map<String, Object> map) throws Exception {
 		return sqlSession.update("cust.updateCust", map);
 	}

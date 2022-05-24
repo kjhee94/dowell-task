@@ -7,7 +7,7 @@ $(function(){
 	$('#psmtGrcCd0').attr("checked",true);	//자택 체크
 	
 	//------------------------------------유효성 검사
-	
+	//유효성 검사 이벤트
 	$.validEvent('insert');
 	
 	//등록버튼 클릭 시

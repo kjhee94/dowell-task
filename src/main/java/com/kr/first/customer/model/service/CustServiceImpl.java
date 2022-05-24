@@ -135,20 +135,16 @@ public class CustServiceImpl implements CustService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//고객등록시 필요한 상태코드명 조회
+		log.info("=================>>고객등록 상태코드명 조회");
 		//직업코드 조회 list(select-option 생성)
-		log.info("=================>>직업 조회");
 		ArrayList<CustVO> pList = cDAO.selectPoc();
-		log.info("=================>>직업 조회 성공");
 		
 		//성별 조회 list(라디오버튼 생성)
-		log.info("=================>>성별 조회");
 		ArrayList<CustVO> sList = cDAO.selectSex();
-		log.info("=================>>성별 조회 성공");
 		
 		//우편물수령 조회 list(라디오버튼 생성)
-		log.info("=================>>우편물수령 조회");
 		ArrayList<CustVO> gList = cDAO.selectPsmtGrc();
-		log.info("=================>>우편물수령 조회 성공");
+		log.info("=================>>고객등록 상태코드명 조회 성공");
 		
 		//map에 삽입
 		map.put("pList", pList);
@@ -210,25 +206,19 @@ public class CustServiceImpl implements CustService {
 	public HashMap<String, Object> custInfo(String custNo) throws Exception {
 		
 		//고객 정보 조회시 필요한 상태코드명 조회
+		log.info("=================>>고객정보조회 상태코드명 조회");
 		//성별 조회 list(라디오버튼 생성)
-		log.info("=================>>성별 조회");
 		ArrayList<CustVO> sList = cDAO.selectSex();
-		log.info("=================>>성별 조회 성공");
 		
 		//직업코드 조회 list(select-option 생성)
-		log.info("=================>>직업 조회");
 		ArrayList<CustVO> pList = cDAO.selectPoc();
-		log.info("=================>>직업 조회 성공");
 		
 		//우편물수령 조회 list(라디오버튼 생성)
-		log.info("=================>>우편물수령 조회");
 		ArrayList<CustVO> gList = cDAO.selectPsmtGrc();
-		log.info("=================>>우편물수령 조회 성공");
 		
 		//고객상태 조회 list(라디오버튼 생성)
-		log.info("=================>>고객상태 조회");
 		ArrayList<CustVO> cList = cDAO.selectCustSs();
-		log.info("=================>>고객상태 조회 성공");
+		log.info("=================>>고객정보조회 상태코드명 조회 성공");
 		
 		//map에 삽입
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -276,10 +266,10 @@ public class CustServiceImpl implements CustService {
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		if(resultUpdate>0 && resultInsert>0) {	//등록 성공		 
-			log.info("=================>>고객 정보 수정 성공");
+			log.info("=================>>고객 정보 수정 & 이력등록 성공");
 			resultMap.put("seccessYN","Y");
 		}else {	//수정 실패
-			log.info("=================>>고객 정보 수정 실패");
+			log.info("=================>>고객 정보 수정 & 이력등록 실패");
 			resultMap.put("seccessYN","N");
 		}
 		resultMap.put("result",true);

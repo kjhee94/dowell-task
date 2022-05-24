@@ -143,7 +143,6 @@ $(function(){
 		//매장코드가 바뀌었을떄 포함
 		if($('#prtCd').val()!=$('#bfPrtCd').val()){	
 			changResult = false;	//false로 변환
-			//alert(changResult);
 		}
 		if(changResult){
 			//selectSearchCust 함수 실행
@@ -159,7 +158,7 @@ $(function(){
 	});
 	
 	//---------------------------------------유효성 검사
-	
+	//유효성 검사 이벤트
 	$.validEvent('update');
 	
 	//업데이트 버튼 클릭시
@@ -176,52 +175,43 @@ $(function(){
 			
 			//고객상태에 따른 가입일자/중지일자/해지일자 적용
 			if(bfCustSsCd=='10'){
-				if(aftCustSsCd=='80'){
+				if(aftCustSsCd=='80'){								//정상->중지
 					$('#custNmMdf').val(custNm);					//기본이름 저장
 					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
-					var date = new Date();							//오늘
-					var formatDate = $.getFormatDate(date);			//포맷
-					$.RmvHyp(formatDate,"#stpDtMdf");				//중지일자 오늘로 변경
-				}else{
+					$.todayFormat("#stpDtMdf");						//중지일자 오늘로 변경
+				}else{												//정상->정상
 					$('#custNmMdf').val(custNm);					//기본이름 저장
 					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
 				}
 			}else if(bfCustSsCd=='80'){
-				if(aftCustSsCd=='90'){
+				if(aftCustSsCd=='90'){								//중지->해지
 					$('#custNmMdf').val("해지고객");					//고객명 해지고객으로 변경
 					var mblNoRpc =	mblNo.replace(/\d/g,"0");		//휴대폰 번호 0으로 변경
 					$('#mblNo').val(mblNoRpc);
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
 					$.RmvHyp($('#stpDt').val(),"#stpDtMdf");		//중지일자 
-					var date = new Date();							//오늘
-					var formatDate = $.getFormatDate(date);			//포맷
-					$.RmvHyp(formatDate,"#cnclDtMdf");				//해지일자 오늘로 변경
-				}else if(aftCustSsCd=='10'){
+					$.todayFormat("#cnclDtMdf");					//해지일자 오늘로 변경
+				}else if(aftCustSsCd=='10'){						//중지->정상
 					$('#custNmMdf').val(custNm);					//기본이름 저장
 					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
-				}else{
+				}else{												//중지->중지
 					$('#custNmMdf').val(custNm);					//기본이름 저장
 					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
 					$.RmvHyp($('#stpDt').val(),"#stpDtMdf");		//중지일자 
 				}
 			}else{
-				if(aftCustSsCd=='10'){
+				if(aftCustSsCd=='10'){								//해지->정상
 					$('#custNmMdf').val(custNm);					//기본이름 저장
 					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
-					var date = new Date();							//오늘
-					var formatDate = $.getFormatDate(date);			//포맷
-					$.RmvHyp(formatDate,"#jsDtMdf");				//가입일자 오늘로 변경
-					$('#stpDtMdf').val('');							//중지일자 초기화
-					$('#cnclDtMdf').val('');						//해지일자 초기화
+					$.todayFormat("#jsDtMdf");						//가입일자 오늘로 변경
 					$('#cnclCnts').val('');							//해지사유 초기화
-				}else{
-					$('#custNmMdf').val("해지고객");					//고객명 해지고객으로 변경
-					var mblNoRpc =	mblNo.replace(/\d/g,"0");		//휴대폰 번호 0으로 변경
-					$('#mblNo').val(mblNoRpc);
+				}else{												//해지->해지
+					$('#custNmMdf').val(custNm);					//기본이름 저장
+					$('#mblNo').val(mblNo);							//기본 핸드폰번호 저장
 					$.RmvHyp($('#jsDt').val(),"#jsDtMdf");			//가입일자 
 					$.RmvHyp($('#stpDt').val(),"#stpDtMdf");		//중지일자 
 					$.RmvHyp($('#cnclDt').val(),"#cnclDtMdf");		//중지일자 
@@ -246,20 +236,23 @@ $(function(){
 			console.log(aftObj);
 			
 			//--------------------------ajax로 배열2(수정에 사용할 [변경항목,변경내용])
-			var formData = new FormData(document.getElementById('updateCustInfo'));
-			var cUpObj={};
+			var formData = new FormData(document.getElementById('updateCustInfo'));	//key: form의 name / value: form의 value 
+			var cUpObj={};															//Object 선언
+			
 			for(var pair of formData.entries()) {
-				cUpObj[pair[0]] = pair[1];
+				cUpObj[pair[0]] = pair[1];											//객체에 넣기
 			}
 			console.log('수정 객체 : '+JSON.stringify(cUpObj));
 			
 			//--------------------------ajax로 배열1(변경이력에 사용할 [변경코드,변경전내용,변경후내용])
-			var cHtArr = new Array();
+			var cHtArr = new Array();						//Array선언
+			var cHtObj={};									//Object 선언
 			
-			for(var i=0; i<bfObj.length; i++){
-				if(bfObj[i].value!=aftObj[i].value && bfObj[i].name!='JS_DT' && bfObj[i].name!='STP_DT' && bfObj[i].name!='CNCL_DT'){
+			for(var i=0; i<bfObj.length; i++){				//총 input 길이만큼 for문
+				if(bfObj[i].value!=aftObj[i].value && 		//변경 전 변경 후가 다른 것들만 
+				   bfObj[i].name!='JS_DT' && bfObj[i].name!='STP_DT' && bfObj[i].name!='CNCL_DT'){	//일자들 제외
 
-					var cHtObj = {
+					cHtObj = {
 							chgCd : bfObj[i].name,			//ex)key: chgCd / value : CUST_NM
 							chgBfCnt : bfObj[i].value,		//ex)key: chgBfCnt / value : 홍길동
 							chgAftCnt : aftObj[i].value,	//ex)key: chgAftCnt / value : 홍길똥

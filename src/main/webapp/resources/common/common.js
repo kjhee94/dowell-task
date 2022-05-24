@@ -40,7 +40,7 @@ $(function(){
 		}else {											//select=1이면 date1이 jsDtTo
 			date.setDate(date.getDate()+1);				//date+1일
 		}
-		var formatDate = $.getFormatDate(date);		//포맷
+		var formatDate = $.getFormatDate(date);			//포맷
 		date1.val(formatDate);							//값변경
 	}
 	
@@ -118,13 +118,13 @@ $(function(){
 		$('#applyBtn').click(function(){
 			if($('.checkbox>input').is(":checked")){	//체크된 것이 있을 때
 				//보낼값 변수값 지정
-				var code = $('input:checked').parent().parent().find(classCode).text(); //체크된 행에서 prtCd 가져오기
-				var name = $('input:checked').parent().parent().find(className).text(); //체크된 행에서 prtNm 가져오기
+				var code = $('input:checked').parent().parent().find(classCode).text(); //체크된 행에서 classCode 가져오기
+				var name = $('input:checked').parent().parent().find(className).text(); //체크된 행에서 className 가져오기
 
 				window.close();
 				//값 적용하기
-				$(opener.document).find(idCode).val(code);	//부모창 custNo input에 삽입
-				$(opener.document).find(idName).val(name);	//부모창 custNm input에 삽입
+				$(opener.document).find(idCode).val(code);	//부모창 idCode에 삽입
+				$(opener.document).find(idName).val(name);	//부모창 idName에 삽입
 			}
 		});
 	}
@@ -133,13 +133,13 @@ $(function(){
 	$.dblclickApply = function(classCode,className,idCode,idName){
 		$('.one-content').dblclick(function(){
 			//보낼값 변수값 지정
-			var code = $(this).find(classCode).text(); 	//클릭한 행에서 code 가져오기
-			var name = $(this).find(className).text(); 	//클릭한 행에서 nams 가져오기
+			var code = $(this).find(classCode).text(); 	//클릭한 행에서 classCode 가져오기
+			var name = $(this).find(className).text(); 	//클릭한 행에서 className 가져오기
 				
 			window.close();
 			//값 적용하기
-			$(opener.document).find(idCode).val(code);	//부모창 code input에 삽입
-			$(opener.document).find(idName).val(name);	//부모창 name input에 삽입	
+			$(opener.document).find(idCode).val(code);	//부모창 idCode에 삽입
+			$(opener.document).find(idName).val(name);	//부모창 idName에 삽입	
 		});
 	}
 
@@ -185,9 +185,15 @@ $(function(){
 		}
 	}
 	
+	//일자 오늘로 변경
+	$.todayFormat = function(selector){
+		var date = new Date();							//오늘
+		var formatDate = $.getFormatDate(date);			//포맷
+		$.RmvHyp(formatDate,selector);					//selector 오늘로 변경
+	}
 	
 	//-------------------------------------------------------------------유효성 검사
-	//검사 블러 이벤트
+	//유효성 검사 이벤트
 	$.validEvent = function(select){
 		//핸드폰번호 변경시
 		$('#mblNo0').change(function(){	//변화가 있을 시
@@ -253,7 +259,7 @@ $(function(){
 		
 		if(custNm.length==1){							//이름 1자 일 때
 			$.validResult('F','고객명은 2자 이상 입력해 주세요.','#custNmInfo');
-		}else if(custNm.length>2) {
+		}else if(custNm.length>1) {
 			$.validResult('T','None','#custNmInfo');
 		}
 	}
@@ -315,7 +321,6 @@ $(function(){
 								}else {
 									$.validResult('F','동일한 번호가 있습니다.','#mblNo0','#mblNo1','#mblNo2',select);
 								}
-								
 							}
 						}
 						else { 									//비즈니스 로직중 에러가 났을 경우(catch)
@@ -425,7 +430,9 @@ $(function(){
 			$(selector1).css("border",'1px solid #c8c8c8');
 			$(selector2).css("border",'1px solid #c8c8c8');
 			$(selector3).css("border",'1px solid #c8c8c8');
-			$('#checkMblNo>span').css("color","#9BDF30");
+			if(select!=null){
+				$('#checkMblNo>span').css("color","#9BDF30");
+			}
 			return true;
 		}
 	}
@@ -485,11 +492,10 @@ $(function(){
 	//고객상태에 따라 비활성화
 	$.custSsCdLimit = function(custSsCd){
 		//현재 선택된 value 값에 따른 비활성화 설정
-		var custSsCdState = $('input[id^="custSsCd"]:checked').val();
 		var checkBtnColor = $('#checkMblNo>span').css("color");
 		
-		if(custSsCdState=='10'){				//정상이 선택되어 있는 경우
-//			alert("초기정상선택");
+		if(custSsCd=='10'){				//정상이 선택되어 있는 경우
+			//alert("초기정상선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','A');		//중지 활성화
 			$.radioState('#custSsCd2','D');		//해지 비활성화
@@ -498,8 +504,8 @@ $(function(){
 				$.checkMblNoBtn('on');			//휴대폰번호 조회 이벤트 재생성
 				$('#checkMblNo>span').css("color","#9BDF30");
 			}
-		}else if(custSsCdState=='80'){			//중지가 선택되어 있는  경우
-//			alert("초기중지선택");
+		}else if(custSsCd=='80'){			//중지가 선택되어 있는  경우
+			//alert("초기중지선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','A');		//중지 활성화
 			$.radioState('#custSsCd2','A');		//해지 활성화
@@ -508,59 +514,45 @@ $(function(){
 				$.checkMblNoBtn('on');			//휴대폰번호 조회 이벤트 재생성
 				$('#checkMblNo>span').css("color","#9BDF30");
 			}
-		}else if(custSsCdState=='90') {			//해지가 선택되어 있는  경우
-//			alert("초기해지선택");
+			
+			//정상버튼 클릭
+			$('input[id=custSsCd0]').off('click').on('click', function() {
+				//alert("정상체크1");
+				$('#cnclCnts').attr("readonly",true);	//해지사유 비활성화
+				$('#cnclCnts').val('');
+			});
+			//중지버튼 클릭
+			$('input[id=custSsCd1]').off('click').on('click', function() {
+				//alert("중지체크1");
+				$('#cnclCnts').attr("readonly",true);	//해지사유 비활성화
+				$('#cnclCnts').val('');
+			});
+			//해지버튼 클릭
+			$('input[id=custSsCd2]').off('click').on('click', function() {
+				//alert("해지체크1");
+				$('#cnclCnts').attr("readonly",false);	//해지사유 활성화
+				$('#cnclCnts').focus();					//해지사유 포커스	
+			});
+			
+		}else if(custSsCd=='90') {			//해지가 선택되어 있는  경우
+			//alert("초기해지선택");
 			$.radioState('#custSsCd0','A');		//정상 활성화
 			$.radioState('#custSsCd1','D');		//중지 비활성화
 			$.radioState('#custSsCd2','A');		//해지 활성화
 			$.readonly('on');					//해지일때 input readonly 설정
 			$.checkMblNoBtn();					//휴대폰번호 조회 막기
+			
+			//정상버튼 클릭
+			$('input[id=custSsCd0]').off('click').on('click', function() {
+				//alert("정상체크2");
+				$.custSsOnclickSetting('rename');
+			});
+			//해지버튼 클릭
+			$('input[id=custSsCd2]').off('click').on('click', function() {
+				//alert("해지체크2");
+				$.custSsOnclickSetting('cancel');
+			});
 		}
-		
-		
-		//버튼을 선택할 경우 세팅 설정
-		if(custSsCd=='80'){
-			//중지에서 해지로 변경되었을때
-			$('input[id=custSsCd2]').on('click', function() {
-				if($(this).is(':checked')) {
-					alert("해지체크1");
-					$('#cnclCnts').attr("readonly",false);	//해지사유 활성화
-					$('#cnclCnts').focus();					//해지사유 포커스	
-				}
-			});
-			//중지에서 정상으로 변경되었을때
-			$('input[id=custSsCd0]').on('click', function() {
-				if($(this).is(':checked')) {
-					alert("정상체크1");
-					$('#cnclCnts').attr("readonly",true);	//해지사유 비활성화
-					$('#cnclCnts').val('');
-				}
-			});
-			//다시 중지로 돌아올 경우
-			$('input[id=custSsCd1]').on('click', function() {
-				if($(this).is(':checked')) {
-					alert("중지체크1");
-					$('#cnclCnts').attr("readonly",true);	//해지사유 비활성화
-					$('#cnclCnts').val('');
-				}
-			});
-		}else if(custSsCd=='90') {
-			//해지에서 정상으로 변경되었을때
-			$('input[id=custSsCd0]').on('click', function() {
-				if($(this).is(':checked')) {
-					alert("정상체크2");
-					$.custSsOnclickSetting('rename');
-				}
-			});
-			//다시 해지로 돌아올 경우
-			$('input[id=custSsCd2]').on('click', function() {
-				if($(this).is(':checked')) {
-					alert("해지체크2");
-					$.custSsOnclickSetting('cancel');
-				};
-			});
-		};
-		
 	}
 	
 	//라디오버튼 비활성화/활성화
@@ -619,7 +611,7 @@ $(function(){
 			$('#checkMblNo>span').css("color","#FF5E4D");		//아이콘 색상 빨강
 			$('#checkMblNo').css('cursor','pointer');			//커서 손가락
 			$('#checkMblNo').on('click', function(){ 			//이밴트 생성
-				$.checkMblNoValid();
+				$.checkMblNoValid('update');
 			});
 		}else {
 			$('#checkMblNo>span').css("color","#707070");		//아이콘 색상 무채색

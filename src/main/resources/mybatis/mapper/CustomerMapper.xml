@@ -146,6 +146,7 @@
 		        WHEN H.CHG_CD='CUST_SS_CD' THEN '고객상태'                      																						--'CUST_SS_CD'일 때 '고객상태'출력
 		        WHEN H.CHG_CD='STP_DT' THEN '중지일자'                          																						--'STP_DT'일 때 '중지일자'출력
 		        WHEN H.CHG_CD='CNCL_DT' THEN '해지일자'                         																						--'CNCL_DT'일 때 '해지일자'출력
+		        WHEN H.CHG_CD='CNCL_CNTS' THEN '해지사유'                         																						--'CNCL_CNTS'일 때 '해지사유'출력
 		        WHEN H.CHG_CD='EMAIL_RCV_YN' THEN '이메일수신동의'                         																				--'EMAIL_RCV_YN'일 때 '이메일수신동의'출력
 		        WHEN H.CHG_CD='SMS_RCV_YN' THEN 'SMS수신동의'                         																					--'SMS_RCV_YN'일 때 'SMS수신동의'출력
 		        WHEN H.CHG_CD='DM_RCV_YN' THEN 'DM수신동의'                         																					--'DM_RCV_YN'일 때 'DM수신동의'출력
@@ -366,9 +367,9 @@
 		    TO_CHAR(SYSDATE,'YYYYMMDD'),	--최초가입일자 default(sysdate)
 		    TO_CHAR(SYSDATE,'YYYYMMDD'),	--가입일자 default(sysdate)
 		    SYSDATE,						--최초등록일자 (sysdate)
-		    #{userId}, 						--세션 아이디
+		    #{userId}, 						--최초등록자(세션 아이디)
 		    SYSDATE,						--최종수정일자 (sysdate)
-		    #{userId} 						--세션 아이디
+		    #{userId} 						--최종수정자(세션 아이디)
 		)
 	</insert>
 	
@@ -379,7 +380,7 @@
 		    C.POC_CD AS POCCD,																							--직업코드
 		    TO_CHAR(TO_DATE(C.BRDY_DT),'YYYY-MM-DD') AS BRDYDT,															--생년월일
 		    C.SCAL_YN AS SCALYN,																						--양음력구분
-		    TO_CHAR(TO_DATE(C.MRRG_DT),'YYYY-MM-DD') AS MRRYDT,															--결혼기념일
+		    TO_CHAR(TO_DATE(C.MRRG_DT),'YYYY-MM-DD') AS MRRGDT,															--결혼기념일
 		    C.MBL_NO AS MBLNO,																							--휴대폰번호
 		    C.EMAIL,																									--이메일
 		    C.PSMT_GRC_CD AS PSMTGRCCD,																					--우편물 수령코드
@@ -436,28 +437,30 @@
 		      , ADDR = #{cUpdData.addr}								--주소
 		      , ADDR_DTL = #{cUpdData.addrDtl}						--상세주소
 		      , CUST_SS_CD = #{cUpdData.custSsCd}					--고객상태코드
-		      , JS_DT = #{cUpdData.jsDt}							--가입일자 오늘로 변경
+		      , JS_DT = #{cUpdData.jsDt}							--가입일자
 		      , CNCL_CNTS = #{cUpdData.cnclCnts}					--해지사유 
-		      , STP_DT = #{cUpdData.stpDt}							--중지일자 오늘
-		      , CNCL_DT = #{cUpdData.cnclDt}						--해지일자 오늘
+		      , STP_DT = #{cUpdData.stpDt}							--중지일자
+		      , CNCL_DT = #{cUpdData.cnclDt}						--해지일자
 		      , EMAIL_RCV_YN = #{cUpdData.emailRcvYn}				--이메일수신동의여부
 		      , SMS_RCV_YN = #{cUpdData.smsRcvYn}					--sms수신동의여부
 		      , DM_RCV_YN = #{cUpdData.dmRcvYn}						--dm수신동의여부
+		      , LST_UPD_DT = SYSDATE								--최종수정일자
+			  , LST_UPD_ID = #{userId}								--최종수정자(세션 아이디)
 		WHERE CUST_NO = #{custNo}									--회원번호로 조회
 	</update>
 	
 	<insert id="insertCustHt" parameterType="hashmap">
 		<foreach collection="cHtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
-			INTO SD_CUST01_HT VALUES (#{custNo},
-								      TO_CHAR(SYSDATE,'YYYYMMDD'),
-								      (SELECT NVL(MAX(CHG_SEQ)+1,1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},
-								      #{item.chgCd},
-								      #{item.chgBfCnt},
-								      #{item.chgAftCnt},
-								      SYSDATE,
-								      #{userId}, 
-								      SYSDATE,
-								      #{userId})
+			INTO SD_CUST01_HT VALUES (#{custNo},																													--고객번호
+								      TO_CHAR(SYSDATE,'YYYYMMDD'),																									--변경일자(오늘)
+								      (SELECT NVL(MAX(CHG_SEQ)+1,1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},	--일련변호((이전 일련번호+1)+index)
+								      #{item.chgCd},																												--변경코드
+								      #{item.chgBfCnt},																												--변경 전 내용
+								      #{item.chgAftCnt},																											--변경 후 내용
+								      SYSDATE,																														--최초등록일자 (sysdate)
+								      #{userId}, 																													--최초등록자(세션 아이디)
+								      SYSDATE,																														--최종수정일자(sysdate)
+								      #{userId})																													--최종수정자(세션아이디)
   		</foreach>
 	</insert>
 </mapper>
