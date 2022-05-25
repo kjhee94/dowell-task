@@ -71,6 +71,144 @@ $(function(){
 	    return  year + '-' + month + '-' + day;     	//'-' 추가하여 yyyy-mm-dd 형태 생성 가능
 	}
 	
+	//name삭제 시 code삭제
+	$.delectCode = function(name,code){
+		$(name).blur(function(){
+			if($(name).val().length==0){
+				$(code).val('');
+			}
+		});
+	}
+	
+	//매장 직접입력
+	$.prtKeydownSearch = function(){
+		$('#prtNm').keydown(function(keyNum){ 
+			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
+				var keyword = $('#prtNm').val().trim();
+				var data = {"keyword" : keyword};
+				
+				if(keyword.length==0){
+					$('#prtCd').val('');
+					return false;
+				}else {
+					$.ajax({
+						url : "/customer/selectPrt.do",
+						type : "post",
+						async: true,
+						data: data,
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						dataType: "json",
+						success : function(data) {
+							//연결성공
+							if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+								if(data["list"].length==1){	//조회 결과가 1개일 때
+									$.each(data["list"], function(index,item){
+										$('#prtCd').val(item.prtCd);
+										$('#prtNm').val(item.prtNm);
+									});
+								}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
+									//팝업창 오픈
+									var openPrtPop;
+									
+									var option = 'width=450, height=500, top=50, left=50, location=no';
+						            openPrtPop = window.open('/customer/prtPop.do', 'prtPopOpen', option);		
+						
+									openPrtPop.onload = function(){
+										openPrtPop.document.getElementById("keyword").value = $('#prtNm').val();
+										openPrtPop.document.getElementById("prtSearchBtn").click();
+									}
+						
+								}else {//조회 결과가 0개일 때
+									alert('조회 결과가 없습니다.');
+									$('#prtCd').val('');
+									$('#prtNm').val('');
+									return false;
+								}
+							}else { //비즈니스 로직중 에러가 났을 경우(catch)
+								//alert에 에러표시
+								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
+							}
+						},
+						error : function(request,status,error) {
+							//연결실패
+							//alert에 에러표시
+							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+							//console에 에러표시
+							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+				}
+			};
+		});
+	}
+	
+	//고객이름 직접입력
+	$.custKeydownSearch = function(){
+		$('#custNm').keydown(function(keyNum){ 
+			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
+				var custNm = $('#custNm').val().trim();
+				var mblNo = '';
+				var data = {"custNm" : custNm, "mblNo" : mblNo};
+				
+				if(custNm.length==0){
+					$('#custNo').val('');
+					return false;
+				}else if(custNm.length==1){
+					alert('고객이름 2자 이상 검색이 가능합니다.');
+					return false;
+				}else {
+					$.ajax({
+						url : "/customer/selectCust.do",
+						type : "post",
+						async: true,
+						data: data,
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						dataType: "json",
+						success : function(data) {
+							//연결성공
+							if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+								if(data["list"].length==1){	//조회 결과가 1개일 때
+									$.each(data["list"], function(index,item){
+										$('#custNo').val(item.custNo);
+										$('#custNm').val(item.custNm);
+									});
+								}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
+									//팝업창 오픈
+									var openCustPop;
+									
+									var option = 'width=650, height=500, top=50, left=50, location=no';
+						            openCustPop = window.open('/customer/custPop.do', 'custPopOpen', option);
+						
+									openCustPop.onload = function(){
+										openCustPop.document.getElementById("custNm").value = $('#custNm').val();
+										openCustPop.document.getElementById("custSearchBtn").click();
+									}
+						
+								}else {//조회 결과가 0개일 때
+									alert('조회 결과가 없습니다.');
+									$('#custNo').val('');
+									$('#custNm').val('');
+									return false;
+								}
+							}else { //비즈니스 로직중 에러가 났을 경우(catch)
+								//alert에 에러표시
+								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
+							}
+						},
+						error : function(request,status,error) {
+							//연결실패
+							//alert에 에러표시
+							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+							//console에 에러표시
+							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+				}
+			};
+		});
+	}
+	
+	
 	//닫기버튼 클릭시 팝업닫기
 	$('#closeBtn').click(function(){
 		window.close();
@@ -185,6 +323,14 @@ $(function(){
 		}
 	}
 	
+	//날짜 하이픈 추가
+	$.addHyp = function(noHyp,selector){
+		var date = $(noHyp).val();
+		var hypDate = date.substr(0, 4)+'-'+date.substr(4, 2)+'-'+date.substr(6, 2);
+		
+		$(selector).val(hypDate);
+	}
+	
 	//일자 오늘로 변경
 	$.todayFormat = function(selector){
 		var date = new Date();							//오늘
@@ -223,7 +369,7 @@ $(function(){
 		$('#brdyDt').attr('max',today);			//오늘 이후 생일 설정 불가
 		
 		$('#brdyDt').blur(function(){ 
-			$.checkBrdyDtValid();
+			$.checkBrdyDtValid(select);
 		});
 		
 		//핸드폰 유효성 검사 이벤트
@@ -249,7 +395,7 @@ $(function(){
 		
 		//결혼기념일 유효성 검사 이벤트
 		$('#mrrgDt').blur(function(){ 
-			$.checkMrrgDtValid();
+			$.checkMrrgDtValid(select);
 		});
 	}
 	
@@ -274,7 +420,7 @@ $(function(){
 	}
 	
 	//생일 유효성 검사
-	$.checkBrdyDtValid = function() {
+	$.checkBrdyDtValid = function(select) {
 		var date = new Date();							//오늘 날짜
 		var today = $.getFormatDate(date);				//포맷팅된 오늘 날짜
 		
@@ -282,10 +428,18 @@ $(function(){
 		
 		if($.checkValidDate(brdyDt)==false){			//입력한 값이 날짜 유효성 체크 실패일 때
 			$.validResult('F','None','#brdyDt');
-			$('#brdyDt').val("");						//입력창 리셋
+			if(select=='insert'){
+				$('#brdyDt').val("");					//입력창 리셋
+			}else {
+				$.addHyp('#bfBrdyDt','#brdyDt');		//기존값
+			}
 		}else if(brdyDt>today){							//입력한 값이 오늘보다 클 때
 			$.validResult('F','미래일자는 입력이 불가능 합니다','#brdyDt');
-			$('#brdyDt').val("");						//입력창 리셋
+			if(select=='insert'){
+				$('#brdyDt').val("");					//입력창 리셋
+			}else {
+				$.addHyp('#bfBrdyDt','#brdyDt');		//기존값
+			}
 		}else {
 			$.validResult('T','None','#brdyDt');
 		}
@@ -315,6 +469,8 @@ $(function(){
 						if(data["result"]) { 					//정상적으로 데이터가 왔을 경우(try)
 							if(data["check"]=="Y"){ 			//중복체크 결과 사용 가능일 때
 								$.validResult('T','사용 가능한 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
+							}else if(data["check"]=="mine"){
+								$.validResult('T','기존 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
 							}else {								//중복체크 결과 중복일 때
 								if(select=="insert"){
 									$.validResult('F','사용중인 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
@@ -393,7 +549,11 @@ $(function(){
 		var mrrgDt = $('#mrrgDt').val();		//사용자가 입력한 값
 		
 		if($.checkValidDate(mrrgDt)==false){	//입력한 값이 유효성  체크 실패일 때
-			$('#mrrgDt').val("");
+			if(select=='insert'){
+				$('#mrrgDt').val("");			//입력창 리셋
+			}else {
+				$.addHyp('#bfMrrgDt','#mrrgDt');//기존값
+			}
 		}
 	}
 	
@@ -448,26 +608,21 @@ $(function(){
 		var addr = $('#addr').val().trim();
 		var addrDtl = $('#addrDtl').val().trim();
 		
-		//휴대폰 번호 번호 미확인
-		if(checkBtnColor === 'rgb(255, 94, 77)'){
+		if(custNm.length==0){																	//고객명 미입력
+			$.validResult('F','고객명을 입력해 주세요.','#custNmInfo');
+		}else if(pocCd.text()=='선택'){															//직업코드 미입력
+			$.validResult('F','직업코드를 입력해 주세요.','select');	
+		}else if(brdyDt.length==0){																//생년월일 미입력
+			$.validResult('F','생년월일을 입력해 주세요.','#brdyDt');
+		}else if(checkBtnColor === 'rgb(255, 94, 77)'){											//휴대폰 번호 번호 미확인
 			if(select=="update"){
 				$.validResult('F','변경버튼 확인','#mblNo0','#mblNo1','#mblNo2');
 			}else{
 				$.validResult('F','휴대폰 번호 체크 버튼을 눌러주세요.','#mblNo0','#mblNo1','#mblNo2');
 			}
-		}
-		//필수입력값 미입력
-		else if(custNm.length==0){
-			$.validResult('F','고객명을 입력해 주세요.','#custNmInfo');
-		}else if(pocCd.text()=='선택'){
-			$.validResult('F','직업코드를 입력해 주세요.','select');
-		}else if(brdyDt.length==0){
-			$.validResult('F','생년월일을 입력해 주세요.','#brdyDt');
-		}else if(email0.length==0 || email1.length==0){
+		}else if(email0.length==0 || email1.length==0){											//이메일 미입력
 			$.validResult('F','이메일을 입력해 주세요.','#email0','#email1');
-		}
-        //주소 유효성 재검사
-		else if((addr.length==0 && addrDtl.length!=0)||(addr.length!=0 && addrDtl.length==0)) {
+		}else if((addr.length==0 && addrDtl.length!=0)||(addr.length!=0 && addrDtl.length==0)) {//주소 유효성 재검사
 			$.validResult('F','주소를 모두 입력해주세요.','#addr','#addrDtl');
 		}
 		//모두통과시 true

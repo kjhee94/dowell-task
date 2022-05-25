@@ -44,18 +44,18 @@
 								<div class="box-input-text">
 									<c:choose>
 										<c:when test="${sessionScope.user.userDtCd eq '2'}">
-											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" autofocus autocomplete='off'>
+											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly autocomplete='off'>
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autocomplete='off'>
+											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autofocus autocomplete='off'>
 										</c:when>
 										<c:otherwise>
-											<input id="prtCd" class="style-input" type="text" name="prtCd" autofocus autocomplete='off'>
+											<input id="prtCd" class="style-input" type="text" name="prtCd" readonly autocomplete='off'>
 											<button id="prtSearchBtn" class="btn-one-search" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input" type="text" name="prtNm" autocomplete='off'>
+											<input id="prtNm" class="style-input" type="text" name="prtNm" autofocus autocomplete='off'>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -63,7 +63,7 @@
 							<div class="one-search">
 								<span class="search-title">고객번호</span>
 								<div class="box-input-text">
-									<input id="custNo" class="style-input" type="text" name="custNo" autocomplete='off'>
+									<input id="custNo" class="style-input" type="text" name="custNo" readonly autocomplete='off'>
 									<button id="custSearchBtn" class="btn-one-search" type="button">
 										<span class="material-icons">search</span>
 									</button>

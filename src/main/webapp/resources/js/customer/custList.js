@@ -21,6 +21,17 @@ $(function(){
 	$.checkValidKeydown($('#jsDtFrom'),$('#jsDtTo'),0);
 	$.checkValidKeydown($('#jsDtTo'),$('#jsDtFrom'),1);
 	
+	//name삭제 시 code삭제
+	$.delectCode('#prtNm','#prtCd');
+	$.delectCode('#custNm','#custNo');
+	
+	//매장 직접입력
+	$.prtKeydownSearch();
+	
+	//고객이름 직접입력
+	$.custKeydownSearch();
+	
+	
 	//---------------------------------------처음 로드시 기본세팅 값
 	//함수 정의(검색시 재호출하기 위해)
 	$.selectSearchCust = function(){

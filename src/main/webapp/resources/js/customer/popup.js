@@ -1,14 +1,11 @@
 /**
  * 
  */
-
-$(function(){
+$(document).ready(function(){
 	//--------------------------------------------매장조회
-	$('#prtSearchBtn').click(function(){
-
+	$.selectPrt = function(){
 		var keyword = $('#keyword').val().trim(); //사용자가 검색한 값 공백 제거
 		var data = {"keyword" : keyword};
-		
 		//keyword의 길이가 0일 때(검색어가 비어있을 경우)
 		if(keyword.length==0){ 						
 			alert("검색어를 입력하세요.")
@@ -72,7 +69,17 @@ $(function(){
 				$resultTag.append(str);
 			}
 		});
+	}
+	
+	//검색버튼 클릭시 검색
+	$('#prtSearchBtn').click(function(){
+		$.selectPrt();
 	});
+	
+	//부모창에서 값이 바로 넘어왔을때
+	if($('#keyword').val()!=null && $('#keyword').val().length!=0){
+		$.selectPrt();
+	}
 	
 	//체크 없이 적용했을 때
 	$.nonCheckApply();
@@ -86,11 +93,10 @@ $(function(){
 	
 	
 	//--------------------------------------------고객조회
-	$('#custSearchBtn').click(function(){
-
+	$.selectCust = function(){
 		var custNm = $('#custNm').val().trim(); //사용자가 검색한 값 공백 제거
 		var mblNo = $('#mblNo').val().trim();	//사용자가 검색한 값 공백 제거
-		var data = {"custNm" : custNm,"mblNo" : mblNo};
+		var data = {"custNm" : custNm, "mblNo" : mblNo};
 		
 		//이름 2자 이상만 검색가능 & 검색어 모두 다 비어있을 경우 alert
 		if(custNm.length==1){ //custNm은 1자 검색 불가
@@ -162,7 +168,17 @@ $(function(){
 				$resultTag.append(str);
 			}
 		});
+	}
+	
+	//검색버튼 클릭시 검색
+	$('#custSearchBtn').click(function(){
+		$.selectCust();
 	});
+	
+	//부모창에서 값이 바로 넘어왔을때
+	if($('#custNm').val()!=null && $('#custNm').val().length!=0){
+		$.selectCust();
+	}
 	
 	//키보드 Enter 이벤트(Enter시 바로 검색)
 	$.keydownEnter($('#custNm'),$('#custSearchBtn'));

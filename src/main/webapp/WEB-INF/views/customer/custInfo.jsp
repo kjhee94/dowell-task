@@ -35,11 +35,12 @@
 					<div class="area-search-input">
 						<span class="search-title">고객번호</span>
 						<div class="box-input-text">
-							<input id="custNo" class="style-input" type="text" name="custNo" value="${requestScope.map.custNo}" autofocus autocomplete='off'>
+							<input id="custNo" class="style-input" type="text" name="custNo" value="${requestScope.map.custNo}" readonly autocomplete='off'>
+							<input id="bfCustNo" type="hidden">
 							<button id="custSearchBtn" class="btn-one-search" type="button">
 								<span class="material-icons">search</span>
 							</button>
-							<input id="custNm" class="style-input" type="text" autocomplete='off'>
+							<input id="custNm" class="style-input" type="text" autofocus autocomplete='off'>
 						</div>
 					</div>
 					
@@ -118,7 +119,7 @@
 							<div class="one-input">
 								<span class="input-title"><span class="required">*</span>가입매장</span>
 								<div class="box-input">
-									<input id="prtCd" class="style-input prt" type="text" name="prtCd">
+									<input id="prtCd" class="style-input prt" type="text" name="prtCd" readonly>
 									<button id="prtSearchBtn" class="btn-one-search" type="button">
 										<span class="material-icons">search</span>
 									</button>
@@ -172,7 +173,7 @@
 							<div class="one-input">
 								<span class="input-title">해지사유</span>
 								<div class="box-input">
-									<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly>
+									<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly autocomplete='off'>
 								</div>
 							</div>
 							<div class="one-input">
@@ -191,7 +192,7 @@
 							</div>
 						</fieldset>
 						
-						<fieldset>
+						<fieldset class="purchase">
 							<legend>구매</legend>
 							<div class="one-input">
 								<span class="input-title">총 구매금액</span>

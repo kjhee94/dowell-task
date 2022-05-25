@@ -410,7 +410,7 @@
 					WHERE CUST_NO=#{custNo}
 						AND SAL_DT BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)),'FM999,999,999'),0) AS PRSAMTMTH,	--포맷변경(소수점 추가)
 		    NVL((SELECT 
-		    		TO_CHAR(TO_DATE(MAX(SAL_DT))) 
+		    		TO_CHAR(TO_DATE(MAX(SAL_DT)),'YYYY-MM-DD') 
 		    	FROM CS_SAL01_MT 
 		    	WHERE CUST_NO=#{custNo}),'-') AS LSTPRSDT,																--최종구매일_스칼라쿼리 출력
 		    C.EMAIL_RCV_YN AS EMAILRCVYN,																				--이메일수신동의여부
@@ -423,8 +423,7 @@
 	
 	<update id="updateCust" parameterType="hashmap">
 		UPDATE CS_CUST01_MT SET 									--고객관리 테이블
-		      CUST_NO = #{custNo}									--고객번호
-		      , CUST_NM = #{cUpdData.custNm}						--고객이름
+			  CUST_NM = #{cUpdData.custNm}							--고객이름
 		      , BRDY_DT = #{cUpdData.brdyDt}						--생년월일
 		      , SEX_CD = #{cUpdData.sexCd}							--성별코드
 		      , SCAL_YN = #{cUpdData.scalYn}						--양음력구분

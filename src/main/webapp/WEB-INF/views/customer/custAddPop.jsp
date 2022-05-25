@@ -19,9 +19,6 @@
 	<div class="container">
 		<div class="box-title">
 			<span class="main-title">신규고객등록</span>
-			<!-- <button id="resetCustAddBtn" class="btn-reset" type="reset">
-				<span class="material-icons">restart_alt</span>
-			</button> -->
 		</div>
 		
 		<form id="custAddForm" method="post">

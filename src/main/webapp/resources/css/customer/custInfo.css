@@ -244,3 +244,9 @@ input[type="radio"] {
 	background-color: #114574;
 	color: #fff;
 }
+
+
+/*구매영역*/
+.purchase input{
+	text-align: right;
+}

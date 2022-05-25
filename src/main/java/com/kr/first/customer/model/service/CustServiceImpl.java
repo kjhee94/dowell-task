@@ -169,7 +169,7 @@ public class CustServiceImpl implements CustService {
 			resultMap.put("check","Y");
 		}else if(result.equals("MINE")) {
 			log.info("=================>>핸드폰 번호 사용 가능(기존 내 번호)");
-			resultMap.put("check","Y");
+			resultMap.put("check","mine");
 		}else {
 			log.info("=================>>핸드폰 번호 사용 불가능(중복번호)");
 			resultMap.put("check","N");

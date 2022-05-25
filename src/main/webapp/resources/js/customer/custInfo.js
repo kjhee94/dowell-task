@@ -3,6 +3,16 @@
  */
 $(function(){
 	
+	//name삭제 시 code삭제
+	$.delectCode('#prtNm','#prtCd');
+	$.delectCode('#custNm','#custNo');
+	
+	//매장 직접입력
+	$.prtKeydownSearch();
+	
+	//고객이름 직접입력
+	$.custKeydownSearch();
+	
 	//본사일때 input 비활성화
 	var userDtCd = $('#userDtCd').val();
 	if(userDtCd=='1'){
@@ -24,6 +34,7 @@ $(function(){
 	//---------------------------------------처음 로드시 기본세팅 값
 	$.selectOneCust = function(){
 		var custNo = $('#custNo').val();
+		$('#bfCustNo').val(custNo);
 		
 		if(custNo.length!=0){
 			$.ajax({
@@ -249,8 +260,7 @@ $(function(){
 			var cHtObj={};									//Object 선언
 			
 			for(var i=0; i<bfObj.length; i++){				//총 input 길이만큼 for문
-				if(bfObj[i].value!=aftObj[i].value && 		//변경 전 변경 후가 다른 것들만 
-				   bfObj[i].name!='JS_DT' && bfObj[i].name!='STP_DT' && bfObj[i].name!='CNCL_DT'){	//일자들 제외
+				if(bfObj[i].value!=aftObj[i].value && bfObj[i].name!='JS_DT'){ //변경 전 변경 후가 다른 것들만 
 
 					cHtObj = {
 							chgCd : bfObj[i].name,			//ex)key: chgCd / value : CUST_NM
@@ -266,11 +276,11 @@ $(function(){
 			var allObj = {
 					cUpdData : cUpObj,
 					cHtData : cHtArr,
-					custNo : $('#custNo').val()
+					custNo : $('#bfCustNo').val()
 			}
-			//console.log('전체 데이터 : '+allObj)
+			//console.log('전체 데이터 : '+allObj);
 			
-			if(changResult){	//변경내역이 없으면
+			if(cHtArr.length==0){	//변경내역이 없으면
 				alert("변경내역이 없습니다.");
 			}else {				//변경내역이 있으면
 				if(confirm("고객정보를 수정하시겠습니까?")){	//더블체크
@@ -320,7 +330,7 @@ $(function(){
 	
 	//resetBtn 클릭시 초기화
 	$('#resetBtn').click(function(){
-		var custNo = $('#custNo').val();
+		var custNo = $('#bfCustNo').val();
 		window.location.href = '/customer/custInfo.do?custNo='+custNo;	//새로고침
 	});
 });
