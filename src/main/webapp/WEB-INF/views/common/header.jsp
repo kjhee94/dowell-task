@@ -28,7 +28,7 @@
 								<span class="material-icons icon-arrow">navigate_next</span>
 							</div>
 							<ul class="lnb">
-								<li><a href="#">ㆍ 고객 판매 관리</a></li>
+								<li><a href="/sale/saleList.do">ㆍ 고객 판매 관리</a></li>
 								<li><a href="#">ㆍ 판매 실적</a></li>
 							</ul>
 						</li>
