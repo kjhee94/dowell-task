@@ -774,4 +774,26 @@ $(function(){
 			$("#checkMblNo").off("click");						//이벤트 끄기
 		}
 	}
+	
+	//고객판매 합계 구하기
+	$.sumvalue = function(length, elem, sumElem){
+		
+		var num = 0;
+		var sum = 0;
+		
+		for(var i=0; i<length; i++){
+			
+			num = $(elem+i).text().replace(/\,/g,"");
+			
+			if($('#salTpCd'+i).val()=='RTN'){
+				//console.log(sum+'-'+num);
+				sum -= Number(num);
+			}else {
+				//console.log(sum+'+'+num);
+				sum += Number(num);
+			}
+			//console.log(sum);
+		}
+		$(sumElem).text(sum.toLocaleString());
+	}
 });

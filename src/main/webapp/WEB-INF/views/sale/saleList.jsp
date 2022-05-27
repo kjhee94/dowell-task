@@ -31,8 +31,9 @@
 					<button id="resetBtn" class="btn-reset" type="reset">
 						<span class="material-icons">restart_alt</span>
 					</button>
-					<button id="custAddBtn" class="btn-add" type="button">판매등록</button>
-					<%-- <c:if test="${sessionScope.user.userDtCd eq '2'}"></c:if> --%>
+					<c:if test="${sessionScope.user.userDtCd eq '2'}">
+						<button id="custAddBtn" class="btn-add" type="button">판매등록</button>
+					</c:if>
 				</div>
 					
 				<div class="box-search">
@@ -107,111 +108,28 @@
 								<span class="pntStlmAmt">포인트</span>
 							</div>
 						</span>
-						<span class="fstUser">등록자</span>
+						<span class="fstUserId">등록자</span>
 						<span class="fstRegDt">등록시간</span>
 					</div>
 					<div id="result" class="result-content">
-						<div class="one-content">
-							<span class="salDt">2021-08-12</span>
-							<span class="custNo">1000000001</span>
-							<span class="custNm">박소연</span>
-							<span class="salNo">
-								<span class="salNoCnt">1</span>
-								<button class="btn-icon" onclick="custHtPopOpen()" type="button">
-							  		<span class="material-icons">list_alt</span>
-								</button>
-							</span>
-							<span class="sale half-height">
-								<span class="totSalQty">3</span>
-								<span class="totSalAmt">2,610,000</span>
-							</span>
-							<span class="payment half-height">
-								<span class="cshStlmAmt">2,610,000</span>
-								<span class="crdStlmAmt">0</span>
-								<span class="pntStlmAmt">0</span>
-							</span>
-							<span class="fstUser">20220409</span>
-							<span class="fstRegDt">2022-05-24</span>
-						</div>
-						<div class="one-content">
-							<span class="salDt">2021-08-12</span>
-							<span class="custNo">1000000001</span>
-							<span class="custNm">박소연</span>
-							<span class="salNo">
-								<span class="salNoCnt">1</span>
-								<button class="btn-icon" onclick="custHtPopOpen()" type="button">
-							  		<span class="material-icons">list_alt</span>
-								</button>
-							</span>
-							<span class="sale half-height">
-								<span class="totSalQty">3</span>
-								<span class="totSalAmt">2,610,000</span>
-							</span>
-							<span class="payment half-height">
-								<span class="cshStlmAmt">2,610,000</span>
-								<span class="crdStlmAmt">0</span>
-								<span class="pntStlmAmt">0</span>
-							</span>
-							<span class="fstUser">20220409</span>
-							<span class="fstRegDt">2022-05-24</span>
-						</div>
-						<div class="one-content">
-							<span class="salDt">2021-08-12</span>
-							<span class="custNo">1000000001</span>
-							<span class="custNm">박소연</span>
-							<span class="salNo">
-								<span class="salNoCnt">1</span>
-								<button class="btn-icon" onclick="custHtPopOpen()" type="button">
-							  		<span class="material-icons">list_alt</span>
-								</button>
-							</span>
-							<span class="sale half-height">
-								<span class="totSalQty">3</span>
-								<span class="totSalAmt">2,610,000</span>
-							</span>
-							<span class="payment half-height">
-								<span class="cshStlmAmt">2,610,000</span>
-								<span class="crdStlmAmt">0</span>
-								<span class="pntStlmAmt">0</span>
-							</span>
-							<span class="fstUser">20220409</span>
-							<span class="fstRegDt">2022-05-24</span>
-						</div>
-						<div class="one-content">
-							<span class="salDt">2021-08-12</span>
-							<span class="custNo">1000000001</span>
-							<span class="custNm">박소연</span>
-							<span class="salNo">
-								<span class="salNoCnt">1</span>
-								<button class="btn-icon" onclick="custHtPopOpen()" type="button">
-							  		<span class="material-icons">list_alt</span>
-								</button>
-							</span>
-							<span class="sale half-height">
-								<span class="totSalQty">3</span>
-								<span class="totSalAmt">2,610,000</span>
-							</span>
-							<span class="payment half-height">
-								<span class="cshStlmAmt">2,610,000</span>
-								<span class="crdStlmAmt">0</span>
-								<span class="pntStlmAmt">0</span>
-							</span>
-							<span class="fstUser">20220409</span>
-							<span class="fstRegDt">2022-05-24</span>
-						</div>
-						
-						<!-- <p>해당하는 판매내역이 없습니다.</p> -->
+						<p>해당하는 판매내역이 없습니다.</p>
 					</div>
-					<div class="tot-sum">
+					<div id="sum" class="tot-sum">
 						<span class="sum-title">합계</span>
-						<span class="sum-result">3 / 2,610,000 / 2,610,000 / 0 / 0</span>
+						<div class="sum-result">
+							<span id="sumTotSalQty"></span>
+							<span id="sumTotSalAmt"></span>
+							<span id="sumCshStlmAmt"></span>
+							<span id="sumCrdStlmAmt"></span>
+							<span id="sumPntStlmAmt"></span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+		<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
 	</div>
 </body>
 </html>

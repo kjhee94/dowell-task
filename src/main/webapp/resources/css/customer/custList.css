@@ -168,7 +168,7 @@ input[type="date"] {
 /*테이블 내용*/
 .result-content {
 	width: 100%;
-	height: calc(100vh - 550px);
+	height: calc(100vh - 490px);
 	overflow: auto;
 }
 .one-content {

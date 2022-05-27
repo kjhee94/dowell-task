@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sale">
+
+	<!-- 고객 판매 조회 쿼리 -->
+	<select id="selectSearchSale" parameterType="hashmap" resultType="sale">
+		SELECT
+			CASE                                                                                                            --가입일자(하이픈처리)
+		        WHEN REGEXP_INSTR(S.SAL_DT,'[^0-9.]')=0 AND LENGTH(S.SAL_DT)=8												--가입일자가 숫자로 이루어진 8자리일 때 'YYYY-MM-DD'의 형식
+		            THEN SUBSTR(S.SAL_DT,1,4)||'-'||SUBSTR(S.SAL_DT,5,2)||'-'||SUBSTR(S.SAL_DT,7)
+		        ELSE '0000-00-00'                                                                                           --예외: '0000-00-00'의 형식으로 출력
+		    END AS SALDT,
+		    S.CUST_NO AS CUSTNO,
+		    C.CUST_NM AS CUSTNM,
+		    S.SAL_NO AS SALNO,
+		    S.SAL_TP_CD AS SALTPCD,
+		    CASE
+		        WHEN S.SAL_DT = G.SAL_DT THEN G.TOT_SAL_QTY
+		        ELSE 0
+		    END AS TOTSALQTY,
+		    CASE
+		        WHEN S.SAL_DT = G.SAL_DT THEN TO_CHAR(G.TOT_SAL_AMT,'FM999,999,999')
+		        ELSE '0'
+		    END AS TOTSALAMT,
+		    TO_CHAR(S.CSH_STLM_AMT,'FM999,999,999') AS CSHSTLMAMT,
+		    TO_CHAR(S.CRD_STLM_AMT,'FM999,999,999') AS CRDSTLMAMT,
+		    TO_CHAR(S.PNT_STLM_AMT,'FM999,999,999') AS PNTSTLMAMT,
+		    S.FST_USER_ID AS FSTUSERID,
+		    TO_CHAR(S.FST_REG_DT,'YYYY-MM-DD') AS FSTREGDTFM
+		FROM CS_SAL01_MT S
+		    LEFT JOIN CS_CUST01_MT C ON (S.CUST_NO=C.CUST_NO)
+		    LEFT JOIN MA_PRT_MT P ON (S.PRT_CD=P.PRT_CD)
+		    LEFT JOIN (SELECT SAL_DT, SAL_NO, SUM(SAL_QTY) AS TOT_SAL_QTY, SUM(SAL_AMT) AS TOT_SAL_AMT
+		                FROM CS_SAL01_DT
+		                WHERE PRT_CD=#{prtCd}
+		                GROUP BY SAL_DT, SAL_NO) G ON (S.SAL_DT = G.SAL_DT AND S.SAL_NO = G.SAL_NO)
+		WHERE (S.SAL_DT BETWEEN TO_DATE(#{salDtFrom}) AND TO_DATE(#{salDtTo}))
+		    AND S.PRT_CD=#{prtCd}
+		    <if test="custNo!=null and !custNo.isEmpty()">
+		    AND S.CUST_NO=#{custNo}
+		    </if>
+		ORDER BY 1 DESC, 4 DESC
+	</select>
+</mapper>

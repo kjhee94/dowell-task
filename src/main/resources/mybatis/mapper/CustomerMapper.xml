@@ -61,8 +61,7 @@
 		FROM CS_CUST01_MT C																									--고객관리 테이블
 		    LEFT JOIN MA_PRT_MT P ON (C.JN_PRT_CD=P.PRT_CD)                                                               	--고객관리,거래처관리 JOIN(PRT_CD)
     		LEFT JOIN MA_USER_MT U ON (C.FST_USER_ID=U.USER_ID)                                                           	--고객관리,사용자 JOIN(FST_USER_ID/USER_ID)
-		WHERE 1=1
-		 	AND (C.JS_DT BETWEEN TO_DATE(#{jsDtFrom}) AND TO_DATE(#{jsDtTo}))                                               --가입일자로 조회
+		WHERE (C.JS_DT BETWEEN TO_DATE(#{jsDtFrom}) AND TO_DATE(#{jsDtTo}))                                               --가입일자로 조회
 			<if test="custSsCd!=null and !custSsCd.equals('all')">
 		    AND C.CUST_SS_CD = #{custSsCd}                                                                              	--고객상태코드로 조회
 		    </if>

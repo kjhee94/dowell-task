@@ -40,7 +40,7 @@ body {
 	width: 100%;
 	padding: 30px;
 	/* 기본적으로 꽉차는 container 설정 */
-	min-height: calc(100vh - 200px);
+	min-height: calc(100vh - 140px);
 	background-color: #fff;
 }
 

@@ -32,13 +32,13 @@ $(function(){
 	$.custKeydownSearch();
 
 	//함수 정의(검색시 재호출하기 위해)
-	$.selectSearchCustSale = function(){
+	$.selectSearchSale = function(){
 		//form 요소 직렬화
 		var form = $('#SearchSaleForm').serialize();
 		
-		//회원 조회 ajax
+		//고객 판매 조회 ajax
 		$.ajax({
-			url : "/sale/selectSearchCustSale.do",
+			url : "/sale/selectSearchSale.do",
 			type : "post",
 			async: true,
 			data: form,
@@ -54,23 +54,58 @@ $(function(){
 					if(data["list"].length>0){ //조회 결과가 0명 이상일 때
 						
 						$.each(data["list"], function(index,item){ //list 반복문
-//							var str = ;
+							var str = '<div class="one-content">'+
+									  '<span class="salDt">'+item.salDt+'</span>'+
+									  '<span class="custNo">'+item.custNo+'</span>'+
+									  '<span class="custNm">'+item.custNm+'</span>'+
+									  '<span class="salNo">'+
+									  	'<span class="salNoCnt">'+item.salNo+'</span>'+
+									  	'<button class="btn-icon" onclick="custHtPopOpen('+index+')" type="button">'+
+									  		'<span class="material-icons">list_alt</span>'+
+									  	'</button>'+
+									  '</span>'+
+									  '<input id="salTpCd'+index+'" type="hidden" value="'+item.salTpCd+'">'+
+									  '<span class="sale half-height">'+
+									  	'<span id="totSalQty'+index+'" class="totSalQty '+item.salTpCd+'">'+item.totSalQty+'</span>'+
+										'<span id="totSalAmt'+index+'" class="totSalAmt '+item.salTpCd+'">'+item.totSalAmt+'</span>'+
+									  '</span>'+
+									  '<span class="payment half-height">'+
+										'<span id="cshStlmAmt'+index+'" class="cshStlmAmt">'+item.cshStlmAmt+'</span>'+
+										'<span id="crdStlmAmt'+index+'" class="crdStlmAmt">'+item.crdStlmAmt+'</span>'+
+										'<span id="pntStlmAmt'+index+'" class="pntStlmAmt">'+item.pntStlmAmt+'</span>'+
+								  	  '</span>'+
+									  '<span class="fstUserId">'+item.fstUserId+'</span>'+
+									  '<span class="fstRegDt">'+item.fstRegDtFm+'</span>'+
+									  '</div>';
 							$resultTag.append(str);
+							
 						});
 						
 						//스크롤바 생성시 table 비율 맞추기
 						$.scrollBerTransform();
 						
+						//합계 영역 보이기
+						$('#sum').css('display','flex');
+						
+						//합계 더하기
+						$.sumvalue(data["list"].length, "#totSalQty", "#sumTotSalQty");
+						$.sumvalue(data["list"].length, "#totSalAmt", "#sumTotSalAmt");
+						$.sumvalue(data["list"].length, "#cshStlmAmt", "#sumCshStlmAmt");
+						$.sumvalue(data["list"].length, "#crdStlmAmt", "#sumCrdStlmAmt");
+						$.sumvalue(data["list"].length, "#pntStlmAmt", "#sumPntStlmAmt");
+						
 					}else {//조회 결과가 0명일 때
-						var str = '<p></p>';
+						var str = '<p>해당하는 판매내역이 없습니다.</p>';
 						$resultTag.append(str);
+						$('#sum').css('display','none');
 					}
 				}else { //비즈니스 로직중 에러가 났을 경우(catch)
 					//alert에 에러표시
 					alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
 					
-					var str = '<p></p>';
+					var str = '<p>해당하는 판매내역이 없습니다.</p>';
 					$resultTag.append(str);
+					$('#sum').css('display','none');
 				}
 			},
 			error : function(request,status,error) {
@@ -84,18 +119,19 @@ $(function(){
 				//내용 초기화
 				$("#result").empty();
 				
-				var str = '<p></p>';
+				var str = '<p>해당하는 판매내역이 없습니다.</p>';
 				$resultTag.append(str);
+				$('#sum').css('display','none');
 			}
 		});
 	}
-	$.selectSearchCustSale();
+	$.selectSearchSale();
 	
 	
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
 		//함수 재실행
-		$.selectSearchCustSale();
+		$.selectSearchSale();
 	});
 	
 	//prtSearchBtn 클릭시 팝업 오픈

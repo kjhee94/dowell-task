@@ -116,7 +116,7 @@
 		</div>
 		
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+		<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
 	</div>
 </body>
 </html>

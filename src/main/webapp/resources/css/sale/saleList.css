@@ -131,7 +131,7 @@ input[type="date"] {
 .custNm, .salNo {width: 8%;}
 .sale {width: 18.5%; height: 100%;}
 .payment {width: 27.5%; height: 100%;}
-.fstUser {width: 8%;}
+.fstUserId {width: 8%;}
 
 .totSalQty, .totSalAmt {
 	width: 50%;
@@ -192,7 +192,7 @@ input[type="date"] {
 /*테이블 내용*/
 .result-content {
 	width: 100%;
-	height: calc(100vh - 620px);
+	height: calc(100vh - 550px);
 	overflow: auto;
 }
 .one-content {
@@ -266,17 +266,42 @@ input[type="date"] {
 	height: 50px;
 	border: 3px #c8c8c8 solid;
 	margin-top: 10px;
-	display: flex;
+	display: none;
 	align-items: center;
 	font-weight: 500;
 	text-align: center;
 }
 .sum-title {
-	width: 30%;
+	width: 35%;
 }
 .sum-result {
-	width: 70%;
+	width: 65%;
+    text-align: right;
+    padding-right: 19%;
+}
+.sum-result>span {
+	display: inline-block;
+	width: 19.3%;
+	padding: 0 15px;
+	font-size: 15px;
+	position: relative;
+}
+.sum-result>span:after {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 18px;
+	position: absolute;
+	right: -1.5px;
+    bottom: 1px;
+    background-color: #c8c8c8;
+}
+.sum-result>span:last-child:after {
+	content: "";
 }
 
-
+/*반품은 빨간색*/
+.RTN {
+	color: #FF5E4D;
+}
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public interface SaleService {
 
-	//고객판매관리 페이지 초기세팅 메소드
-//	HashMap<String, Object> saleList() throws Exception;
+	//고객 판매 조회 메소드
+	HashMap<String, Object> selectSearchSale(HashMap<String, Object> map) throws Exception;
+
 }
