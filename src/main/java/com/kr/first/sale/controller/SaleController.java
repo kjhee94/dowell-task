@@ -29,7 +29,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private SaleService sService;
 	
-	//고객판매관리 페이지 초기세팅 메소드
+	//고객 판매 관리 페이지 초기세팅 메소드
 	@RequestMapping(value = "/sale/saleList.do")
 	public ModelAndView saleList(ModelAndView mav, HttpServletResponse response) throws IOException {
 		
@@ -56,6 +56,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 		return mav;
 	}
 	
+	//고객 판매 조회 메소드
 	@ResponseBody
 	@PostMapping(value = "/sale/selectSearchSale.do")
 	public void selectSearchCust(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {
@@ -73,6 +74,69 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 			log.error("error : ", e);
 			
 			//view단에 오류메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
+	
+	//판매 상세 조회 팝업창 오픈(팝업)
+	@RequestMapping(value = "/sale/saleDtPop.do")
+	public String selectCustHt() {
+		
+		return "sale/saleDtPop";
+	}
+	
+	//판매 상세 조회 메소드(팝업)
+	@ResponseBody
+	@RequestMapping(value = "/sale/selectSaleDt.do")
+	public void selectSaleDt(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {	
+		
+		log.info("매장코드 : "+map.get("prtCd")+" or 판매일자 : "+map.get("salDt")+" or 판매번호 : "+map.get("salNo"));
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = sService.selectSaleDt(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 이력 조회 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
+	
+	//반품처리 메소드(팝업)
+	@ResponseBody
+	@RequestMapping(value = "/sale/insertReturn.do")
+	public void insertReturn(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {	
+		
+		log.info("매장코드 : "+map.get("prtCd")+" or 판매일자 : "+map.get("salDt")+" or 판매번호 : "+map.get("salNo"));
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = sService.insertReturn(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>고객 이력 조회 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
 			resultMap.put("msg", e.getMessage());
 			resultMap.put("result",false);
 		} 

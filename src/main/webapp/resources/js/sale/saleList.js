@@ -55,15 +55,17 @@ $(function(){
 						
 						$.each(data["list"], function(index,item){ //list 반복문
 							var str = '<div class="one-content">'+
-									  '<span class="salDt">'+item.salDt+'</span>'+
-									  '<span class="custNo">'+item.custNo+'</span>'+
-									  '<span class="custNm">'+item.custNm+'</span>'+
+									  '<span id="salDt'+index+'" class="salDt">'+item.salDt+'</span>'+
+									  '<span id="custNo'+index+'" class="custNo">'+item.custNo+'</span>'+
+									  '<span id="custNm'+index+'" class="custNm">'+item.custNm+'</span>'+
 									  '<span class="salNo">'+
-									  	'<span class="salNoCnt">'+item.salNo+'</span>'+
-									  	'<button class="btn-icon" onclick="custHtPopOpen('+index+')" type="button">'+
+									  	'<span id="salNo'+index+'" class="salNoCnt">'+item.salNo+'</span>'+
+									  	'<button class="btn-icon" onclick="saleDtPopOpen('+index+')" type="button">'+
 									  		'<span class="material-icons">list_alt</span>'+
 									  	'</button>'+
 									  '</span>'+
+									  '<input id="prtCd'+index+'" type="hidden" value="'+item.prtCd+'">'+
+									  '<input id="prtNm'+index+'" type="hidden" value="'+item.prtNm+'">'+
 									  '<input id="salTpCd'+index+'" type="hidden" value="'+item.salTpCd+'">'+
 									  '<span class="sale half-height">'+
 									  	'<span id="totSalQty'+index+'" class="totSalQty '+item.salTpCd+'">'+item.totSalQty+'</span>'+
@@ -74,7 +76,7 @@ $(function(){
 										'<span id="crdStlmAmt'+index+'" class="crdStlmAmt">'+item.crdStlmAmt+'</span>'+
 										'<span id="pntStlmAmt'+index+'" class="pntStlmAmt">'+item.pntStlmAmt+'</span>'+
 								  	  '</span>'+
-									  '<span class="fstUserId">'+item.fstUserId+'</span>'+
+									  '<span class="fstUserNm">'+item.fstUserNm+'</span>'+
 									  '<span class="fstRegDt">'+item.fstRegDtFm+'</span>'+
 									  '</div>';
 							$resultTag.append(str);
@@ -130,6 +132,14 @@ $(function(){
 	
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
+		var prtCd = $('#prtCd').val(); //사용자가 검색한 값 공백 제거
+		//keyword의 길이가 0일 때(검색어가 비어있을 경우)
+		if(prtCd.length==0){ 						
+			alert("매장을 선택하세요.");
+			$('#prtNm').focus();
+			return false;
+		}
+		
 		//함수 재실행
 		$.selectSearchSale();
 	});
@@ -147,11 +157,23 @@ $(function(){
 	$.reset($('#resetBtn'),'/sale/saleList.do');
 });
 
-//custHtPopOpen 함수 실행(ajax에서 append된 값)
-function custHtPopOpen(index) {
+//saleDtPopOpen 함수 실행(ajax에서 append된 값)
+function saleDtPopOpen(index) {
 	
-//	var custNo = $("#custNo"+index).text();
-//	
-//	var option = 'width=1000, height=500, top=50, left=50, location=no';
-//	window.open('/customer/custHtPop.do?custNo='+custNo, 'custHtPopOpen', option);
+	var option = 'width=900, height=500, top=50, left=50, location=no';
+	openSaleDtPop = window.open('/sale/saleDtPop.do', 'saleDtPopOpen', option);
+	
+	openSaleDtPop.onload = function(){
+		openSaleDtPop.document.getElementById("prtCd").value = $("#prtCd"+index).val();
+		openSaleDtPop.document.getElementById("prtNm").value = $("#prtNm"+index).val();
+		openSaleDtPop.document.getElementById("custNo").value = $("#custNo"+index).text();
+		openSaleDtPop.document.getElementById("custNm").value = $("#custNm"+index).text();
+		openSaleDtPop.document.getElementById("totSalQty").value = $("#totSalQty"+index).text();
+		openSaleDtPop.document.getElementById("totSalAmt").value = $("#totSalAmt"+index).text();
+		openSaleDtPop.document.getElementById("cshStlmAmt").value = $("#cshStlmAmt"+index).text();
+		openSaleDtPop.document.getElementById("crdStlmAmt").value = $("#crdStlmAmt"+index).text();
+		openSaleDtPop.document.getElementById("salDt").value = $("#salDt"+index).text();
+		openSaleDtPop.document.getElementById("salNo").value = $("#salNo"+index).text();
+		openSaleDtPop.document.getElementById("salTpCd").value = $("#salTpCd"+index).val();
+	}
 }

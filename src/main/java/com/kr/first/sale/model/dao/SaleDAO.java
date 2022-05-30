@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.kr.first.customer.model.vo.CustVO;
+import com.kr.first.sale.model.vo.SaleDtVO;
+import com.kr.first.sale.model.vo.SaleVO;
 
 @Repository
 public class SaleDAO {
@@ -18,8 +19,13 @@ public class SaleDAO {
 	private SqlSessionTemplate sqlSession;
 
 	//고객 판매 조회 메소드
-	public ArrayList<CustVO> selectSearchSale(HashMap<String, Object> map) throws Exception {
-		return new ArrayList<CustVO>(sqlSession.selectList("sale.selectSearchSale",map));
+	public ArrayList<SaleVO> selectSearchSale(HashMap<String, Object> map) throws Exception {
+		return new ArrayList<SaleVO>(sqlSession.selectList("sale.selectSearchSale",map));
+	}
+
+	//판매 상세 조회 메소드
+	public ArrayList<SaleDtVO> selectSaleDt(HashMap<String, Object> map) throws Exception {
+		return new ArrayList<SaleDtVO>(sqlSession.selectList("sale.selectSaleDt",map));
 	}
 
 }

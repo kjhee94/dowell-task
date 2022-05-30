@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.kr.first.customer.model.vo.CustVO;
 import com.kr.first.sale.model.dao.SaleDAO;
+import com.kr.first.sale.model.vo.SaleDtVO;
+import com.kr.first.sale.model.vo.SaleVO;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -27,12 +29,61 @@ public class SaleServiceImpl implements SaleService {
 		
 		//고객 판매 조회 list
 		log.info("=================>>고객 판매 조회");
-		ArrayList<CustVO> list = sDAO.selectSearchSale(map);
+		ArrayList<SaleVO> list = sDAO.selectSearchSale(map);
 		log.info("=================>>고객 판매 조회 성공");
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("list", list);
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
+
+	//판매 상세 조회 메소드
+	@Override
+	public HashMap<String, Object> selectSaleDt(HashMap<String, Object> map) throws Exception {
+		
+		//판매 상세 조회 list
+		log.info("=================>>판매 상세 조회");
+		ArrayList<SaleDtVO> list = sDAO.selectSaleDt(map);
+		System.out.println(list);
+		log.info("=================>>판매 상세 조회");
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", list);
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
+
+	//반품처리 메소드
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public HashMap<String, Object> insertReturn(HashMap<String, Object> map) throws Exception {
+		
+		//반품 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>반품 등록");
+		int resultRtnInsert = sDAO.InsertRtn(map);
+		
+		//반품상세 추가 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>반품상세 등록");
+		int resultRtnDtInsert = sDAO.InsertRtnDt(map);
+		
+		//재고 수정 결과 int에 담기(1:성공 / 0:실패)
+		log.info("=================>>재고 수정");
+		int resultUpdate = sDAO.updateStock(map);
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		if(resultRtnInsert>0 && resultRtnDtInsert>0 && resultUpdate>0) {	//등록 성공		 
+			log.info("=================>>반품 등록 & 반품상세 등록 & 재고 수정 성공");
+			resultMap.put("seccessYN","Y");
+		}else {	//수정 실패
+			log.info("=================>>반품 등록 & 반품상세 등록 & 재고 수정 실패");
+			resultMap.put("seccessYN","N");
+		}
 		resultMap.put("result",true);
 		
 		return resultMap;

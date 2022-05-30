@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+/*고객조회 영역*/
+.cb-cust {width: 11%;}
+.custNo, .mblNo {width: 25%;}
+.custNm {width: 20%;}
+.custSsNm {width: 15%;}
+
+.one-content>span {
+	text-align: center;
+}

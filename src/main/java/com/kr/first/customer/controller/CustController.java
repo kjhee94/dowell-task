@@ -172,23 +172,10 @@ public class CustController {
 	}
 	
 	//고객 이력 팝업창 오픈(팝업_post)
-//	@RequestMapping(value = "/customer/CustHtPop.do")
-//	public String selectCustHt() {
-//		
-//		return "customer/custHtPop";
-//	}
-	
-	//고객 이력 팝업창 오픈(팝업_get)
 	@RequestMapping(value = "/customer/custHtPop.do")
-	public ModelAndView selectCustHt(HttpServletRequest request , @RequestParam String custNo, ModelAndView mav) {
-		//팝업 오픈
-		log.info("고객이력 팝업 오픈");
-		log.info("고객번호 : "+custNo);
+	public String selectCustHt() {
 		
-		mav.addObject("custNo",custNo);
-		mav.setViewName("customer/custHtPop");
-		
-		return mav;
+		return "customer/custHtPop";
 	}
 	
 	//고객 이력 조회 메소드(팝업)

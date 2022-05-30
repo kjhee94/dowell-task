@@ -11,8 +11,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/resources/common/common.css">
-<link rel="stylesheet" href="/resources/css/customer/popup.css">
-<link rel="stylesheet" href="/resources/css/customer/custHt.css">
+<link rel="stylesheet" href="/resources/common/popup.css">
+<link rel="stylesheet" href="/resources/css/customer/custHtPop.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/resources/common/common.js"></script>
 <script src="/resources/js/customer/custHtPop.js"></script>
@@ -23,10 +23,10 @@
 			<span class="main-title">변경이력</span>
 		</div>
 		
-		<div class="box-user">
+		<div class="box-search">
 			<span class="search-title">고객</span>
 			<div class="box-info">
-				<input id="custNo" type="text" class="style-input" value="${requestScope.custNo}" readonly>
+				<input id="custNo" type="text" class="style-input" readonly>
 				<input id="custNm" type="text" class="style-input" readonly>
 			</div>
 		</div>

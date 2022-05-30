@@ -7,4 +7,10 @@ public interface SaleService {
 	//고객 판매 조회 메소드
 	HashMap<String, Object> selectSearchSale(HashMap<String, Object> map) throws Exception;
 
+	//판매 상세 조회 메소드
+	HashMap<String, Object> selectSaleDt(HashMap<String, Object> map) throws Exception;
+
+	//반품처리 메소드
+	HashMap<String, Object> insertReturn(HashMap<String, Object> map) throws Exception;
+
 }

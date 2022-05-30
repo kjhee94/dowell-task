@@ -1,7 +1,7 @@
 /**
  * 
  */
-$(function(){
+$(document).ready(function(){
 	
 	var custNo = $('#custNo').val();
 	var data = {"custNo" : custNo};

@@ -108,7 +108,7 @@
 								<span class="pntStlmAmt">포인트</span>
 							</div>
 						</span>
-						<span class="fstUserId">등록자</span>
+						<span class="fstUserNm">등록자</span>
 						<span class="fstRegDt">등록시간</span>
 					</div>
 					<div id="result" class="result-content">

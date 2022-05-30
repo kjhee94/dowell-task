@@ -1,13 +1,9 @@
 @charset "UTF-8";
 
 /*사용자 정보 박스*/
-.box-user {
-	width: 100%;
+.box-search {
 	height: 70px;
-	padding: 30px;
-	border: 1px #C8C8C8 solid; 
-	margin-bottom: 20px;
-	display: flex;
+	justify-content: inherit;
 	align-items: center;
 }
 .search-title {
@@ -24,17 +20,10 @@
 .result-content {
 	height: calc(100vh - 285px);
 }
-.one-content>span.chgBfCnt,
-.one-content>span.chgAftCnt,
-.one-content>span.lstUpdId {
-	text-align: left;
-}
 
-.chgDt,.chgCd {width: 14%;}
+.chgDt,.chgCd {width: 14%; text-align: center;}
 .chgBfCnt,.chgAftCnt,.lstUpdId {width: 17%;}
-.lstUpdDt {width: 19%;}
-
-
+.lstUpdDt {width: 19%; text-align: center;}
 
 .one-content {
 	cursor: auto;

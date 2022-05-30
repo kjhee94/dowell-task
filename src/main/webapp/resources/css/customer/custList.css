@@ -156,9 +156,12 @@ input[type="date"] {
 }
 .result-title>span {
 	display: inline-block;
+	height: 100%;
+	line-height: 60px;
 	padding: 0 15px;
 	text-align: center;
 	font-weight: 700;
+	border-right: 1px #d9d9d9 solid;
 }
 .result-title>span:last-child {
 	border-right: 0;

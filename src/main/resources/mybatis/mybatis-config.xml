@@ -8,5 +8,6 @@
 		<typeAlias type="com.kr.first.customer.model.vo.PrtVO" alias="prt"/>
 		<typeAlias type="com.kr.first.customer.model.vo.CustHtVO" alias="custHt"/>
 		<typeAlias type="com.kr.first.sale.model.vo.SaleVO" alias="sale"/>
+		<typeAlias type="com.kr.first.sale.model.vo.SaleDtVO" alias="saleDt"/>
 	</typeAliases>
 </configuration>

@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/*매장조회 영역*/
+.cb-prt {width: 15.5%;}
+.prtCd,.prtNm {width: 29%;}
+.prtSsNm {width: 26%;}
+
+.one-content>span {
+	text-align: center;
+}

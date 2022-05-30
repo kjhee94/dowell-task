@@ -131,7 +131,7 @@ input[type="date"] {
 .custNm, .salNo {width: 8%;}
 .sale {width: 18.5%; height: 100%;}
 .payment {width: 27.5%; height: 100%;}
-.fstUserId {width: 8%;}
+.fstUserNm {width: 8%;}
 
 .totSalQty, .totSalAmt {
 	width: 50%;
@@ -277,7 +277,7 @@ input[type="date"] {
 .sum-result {
 	width: 65%;
     text-align: right;
-    padding-right: 19%;
+    padding-right: 19.2%;
 }
 .sum-result>span {
 	display: inline-block;
@@ -289,7 +289,7 @@ input[type="date"] {
 .sum-result>span:after {
 	content: "";
 	display: block;
-	width: 1px;
+	width: 0.5px;
 	height: 18px;
 	position: absolute;
 	right: -1.5px;

@@ -66,32 +66,25 @@
 .box-result {
 	margin-bottom: 20px;
 }
-/*매장조회 영역*/
-.cb-prt {width: 15%;}
-.prtCd,.prtNm {width: 28%;}
-.prtSsNm {width: 26%;}
-
-/*고객조회 영역*/
-.cb-cust {width: 11%;}
-.custNo,.mblNo {width: 25%;}
-.custNm {width: 20%;}
-.custSsNm {width: 15%;}
 
 /*테이블 제목*/
 .result-title {
 	width: 100%;
 	height: 40px;
-	line-height: 40px;
 	background-color: #eee;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 .result-title>span {
 	display: inline-block;
+	height: 100%;
+	line-height: 40px;
 	padding: 0 10px;
 	text-align: center;
 	font-size: 15px;
 	font-weight: 500;
+	border-right: 1px #d9d9d9 solid;
 }
 .result-title>span:last-child {
 	border-right: 0;
@@ -117,7 +110,6 @@
 .one-content>span {
 	display: inline-block;
 	padding: 0 10px;
-	text-align: center;
 	font-size: 14px;
 	border-right: 1px #d9d9d9 solid;
 }
