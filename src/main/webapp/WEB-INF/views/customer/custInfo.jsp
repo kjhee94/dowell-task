@@ -96,7 +96,7 @@
 								<span class="input-title"><span class="required">*</span>직업코드</span>
 								<div class="box-input">
 									<select id="pocCd" name="pocCd" class="style-input">
-										<option disabled>선택</option>
+										<option selected="selected" disabled>선택</option>
 										<c:forEach items="${requestScope.map.pList}" var="p" varStatus="status">
 											<option id="pocCd${status.index}" value="${p.pocCd}">${p.pocNm}</option>
 										</c:forEach>
@@ -171,12 +171,6 @@
 								</div>
 							</div>
 							<div class="one-input">
-								<span class="input-title">해지사유</span>
-								<div class="box-input">
-									<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly autocomplete='off'>
-								</div>
-							</div>
-							<div class="one-input">
 								<span class="input-title">중지일자</span>
 								<div class="box-input">
 									<input id="stpDt" class="style-input" type="text" readonly>
@@ -188,6 +182,12 @@
 								<div class="box-input">
 									<input id="cnclDt" class="style-input" type="text" readonly>
 									<input id="cnclDtMdf" type="hidden" name="cnclDt">
+								</div>
+							</div>
+							<div class="one-input">
+								<span class="input-title">해지사유</span>
+								<div class="box-input">
+									<input id="cnclCnts" class="style-input" type="text" name="cnclCnts" readonly autocomplete='off'>
 								</div>
 							</div>
 						</fieldset>
@@ -255,9 +255,9 @@
 						<input id="bfAddrDtl" type="hidden" name="ADDR_DTL">
 						<input id="bfCustSsCd" type="hidden" name="CUST_SS_CD">
 						<input id="bfJsDt" type="hidden" name="JS_DT">
-						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfStpDt" type="hidden" name="STP_DT">
 						<input id="bfCnclDt" type="hidden" name="CNCL_DT">
+						<input id="bfCnclCnts" type="hidden" name="CNCL_CNTS">
 						<input id="bfEmailRcvYn" type="hidden" name="EMAIL_RCV_YN">
 						<input id="bfSmsRcvYn" type="hidden" name="SMS_RCV_YN">
 						<input id="bfDmRcvYn" type="hidden" name="DM_RCV_YN">

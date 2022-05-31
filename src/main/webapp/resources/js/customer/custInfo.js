@@ -296,7 +296,9 @@ $(function(){
 							if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
 								if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
 									alert("수정이 완료되었습니다.");
-									location.reload();
+									
+									var custNo = $('#bfCustNo').val();
+									location.href = '/customer/custInfo.do?custNo='+custNo;	//새로고침
 								}else {//데이터 삽입 실패
 									alert("수정 실패. 관리자에게 문의해 주세요");
 								}

@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kr.first.sale.model.service.SaleService;
+import com.kr.first.user.model.vo.UserVO;
 
 @Controller
 public class SaleController {
@@ -33,7 +35,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/sale/saleList.do")
 	public ModelAndView saleList(ModelAndView mav, HttpServletResponse response) throws IOException {
 		
-		log.info("고객판매관리 페이지 오픈");
+		log.info("고객 판매 관리 페이지 오픈");
 		
 		//가입날짜 조회 default값
 		Calendar c = Calendar.getInstance();
@@ -87,6 +89,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/sale/saleDtPop.do")
 	public String selectCustHt() {
 		
+		log.info("판매 상세 조회 팝업 오픈");
 		return "sale/saleDtPop";
 	}
 	
@@ -105,7 +108,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
-			log.info("=================>>고객 이력 조회 실패");
+			log.info("=================>>판매 상세 조회 실패");
 			log.error("error : ", e);
 			
 			//view단에 메세지 노출
@@ -121,9 +124,14 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	//반품처리 메소드(팝업)
 	@ResponseBody
 	@RequestMapping(value = "/sale/insertReturn.do")
-	public void insertReturn(@RequestParam HashMap<String,Object> map, HttpServletResponse response) throws IOException {	
+	public void insertReturn(@RequestParam HashMap<String,Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
 		
 		log.info("매장코드 : "+map.get("prtCd")+" or 판매일자 : "+map.get("salDt")+" or 판매번호 : "+map.get("salNo"));
+		
+		//세션 ID 가져오기
+		String userId = user.getUserId();
+		log.info("userId : "+userId);
+		map.put("userId", userId);
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
@@ -133,7 +141,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
-			log.info("=================>>고객 이력 조회 실패");
+			log.info("=================>>반품처리 실패");
 			log.error("error : ", e);
 			
 			//view단에 메세지 노출

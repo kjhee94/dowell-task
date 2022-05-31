@@ -469,7 +469,7 @@ $(function(){
 						if(data["result"]) { 					//정상적으로 데이터가 왔을 경우(try)
 							if(data["check"]=="Y"){ 			//중복체크 결과 사용 가능일 때
 								$.validResult('T','사용 가능한 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
-							}else if(data["check"]=="mine"){
+							}else if(data["check"]=="mine"){	//기존 번호일 때
 								$.validResult('T','기존 핸드폰 번호입니다.','#mblNo0','#mblNo1','#mblNo2',select);
 							}else {								//중복체크 결과 중복일 때
 								if(select=="insert"){

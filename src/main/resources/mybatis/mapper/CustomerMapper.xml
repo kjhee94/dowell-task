@@ -299,6 +299,7 @@
 		ORDER BY 3 DESC, 10 DESC																																	--변경일자,일련번호 내림차순
 	</select>
 	
+	<!-- 휴대폰번호 중복체크 쿼리 -->
 	<select id="selectmblNo" parameterType="hashmap" resultType="String">
 		SELECT 
 			<choose>
@@ -316,6 +317,7 @@
 		WHERE MBL_NO=#{mblNo}							--휴대폰번호로 조회
 	</select>
 	
+	<!-- 고객 등록 쿼리 -->
 	<insert id="insertCust" parameterType="hashmap">
 		INSERT INTO CS_CUST01_MT ( 			--고객관리 테이블
 		    CUST_NO,						--고객번호
@@ -372,6 +374,7 @@
 		)
 	</insert>
 	
+	<!-- 고객 정보 조회 쿼리 -->
 	<select id="selectOneCust" parameterType="String" resultType="cust">
 		SELECT 
 		    C.CUST_NM AS CUSTNM,																						--고객명
@@ -420,6 +423,7 @@
 		WHERE CUST_NO=#{custNo}																							--회원번호로 조회
 	</select>
 	
+	<!-- 고객 정보 수정 쿼리 -->
 	<update id="updateCust" parameterType="hashmap">
 		UPDATE CS_CUST01_MT SET 									--고객관리 테이블
 			  CUST_NM = #{cUpdData.custNm}							--고객이름
@@ -447,18 +451,31 @@
 		WHERE CUST_NO = #{custNo}									--회원번호로 조회
 	</update>
 	
+	<!-- 고객 이력 등록 쿼리 -->
 	<insert id="insertCustHt" parameterType="hashmap">
 		<foreach collection="cHtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
-			INTO SD_CUST01_HT VALUES (#{custNo},																													--고객번호
-								      TO_CHAR(SYSDATE,'YYYYMMDD'),																									--변경일자(오늘)
-								      (SELECT NVL(MAX(CHG_SEQ)+1,1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},	--일련변호((이전 일련번호+1)+index)
-								      #{item.chgCd},																												--변경코드
-								      #{item.chgBfCnt},																												--변경 전 내용
-								      #{item.chgAftCnt},																											--변경 후 내용
-								      SYSDATE,																														--최초등록일자 (sysdate)
-								      #{userId}, 																													--최초등록자(세션 아이디)
-								      SYSDATE,																														--최종수정일자(sysdate)
-								      #{userId})																													--최종수정자(세션아이디)
+			INTO SD_CUST01_HT
+				(CUST_NO,
+				 CHG_DT,
+				 CHG_SEQ,
+				 CHG_CD,
+				 CHG_BF_CNT,
+				 CHG_AFT_CNT,
+				 FST_REG_DT,
+			     FST_USER_ID,
+			     LST_UPD_DT,
+			     LST_UPD_ID)
+			VALUES 
+				(#{custNo},																														--고객번호
+				 TO_CHAR(SYSDATE,'YYYYMMDD'),																									--변경일자(오늘)
+				 (SELECT NVL(MAX(CHG_SEQ)+1,1) FROM SD_CUST01_HT WHERE CUST_NO=#{custNo} AND CHG_DT=TO_CHAR(SYSDATE,'YYYYMMDD')) + #{index},	--일련변호((이전 일련번호+1)+index)
+				 #{item.chgCd},																													--변경코드
+				 #{item.chgBfCnt},																												--변경 전 내용
+				 #{item.chgAftCnt},																												--변경 후 내용
+				 SYSDATE,																														--최초등록일자 (sysdate)
+				 #{userId}, 																													--최초등록자(세션 아이디)
+				 SYSDATE,																														--최종수정일자(sysdate)
+				 #{userId})																														--최종수정자(세션아이디)
   		</foreach>
 	</insert>
 </mapper>

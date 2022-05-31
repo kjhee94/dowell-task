@@ -48,7 +48,7 @@ public class SaleServiceImpl implements SaleService {
 		log.info("=================>>판매 상세 조회");
 		ArrayList<SaleDtVO> list = sDAO.selectSaleDt(map);
 		System.out.println(list);
-		log.info("=================>>판매 상세 조회");
+		log.info("=================>>판매 상세 조회 성공");
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -65,15 +65,23 @@ public class SaleServiceImpl implements SaleService {
 		
 		//반품 결과 int에 담기(1:성공 / 0:실패)
 		log.info("=================>>반품 등록");
-		int resultRtnInsert = sDAO.InsertRtn(map);
+		//변경할 판매목록 list에 담기
+		ArrayList<SaleVO> slist = sDAO.selectOneSale(map);
+		System.out.println(slist);
+		map.put("slist", slist);
+		int resultRtnInsert = sDAO.insertRtn(map);
 		
 		//반품상세 추가 결과 int에 담기(1:성공 / 0:실패)
 		log.info("=================>>반품상세 등록");
-		int resultRtnDtInsert = sDAO.InsertRtnDt(map);
+		ArrayList<SaleDtVO> sdlist = sDAO.selectOneSaleDt(map);
+		System.out.println(sdlist);
+		map.put("sdlist", sdlist);
+		int resultRtnDtInsert = sDAO.insertRtnDt(map);
 		
 		//재고 수정 결과 int에 담기(1:성공 / 0:실패)
 		log.info("=================>>재고 수정");
-		int resultUpdate = sDAO.updateStock(map);
+		int resultUpdate = sDAO.updateIvco(map);
+		System.out.println(resultUpdate);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
