@@ -150,8 +150,8 @@ $(function(){
 	//custSearchBtn 클릭시 팝업 오픈
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 
-	//custAddBtn 클릭시 팝업 오픈
-	//$.popupOpen($('#custAddBtn'),'850','630','/customer/custAddPop.do','custAddPop');
+	//saleAddBtn 클릭시 팝업 오픈
+	$.popupOpen($('#saleAddBtn'),'850','630','/sale/saleAddPop.do','saleAddPop');
 
 	//resetBtn 클릭시 초기화
 	$.reset($('#resetBtn'),'/sale/saleList.do');
@@ -160,7 +160,7 @@ $(function(){
 //saleDtPopOpen 함수 실행(ajax에서 append된 값)
 function saleDtPopOpen(index) {
 	
-	var option = 'width=900, height=500, top=50, left=50, location=no';
+	var option = 'width=900, height=511, top=50, left=50, location=no';
 	openSaleDtPop = window.open('/sale/saleDtPop.do', 'saleDtPopOpen', option);
 	
 	openSaleDtPop.onload = function(){

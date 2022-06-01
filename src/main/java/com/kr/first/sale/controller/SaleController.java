@@ -87,7 +87,7 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	//판매 상세 조회 팝업창 오픈(팝업)
 	@RequestMapping(value = "/sale/saleDtPop.do")
-	public String selectCustHt() {
+	public String saleDtPop() {
 		
 		log.info("판매 상세 조회 팝업 오픈");
 		return "sale/saleDtPop";
@@ -152,5 +152,13 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 		PrintWriter out = response.getWriter();
 		//map->json
 		new Gson().toJson(resultMap,out);
+	}
+	
+	//판매 등록 팝업창 오픈(팝업)
+	@RequestMapping(value = "//sale/saleAddPop.do")
+	public String saleAddPop() {
+		
+		log.info("판매 등록 팝업 오픈");
+		return "sale/saleAddPop";
 	}
 }

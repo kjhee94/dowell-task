@@ -305,3 +305,10 @@ input[type="date"] {
 	color: #FF5E4D;
 }
 
+/*버튼 비활성화*/
+.btn-disabled {
+	cursor: auto;
+}
+.btn-disabled>span {
+	color: #c8c8c8;
+}

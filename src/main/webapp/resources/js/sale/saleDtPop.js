@@ -37,16 +37,25 @@ $(document).ready(function(){
 								  '<span class="seqNum">'+item.seqNum+'</span>'+
 								  '<span class="prdCd">'+item.prdCd+'</span>'+
 								  '<span class="prdNm">'+item.prdNm+'</span>'+
-								  '<span class="salQty">'+item.salQty+'</span>'+
-								  '<span class="salVosAmt">'+item.salVosAmt+'</span>'+
-								  '<span class="salVatAmt">'+item.salVatAmt+'</span>'+
-								  '<span class="salAmt">'+item.salAmt+'</span>'+
+								  '<span id="salQty'+index+'" class="salQty">'+item.salQty+'</span>'+
+								  '<span id="salVosAmt'+index+'" class="salVosAmt">'+item.salVosAmt+'</span>'+
+								  '<span id="salVatAmt'+index+'" class="salVatAmt">'+item.salVatAmt+'</span>'+
+								  '<span id="salAmt'+index+'" class="salAmt">'+item.salAmt+'</span>'+
 								  '</div>';
 						$resultTag.append(str);
 					});
 					
 					//스크롤바 생성시 table 비율 맞추기
 					$.scrollBerTransform();
+					
+					//합계 영역 보이기
+					$('#sum').css('display','flex');
+					
+					//합계 더하기
+					$.sumvalue(data["list"].length, "#salQty", "#sumSalQty");
+					$.sumvalue(data["list"].length, "#salVosAmt", "#sumSalVosAmt");
+					$.sumvalue(data["list"].length, "#salVatAmt", "#sumSalVatAmt");
+					$.sumvalue(data["list"].length, "#salAmt", "#sumSalAmt");
 					
 				}else {//조회 결과가 0개일 때
 					var str = '<p>상세내역이 없습니다.</p>';

@@ -86,6 +86,13 @@
 			<div id="result" class="result-content">
 				<p>상세내역이 없습니다.</p>
 			</div>
+			<div id="sum" class="result-sum">
+				<span class="total">합계</span>
+				<span id="sumSalQty" class="salQty"></span>
+				<span id="sumSalVosAmt" class="salVosAmt"></span>
+				<span id="sumSalVatAmt" class="salVatAmt"></span>
+				<span id="sumSalAmt" class="salAmt"></span>
+			</div>
 		</div>
 				
 		<div class="box-btn">

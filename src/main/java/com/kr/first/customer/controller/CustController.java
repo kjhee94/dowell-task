@@ -101,7 +101,7 @@ public class CustController {
 	
 	//거래처 팝업창 오픈(팝업)
 	@RequestMapping(value = "/customer/prtPop.do")
-	public String selectPrt() {
+	public String prtPop() {
 		//팝업 오픈
 		log.info("거래처 검색 팝업 오픈");
 		return "customer/prtPop";
@@ -137,7 +137,7 @@ public class CustController {
 	
 	//고객 팝업창 오픈(팝업)
 	@RequestMapping(value = "/customer/custPop.do")
-	public String selectCust() {
+	public String custPop() {
 		//팝업 오픈
 		log.info("고객 검색 팝업 오픈");
 		return "customer/custPop";
@@ -173,7 +173,7 @@ public class CustController {
 	
 	//고객 이력 팝업창 오픈(팝업_post)
 	@RequestMapping(value = "/customer/custHtPop.do")
-	public String selectCustHt() {
+	public String custHtPop() {
 		
 		return "customer/custHtPop";
 	}

@@ -32,7 +32,7 @@
 						<span class="material-icons">restart_alt</span>
 					</button>
 					<c:if test="${sessionScope.user.userDtCd eq '2'}">
-						<button id="custAddBtn" class="btn-add" type="button">판매등록</button>
+						<button id="saleAddBtn" class="btn-add" type="button">판매등록</button>
 					</c:if>
 				</div>
 					
@@ -52,10 +52,10 @@
 									<c:choose>
 										<c:when test="${sessionScope.user.userDtCd eq '2'}">
 											<input id="prtCd" class="style-input" type="text" name="prtCd" value="${sessionScope.user.prtCd}" readonly autocomplete='off'>
-											<button id="prtSearchBtn" class="btn-one-search" type="button">
+											<button class="btn-one-search btn-disabled" type="button">
 												<span class="material-icons">search</span>
 											</button>
-											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" autofocus autocomplete='off'>
+											<input id="prtNm" class="style-input" type="text" name="prtNm" value="${sessionScope.user.prtNm}" readonly autocomplete='off'>
 										</c:when>
 										<c:otherwise>
 											<input id="prtCd" class="style-input" type="text" name="prtCd" readonly autocomplete='off'>
@@ -74,7 +74,14 @@
 									<button id="custSearchBtn" class="btn-one-search" type="button">
 										<span class="material-icons">search</span>
 									</button>
-									<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
+									<c:choose>
+										<c:when test="${sessionScope.user.userDtCd eq '2'}">
+											<input id="custNm" class="style-input" type="text" name="custNm" autofocus autocomplete='off'>
+										</c:when>
+										<c:otherwise>
+											<input id="custNm" class="style-input" type="text" name="custNm" autocomplete='off'>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 						</div>
