@@ -84,7 +84,7 @@ $(function(){
 						});
 						
 						//스크롤바 생성시 table 비율 맞추기
-						$.scrollBerTransform();
+						$.scrollBerTransform('sale');
 						
 						//합계 영역 보이기
 						$('#sum').css('display','flex');
@@ -151,7 +151,7 @@ $(function(){
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 
 	//saleAddBtn 클릭시 팝업 오픈
-	$.popupOpen($('#saleAddBtn'),'850','630','/sale/saleAddPop.do','saleAddPop');
+	$.popupOpen($('#saleAddBtn'),'850','675','/sale/saleAddPop.do','saleAddPop');
 
 	//resetBtn 클릭시 초기화
 	$.reset($('#resetBtn'),'/sale/saleList.do');

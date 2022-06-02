@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+/*재고조회 영역*/
+.checkbox {width: 11%; text-align: center;}
+.prdCd, .prdNm {width: 27%; text-align: center;}
+.ivcoQty, .prdCsmrUpr {width: 17.5%; text-align: right;}

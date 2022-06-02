@@ -28,19 +28,19 @@ $(document).ready(function(){
 				if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
 					if(data["list"].length>0){	//조회 결과가 0개 이상일 때
 						$.each(data["list"], function(index,item){ //list 반복문
-							var str = '<div class="one-content">'+
-									  '<span class="checkbox cb-prt">'+
-									  '<input type="checkbox">'+
+							var str = '<div id="oneContent'+index+'" class="one-content">'+
+									  '<span class="checkbox">'+
+									  '<input id="checkbox'+index+'" type="checkbox">'+
 									  '</span>'+
-									  '<span class="prtCd">'+item.prtCd+'</span>'+
-									  '<span class="prtNm">'+item.prtNm+'</span>'+
+									  '<span id="prtCd'+index+'" class="prtCd">'+item.prtCd+'</span>'+
+									  '<span id="prtNm'+index+'" class="prtNm">'+item.prtNm+'</span>'+
 									  '<span class="prtSsNm">'+item.prtSsNm+'</span>'+
 									  '</div>';
 							$resultTag.append(str);
 						});
 						
 						//팝업 공통 함수 묶어서(체크박스나 Apply 관련)
-						$.allPopSearchFunc('.prtCd','.prtNm','#prtCd','#prtNm');
+						$.allPopSearchFunc(data["list"].length,'#prtCd','#prtNm');
 						
 					}else {//조회 결과가 0개일 때
 						var str = '<p>해당하는 매장이 없습니다.</p>';
@@ -126,12 +126,12 @@ $(document).ready(function(){
 					if(data["list"].length>0){	//조회 결과가 0개 이상일 때
 						$.each(data["list"], function(index,item){ //list 반복문
 							
-							var str = '<div class="one-content one-prt-content">'+
-									  '<span class="checkbox cb-cust">'+
-									  '<input type="checkbox">'+
+							var str = '<div id="oneContent'+index+'" class="one-content">'+
+									  '<span class="checkbox">'+
+									  '<input id="checkbox'+index+'" type="checkbox">'+
 									  '</span>'+
-									  '<span class="custNo">'+item.custNo+'</span>'+
-									  '<span class="custNm">'+item.custNm+'</span>'+
+									  '<span id="custNo'+index+'" class="custNo">'+item.custNo+'</span>'+
+									  '<span id="custNm'+index+'" class="custNm">'+item.custNm+'</span>'+
 									  '<span class="mblNo">'+item.mblNo+'</span>'+
 									  '<span class="custSsNm">'+item.custSsNm+'</span>'+
 									  '</div>';
@@ -139,7 +139,7 @@ $(document).ready(function(){
 						});
 						
 						//팝업 공통 함수 묶어서(체크박스나 Apply 관련)
-						$.allPopSearchFunc('.custNo','.custNm','#custNo','#custNm');
+						$.allPopSearchFunc(data["list"].length,'#custNo','#custNm');
 						
 					}else { //조회 결과가 0개일 때
 						var str = '<p>해당하는 고객이 없습니다.</p>';

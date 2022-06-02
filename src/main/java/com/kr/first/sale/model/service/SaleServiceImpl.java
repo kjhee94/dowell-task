@@ -39,6 +39,24 @@ public class SaleServiceImpl implements SaleService {
 		
 		return resultMap;
 	}
+	
+	//매장 재고 조회 메소드(팝업)
+	@Override
+	public HashMap<String, Object> selectPrd(HashMap<String, Object> map) throws Exception {
+		
+		//매장 재고 조회 list
+		log.info("=================>>매장 재고 조회");
+		ArrayList<SaleDtVO> list = sDAO.selectPrd(map);
+		System.out.println(list);
+		log.info("=================>>매장 재고 조회 성공");
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", list);
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
 
 	//판매 상세 조회 메소드
 	@Override

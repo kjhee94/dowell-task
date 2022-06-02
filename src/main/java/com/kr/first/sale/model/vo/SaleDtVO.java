@@ -12,7 +12,9 @@ public class SaleDtVO {
 	private String salSeq;		//판매일련번호
 	private String prdCd;		//상품코드
 	private String prdNm;		//상품명		-JOIN
+	private String ivcoQty;		//재고수량		-JOIN
 	private String prdCsmrUpr;	//소비자단가
+	private String prdSsCd;		//상품유형코드	-JOIN
 	private String salQty;		//판매수량
 	private String salAmt;		//판매금액
 	private String salVosAmt;	//판매공급가액
@@ -32,9 +34,9 @@ public class SaleDtVO {
 		// TODO Auto-generated constructor stub
 	}
 	public SaleDtVO(String seqNum, String prtCd, String prtNm, String salDt, String salNo, String salSeq, String prdCd,
-			String prdNm, String prdCsmrUpr, String salQty, String salAmt, String salVosAmt, String salVatAmt,
-			Date fstRegDt, String fstRegDtFm, String fstUserId, String fstUserNm, Date lstUpdDt, String lstUpdDtFm,
-			String lstUpdId, String lstUpdNm) {
+			String prdNm, String ivcoQty, String prdCsmrUpr, String prdSsCd, String salQty, String salAmt,
+			String salVosAmt, String salVatAmt, Date fstRegDt, String fstRegDtFm, String fstUserId, String fstUserNm,
+			Date lstUpdDt, String lstUpdDtFm, String lstUpdId, String lstUpdNm) {
 		this.seqNum = seqNum;
 		this.prtCd = prtCd;
 		this.prtNm = prtNm;
@@ -43,7 +45,9 @@ public class SaleDtVO {
 		this.salSeq = salSeq;
 		this.prdCd = prdCd;
 		this.prdNm = prdNm;
+		this.ivcoQty = ivcoQty;
 		this.prdCsmrUpr = prdCsmrUpr;
+		this.prdSsCd = prdSsCd;
 		this.salQty = salQty;
 		this.salAmt = salAmt;
 		this.salVosAmt = salVosAmt;
@@ -108,11 +112,23 @@ public class SaleDtVO {
 	public void setPrdNm(String prdNm) {
 		this.prdNm = prdNm;
 	}
+	public String getIvcoQty() {
+		return ivcoQty;
+	}
+	public void setIvcoQty(String ivcoQty) {
+		this.ivcoQty = ivcoQty;
+	}
 	public String getPrdCsmrUpr() {
 		return prdCsmrUpr;
 	}
 	public void setPrdCsmrUpr(String prdCsmrUpr) {
 		this.prdCsmrUpr = prdCsmrUpr;
+	}
+	public String getPrdSsCd() {
+		return prdSsCd;
+	}
+	public void setPrdSsCd(String prdSsCd) {
+		this.prdSsCd = prdSsCd;
 	}
 	public String getSalQty() {
 		return salQty;
@@ -132,10 +148,10 @@ public class SaleDtVO {
 	public void setSalVosAmt(String salVosAmt) {
 		this.salVosAmt = salVosAmt;
 	}
-	public String getsalVatAmt() {
+	public String getSalVatAmt() {
 		return salVatAmt;
 	}
-	public void setsalVatAmt(String salVatAmt) {
+	public void setSalVatAmt(String salVatAmt) {
 		this.salVatAmt = salVatAmt;
 	}
 	public Date getFstRegDt() {
@@ -187,14 +203,15 @@ public class SaleDtVO {
 		this.lstUpdNm = lstUpdNm;
 	}
 	
+	
 	//toString
 	@Override
 	public String toString() {
 		return "SaleDtVO [seqNum=" + seqNum + ", prtCd=" + prtCd + ", prtNm=" + prtNm + ", salDt=" + salDt + ", salNo="
-				+ salNo + ", salSeq=" + salSeq + ", prdCd=" + prdCd + ", prdNm=" + prdNm + ", prdCsmrUpr=" + prdCsmrUpr
-				+ ", salQty=" + salQty + ", salAmt=" + salAmt + ", salVosAmt=" + salVosAmt + ", salVatAmt=" + salVatAmt
-				+ ", fstRegDt=" + fstRegDt + ", fstRegDtFm=" + fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm="
-				+ fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId
-				+ ", lstUpdNm=" + lstUpdNm + "]";
+				+ salNo + ", salSeq=" + salSeq + ", prdCd=" + prdCd + ", prdNm=" + prdNm + ", ivcoQty=" + ivcoQty
+				+ ", prdCsmrUpr=" + prdCsmrUpr + ", prdSsCd=" + prdSsCd + ", salQty=" + salQty + ", salAmt=" + salAmt
+				+ ", salVosAmt=" + salVosAmt + ", salVatAmt=" + salVatAmt + ", fstRegDt=" + fstRegDt + ", fstRegDtFm="
+				+ fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt=" + lstUpdDt
+				+ ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + ", lstUpdNm=" + lstUpdNm + "]";
 	}
 }

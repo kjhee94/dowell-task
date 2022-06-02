@@ -215,14 +215,24 @@ $(function(){
 	});
 	
 	//스크롤바 생성 변형 함수
-	$.scrollBerTransform = function(){
+	$.scrollBerTransform = function(select){
 		$.fn.hasScrollBar = function() {
 			return (this.prop("scrollHeight") == 0 && this.prop("clientHeight") == 0) || (this.prop("scrollHeight") > this.prop("clientHeight"));
 		};
 		if($('.result-content').hasScrollBar()) { 				//결과값이 많아 tbody에 스크롤바가 생길 경우
-			$('.result-title').css('padding-right','16.5px'); 	//th의 tr에 스크롤바 넓이의 padding 추가  
+			$('.result-title').css('padding-right','16.5px'); 	//th의 tr에 스크롤바 넓이의 padding 추가
+			if(select=='sale'){
+				$('.sum-result').css('padding-right','19.2%');
+			}else if(select='saleDt'){
+				$('.sum-result').css('padding-right','16.5px');
+			}
 		}else {
 			$('.result-title').css('padding-right','0');		//스크롤바가 없는경우 padding 0
+			if(select=='sale'){
+				$('.sum-result').css('padding-right','17.8%');
+			}else if(select='saleDt'){
+				$('.sum-result').css('padding-right','0');
+			}
 		}
 	}
 	
@@ -243,46 +253,70 @@ $(function(){
 	
 	//체크박스 단일선택
 	$.oneCheck = function(){
-		$('.checkbox>input').click(function(){
+		$('input[id^="checkbox"]').click(function(){
 			if($(this).prop('checked')){ 					//체크박스 하나가 선택 됐을 때
-				$('.checkbox>input').prop('checked',false);	//모든 체크박스 선택 해제
+				$('input[id^="checkbox"]').prop('checked',false);	//모든 체크박스 선택 해제
 				$(this).prop('checked',true); 				//선택된 것만 다시 체크
 			};
 		});
 	}
 	
 	//적용 버튼 클릭시 체크박스 값 적용하기
-	$.clickBtnApply = function(classCode,className,idCode,idName){
+	$.clickBtnApply = function(length,data1,data2,data3,data4,select){
 		$('#applyBtn').click(function(){
-			if($('.checkbox>input').is(":checked")){	//체크된 것이 있을 때
-				//보낼값 변수값 지정
-				var code = $('input:checked').parent().parent().find(classCode).text(); //체크된 행에서 classCode 가져오기
-				var name = $('input:checked').parent().parent().find(className).text(); //체크된 행에서 className 가져오기
-
-				window.close();
-				//값 적용하기
-				$(opener.document).find(idCode).val(code);	//부모창 idCode에 삽입
-				$(opener.document).find(idName).val(name);	//부모창 idName에 삽입
+			for(var i=0; i<length; i++){
+				if($('#checkbox'+i).is(":checked")){
+					//보낼값 변수값 지정
+					var val1 = $(data1+i).text(); //체크된 행에서 data1+i 가져오기
+					var val2 = $(data2+i).text(); //체크된 행에서 data2+i 가져오기
+					var val3 = $(data3+i).text(); //체크된 행에서 data3+i 가져오기
+					var val4 = $(data4+i).text(); //체크된 행에서 data4+i 가져오기
+				}
+			}
+			window.close();
+			//값 적용하기
+			$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
+			if(select=='prd'){
+				$(opener.document).find(data2).text(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3).text(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4).text(val4);	//부모창 data4에 삽입
+			}else {
+				$(opener.document).find(data2).val(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3).val(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4).val(val4);	//부모창 data4에 삽입
 			}
 		});
 	}
 	
 	//행 더블클릭시 값 적용하기
-	$.dblclickApply = function(classCode,className,idCode,idName){
-		$('.one-content').dblclick(function(){
-			//보낼값 변수값 지정
-			var code = $(this).find(classCode).text(); 	//클릭한 행에서 classCode 가져오기
-			var name = $(this).find(className).text(); 	//클릭한 행에서 className 가져오기
-				
+	$.dblclickApply = function(length,data1,data2,data3,data4,select){
+		$('[id^="oneContent"]').dblclick(function(){
+			for(var i=0; i<length; i++){
+				if($(this).attr('id')=='oneContent'+i){
+					//보낼값 변수값 지정
+					var val1 = $(data1+i).text(); 	//클릭한 행에서 data1+i 가져오기
+					var val2 = $(data2+i).text(); 	//클릭한 행에서 data2+i 가져오기
+					var val3 = $(data3+i).text(); 	//클릭한 행에서 data3+i 가져오기
+					var val4 = $(data4+i).text(); 	//클릭한 행에서 data4+i 가져오기
+				}
+			}
 			window.close();
 			//값 적용하기
-			$(opener.document).find(idCode).val(code);	//부모창 idCode에 삽입
-			$(opener.document).find(idName).val(name);	//부모창 idName에 삽입	
+			$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
+			if(select=='prd'){
+				$(opener.document).find(data2).text(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3).text(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4).text(val4);	//부모창 data4에 삽입
+			}else {
+				$(opener.document).find(data2).val(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3).val(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4).val(val4);	//부모창 data4에 삽입
+			}
 		});
 	}
 
 	//popup 검색 공통함수
-	$.allPopSearchFunc = function(classCode,className,idCode,idName){
+	$.allPopSearchFunc = function(length,idCode,idName){
 		//스크롤바 생성 변형 함수
 		$.scrollBerTransform();
 		
@@ -290,10 +324,10 @@ $(function(){
 		$.oneCheck();
 		
 		//행 더블클릭시 값 적용하기
-		$.clickBtnApply(classCode,className,idCode,idName)
+		$.clickBtnApply(length,idCode,idName)
 		
 		//행 더블클릭시 값 적용하기
-		$.dblclickApply(classCode,className,idCode,idName)
+		$.dblclickApply(length,idCode,idName)
 	}
 	
 	//체크 없이 적용했을 때

@@ -38,8 +38,8 @@
 							<option selected>전체</option>
 							<option>판매</option>
 							<option disabled>반품</option>
-							<%-- <c:forEach items="${requestScope.map.pList}" var="p" varStatus="status">
-								<option id="salTpCd${status.index}" value="${p.pocCd}">${p.pocNm}</option>
+							<%-- <c:forEach items="${requestScope.map.stList}" var="st" varStatus="status">
+								<option id="salTpCd${status.index}" value="${st.salTpCd}">${st.salTpNm}</option>
 							</c:forEach> --%>
 						</select>
 						<span class="material-icons select-arrow">expand_more</span>
@@ -47,7 +47,7 @@
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>고객번호</span>
-					<div class="box-info">
+					<div class="box-info box-cust">
 						<input id="custNo" class="style-input" type="text" name="custNo" readonly autocomplete='off'>
 						<button id="custSearchBtn" class="btn-one-search" type="button">
 							<span class="material-icons">search</span>
@@ -74,7 +74,7 @@
 				<div class="one-input">
 					<span class="input-title">유효일자</span>
 					<div class="box-input">
-						<input id="vldYM" class="style-input" type="text">
+						<input id="vldYM" class="style-input" type="text" maxlength="6">
 					</div>
 				</div>
 				<div class="one-input">
@@ -84,14 +84,14 @@
 							<option selected disabled>선택</option>
 							<option>국민</option>
 							<option>신한</option>
-							<%-- <c:forEach items="${requestScope.map.pList}" var="p" varStatus="status">
-								<option id="salTpCd${status.index}" value="${p.pocCd}">${p.pocNm}</option>
+							<%-- <c:forEach items="${requestScope.map.ccList}" var="cc" varStatus="status">
+								<option id="crdCoCd${status.index}" value="${cc.crdCoCd}">${cc."crdCoNm"}</option>
 							</c:forEach> --%>
 						</select>
 						<span class="material-icons select-arrow">expand_more</span>
 					</div>
 				</div>
-				<div class="one-input">
+				<div class="one-input box-crdNo">
 					<span class="input-title">카드번호</span>
 					<div class="box-input">
 						<input id="crdNo0" class="style-input" type="text" maxlength="4">
@@ -118,7 +118,7 @@
 				<span class="seqNum">번호</span>
 				<span class="prdCd">상품코드</span>
 				<span class="prdNm">상품명</span>
-				<span class="">매장재고</span>
+				<span class="ivcoQty">매장재고</span>
 				<span class="salQty">판매수량</span>
 				<span class="prdCsmrUpr">소비자가</span>
 				<span class="salAmt">판매금액</span>
@@ -130,25 +130,26 @@
 					</span>
 					<span class="seqNum">1</span>
 					<span class="prdCd">
-						<input id="prdCd" class="style-input" type="text" name="prdCd" readonly autocomplete='off'>
+						<input id="prdCd" class="style-input" type="text" name="prdCd" autocomplete='off'>
 						<button id="prdSearchBtn" class="btn-one-search" type="button">
 							<span class="material-icons">search</span>
 						</button>
 					</span>
-					<span class="prdNm"></span>
-					<span class="">100</span>
+					<span id="prdNm" class="prdNm"></span>
+					<span id="ivcoQty"  class="ivcoQty">0</span>
 					<span class="salQty">
-						<input id="salQty" name="salQty" type="text">
+						<input id="salQty" class="style-input" name="salQty" type="text" value="0">
 					</span>
-					<span class="prdCsmrUpr">100,000</span>
-					<span class="salAmt">200,000</span>
+					<span id="prdCsmrUpr"  class="prdCsmrUpr">0</span>
+					<span id="salAmt"  class="salAmt">0</span>
 				</div>
 			</div>
 			<div id="sum" class="tot-sum">
 				<span class="sum-title">합계</span>
 				<div class="sum-result">
-					<span id="sumSalQty"></span>
-					<span id="sumSalAmt"></span>
+					<span id="sumSalQty">10</span>
+					<span id="sumPrdCsmrUpr">300,000</span>
+					<span id="sumSalAmt">600,000</span>
 				</div>
 			</div>
 		</div>

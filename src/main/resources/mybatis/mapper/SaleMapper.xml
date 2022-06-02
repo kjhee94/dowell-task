@@ -45,6 +45,21 @@
 		ORDER BY 1 DESC, 4 DESC
 	</select>
 	
+	<!-- 매장 재고 조회 쿼리 -->
+	<select id="selectPrd" parameterType="hashmap" resultType="saleDt">
+		SELECT 
+		    P.PRD_CD AS PRDCD,
+		    P.PRD_NM AS PRDNM,
+		    I.IVCO_QTY AS IVCOQTY,
+		    P.PRD_CSMR_UPR AS PRDCSMRUPR,
+		    P.PRD_SS_CD AS PRDSSCD
+		FROM SD_IVCO01_MT I
+		    LEFT JOIN MA_PRD01_MT P ON (I.PRD_CD=P.PRD_CD)
+		WHERE P.PRD_TP_CD='10'
+		    AND PRT_CD=#{prtCd}
+		    AND (P.PRD_CD LIKE '%'||#{keyword}||'%' OR P.PRD_NM LIKE '%'||#{keyword}||'%')
+	</select>
+		
 	<!-- 판매 상세 조회 쿼리 -->
 	<select id="selectSaleDt" parameterType="hashmap" resultType="saleDt">
 		SELECT 

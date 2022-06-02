@@ -23,6 +23,11 @@ public class SaleDAO {
 	public ArrayList<SaleVO> selectSearchSale(HashMap<String, Object> map) throws Exception {
 		return new ArrayList<SaleVO>(sqlSession.selectList("sale.selectSearchSale",map));
 	}
+	
+	//매장 재고 조회 메소드(팝업)
+	public ArrayList<SaleDtVO> selectPrd(HashMap<String, Object> map) {
+		return new ArrayList<SaleDtVO>(sqlSession.selectList("sale.selectPrd",map));
+	}
 
 	//판매 상세 조회 메소드
 	public ArrayList<SaleDtVO> selectSaleDt(HashMap<String, Object> map) throws Exception {
@@ -53,6 +58,8 @@ public class SaleDAO {
 	public int updateIvco(HashMap<String, Object> map) {
 		return sqlSession.update("sale.updateIvco",map);
 	}
+
+	
 
 	
 
