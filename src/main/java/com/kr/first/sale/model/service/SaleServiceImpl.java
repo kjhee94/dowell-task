@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kr.first.customer.model.vo.CustVO;
 import com.kr.first.sale.model.dao.SaleDAO;
 import com.kr.first.sale.model.vo.SaleDtVO;
 import com.kr.first.sale.model.vo.SaleVO;
@@ -38,6 +39,33 @@ public class SaleServiceImpl implements SaleService {
 		resultMap.put("result",true);
 		
 		return resultMap;
+	}
+	
+	//판매 등록 팝업 세부코드명 조회 메소드(팝업)
+	@Override
+	public HashMap<String, Object> saleAddPop() throws Exception {
+		
+		log.info("=================>>세부코드명 조회");
+		//판매구분명 조회 list
+		ArrayList<SaleVO> stList = sDAO.selectSalTp();
+		
+		//카드회사명 조회 list
+		ArrayList<SaleVO> ccList = sDAO.selectCrdCo();
+		log.info("=================>>세부코드명 조회 성공");
+		
+		//가입날짜 조회 default값
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//오늘날짜
+		String today = sdf.format(c.getTime());
+		
+		//map에 삽입
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("stList", stList);
+		map.put("ccList", ccList);
+		map.put("salDt", today);
+		
+		return map;
 	}
 	
 	//매장 재고 조회 메소드(팝업)

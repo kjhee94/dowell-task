@@ -2,8 +2,7 @@
  * 
  */
 $(document).ready(function(){
-	//검색버튼 클릭시 검색
-	$('#prdSearchBtn').click(function(){
+	$.selectPrd = function(){
 		var prtCd = $('#prtCd').val(); 				//사용자가 검색한 값 공백 제거
 		var keyword = $('#keyword').val().trim();	//사용자가 검색한 값 공백 제거
 		var data = {"prtCd" : prtCd, "keyword" : keyword};
@@ -50,8 +49,9 @@ $(document).ready(function(){
 						//체크박스 단일선택
 						$.oneCheck();
 						
-						//행 더블클릭시 값 적용하기
-						$.clickBtnApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd')
+						//적용 버튼 클릭시 체크박스 값 적용하기
+						var index = $('#index').val();
+						$.clickBtnApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd', index);
 						
 						//체크박스 비활성화
 						for(var i=0; i<data["list"].length; i++){
@@ -95,7 +95,17 @@ $(document).ready(function(){
 				$resultTag.append(str);
 			}
 		});
+	}
+	
+	//검색버튼 클릭시 검색
+	$('#prdSearchBtn').click(function(){
+		$.selectPrd();
 	});
+	
+	//부모창에서 값이 바로 넘어왔을때
+	if($('#keyword').val()!=null && $('#keyword').val().length!=0){
+		$.selectPrd();
+	}
 	
 	//키보드 Enter 이벤트(Enter시 바로 검색)
 	$.keydownEnter($('#keyword'),$('#prdSearchBtn'));

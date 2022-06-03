@@ -82,129 +82,129 @@ $(function(){
 	
 	//매장 직접입력
 	$.prtKeydownSearch = function(){
-		$('#prtNm').keydown(function(keyNum){ 
-			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
-				var keyword = $('#prtNm').val().trim();
-				var data = {"keyword" : keyword};
-				
-				if(keyword.length==0){
-					$('#prtCd').val('');
-					return false;
-				}else {
-					$.ajax({
-						url : "/customer/selectPrt.do",
-						type : "post",
-						async: true,
-						data: data,
-						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-						dataType: "json",
-						success : function(data) {
-							//연결성공
-							if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
-								if(data["list"].length==1){	//조회 결과가 1개일 때
-									$.each(data["list"], function(index,item){
-										$('#prtCd').val(item.prtCd);
-										$('#prtNm').val(item.prtNm);
-									});
-								}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
-									//팝업창 오픈
-									var openPrtPop;
-									
-									var option = 'width=450, height=500, top=50, left=50, location=no';
-						            openPrtPop = window.open('/customer/prtPop.do', 'prtPopOpen', option);		
-						
-									openPrtPop.onload = function(){
-										openPrtPop.document.getElementById("keyword").value = $('#prtNm').val();
-										openPrtPop.document.getElementById("prtSearchBtn").click();
-									}
-						
-								}else {//조회 결과가 0개일 때
-									alert('조회 결과가 없습니다.');
+		$('#prtNm').change(function(){ 
+			var keyword = $('#prtNm').val().trim();
+			var data = {"keyword" : keyword};
+			
+			if(keyword.length==0){
+				$('#prtCd').val('');
+				return false;
+			}else {
+				$.ajax({
+					url : "/customer/selectPrt.do",
+					type : "post",
+					async: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					dataType: "json",
+					success : function(data) {
+						//연결성공
+						if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+							if(data["list"].length==1){	//조회 결과가 1개일 때
+								$.each(data["list"], function(index,item){
+									$('#prtCd').val(item.prtCd);
+									$('#prtNm').val(item.prtNm);
+								});
+							}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
+								//팝업창 오픈
+								var option = 'width=450, height=500, top=50, left=50, location=no';
+					            var openPrtPop = window.open('/customer/prtPop.do', 'prtPopOpen', option);		
+					
+								openPrtPop.onload = function(){
+									openPrtPop.document.getElementById("keyword").value = $('#prtNm').val();
+									openPrtPop.document.getElementById("prtSearchBtn").click();
+								
+									//부모값 비우기
 									$('#prtCd').val('');
 									$('#prtNm').val('');
-									return false;
 								}
-							}else { //비즈니스 로직중 에러가 났을 경우(catch)
-								//alert에 에러표시
-								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
+					
+							}else {//조회 결과가 0개일 때
+								alert('조회 결과가 없습니다.');
+								$('#prtCd').val('');
+								$('#prtNm').val('');
+								return false;
 							}
-						},
-						error : function(request,status,error) {
-							//연결실패
+						}else { //비즈니스 로직중 에러가 났을 경우(catch)
 							//alert에 에러표시
-							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
-							//console에 에러표시
-							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
 						}
-					});
-				}
-			};
+					},
+					error : function(request,status,error) {
+						//연결실패
+						//alert에 에러표시
+						alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+						//console에 에러표시
+						//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
 		});
 	}
 	
 	//고객이름 직접입력
 	$.custKeydownSearch = function(){
-		$('#custNm').keydown(function(keyNum){ 
-			if(keyNum.keyCode == 13){ 						//값변경 후 enter(keyCode : 13)
-				var custNm = $('#custNm').val().trim();
-				var mblNo = '';
-				var data = {"custNm" : custNm, "mblNo" : mblNo};
-				
-				if(custNm.length==0){
-					$('#custNo').val('');
-					return false;
-				}else if(custNm.length==1){
-					alert('고객이름 2자 이상 검색이 가능합니다.');
-					return false;
-				}else {
-					$.ajax({
-						url : "/customer/selectCust.do",
-						type : "post",
-						async: true,
-						data: data,
-						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-						dataType: "json",
-						success : function(data) {
-							//연결성공
-							if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
-								if(data["list"].length==1){	//조회 결과가 1개일 때
-									$.each(data["list"], function(index,item){
-										$('#custNo').val(item.custNo);
-										$('#custNm').val(item.custNm);
-									});
-								}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
-									//팝업창 오픈
-									var openCustPop;
+		$('#custNm').change(function(){ 
+			var custNm = $('#custNm').val().trim();
+			var mblNo = '';
+			var data = {"custNm" : custNm, "mblNo" : mblNo};
+			
+			if(custNm.length==0){
+				$('#custNo').val('');
+				return false;
+			}else if(custNm.length==1){
+				alert('고객이름 2자 이상 검색이 가능합니다.');
+				return false;
+			}else {
+				$.ajax({
+					url : "/customer/selectCust.do",
+					type : "post",
+					async: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					dataType: "json",
+					success : function(data) {
+						//연결성공
+						if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
+							if(data["list"].length==1){	//조회 결과가 1개일 때
+								$.each(data["list"], function(index,item){
+									$('#custNo').val(item.custNo);
+									$('#custNm').val(item.custNm);
+								});
+							}else if(data["list"].length>1){ //조회 결과가 1개 이상일 때
+								//팝업창 오픈
+								var option = 'width=650, height=500, top=50, left=50, location=no';
+					            var openCustPop = window.open('/customer/custPop.do', 'custPopOpen', option);
+					
+								openCustPop.onload = function(){
+									openCustPop.document.getElementById("custNm").value = $('#custNm').val();
+									openCustPop.document.getElementById("custSearchBtn").click();
 									
-									var option = 'width=650, height=500, top=50, left=50, location=no';
-						            openCustPop = window.open('/customer/custPop.do', 'custPopOpen', option);
-						
-									openCustPop.onload = function(){
-										openCustPop.document.getElementById("custNm").value = $('#custNm').val();
-										openCustPop.document.getElementById("custSearchBtn").click();
-									}
-						
-								}else {//조회 결과가 0개일 때
-									alert('조회 결과가 없습니다.');
+									//부모값 비우기
 									$('#custNo').val('');
 									$('#custNm').val('');
-									return false;
 								}
-							}else { //비즈니스 로직중 에러가 났을 경우(catch)
-								//alert에 에러표시
-								alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
+					
+							}else {//조회 결과가 0개일 때
+								alert('조회 결과가 없습니다.');
+								$('#custNo').val('');
+								$('#custNm').val('');
+								return false;
 							}
-						},
-						error : function(request,status,error) {
-							//연결실패
+						}else { //비즈니스 로직중 에러가 났을 경우(catch)
 							//alert에 에러표시
-							alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
-							//console에 에러표시
-							//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")")
 						}
-					});
-				}
-			};
+					},
+					error : function(request,status,error) {
+						//연결실패
+						//alert에 에러표시
+						alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+						//console에 에러표시
+						//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
 		});
 	}
 	
@@ -262,8 +262,14 @@ $(function(){
 	}
 	
 	//적용 버튼 클릭시 체크박스 값 적용하기
-	$.clickBtnApply = function(length,data1,data2,data3,data4,select){
+	$.clickBtnApply = function(length,data1,data2,data3,data4,select,index){
 		$('#applyBtn').click(function(){
+			//체크 없이 적용했을 때
+			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
+				alert('체크박스를 선택해 주세요.');
+				return false;
+			}
+			
 			for(var i=0; i<length; i++){
 				if($('#checkbox'+i).is(":checked")){
 					//보낼값 변수값 지정
@@ -275,12 +281,13 @@ $(function(){
 			}
 			window.close();
 			//값 적용하기
-			$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
 			if(select=='prd'){
-				$(opener.document).find(data2).text(val2);	//부모창 data2에 삽입
-				$(opener.document).find(data3).text(val3);	//부모창 data3에 삽입
-				$(opener.document).find(data4).text(val4);	//부모창 data4에 삽입
+				$(opener.document).find(data1+index).val(val1);		//부모창 data1에 삽입
+				$(opener.document).find(data2+index).text(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3+index).text(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4+index).text(val4);	//부모창 data4에 삽입
 			}else {
+				$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
 				$(opener.document).find(data2).val(val2);	//부모창 data2에 삽입
 				$(opener.document).find(data3).val(val3);	//부모창 data3에 삽입
 				$(opener.document).find(data4).val(val4);	//부모창 data4에 삽입
@@ -328,16 +335,6 @@ $(function(){
 		
 		//행 더블클릭시 값 적용하기
 		$.dblclickApply(length,idCode,idName)
-	}
-	
-	//체크 없이 적용했을 때
-	$.nonCheckApply = function(){
-		$('#applyBtn').click(function(){
-			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
-				alert('체크박스를 선택해 주세요.');
-				return false;
-			}
-		});
 	}
 	
 	//키보드 Enter 이벤트
@@ -810,24 +807,45 @@ $(function(){
 	}
 	
 	//고객판매 합계 구하기
-	$.sumvalue = function(length, elem, sumElem){
+	$.sumvalue = function(length, elem, sumElem, select1, select2){
 		
 		var num = 0;
 		var sum = 0;
 		
 		for(var i=0; i<length; i++){
 			
-			num = $(elem+i).text().replace(/\,/g,"");
-			
-			if($('#salTpCd'+i).val()=='RTN'){
-				//console.log(sum+'-'+num);
-				sum -= Number(num);
+			if(select2=='val'){
+				num = $(elem+i).val().replace(/\,/g,"");
 			}else {
-				//console.log(sum+'+'+num);
-				sum += Number(num);
+				num = $(elem+i).text().replace(/\,/g,"");
 			}
-			//console.log(sum);
+			
+			if(select1=='ADD'){
+				console.log(sum+'+'+num);
+				sum += Number(num);
+			}else {
+				if($('#salTpCd'+i).val()=='RTN'){
+					console.log(sum+'-'+num);
+					sum -= Number(num);
+				}else {
+					console.log(sum+'+'+num);
+					sum += Number(num);
+				}
+			}
+			console.log(sum);
 		}
 		$(sumElem).text(sum.toLocaleString());
+	}
+	
+	//상품코드 리셋
+	$.prdCdReset = function(msg,index){
+		if(msg!='none'){
+			alert(msg);
+		}
+		$('#prdCd'+index).val('');
+		$('#prdNm'+index).text('');
+		$('#ivcoQty'+index).text('0');
+		$('#prdCsmrUpr'+index).text('0');
+		$('#prdCd'+index).focus();
 	}
 });

@@ -33,6 +33,7 @@
 					<span class="search-title">상품(코드+명)</span>
 					<input id="keyword" class="style-input" type="text" name="keyword" autofocus autocomplete='off'>
 				</div>
+				<input id="index" type="hidden">
 			</div>
 			<div class="area-btn">
 				<button id="prdSearchBtn" class="btn-search" type="button">

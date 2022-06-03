@@ -57,7 +57,7 @@ public class CustController {
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
-			log.info("=================>>상태코드명 조회 실패");
+			log.info("=================>>세부코드명 조회 실패");
 			log.error("error : ", e);
 			
 			response.setContentType("text/html; charset=UTF-8");
@@ -220,7 +220,7 @@ public class CustController {
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
-			log.info("=================>>상태코드명 조회 실패");
+			log.info("=================>>세부코드명 조회 실패");
 			log.error("error : ", e);
 			
 			response.setContentType("text/html; charset=UTF-8");
@@ -315,7 +315,7 @@ public class CustController {
 		} catch (Exception e) { //Exception 발생시 처리
 			//Exception 로그
 			//e.printStackTrace();
-			log.info("=================>>상태코드명 조회 실패");
+			log.info("=================>>세부코드명 조회 실패");
 			log.error("error : ", e);
 			
 			//ModelAndView에 담아 return

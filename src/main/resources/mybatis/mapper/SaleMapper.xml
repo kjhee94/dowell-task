@@ -45,13 +45,38 @@
 		ORDER BY 1 DESC, 4 DESC
 	</select>
 	
+	<!-- 고객상태 조회 쿼리 -->
+	<select id="selectCustSs" resultType="cust">
+		SELECT DTL_CD AS CUSTSSCD, 		--세부코드
+			   DTL_CD_NM AS CUSTSSNM	--세부코드명
+		FROM MA_CODE_DT 				--코드상세 테이블
+		WHERE CODE_CD='CUST_SS_CD'		--공통코드가 'CUST_SS_CD'인 것만 조회
+	</select>
+	
+	<!-- 판매구분 조회 쿼리 -->
+	<select id="selectSalTp" resultType="sale">
+		SELECT DTL_CD AS SALTPCD, 	--세부코드
+			   DTL_CD_NM AS SALTPNM	--세부코드명
+		FROM MA_CODE_DT 			--코드상세 테이블
+		WHERE CODE_CD='SAL_TP_CD'	--공통코드가 'SAL_TP_CD'인 것만 조회
+		ORDER BY 1 DESC
+	</select>
+	
+	<!-- 카드회사 조회 쿼리 -->
+	<select id="selectCrdCo" resultType="sale">
+		SELECT DTL_CD AS CRDCOCD, 	--세부코드
+			   DTL_CD_NM AS CRDCONM	--세부코드명
+		FROM MA_CODE_DT 			--코드상세 테이블
+		WHERE CODE_CD='CRD_CO_CD'	--공통코드가 'CRD_CO_CD'인 것만 조회
+	</select>
+	
 	<!-- 매장 재고 조회 쿼리 -->
 	<select id="selectPrd" parameterType="hashmap" resultType="saleDt">
 		SELECT 
 		    P.PRD_CD AS PRDCD,
 		    P.PRD_NM AS PRDNM,
 		    I.IVCO_QTY AS IVCOQTY,
-		    P.PRD_CSMR_UPR AS PRDCSMRUPR,
+		    TO_CHAR(P.PRD_CSMR_UPR,'FM999,999,999') AS PRDCSMRUPR,
 		    P.PRD_SS_CD AS PRDSSCD
 		FROM SD_IVCO01_MT I
 		    LEFT JOIN MA_PRD01_MT P ON (I.PRD_CD=P.PRD_CD)

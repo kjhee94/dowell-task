@@ -86,11 +86,33 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	//판매 등록 팝업창 오픈(팝업)
-	@RequestMapping(value = "//sale/saleAddPop.do")
-	public String saleAddPop() {
+	@RequestMapping(value = "/sale/saleAddPop.do")
+	public ModelAndView saleAddPop(HttpServletResponse response, ModelAndView mav) throws IOException {
 		
 		log.info("판매 등록 팝업 오픈");
-		return "sale/saleAddPop";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			map = sService.saleAddPop();
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>세부코드명 조회 실패");
+			log.error("error : ", e);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>alert('오류가 발생했습니다. 관리자에게 문의해주세요.');</script>");
+			out.flush();
+		} 
+		
+		//ModelAndView에 담아 return
+		mav.addObject("map", map);
+		mav.setViewName("sale/saleAddPop");
+		
+		return mav;
 	}
 	
 	//매장 재고 조회 팝업창 오픈(팝업)

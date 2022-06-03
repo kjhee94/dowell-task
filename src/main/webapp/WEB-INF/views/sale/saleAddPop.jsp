@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,19 +29,16 @@
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>판매일자</span>
 					<div class="box-info">
-						<input id="salDt" type="date" name="salDt" value="${requestScope.map.salDtFrom}" readonly>
+						<input id="salDt" type="date" name="salDt" value="${requestScope.map.salDt}" readonly>
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>판매구분</span>
 					<div class="box-info">
 						<select id="salTpCd" name="salTpCd" class="style-input">
-							<option selected>전체</option>
-							<option>판매</option>
-							<option disabled>반품</option>
-							<%-- <c:forEach items="${requestScope.map.stList}" var="st" varStatus="status">
+							<c:forEach items="${requestScope.map.stList}" var="st" varStatus="status">
 								<option id="salTpCd${status.index}" value="${st.salTpCd}">${st.salTpNm}</option>
-							</c:forEach> --%>
+							</c:forEach>
 						</select>
 						<span class="material-icons select-arrow">expand_more</span>
 					</div>
@@ -82,11 +80,9 @@
 					<div class="box-input">
 						<select id="crdCoCd" name="crdCoCd" class="style-input">
 							<option selected disabled>선택</option>
-							<option>국민</option>
-							<option>신한</option>
-							<%-- <c:forEach items="${requestScope.map.ccList}" var="cc" varStatus="status">
-								<option id="crdCoCd${status.index}" value="${cc.crdCoCd}">${cc."crdCoNm"}</option>
-							</c:forEach> --%>
+							<c:forEach items="${requestScope.map.ccList}" var="cc" varStatus="status">
+								<option id="crdCoCd${status.index}" value="${cc.crdCoCd}">${cc.crdCoNm}</option>
+							</c:forEach>
 						</select>
 						<span class="material-icons select-arrow">expand_more</span>
 					</div>
@@ -105,6 +101,7 @@
 		</form>
 					
 		<div class="box-result">
+			<input id="prtCd" type="hidden" name="prtCd" value="${sessionScope.user.prtCd}">
 			<div class="btn-add">
 				<button id="prdAddBtn" class="btn-icon" type="button">
 					<span class="material-icons">add</span>
@@ -124,32 +121,31 @@
 				<span class="salAmt">판매금액</span>
 			</div>
 			<div id="result" class="result-content">
-				<div class="one-content">
+				<div id="oneContent0" class="one-content">
 					<span class="checkbox">
-						<input type="checkbox">
+						<input id="checkbox0" type="checkbox">
 					</span>
 					<span class="seqNum">1</span>
 					<span class="prdCd">
-						<input id="prdCd" class="style-input" type="text" name="prdCd" autocomplete='off'>
-						<button id="prdSearchBtn" class="btn-one-search" type="button">
+						<input id="prdCd0" onchange="prdCdAuto(this)" class="style-input" type="text" name="prdCd" autocomplete='off'>
+						<button id="prdSearchBtn0" onclick="prdPopOpen(this)" class="btn-one-search" type="button">
 							<span class="material-icons">search</span>
 						</button>
 					</span>
-					<span id="prdNm" class="prdNm"></span>
-					<span id="ivcoQty"  class="ivcoQty">0</span>
+					<span id="prdNm0" class="prdNm"></span>
+					<span id="ivcoQty0" class="ivcoQty">0</span>
 					<span class="salQty">
-						<input id="salQty" class="style-input" name="salQty" type="text" value="0">
+						<input id="salQty0" onchange="salAmtAuto(this)" class="style-input" name="salQty" type="text" value="0">
 					</span>
-					<span id="prdCsmrUpr"  class="prdCsmrUpr">0</span>
-					<span id="salAmt"  class="salAmt">0</span>
+					<span id="prdCsmrUpr0" class="prdCsmrUpr">0</span>
+					<span id="salAmt0" class="salAmt">0</span>
 				</div>
 			</div>
 			<div id="sum" class="tot-sum">
 				<span class="sum-title">합계</span>
 				<div class="sum-result">
-					<span id="sumSalQty">10</span>
-					<span id="sumPrdCsmrUpr">300,000</span>
-					<span id="sumSalAmt">600,000</span>
+					<span id="sumSalQty">0</span>
+					<span id="sumSalAmt">0</span>
 				</div>
 			</div>
 		</div>

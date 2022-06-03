@@ -174,6 +174,14 @@ $(function(){
 	
 	//업데이트 버튼 클릭시
 	$('#updateBtn').click(function(){
+		
+		//고객번호가 없을 때
+		if($('#custNo').val().length==0){
+			alert("고객번호를 입력해주세요.");
+			$('#custNm').focus();
+			return false;
+		}
+		
 		if($.checkAll("update")){ 	//유효성 검사가 참이면
 			//보낼 value값 정리
 			var aftCustSsCd = $('input[id^="custSsCd"]:checked').val();

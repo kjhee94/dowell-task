@@ -41,7 +41,7 @@ $(document).ready(function(){
 						
 						//팝업 공통 함수 묶어서(체크박스나 Apply 관련)
 						$.allPopSearchFunc(data["list"].length,'#prtCd','#prtNm');
-						
+					
 					}else {//조회 결과가 0개일 때
 						var str = '<p>해당하는 매장이 없습니다.</p>';
 						$resultTag.append(str);
@@ -80,9 +80,6 @@ $(document).ready(function(){
 	if($('#keyword').val()!=null && $('#keyword').val().length!=0){
 		$.selectPrt();
 	}
-	
-	//체크 없이 적용했을 때
-	$.nonCheckApply();
 	
 	//키보드 Enter 이벤트
 	$.keydownEnter($('#keyword'),$('#prtSearchBtn'));

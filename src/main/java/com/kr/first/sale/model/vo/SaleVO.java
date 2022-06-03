@@ -9,6 +9,7 @@ public class SaleVO {
 	private String salDt;		//판매일자
 	private String salNo;		//판매번호
 	private String salTpCd;		//판매구분코드	- SAL: 판매, RTN : 반품
+	private String salTpNm;		//판매구분명	- JOIN
 	private String totSalQty;	//총판매수량
 	private String totSalAmt;	//총판매금액
 	private String totVosAmt;	//총공급가액
@@ -21,6 +22,7 @@ public class SaleVO {
 	private String crdNo;		//카드번호
 	private String vldYM;		//유효년월
 	private String crdCoCd;		//카드회사		- 01 : BC, 02: 현대, 03: 삼성, 04 : 신한
+	private String crdCoNm;		//카드회사명	- JOIN
 	private Date fstRegDt;		//최초등록일자
 	private String fstRegDtFm;	//최초등록일자
 	private String fstUserId;	//최초등록자
@@ -33,15 +35,17 @@ public class SaleVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public SaleVO(String prtCd, String prtNm, String salDt, String salNo, String salTpCd, String totSalQty,
-			String totSalAmt, String totVosAmt, String totVatAmt, String cshStlmAmt, String crdStlmAmt,
-			String pntStlmAmt, String custNo, String custNm, String crdNo, String vldYM, String crdCoCd, Date fstRegDt,
-			String fstRegDtFm, String fstUserId, String fstUserNm, Date lstUpdDt, String lstUpdId) {
+	public SaleVO(String prtCd, String prtNm, String salDt, String salNo, String salTpCd, String salTpNm,
+			String totSalQty, String totSalAmt, String totVosAmt, String totVatAmt, String cshStlmAmt,
+			String crdStlmAmt, String pntStlmAmt, String custNo, String custNm, String crdNo, String vldYM,
+			String crdCoCd, String crdCoNm, Date fstRegDt, String fstRegDtFm, String fstUserId, String fstUserNm,
+			Date lstUpdDt, String lstUpdId) {
 		this.prtCd = prtCd;
 		this.prtNm = prtNm;
 		this.salDt = salDt;
 		this.salNo = salNo;
 		this.salTpCd = salTpCd;
+		this.salTpNm = salTpNm;
 		this.totSalQty = totSalQty;
 		this.totSalAmt = totSalAmt;
 		this.totVosAmt = totVosAmt;
@@ -54,6 +58,7 @@ public class SaleVO {
 		this.crdNo = crdNo;
 		this.vldYM = vldYM;
 		this.crdCoCd = crdCoCd;
+		this.crdCoNm = crdCoNm;
 		this.fstRegDt = fstRegDt;
 		this.fstRegDtFm = fstRegDtFm;
 		this.fstUserId = fstUserId;
@@ -61,6 +66,7 @@ public class SaleVO {
 		this.lstUpdDt = lstUpdDt;
 		this.lstUpdId = lstUpdId;
 	}
+
 
 	//getter setter
 	public String getPrtCd() {
@@ -92,6 +98,12 @@ public class SaleVO {
 	}
 	public void setSalTpCd(String salTpCd) {
 		this.salTpCd = salTpCd;
+	}
+	public String getSalTpNm() {
+		return salTpNm;
+	}
+	public void setSalTpNm(String salTpNm) {
+		this.salTpNm = salTpNm;
 	}
 	public String getTotSalQty() {
 		return totSalQty;
@@ -165,6 +177,12 @@ public class SaleVO {
 	public void setCrdCoCd(String crdCoCd) {
 		this.crdCoCd = crdCoCd;
 	}
+	public String getCrdCoNm() {
+		return crdCoNm;
+	}
+	public void setCrdCoNm(String crdCoNm) {
+		this.crdCoNm = crdCoNm;
+	}
 	public Date getFstRegDt() {
 		return fstRegDt;
 	}
@@ -202,15 +220,16 @@ public class SaleVO {
 		this.lstUpdId = lstUpdId;
 	}
 	
+	
 	//toString
 	@Override
 	public String toString() {
 		return "SaleVO [prtCd=" + prtCd + ", prtNm=" + prtNm + ", salDt=" + salDt + ", salNo=" + salNo + ", salTpCd="
-				+ salTpCd + ", totSalQty=" + totSalQty + ", totSalAmt=" + totSalAmt + ", totVosAmt=" + totVosAmt
-				+ ", totVatAmt=" + totVatAmt + ", cshStlmAmt=" + cshStlmAmt + ", crdStlmAmt=" + crdStlmAmt
-				+ ", pntStlmAmt=" + pntStlmAmt + ", custNo=" + custNo + ", custNm=" + custNm + ", crdNo=" + crdNo
-				+ ", vldYM=" + vldYM + ", crdCoCd=" + crdCoCd + ", fstRegDt=" + fstRegDt + ", fstRegDtFm=" + fstRegDtFm
-				+ ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdId="
-				+ lstUpdId + "]";
+				+ salTpCd + ", salTpNm=" + salTpNm + ", totSalQty=" + totSalQty + ", totSalAmt=" + totSalAmt
+				+ ", totVosAmt=" + totVosAmt + ", totVatAmt=" + totVatAmt + ", cshStlmAmt=" + cshStlmAmt
+				+ ", crdStlmAmt=" + crdStlmAmt + ", pntStlmAmt=" + pntStlmAmt + ", custNo=" + custNo + ", custNm="
+				+ custNm + ", crdNo=" + crdNo + ", vldYM=" + vldYM + ", crdCoCd=" + crdCoCd + ", crdCoNm=" + crdCoNm
+				+ ", fstRegDt=" + fstRegDt + ", fstRegDtFm=" + fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm="
+				+ fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + "]";
 	}
 }

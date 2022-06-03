@@ -134,11 +134,10 @@ $(function(){
 
 //custHtPopOpen 함수 실행(ajax에서 append된 값)
 function custHtPopOpen(index) {
-	
 	var custNo = $("#custNo"+index).text();
 	
 	var option = 'width=1000, height=500, top=50, left=50, location=no';
-	openCustHtPop = window.open('/customer/custHtPop.do', 'custHtPopOpen', option);
+	var openCustHtPop = window.open('/customer/custHtPop.do', 'custHtPopOpen', option);
 	
 	openCustHtPop.onload = function(){
 		openCustHtPop.document.getElementById("custNo").value = $("#custNo"+index).text();

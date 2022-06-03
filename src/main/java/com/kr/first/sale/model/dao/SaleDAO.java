@@ -24,6 +24,16 @@ public class SaleDAO {
 		return new ArrayList<SaleVO>(sqlSession.selectList("sale.selectSearchSale",map));
 	}
 	
+	//판매구분명 조회
+	public ArrayList<SaleVO> selectSalTp() {
+		return new ArrayList<SaleVO>(sqlSession.selectList("sale.selectSalTp"));
+	}
+
+	//카드회사명 조회
+	public ArrayList<SaleVO> selectCrdCo() {
+		return new ArrayList<SaleVO>(sqlSession.selectList("sale.selectCrdCo"));
+	}
+	
 	//매장 재고 조회 메소드(팝업)
 	public ArrayList<SaleDtVO> selectPrd(HashMap<String, Object> map) {
 		return new ArrayList<SaleDtVO>(sqlSession.selectList("sale.selectPrd",map));
@@ -58,9 +68,4 @@ public class SaleDAO {
 	public int updateIvco(HashMap<String, Object> map) {
 		return sqlSession.update("sale.updateIvco",map);
 	}
-
-	
-
-	
-
 }

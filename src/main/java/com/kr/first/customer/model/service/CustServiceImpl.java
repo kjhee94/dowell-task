@@ -33,9 +33,9 @@ public class CustServiceImpl implements CustService {
 	public HashMap<String, Object> custList() throws Exception {
 
 		//고객상태 조회 list(라디오버튼 생성)
-		log.info("=================>>고객상태 조회");
+		log.info("=================>>세부코드명 조회");
 		ArrayList<CustVO> list = cDAO.selectCustSs();
-		log.info("=================>>고객상태 조회 성공");
+		log.info("=================>>세부코드명 조회 성공");
 		
 		//가입날짜 조회 default값
 		Calendar c = Calendar.getInstance();
@@ -135,7 +135,7 @@ public class CustServiceImpl implements CustService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//고객등록시 필요한 상태코드명 조회
-		log.info("=================>>고객등록 상태코드명 조회");
+		log.info("=================>>고객등록 세부코드명 조회");
 		//직업코드 조회 list(select-option 생성)
 		ArrayList<CustVO> pList = cDAO.selectPoc();
 		
@@ -144,7 +144,7 @@ public class CustServiceImpl implements CustService {
 		
 		//우편물수령 조회 list(라디오버튼 생성)
 		ArrayList<CustVO> gList = cDAO.selectPsmtGrc();
-		log.info("=================>>고객등록 상태코드명 조회 성공");
+		log.info("=================>>고객등록 세부코드명 조회 성공");
 		
 		//map에 삽입
 		map.put("pList", pList);
@@ -206,7 +206,7 @@ public class CustServiceImpl implements CustService {
 	public HashMap<String, Object> custInfo(String custNo) throws Exception {
 		
 		//고객 정보 조회시 필요한 상태코드명 조회
-		log.info("=================>>고객정보조회 상태코드명 조회");
+		log.info("=================>>고객정보조회 세부코드명 조회");
 		//성별 조회 list(라디오버튼 생성)
 		ArrayList<CustVO> sList = cDAO.selectSex();
 		
@@ -218,7 +218,7 @@ public class CustServiceImpl implements CustService {
 		
 		//고객상태 조회 list(라디오버튼 생성)
 		ArrayList<CustVO> cList = cDAO.selectCustSs();
-		log.info("=================>>고객정보조회 상태코드명 조회 성공");
+		log.info("=================>>고객정보조회 세부코드명 조회 성공");
 		
 		//map에 삽입
 		HashMap<String, Object> map = new HashMap<String, Object>();

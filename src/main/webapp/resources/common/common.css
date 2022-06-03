@@ -111,6 +111,10 @@ select {
 select::-ms-expand{
    display:none;/*for IE10,11*/
 }
+option[disabled]{
+	background-color: #c8c8c8;
+	color: #fff;
+}
 
 /*상단 타이틀 영역 공통*/
 .box-title {
