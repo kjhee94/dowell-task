@@ -26,10 +26,12 @@
 		
 		<form id="saleForm">
 			<div class="box-search">
+				<input id="prtCd" type="hidden" name="prtCd" value="${sessionScope.user.prtCd}">
 				<div class="one-input">
 					<span class="search-title"><span class="required">*</span>판매일자</span>
 					<div class="box-info">
-						<input id="salDt" type="date" name="salDt" value="${requestScope.map.salDt}" readonly>
+						<input id="salDt" type="date" value="${requestScope.map.salDt}" readonly>
+						<input id="salDtMdf" type="hidden" name="salDt">
 					</div>
 				</div>
 				<div class="one-input">
@@ -50,29 +52,35 @@
 						<button id="custSearchBtn" class="btn-one-search" type="button">
 							<span class="material-icons">search</span>
 						</button>
-						<input id="custNm" class="style-input" type="text" name="custNm" autofocus autocomplete='off'>
+						<input id="custNm" class="style-input" type="text" autofocus autocomplete='off'>
 					</div>
 				</div>
 			</div>
 			
 			<fieldset>
 				<legend>결제 금액</legend>
+				<input id="totSalQty" type="hidden" name="totSalQty">
+				<input id="totSalAmt" type="hidden" name="totSalAmt">
+				<input id="totVosAmt" type="hidden" name="totVosAmt">
+				<input id="totVatAmt" type="hidden" name="totVatAmt">
 				<div class="one-input">
 					<span class="input-title">현금</span>
 					<div class="box-input">
-						<input id="cshStlmAmt" class="style-input" type="text">
+						<input id="cshStlmAmt" class="style-input" type="text" onkeyup="inputNumberFormat(this)">
+						<input id="cshStlmAmtMdf" type="hidden" name="cshStlmAmt">
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="input-title">카드금액</span>
 					<div class="box-input">
-						<input id="crdStlmAmt" class="style-input" type="text">
+						<input id="crdStlmAmt" class="style-input" type="text" name="crdStlmAmt"  onkeyup="inputNumberFormat(this)">
+						<input id="crdStlmAmtMdf" type="hidden" name="crdStlmAmt">
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="input-title">유효일자</span>
 					<div class="box-input">
-						<input id="vldYM" class="style-input" type="text" maxlength="6">
+						<input id="vldYM" class="style-input" type="text" maxlength="6" name="vldYM">
 					</div>
 				</div>
 				<div class="one-input">
@@ -101,7 +109,6 @@
 		</form>
 					
 		<div class="box-result">
-			<input id="prtCd" type="hidden" name="prtCd" value="${sessionScope.user.prtCd}">
 			<div class="btn-add">
 				<button id="prdAddBtn" class="btn-icon" type="button">
 					<span class="material-icons">add</span>
@@ -127,7 +134,7 @@
 					</span>
 					<span class="seqNum">1</span>
 					<span class="prdCd">
-						<input id="prdCd0" onchange="prdCdAuto(this)" class="style-input" type="text" name="prdCd" autocomplete='off'>
+						<input id="prdCd0" onchange="prdCdAuto(this)" class="style-input" type="text" autocomplete='off'>
 						<button id="prdSearchBtn0" onclick="prdPopOpen(this)" class="btn-one-search" type="button">
 							<span class="material-icons">search</span>
 						</button>
@@ -135,9 +142,11 @@
 					<span id="prdNm0" class="prdNm"></span>
 					<span id="ivcoQty0" class="ivcoQty">0</span>
 					<span class="salQty">
-						<input id="salQty0" onchange="salAmtAuto(this)" class="style-input" name="salQty" type="text" value="0">
+						<input id="salQty0" onchange="salAmtAuto(this)" class="style-input" type="text" placeholder="0">
 					</span>
 					<span id="prdCsmrUpr0" class="prdCsmrUpr">0</span>
+					<input id="salVosAmt0" type="hidden">
+					<input id="salVatAmt0" type="hidden">
 					<span id="salAmt0" class="salAmt">0</span>
 				</div>
 			</div>

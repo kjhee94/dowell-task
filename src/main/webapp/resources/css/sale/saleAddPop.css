@@ -138,9 +138,9 @@ fieldset>.one-input:last-child {
 }
 
 /*결과영역*/
-.checkbox {width: 7%; text-align: center;}
-.seqNum {width: 7%; text-align: right;}
-.prdCd, .prdNm {width: 19%;}
+.checkbox {width: 6.5%; text-align: center;}
+.seqNum {width: 6.5%; text-align: right;}
+.prdCd, .prdNm {width: 19.5%;}
 .ivcoQty, .salQty, .prdCsmrUpr, .salAmt {
 	width: 12%; 
 	text-align: right;

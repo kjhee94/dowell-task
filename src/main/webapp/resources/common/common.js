@@ -254,15 +254,15 @@ $(function(){
 	//체크박스 단일선택
 	$.oneCheck = function(){
 		$('input[id^="checkbox"]').click(function(){
-			if($(this).prop('checked')){ 					//체크박스 하나가 선택 됐을 때
+			if($(this).prop('checked')){ 							//체크박스 하나가 선택 됐을 때
 				$('input[id^="checkbox"]').prop('checked',false);	//모든 체크박스 선택 해제
-				$(this).prop('checked',true); 				//선택된 것만 다시 체크
+				$(this).prop('checked',true); 						//선택된 것만 다시 체크
 			};
 		});
 	}
 	
 	//적용 버튼 클릭시 체크박스 값 적용하기
-	$.clickBtnApply = function(length,data1,data2,data3,data4,select,index){
+	$.clickBtnApply = function(length,data1,data2,data3,data4,data5,data6,select,index){
 		$('#applyBtn').click(function(){
 			//체크 없이 적용했을 때
 			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
@@ -277,6 +277,20 @@ $(function(){
 					var val2 = $(data2+i).text(); //체크된 행에서 data2+i 가져오기
 					var val3 = $(data3+i).text(); //체크된 행에서 data3+i 가져오기
 					var val4 = $(data4+i).text(); //체크된 행에서 data4+i 가져오기
+					var val5 = $(data5+i).val();  //체크된 행에서 data5+i 가져오기
+					var val6 = $(data6+i).val();  //체크된 행에서 data6+i 가져오기
+					
+					//같은 상품코드가 있을경우
+					var resultLength = $(opener.document).find('#result').children().length;
+					for(var j=0; j<resultLength; j++){
+						if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
+							//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+							alert('동일한 상품이 있습니다.');
+							window.close();
+							$(opener.document).find('#prdCd'+j).focus();
+							return false;
+						}
+					}
 				}
 			}
 			window.close();
@@ -286,6 +300,12 @@ $(function(){
 				$(opener.document).find(data2+index).text(val2);	//부모창 data2에 삽입
 				$(opener.document).find(data3+index).text(val3);	//부모창 data3에 삽입
 				$(opener.document).find(data4+index).text(val4);	//부모창 data4에 삽입
+				$(opener.document).find(data5+index).val(val5);		//부모창 data5에 삽입
+				$(opener.document).find(data6+index).val(val6);		//부모창 data6에 삽입
+				$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
+				$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
+				
+				opener.parent.$.allSum();							//부모창 이벤트 실행
 			}else {
 				$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
 				$(opener.document).find(data2).val(val2);	//부모창 data2에 삽입
@@ -296,7 +316,7 @@ $(function(){
 	}
 	
 	//행 더블클릭시 값 적용하기
-	$.dblclickApply = function(length,data1,data2,data3,data4,select){
+	$.dblclickApply = function(length,data1,data2,data3,data4,data5,data6,select,index){
 		$('[id^="oneContent"]').dblclick(function(){
 			for(var i=0; i<length; i++){
 				if($(this).attr('id')=='oneContent'+i){
@@ -305,16 +325,35 @@ $(function(){
 					var val2 = $(data2+i).text(); 	//클릭한 행에서 data2+i 가져오기
 					var val3 = $(data3+i).text(); 	//클릭한 행에서 data3+i 가져오기
 					var val4 = $(data4+i).text(); 	//클릭한 행에서 data4+i 가져오기
+					var val5 = $(data5+i).val();  	//클릭한 행에서 data5+i 가져오기
+					var val6 = $(data6+i).val();  	//클릭한 행에서 data6+i 가져오기
 				}
+				
+				//같은 상품코드가 있을경우
+//				var resultLength = $(opener.document).find('#result').children().length;
+//				for(var j=0; j<resultLength; j++){
+//					if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
+//						console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+//						alert('동일한 상품이 있습니다.');
+//						//window.close();
+//						$(opener.document).find('#prdCd'+j).focus();
+//						return false;
+//					}
+//				}
 			}
 			window.close();
 			//값 적용하기
-			$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
 			if(select=='prd'){
-				$(opener.document).find(data2).text(val2);	//부모창 data2에 삽입
-				$(opener.document).find(data3).text(val3);	//부모창 data3에 삽입
-				$(opener.document).find(data4).text(val4);	//부모창 data4에 삽입
+				$(opener.document).find(data1+index).val(val1);		//부모창 data1에 삽입
+				$(opener.document).find(data2+index).text(val2);	//부모창 data2에 삽입
+				$(opener.document).find(data3+index).text(val3);	//부모창 data3에 삽입
+				$(opener.document).find(data4+index).text(val4);	//부모창 data4에 삽입
+				$(opener.document).find(data5+index).val(val5);		//부모창 data5에 삽입
+				$(opener.document).find(data6+index).val(val6);		//부모창 data6에 삽입
+				
+				opener.parent.$.allSum();							//부모창 이벤트 실행
 			}else {
+				$(opener.document).find(data1).val(val1);	//부모창 data1에 삽입
 				$(opener.document).find(data2).val(val2);	//부모창 data2에 삽입
 				$(opener.document).find(data3).val(val3);	//부모창 data3에 삽입
 				$(opener.document).find(data4).val(val4);	//부모창 data4에 삽입
@@ -360,6 +399,14 @@ $(function(){
 		var hypDate = date.substr(0, 4)+'-'+date.substr(4, 2)+'-'+date.substr(6, 2);
 		
 		$(selector).val(hypDate);
+	}
+	
+	//가격 콤마 제거
+	$.RmvCom = function(str,selector){
+		if(str!=null){
+			var strRpc = str.replace(/\,/g,"");	//','제거
+			$(selector).val(strRpc);
+		}
 	}
 	
 	//일자 오늘로 변경
@@ -808,12 +855,10 @@ $(function(){
 	
 	//고객판매 합계 구하기
 	$.sumvalue = function(length, elem, sumElem, select1, select2){
-		
 		var num = 0;
 		var sum = 0;
 		
 		for(var i=0; i<length; i++){
-			
 			if(select2=='val'){
 				num = $(elem+i).val().replace(/\,/g,"");
 			}else {
@@ -821,20 +866,40 @@ $(function(){
 			}
 			
 			if(select1=='ADD'){
-				console.log(sum+'+'+num);
+				//console.log(sum+'+'+num);
 				sum += Number(num);
 			}else {
 				if($('#salTpCd'+i).val()=='RTN'){
-					console.log(sum+'-'+num);
+					//console.log(sum+'-'+num);
 					sum -= Number(num);
 				}else {
-					console.log(sum+'+'+num);
+					//console.log(sum+'+'+num);
 					sum += Number(num);
 				}
 			}
-			console.log(sum);
+			//console.log(sum);
 		}
 		$(sumElem).text(sum.toLocaleString());
+	}
+	
+	//tot 합구하기
+	$.totValue = function(length, elem, sumElem, select){
+		var num = 0;
+		var sum = 0;
+		
+		for(var i=0; i<length; i++){
+			if($('#checkbox'+i).is(":checked")){
+				if(select=='val'){
+					num = $(elem+i).val().replace(/\,/g,"");
+				}else {
+					num = $(elem+i).text().replace(/\,/g,"");
+				}
+				//console.log(sum+'+'+num);
+				sum += Number(num);
+				//console.log(sum);
+			}
+		}
+		$(sumElem).val(sum);
 	}
 	
 	//상품코드 리셋
@@ -846,6 +911,35 @@ $(function(){
 		$('#prdNm'+index).text('');
 		$('#ivcoQty'+index).text('0');
 		$('#prdCsmrUpr'+index).text('0');
+		$('#salVosAmt'+index).val('');
+		$('#salVatAmt'+index).val('');
 		$('#prdCd'+index).focus();
+		
+		//합계구하기
+		$('#salQty'+index).val('');
+		$('#salAmt'+index).text('0');
+		
+		$.allSum();
+	}
+	
+	//input 내용이 숫자인가?
+	$.isNumber =  function(str){
+		var result = str.replace(/[^0-9]/g,'');
+		
+		if(str!=result){
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	//합계구하기
+	$.allSum = function(){
+		//자식요소의 갯수 구하기
+		var length = $('#result').children().length;
+		
+		//합계구하기
+		$.sumvalue(length, "#salQty", "#sumSalQty",'ADD','val');
+		$.sumvalue(length, "#salAmt", "#sumSalAmt",'ADD');
 	}
 });
