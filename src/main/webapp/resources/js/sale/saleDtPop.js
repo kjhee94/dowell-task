@@ -52,10 +52,10 @@ $(document).ready(function(){
 					$('#sum').css('display','flex');
 					
 					//합계 더하기
-					$.sumvalue(data["list"].length, "#salQty", "#sumSalQty");
-					$.sumvalue(data["list"].length, "#salVosAmt", "#sumSalVosAmt");
-					$.sumvalue(data["list"].length, "#salVatAmt", "#sumSalVatAmt");
-					$.sumvalue(data["list"].length, "#salAmt", "#sumSalAmt");
+					$.sumValue(data["list"].length, "#salQty", "#sumSalQty");
+					$.sumValue(data["list"].length, "#salVosAmt", "#sumSalVosAmt");
+					$.sumValue(data["list"].length, "#salVatAmt", "#sumSalVatAmt");
+					$.sumValue(data["list"].length, "#salAmt", "#sumSalAmt");
 					
 				}else {//조회 결과가 0개일 때
 					var str = '<p>상세내역이 없습니다.</p>';
@@ -103,7 +103,7 @@ $(document).ready(function(){
 					if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
 						if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
 							alert("반품처리가 완료되었습니다.");
-							location.reload();
+							window.close();
 						}else {//데이터 삽입 실패
 							alert("반품 실패. 관리자에게 문의해 주세요");
 						}

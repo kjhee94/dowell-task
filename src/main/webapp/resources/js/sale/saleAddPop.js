@@ -23,7 +23,7 @@ $(document).ready(function(){
 		var $resultTag = $("#result");
 		var str = '<div id="oneContent'+index+'" class="one-content">'+
 				  '<span class="checkbox">'+
-				  '<input id="checkbox'+index+'" type="checkbox">'+
+				  '<input id="checkbox'+index+'" type="checkbox" checked onclick="check(this)">'+
 				  '</span>'+
 				  '<span class="seqNum">'+Number(index+1)+'</span>'+
 				  '<span class="prdCd">'+
@@ -35,7 +35,7 @@ $(document).ready(function(){
 				  '<span id="prdNm'+index+'" class="prdNm"></span>'+
 				  '<span id="ivcoQty'+index+'" class="ivcoQty">0</span>'+
 				  '<span class="salQty">'+
-				  '<input id="salQty'+index+'" onchange="salAmtAuto(this)" class="style-input" type="text" placeholder="0">'+
+				  '<input id="salQty'+index+'" onchange="salAmtAuto(this)" class="style-input" type="text" placeholder="0" autocomplete="off">'+
 				  '</span>'+
 				  '<span id="prdCsmrUpr'+index+'" class="prdCsmrUpr">0</span>'+
 				  '<input id="salVosAmt'+index+'" type="hidden">'+
@@ -58,8 +58,8 @@ $(document).ready(function(){
 			$('#oneContent'+index).remove();
 			
 			//합계구하기
-			$.sumvalue(index, "#salQty", "#sumSalQty",'ADD','val');
-			$.sumvalue(index, "#salAmt", "#sumSalAmt",'ADD');
+			$.checkSumValue(length, "#salQty", "#sumSalQty",'val','text');
+			$.checkSumValue(length, "#salAmt", "#sumSalAmt",'text','text');
 		}
 		
 		//스크롤바 제어
@@ -90,7 +90,7 @@ $(document).ready(function(){
 					$('#prdCd'+i).focus();
 					return false;
 				}
-				if($('#checkbox'+i).is(":checked") && $('#prdCd'+i).val().length!=0 && $('#salQty'+i).val().length==0) {
+				if($('#checkbox'+i).is(":checked") && $('#salQty'+i).val().length==0) {
 					//console.log(i);
 					alert('판매수량을 입력해 주세요.');
 					$('#salQty'+i).focus();
@@ -109,10 +109,10 @@ $(document).ready(function(){
 		//합계 계산
 		var length = $('#result').children().length;
 		
-		$.totValue(length,'#salQty','#totSalQty','val');
-		$.totValue(length,'#salAmt','#totSalAmt','text');
-		$.totValue(length,'#salVosAmt','#totVosAmt','val');
-		$.totValue(length,'#salVatAmt','#totVatAmt','val');
+		$.checkSumValue(length,'#salQty','#totSalQty','val','val');
+		$.checkSumValue(length,'#salAmt','#totSalAmt','text','val');
+		$.checkSumValue(length,'#salVosAmt','#totVosAmt','val','val');
+		$.checkSumValue(length,'#salVatAmt','#totVatAmt','val','val');
 		
 		//현금+카드
 		var cshStlmAmt = $('#cshStlmAmt').val().replace(/\,/g,"");
@@ -154,23 +154,86 @@ $(document).ready(function(){
 			}
 		}
 		
+		//-------------------------------------------------ajax에 담을 데이터
+		//날짜 포맷변경
+		$.RmvHyp($('#salDt').val(),"#salDtMdf");		//YYYY-MM-DD -> YYYYMMDD
+		
+		//가격 포멧변경
+		$.RmvCom($('#cshStlmAmt').val(),"#cshStlmAmtMdf");
+		$.RmvCom($('#crdStlmAmt').val(),"#crdStlmAmtMdf");
+		
+		//-------------------------------------------------판매객체
+		var formData = new FormData(document.getElementById('saleForm'));		//key: form의 name / value: form의 value 
+		var sObj={};															//Object 선언
+		
+		for(var pair of formData.entries()) {
+			sObj[pair[0]] = pair[1];											//객체에 넣기
+		}
+		console.log('판매 객체 : '+JSON.stringify(sObj));
+		
+		//-------------------------------------------------판매상세 객체
+		var sDtArr = new Array();						//Array선언
+		var sDtObj={};	
+		
+		var length = $('#result').children().length;
+		
+		for(var i=0; i<length; i++){
+			if($('#checkbox'+i).is(":checked")){
+				sDtObj = {
+						prdCsmrUpr : $('#prdCsmrUpr'+i).text().replace(/\,/g,""),
+						salQty : $('#salQty'+i).val(),
+						salAmt : $('#salAmt'+i).text().replace(/\,/g,""),
+						salVosAmt : $('#salVosAmt'+i).val(),
+						salVatAmt : $('#salVatAmt'+i).val(),
+						prdCd : $('#prdCd'+i).val(),
+						ivcoQty : Number($('#ivcoQty'+i).text())-$('#salQty'+i).val()
+					}
+				sDtArr.push(sDtObj);
+			}
+		}
+		console.log('판매상세 배열 : '+JSON.stringify(sDtArr));
+		
+		//-------------------------------------------------ajax에 보낼 전체 데이터
+		var allObj = {
+				saleData : sObj,
+				saleDtData : sDtArr,
+				prtCd : $('#prtCd').val(),
+				salDt : $('#salDtMdf').val(),
+				salTpCd : $('#salTpCd').val(),
+				custNo : $('#custNo').val()
+		}
+		console.log('전체 데이터 : '+JSON.stringify(allObj));
+		
+		//저장
 		if(confirm("판매내역을 저장하시겠습니까?")){
 			
-			//날짜 포맷변경
-			$.RmvHyp($('#salDt').val(),"#salDtMdf");		//YYYY-MM-DD -> YYYYMMDD
-			
-			//가격 포멧변경
-			$.RmvCom($('#cshStlmAmt').val(),"#cshStlmAmtMdf");
-			$.RmvCom($('#crdStlmAmt').val(),"#crdStlmAmtMdf");
-			
-			//판매객체
-			var formData = new FormData(document.getElementById('saleForm'));		//key: form의 name / value: form의 value 
-			var saleObj={};															//Object 선언
-			
-			for(var pair of formData.entries()) {
-				saleObj[pair[0]] = pair[1];											//객체에 넣기
-			}
-			console.log('수정 객체 : '+JSON.stringify(saleObj));
+			$.ajax({
+				url : "/sale/insertSale.do",
+				type : "post",
+				contentType: "application/json; charset=UTF-8",
+				data : JSON.stringify(allObj),
+				dataType: "json",
+				success : function(data) {
+					//연결성공
+					if(data["result"]) { //정상적으로 데이터가 왔을 경우(try)
+						if(data["seccessYN"]=="Y"){ //데이터 삽입 성공
+							alert("저장이 완료되었습니다.");
+							window.close();
+						}else {//데이터 삽입 실패
+							alert("저장 실패. 관리자에게 문의해 주세요");
+						}
+					}else { //비즈니스 로직중 에러가 났을 경우(catch)
+						//alert에 에러표시
+						alert("오류가 발생했습니다. 관리자에게 문의해 주세요.\n("+data["msg"]+")");
+					}
+				},
+				error : function(request,status,error) {
+					//alert에 에러표시
+					alert("서버연결에 실패했습니다. 관리자에게 문의해 주세요.\n("+request.status+" : "+error+")")
+					//console에 에러표시
+					//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
 			
 		}else{
 			return false;
@@ -224,14 +287,6 @@ function prdCdAuto(e) {
 							$('#prdNm'+index).text(item.prdNm);
 							$('#ivcoQty'+index).text(item.ivcoQty);
 							$('#prdCsmrUpr'+index).text(item.prdCsmrUpr);
-							
-							//부가세액 공급가액 계산
-							var prdCsmrUpr = $('#prdCsmrUpr'+index).text().replace(/\,/g,"");
-							var salVatAmt = Number(prdCsmrUpr)*0.1;
-							var salVosAmt = Number(prdCsmrUpr)-(Number(prdCsmrUpr)*0.1);
-
-							$('#salVatAmt'+index).val(salVatAmt);
-							$('#salVosAmt'+index).val(salVosAmt);
 							
 							//합계 리셋
 							$('#salQty'+index).val('');
@@ -292,16 +347,31 @@ function salAmtAuto(e) {
 		
 		//입력한 수량
 		var salQty = $('#salQty'+index).val();
+		var ivcoQty = $('#ivcoQty'+index).text();
 		
 		if(!$.isNumber(salQty)){
 			alert('숫자만 입력해 주세요.');
 			$('#salQty'+index).val(salQty.replace(/[^0-9]/g,''));
+			return false;
 		}
 		
-		var salQty = $('#salQty'+index).val();
+		if(Number(ivcoQty)<salQty){
+			alert('매장재고가 부족합니다.');
+			$('#salQty'+index).val('');
+			$('#salQty'+index).focus();
+			return false;
+		}
+		
 		var prdCsmrUpr = $('#prdCsmrUpr'+index).text().replace(/\,/g,"");
 		var salAmt = Number(salQty)*Number(prdCsmrUpr);
 		
+		//부가세액 공급가액 계산
+		var prdCsmrUpr = $('#prdCsmrUpr'+index).text().replace(/\,/g,"");
+		var salVatAmt = Number(salAmt)*0.1;
+		var salVosAmt = Number(salAmt)-Number(salVatAmt);
+
+		$('#salVatAmt'+index).val(salVatAmt);
+		$('#salVosAmt'+index).val(salVosAmt);
 		$('#salAmt'+index).text(salAmt.toLocaleString());
 		
 		$.allSum();
@@ -325,4 +395,9 @@ function comma(str) {
 function uncomma(str) {
     str = String(str);
     return str.replace(/[^\d]+/g, '');
+}
+
+//체크박스 해지시 합계 재계산
+function check(e) {
+	$.allSum();
 }

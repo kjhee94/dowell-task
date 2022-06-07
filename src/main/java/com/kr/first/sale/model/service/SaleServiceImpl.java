@@ -85,6 +85,38 @@ public class SaleServiceImpl implements SaleService {
 		
 		return resultMap;
 	}
+	
+	//판매등록 메소드(팝업)
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public HashMap<String, Object> insertSale(HashMap<String, Object> map) throws Exception {
+		
+		//판매 등록 결과 int에 담기(1이상:성공 / 0:실패)
+		log.info("=================>>판매 등록");
+		int resultSaleInsert = sDAO.insertSale(map);
+		
+		//판매상세 등록 결과 int에 담기(1이상:성공 / 0:실패)
+		log.info("=================>>판매상세 등록");
+		int resultSaleDtInsert = sDAO.insertSaleDt(map);
+		
+		//재고 수정 결과 int에 담기(1이상:성공 / 0:실패)
+		log.info("=================>>재고 수정");
+		int resultUpdate = sDAO.updateSaleIvco(map);
+		//System.out.println(resultUpdate);
+		
+		//반환할 객체 선언
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		if(resultSaleInsert!=0 && resultSaleDtInsert!=0 && resultUpdate!=0) {	//등록 성공		 
+			log.info("=================>>판매 등록 & 판매상세 등록 & 재고 수정 성공");
+			resultMap.put("seccessYN","Y");
+		}else {	//등록 실패
+			log.info("=================>>판매 등록 & 판매상세 등록 & 재고 수정 실패");
+			resultMap.put("seccessYN","N");
+		}
+		resultMap.put("result",true);
+		
+		return resultMap;
+	}
 
 	//판매 상세 조회 메소드
 	@Override
@@ -109,7 +141,7 @@ public class SaleServiceImpl implements SaleService {
 	@Transactional(rollbackFor = {Exception.class})
 	public HashMap<String, Object> insertReturn(HashMap<String, Object> map) throws Exception {
 		
-		//반품 결과 int에 담기(1:성공 / 0:실패)
+		//반품 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>반품 등록");
 		//변경할 판매목록 list에 담기
 		ArrayList<SaleVO> slist = sDAO.selectOneSale(map);
@@ -117,21 +149,22 @@ public class SaleServiceImpl implements SaleService {
 		map.put("slist", slist);
 		int resultRtnInsert = sDAO.insertRtn(map);
 		
-		//반품상세 추가 결과 int에 담기(1:성공 / 0:실패)
+		//반품상세 추가 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>반품상세 등록");
+		//변경할 판매상세목록 list에 담기
 		ArrayList<SaleDtVO> sdlist = sDAO.selectOneSaleDt(map);
 		System.out.println(sdlist);
 		map.put("sdlist", sdlist);
 		int resultRtnDtInsert = sDAO.insertRtnDt(map);
 		
-		//재고 수정 결과 int에 담기(1:성공 / 0:실패)
+		//재고 수정 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>재고 수정");
-		int resultUpdate = sDAO.updateIvco(map);
-		System.out.println(resultUpdate);
+		int resultUpdate = sDAO.updateRtnIvco(map);
+		//System.out.println(resultUpdate);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		if(resultRtnInsert>0 && resultRtnDtInsert>0 && resultUpdate>0) {	//등록 성공		 
+		if(resultRtnInsert!=0 && resultRtnDtInsert!=0 && resultUpdate!=0) {	//등록 성공		 
 			log.info("=================>>반품 등록 & 반품상세 등록 & 재고 수정 성공");
 			resultMap.put("seccessYN","Y");
 		}else {	//수정 실패

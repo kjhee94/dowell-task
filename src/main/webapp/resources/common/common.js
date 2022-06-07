@@ -262,7 +262,7 @@ $(function(){
 	}
 	
 	//적용 버튼 클릭시 체크박스 값 적용하기
-	$.clickBtnApply = function(length,data1,data2,data3,data4,data5,data6,select,index){
+	$.clickBtnApply = function(length,data1,data2,data3,data4,select,index){
 		$('#applyBtn').click(function(){
 			//체크 없이 적용했을 때
 			if($('.checkbox>input').is(":checked")==false){	//체크된 것이 없을 때
@@ -277,18 +277,18 @@ $(function(){
 					var val2 = $(data2+i).text(); //체크된 행에서 data2+i 가져오기
 					var val3 = $(data3+i).text(); //체크된 행에서 data3+i 가져오기
 					var val4 = $(data4+i).text(); //체크된 행에서 data4+i 가져오기
-					var val5 = $(data5+i).val();  //체크된 행에서 data5+i 가져오기
-					var val6 = $(data6+i).val();  //체크된 행에서 data6+i 가져오기
 					
-					//같은 상품코드가 있을경우
-					var resultLength = $(opener.document).find('#result').children().length;
-					for(var j=0; j<resultLength; j++){
-						if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
-							//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
-							alert('동일한 상품이 있습니다.');
-							window.close();
-							$(opener.document).find('#prdCd'+j).focus();
-							return false;
+					if(select=='prd'){
+						//같은 상품코드가 있을경우
+						var resultLength = $(opener.document).find('#result').children().length;
+						for(var j=0; j<resultLength; j++){
+							if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
+								//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+								alert('동일한 상품이 있습니다.');
+								window.close();
+								$(opener.document).find('#prdCd'+j).focus();
+								return false;
+							}
 						}
 					}
 				}
@@ -300,8 +300,6 @@ $(function(){
 				$(opener.document).find(data2+index).text(val2);	//부모창 data2에 삽입
 				$(opener.document).find(data3+index).text(val3);	//부모창 data3에 삽입
 				$(opener.document).find(data4+index).text(val4);	//부모창 data4에 삽입
-				$(opener.document).find(data5+index).val(val5);		//부모창 data5에 삽입
-				$(opener.document).find(data6+index).val(val6);		//부모창 data6에 삽입
 				$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
 				$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
 				
@@ -316,7 +314,7 @@ $(function(){
 	}
 	
 	//행 더블클릭시 값 적용하기
-	$.dblclickApply = function(length,data1,data2,data3,data4,data5,data6,select,index){
+	$.dblclickApply = function(length,data1,data2,data3,data4,select,index){
 		$('[id^="oneContent"]').dblclick(function(){
 			for(var i=0; i<length; i++){
 				if($(this).attr('id')=='oneContent'+i){
@@ -325,8 +323,6 @@ $(function(){
 					var val2 = $(data2+i).text(); 	//클릭한 행에서 data2+i 가져오기
 					var val3 = $(data3+i).text(); 	//클릭한 행에서 data3+i 가져오기
 					var val4 = $(data4+i).text(); 	//클릭한 행에서 data4+i 가져오기
-					var val5 = $(data5+i).val();  	//클릭한 행에서 data5+i 가져오기
-					var val6 = $(data6+i).val();  	//클릭한 행에서 data6+i 가져오기
 				}
 				
 				//같은 상품코드가 있을경우
@@ -348,8 +344,8 @@ $(function(){
 				$(opener.document).find(data2+index).text(val2);	//부모창 data2에 삽입
 				$(opener.document).find(data3+index).text(val3);	//부모창 data3에 삽입
 				$(opener.document).find(data4+index).text(val4);	//부모창 data4에 삽입
-				$(opener.document).find(data5+index).val(val5);		//부모창 data5에 삽입
-				$(opener.document).find(data6+index).val(val6);		//부모창 data6에 삽입
+				$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
+				$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
 				
 				opener.parent.$.allSum();							//부모창 이벤트 실행
 			}else {
@@ -854,7 +850,7 @@ $(function(){
 	}
 	
 	//고객판매 합계 구하기
-	$.sumvalue = function(length, elem, sumElem, select1, select2){
+	$.sumValue = function(length, elem, sumElem, select1, select2){
 		var num = 0;
 		var sum = 0;
 		
@@ -882,14 +878,15 @@ $(function(){
 		$(sumElem).text(sum.toLocaleString());
 	}
 	
-	//tot 합구하기
-	$.totValue = function(length, elem, sumElem, select){
+	//checkSum 합구하기
+	$.checkSumValue = function(length, elem, sumElem, select1, select2){
 		var num = 0;
 		var sum = 0;
 		
 		for(var i=0; i<length; i++){
+			//console.log('i : '+i);
 			if($('#checkbox'+i).is(":checked")){
-				if(select=='val'){
+				if(select1=='val'){
 					num = $(elem+i).val().replace(/\,/g,"");
 				}else {
 					num = $(elem+i).text().replace(/\,/g,"");
@@ -899,7 +896,11 @@ $(function(){
 				//console.log(sum);
 			}
 		}
-		$(sumElem).val(sum);
+		if(select2=='val'){
+			$(sumElem).val(sum);
+		}else {
+			$(sumElem).text(sum.toLocaleString());
+		}
 	}
 	
 	//상품코드 리셋
@@ -939,7 +940,7 @@ $(function(){
 		var length = $('#result').children().length;
 		
 		//합계구하기
-		$.sumvalue(length, "#salQty", "#sumSalQty",'ADD','val');
-		$.sumvalue(length, "#salAmt", "#sumSalAmt",'ADD');
+		$.checkSumValue(length, "#salQty", "#sumSalQty",'val','text');
+		$.checkSumValue(length, "#salAmt", "#sumSalAmt",'text','text');
 	}
 });

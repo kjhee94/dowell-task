@@ -38,6 +38,21 @@ public class SaleDAO {
 	public ArrayList<SaleDtVO> selectPrd(HashMap<String, Object> map) {
 		return new ArrayList<SaleDtVO>(sqlSession.selectList("sale.selectPrd",map));
 	}
+	
+	//판매 등록 메소드
+	public int insertSale(HashMap<String, Object> map) {
+		return sqlSession.insert("sale.insertSale",map);
+	}
+
+	//판매상세 등록 메소드
+	public int insertSaleDt(HashMap<String, Object> map) {
+		return sqlSession.insert("sale.insertSaleDt",map);
+	}
+
+	//재고 수정(등록) 메소드
+	public int updateSaleIvco(HashMap<String, Object> map) {
+		return sqlSession.update("sale.updateSaleIvco",map);
+	}
 
 	//판매 상세 조회 메소드
 	public ArrayList<SaleDtVO> selectSaleDt(HashMap<String, Object> map) throws Exception {
@@ -65,7 +80,9 @@ public class SaleDAO {
 	}
 
 	//현재고 수정
-	public int updateIvco(HashMap<String, Object> map) {
-		return sqlSession.update("sale.updateIvco",map);
+	public int updateRtnIvco(HashMap<String, Object> map) {
+		return sqlSession.update("sale.updateRtnIvco",map);
 	}
+
+	
 }

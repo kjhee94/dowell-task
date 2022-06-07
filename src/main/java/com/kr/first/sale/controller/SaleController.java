@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -152,9 +153,47 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 		new Gson().toJson(resultMap,out);
 	}
 	
+	//판매등록 메소드(팝업)
+	@ResponseBody
+	@PostMapping(value = "/sale/insertSale.do")
+	public void insertSale(@RequestBody HashMap<String,Object> map, @SessionAttribute UserVO user, HttpServletResponse response) throws IOException {	
+		
+		//세션 ID 가져오기
+		String userId = user.getUserId();
+		log.info("userId : "+userId);
+		map.put("userId", userId);
+		
+		log.info("saleData : "+map.get("saleData"));
+		log.info("saleDtData : "+map.get("saleDtData"));
+		
+		//System.out.println(map);
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try { //Exception 발생 구문 
+			resultMap = sService.insertSale(map);
+			
+		} catch (Exception e) { //Exception 발생시 처리
+			//Exception 로그
+			//e.printStackTrace();
+			log.info("=================>>판매등록 실패");
+			log.error("error : ", e);
+			
+			//view단에 메세지 노출
+			resultMap.put("msg", e.getMessage());
+			resultMap.put("result",false);
+		} 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//map->json
+		new Gson().toJson(resultMap,out);
+	}
+	
 	//판매 상세 조회 팝업창 오픈(팝업)
 	@RequestMapping(value = "/sale/saleDtPop.do")
 	public String saleDtPop() {
+		
+		//원코드 조회쿼리 추가
 		
 		log.info("판매 상세 조회 팝업 오픈");
 		return "sale/saleDtPop";

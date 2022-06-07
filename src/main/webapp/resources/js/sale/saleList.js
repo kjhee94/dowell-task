@@ -90,11 +90,11 @@ $(function(){
 						$('#sum').css('display','flex');
 						
 						//합계 더하기
-						$.sumvalue(data["list"].length, "#totSalQty", "#sumTotSalQty");
-						$.sumvalue(data["list"].length, "#totSalAmt", "#sumTotSalAmt");
-						$.sumvalue(data["list"].length, "#cshStlmAmt", "#sumCshStlmAmt");
-						$.sumvalue(data["list"].length, "#crdStlmAmt", "#sumCrdStlmAmt");
-						$.sumvalue(data["list"].length, "#pntStlmAmt", "#sumPntStlmAmt");
+						$.sumValue(data["list"].length, "#totSalQty", "#sumTotSalQty");
+						$.sumValue(data["list"].length, "#totSalAmt", "#sumTotSalAmt");
+						$.sumValue(data["list"].length, "#cshStlmAmt", "#sumCshStlmAmt");
+						$.sumValue(data["list"].length, "#crdStlmAmt", "#sumCrdStlmAmt");
+						$.sumValue(data["list"].length, "#pntStlmAmt", "#sumPntStlmAmt");
 						
 					}else {//조회 결과가 0명일 때
 						var str = '<p>해당하는 판매내역이 없습니다.</p>';
