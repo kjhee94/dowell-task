@@ -29,45 +29,23 @@ $(document).ready(function(){
 				if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
 					if(data["list"].length>0){	//조회 결과가 0개 이상일 때
 						$.each(data["list"], function(index,item){ //list 반복문
-							
-							var str = '<div id="oneContent'+index+'" class="one-content">'+
-									  '<input id="prdSsCd'+index+'" type="hidden" value="'+item.prdSsCd+'">'+
-									  '<span class="checkbox">'+
-									  '<input id="checkbox'+index+'" type="checkbox">'+
-									  '</span>'+
-									  '<span id="prdCd'+index+'" class="prdCd">'+item.prdCd+'</span>'+
-									  '<span id="prdNm'+index+'" class="prdNm">'+item.prdNm+'</span>'+
-									  '<span id="ivcoQty'+index+'" class="ivcoQty">'+item.ivcoQty+'</span>'+
-//									  '<input id="salVosAmt'+index+'" type="hidden">'+
-//									  '<input id="salVatAmt'+index+'" type="hidden">'+
-									  '<span id="prdCsmrUpr'+index+'" class="prdCsmrUpr">'+item.prdCsmrUpr+'</span>'+
-									  '</div>';
-							$resultTag.append(str);
-							
-//							//부가세액 공급가액 계산
-//							var prdCsmrUpr = item.prdCsmrUpr.replace(/\,/g,"");
-//							//console.log(prdCsmrUpr);
-//							var salVatAmt = Number(prdCsmrUpr)*0.1;
-//							//console.log(salVatAmt);
-//							var salVosAmt = Number(prdCsmrUpr)-(Number(prdCsmrUpr)*0.1);
-//							//console.log(salVosAmt);
-//							
-//							$('#salVosAmt'+index).val(salVosAmt);
-//							$('#salVatAmt'+index).val(salVatAmt);
+							if(item.prdTpCd=='10'){
+								var str = '<div id="oneContent'+index+'" class="one-content">'+
+								  '<input id="prdSsCd'+index+'" type="hidden" value="'+item.prdSsCd+'">'+
+								  '<span class="checkbox">'+
+								  '<input id="checkbox'+index+'" type="checkbox">'+
+								  '</span>'+
+								  '<span id="prdCd'+index+'" class="prdCd">'+item.prdCd+'</span>'+
+								  '<span id="prdNm'+index+'" class="prdNm">'+item.prdNm+'</span>'+
+								  '<span id="ivcoQty'+index+'" class="ivcoQty">'+item.ivcoQty+'</span>'+
+								  '<span id="prdCsmrUpr'+index+'" class="prdCsmrUpr">'+item.prdCsmrUpr+'</span>'+
+								  '</div>';
+								$resultTag.append(str);
+							}
 						});
 						
 						//스크롤바 생성시 table 비율 맞추기
 						$.scrollBerTransform();
-						
-						//체크박스 단일선택
-						$.oneCheck();
-						
-						//적용 버튼 클릭시 체크박스 값 적용하기
-						var index = $('#index').val();
-						$.clickBtnApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd', index);
-						
-						//행 더블클릭시 값 적용하기
-						//$.dblclickApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd', index);
 						
 						//체크박스 비활성화
 						for(var i=0; i<data["list"].length; i++){
@@ -83,6 +61,16 @@ $(document).ready(function(){
 								$('#oneContent'+i+'>span').css('cursor','auto');
 							}
 						}
+						
+						//체크박스 단일선택
+						$.oneCheck();
+						
+						//적용 버튼 클릭시 체크박스 값 적용하기
+						var index = $('#index').val();
+						$.clickBtnApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd', index);
+						
+						//행 더블클릭시 값 적용하기
+						$.dblclickApply(data["list"].length,'#prdCd','#prdNm','#ivcoQty','#prdCsmrUpr','prd', index);
 						
 					}else { //조회 결과가 0개일 때
 						var str = '<p>해당하는 상품이 없습니다.</p>';

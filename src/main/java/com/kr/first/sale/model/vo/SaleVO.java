@@ -29,6 +29,9 @@ public class SaleVO {
 	private String fstUserNm;	//최초등록자	-JOIN
 	private Date lstUpdDt;		//최종수정일자
 	private String lstUpdId;	//최종수정자
+	private String orgShopCd;	//최종수정자
+	private String orgSalDt;	//최종수정자
+	private String orgSalNo;	//최종수정자
 	
 	//생성자
 	public SaleVO() {
@@ -39,7 +42,7 @@ public class SaleVO {
 			String totSalQty, String totSalAmt, String totVosAmt, String totVatAmt, String cshStlmAmt,
 			String crdStlmAmt, String pntStlmAmt, String custNo, String custNm, String crdNo, String vldYM,
 			String crdCoCd, String crdCoNm, Date fstRegDt, String fstRegDtFm, String fstUserId, String fstUserNm,
-			Date lstUpdDt, String lstUpdId) {
+			Date lstUpdDt, String lstUpdId, String orgShopCd, String orgSalDt, String orgSalNo) {
 		this.prtCd = prtCd;
 		this.prtNm = prtNm;
 		this.salDt = salDt;
@@ -65,9 +68,12 @@ public class SaleVO {
 		this.fstUserNm = fstUserNm;
 		this.lstUpdDt = lstUpdDt;
 		this.lstUpdId = lstUpdId;
+		this.orgShopCd = orgShopCd;
+		this.orgSalDt = orgSalDt;
+		this.orgSalNo = orgSalNo;
 	}
 
-
+	
 	//getter setter
 	public String getPrtCd() {
 		return prtCd;
@@ -219,6 +225,24 @@ public class SaleVO {
 	public void setLstUpdId(String lstUpdId) {
 		this.lstUpdId = lstUpdId;
 	}
+	public String getOrgShopCd() {
+		return orgShopCd;
+	}
+	public void setOrgShopCd(String orgShopCd) {
+		this.orgShopCd = orgShopCd;
+	}
+	public String getOrgSalDt() {
+		return orgSalDt;
+	}
+	public void setOrgSalDt(String orgSalDt) {
+		this.orgSalDt = orgSalDt;
+	}
+	public String getOrgSalNo() {
+		return orgSalNo;
+	}
+	public void setOrgSalNo(String orgSalNo) {
+		this.orgSalNo = orgSalNo;
+	}
 	
 	
 	//toString
@@ -230,6 +254,7 @@ public class SaleVO {
 				+ ", crdStlmAmt=" + crdStlmAmt + ", pntStlmAmt=" + pntStlmAmt + ", custNo=" + custNo + ", custNm="
 				+ custNm + ", crdNo=" + crdNo + ", vldYM=" + vldYM + ", crdCoCd=" + crdCoCd + ", crdCoNm=" + crdCoNm
 				+ ", fstRegDt=" + fstRegDt + ", fstRegDtFm=" + fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm="
-				+ fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + "]";
+				+ fstUserNm + ", lstUpdDt=" + lstUpdDt + ", lstUpdId=" + lstUpdId + ", orgShopCd=" + orgShopCd
+				+ ", orgSalDt=" + orgSalDt + ", orgSalNo=" + orgSalNo + "]";
 	}
 }

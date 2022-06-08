@@ -283,9 +283,16 @@ $(function(){
 						var resultLength = $(opener.document).find('#result').children().length;
 						for(var j=0; j<resultLength; j++){
 							if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
-								//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+								console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
 								alert('동일한 상품이 있습니다.');
 								window.close();
+								
+								$(opener.document).find(data1+index).val('');		//부모창 data1  초기화
+								$(opener.document).find(data2+index).text('');		//부모창 data2  초기화
+								$(opener.document).find(data3+index).text('0');		//부모창 data3  초기화
+								$(opener.document).find(data4+index).text('0');		//부모창 data4  초기화
+								$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
+								$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
 								$(opener.document).find('#prdCd'+j).focus();
 								return false;
 							}
@@ -316,28 +323,38 @@ $(function(){
 	//행 더블클릭시 값 적용하기
 	$.dblclickApply = function(length,data1,data2,data3,data4,select,index){
 		$('[id^="oneContent"]').dblclick(function(){
-			for(var i=0; i<length; i++){
-				if($(this).attr('id')=='oneContent'+i){
-					//보낼값 변수값 지정
-					var val1 = $(data1+i).text(); 	//클릭한 행에서 data1+i 가져오기
-					var val2 = $(data2+i).text(); 	//클릭한 행에서 data2+i 가져오기
-					var val3 = $(data3+i).text(); 	//클릭한 행에서 data3+i 가져오기
-					var val4 = $(data4+i).text(); 	//클릭한 행에서 data4+i 가져오기
-				}
+			var i = $(this).attr('id').replace(/[^0-9]/g,'');
+			if($('#checkbox'+i).prop('disabled')==false){
+				//보낼값 변수값 지정
+				var val1 = $(data1+i).text(); 	//클릭한 행에서 data1+i 가져오기
+				var val2 = $(data2+i).text(); 	//클릭한 행에서 data2+i 가져오기
+				var val3 = $(data3+i).text(); 	//클릭한 행에서 data3+i 가져오기
+				var val4 = $(data4+i).text(); 	//클릭한 행에서 data4+i 가져오기
 				
-				//같은 상품코드가 있을경우
-//				var resultLength = $(opener.document).find('#result').children().length;
-//				for(var j=0; j<resultLength; j++){
-//					if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
-//						console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
-//						alert('동일한 상품이 있습니다.');
-//						//window.close();
-//						$(opener.document).find('#prdCd'+j).focus();
-//						return false;
-//					}
-//				}
+				window.close();
 			}
-			window.close();
+			
+			if(select=='prd'){
+				//같은 상품코드가 있을경우
+				var resultLength = $(opener.document).find('#result').children().length;
+				for(var j=0; j<resultLength; j++){
+					if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
+						console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+						alert('동일한 상품이 있습니다.');
+						window.close();
+						
+						$(opener.document).find(data1+index).val('');		//부모창 data1  초기화
+						$(opener.document).find(data2+index).text('');		//부모창 data2  초기화
+						$(opener.document).find(data3+index).text('0');		//부모창 data3  초기화
+						$(opener.document).find(data4+index).text('0');		//부모창 data4  초기화
+						$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
+						$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
+						$(opener.document).find('#prdCd'+j).focus();
+						return false;
+					}
+				}
+			}
+			
 			//값 적용하기
 			if(select=='prd'){
 				$(opener.document).find(data1+index).val(val1);		//부모창 data1에 삽입

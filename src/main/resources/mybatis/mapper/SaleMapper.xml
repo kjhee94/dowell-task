@@ -5,44 +5,44 @@
 	<!-- 고객 판매 조회 쿼리 -->
 	<select id="selectSearchSale" parameterType="hashmap" resultType="sale">
 		SELECT
-			CASE                                                                                        --가입일자(하이픈처리)
-		        WHEN REGEXP_INSTR(S.SAL_DT,'[^0-9.]')=0 AND LENGTH(S.SAL_DT)=8							--가입일자가 숫자로 이루어진 8자리일 때 'YYYY-MM-DD'의 형식
-		            THEN SUBSTR(S.SAL_DT,1,4)||'-'||SUBSTR(S.SAL_DT,5,2)||'-'||SUBSTR(S.SAL_DT,7)
-		        ELSE '0000-00-00'                                                                       --예외: '0000-00-00'의 형식으로 출력
+			CASE                                                                                        	--판매일자(하이픈처리)
+		        WHEN LENGTH(S.SAL_DT)=8																		--판매일자가 8자리일 때 
+		            THEN SUBSTR(S.SAL_DT,1,4)||'-'||SUBSTR(S.SAL_DT,5,2)||'-'||SUBSTR(S.SAL_DT,7)			--'YYYY-MM-DD'의 형식
+		        ELSE '0000-00-00'                                                                       	--예외: '0000-00-00'의 형식으로 출력
 		    END AS SALDT,
-		    S.CUST_NO AS CUSTNO,
-		    C.CUST_NM AS CUSTNM,
-		    S.SAL_NO AS SALNO,
-		    S.SAL_TP_CD AS SALTPCD,
-		    S.PRT_CD AS PRTCD,
-		    P.PRT_NM AS PRTNM,
-		    CASE
-		        WHEN S.SAL_DT = G.SAL_DT THEN G.TOT_SAL_QTY
-		        ELSE 0
+		    S.CUST_NO AS CUSTNO,																			--고객번호
+		    C.CUST_NM AS CUSTNM,																			--고객명
+		    S.SAL_NO AS SALNO,																				--판매번호
+		    S.SAL_TP_CD AS SALTPCD,																			--판매구분코드
+		    S.PRT_CD AS PRTCD,																				--매장코드
+		    P.PRT_NM AS PRTNM,																				--매장명
+		    CASE																							--총판매수량
+		        WHEN S.SAL_DT = G.SAL_DT AND S.SAL_NO = G.SAL_NO THEN G.TOT_SAL_QTY							--판매상세 sum수량
+		        ELSE 0																						--예외: 0
 		    END AS TOTSALQTY,
-		    CASE
-		        WHEN S.SAL_DT = G.SAL_DT THEN TO_CHAR(G.TOT_SAL_AMT,'FM999,999,999')
+		    CASE																							--총판매금액
+		        WHEN S.SAL_DT = G.SAL_DT AND S.SAL_NO = G.SAL_NO THEN TO_CHAR(G.TOT_SAL_AMT,'FM999,999,999')--판매상세 sum금액(,포멧)
 		        ELSE '0'
 		    END AS TOTSALAMT,
-		    TO_CHAR(S.CSH_STLM_AMT,'FM999,999,999') AS CSHSTLMAMT,
-		    TO_CHAR(S.CRD_STLM_AMT,'FM999,999,999') AS CRDSTLMAMT,
-		    TO_CHAR(S.PNT_STLM_AMT,'FM999,999,999') AS PNTSTLMAMT,
-		    U.USER_NM AS FSTUSERNM,
-		    TO_CHAR(S.FST_REG_DT,'YYYY-MM-DD') AS FSTREGDTFM
-		FROM CS_SAL01_MT S
-		    LEFT JOIN CS_CUST01_MT C ON (S.CUST_NO=C.CUST_NO)
-		    LEFT JOIN MA_PRT_MT P ON (S.PRT_CD=P.PRT_CD)
-		    LEFT JOIN MA_USER_MT U ON (S.FST_USER_ID=U.USER_ID) 
-		    LEFT JOIN (SELECT SAL_DT, SAL_NO, SUM(SAL_QTY) AS TOT_SAL_QTY, SUM(SAL_AMT) AS TOT_SAL_AMT
+		    TO_CHAR(S.CSH_STLM_AMT,'FM999,999,999') AS CSHSTLMAMT,											--현금결재금액(,포멧)
+		    TO_CHAR(S.CRD_STLM_AMT,'FM999,999,999') AS CRDSTLMAMT,											--카드결제금액(,포멧)
+		    TO_CHAR(S.PNT_STLM_AMT,'FM999,999,999') AS PNTSTLMAMT,											--포인트사용금액(,포멧)
+		    U.USER_NM AS FSTUSERNM,																			--등록자
+		    TO_CHAR(S.FST_REG_DT,'YYYY-MM-DD') AS FSTREGDTFM												--등록시간(YYYY-MM-DD)
+		FROM CS_SAL01_MT S																					--판매 테이블
+		    LEFT JOIN CS_CUST01_MT C ON (S.CUST_NO=C.CUST_NO)												--판매,고객관리 JOIN(CUST_NO)
+		    LEFT JOIN MA_PRT_MT P ON (S.PRT_CD=P.PRT_CD)													--판매,매장 JOIN(PRT_CD)
+		    LEFT JOIN MA_USER_MT U ON (S.FST_USER_ID=U.USER_ID) 											--판매,사용자 JOIN(FST_USER_ID/USER_ID)
+		    LEFT JOIN (SELECT SAL_DT, SAL_NO, SUM(SAL_QTY) AS TOT_SAL_QTY, SUM(SAL_AMT) AS TOT_SAL_AMT		--판매일자,판매번호,판매수량의 합,판매금액의 합
 		                FROM CS_SAL01_DT
 		                WHERE PRT_CD=#{prtCd}
-		                GROUP BY SAL_DT, SAL_NO) G ON (S.SAL_DT = G.SAL_DT AND S.SAL_NO = G.SAL_NO)
-		WHERE (S.SAL_DT BETWEEN TO_DATE(#{salDtFrom}) AND TO_DATE(#{salDtTo}))
-		    AND S.PRT_CD=#{prtCd}
+		                GROUP BY SAL_DT, SAL_NO) G ON (S.SAL_DT = G.SAL_DT AND S.SAL_NO = G.SAL_NO)			--판매,판매상세(sum) JOIN
+		WHERE (S.SAL_DT BETWEEN TO_DATE(#{salDtFrom}) AND TO_DATE(#{salDtTo}))								--판매일자 조건
+		    AND S.PRT_CD=#{prtCd}																			--매장 조건
 		    <if test="custNo!=null and !custNo.isEmpty()">
-		    AND S.CUST_NO=#{custNo}
+		    AND S.CUST_NO=#{custNo}																			--고객번호 조건
 		    </if>
-		ORDER BY 1 DESC, 4
+		ORDER BY 1 DESC, 4 DESC																				--판매일자,판매번호 역순
 	</select>
 	
 	<!-- 고객상태 조회 쿼리 -->
@@ -55,34 +55,34 @@
 	
 	<!-- 판매구분 조회 쿼리 -->
 	<select id="selectSalTp" resultType="sale">
-		SELECT DTL_CD AS SALTPCD, 	--세부코드
-			   DTL_CD_NM AS SALTPNM	--세부코드명
-		FROM MA_CODE_DT 			--코드상세 테이블
-		WHERE CODE_CD='SAL_TP_CD'	--공통코드가 'SAL_TP_CD'인 것만 조회
+		SELECT DTL_CD AS SALTPCD, 		--세부코드
+			   DTL_CD_NM AS SALTPNM		--세부코드명
+		FROM MA_CODE_DT 				--코드상세 테이블
+		WHERE CODE_CD='SAL_TP_CD'		--공통코드가 'SAL_TP_CD'인 것만 조회
 		ORDER BY 1 DESC
 	</select>
 	
 	<!-- 카드회사 조회 쿼리 -->
 	<select id="selectCrdCo" resultType="sale">
-		SELECT DTL_CD AS CRDCOCD, 	--세부코드
-			   DTL_CD_NM AS CRDCONM	--세부코드명
-		FROM MA_CODE_DT 			--코드상세 테이블
-		WHERE CODE_CD='CRD_CO_CD'	--공통코드가 'CRD_CO_CD'인 것만 조회
+		SELECT DTL_CD AS CRDCOCD, 		--세부코드
+			   DTL_CD_NM AS CRDCONM		--세부코드명
+		FROM MA_CODE_DT 				--코드상세 테이블
+		WHERE CODE_CD='CRD_CO_CD'		--공통코드가 'CRD_CO_CD'인 것만 조회
 	</select>
 	
 	<!-- 매장 재고 조회 쿼리 -->
 	<select id="selectPrd" parameterType="hashmap" resultType="saleDt">
 		SELECT 
-		    P.PRD_CD AS PRDCD,
-		    P.PRD_NM AS PRDNM,
-		    I.IVCO_QTY AS IVCOQTY,
-		    TO_CHAR(P.PRD_CSMR_UPR,'FM999,999,999') AS PRDCSMRUPR,
-		    P.PRD_SS_CD AS PRDSSCD
-		FROM SD_IVCO01_MT I
-		    LEFT JOIN MA_PRD01_MT P ON (I.PRD_CD=P.PRD_CD)
-		WHERE P.PRD_TP_CD='10'
-		    AND PRT_CD=#{prtCd}
-		    AND (P.PRD_CD LIKE '%'||#{keyword}||'%' OR P.PRD_NM LIKE '%'||#{keyword}||'%')
+		    P.PRD_CD AS PRDCD,																--상품코드
+		    P.PRD_NM AS PRDNM,																--상품명
+		    I.IVCO_QTY AS IVCOQTY,															--매장재고
+		    TO_CHAR(P.PRD_CSMR_UPR,'FM999,999,999') AS PRDCSMRUPR,							--소비자가(,포멧)
+		    P.PRD_SS_CD AS PRDSSCD,															--상품상태코드
+		    P.PRD_TP_CD AS PRDTPCD                                                          --상품유형코드
+		FROM SD_IVCO01_MT I																	--매장재고 테이블
+		    LEFT JOIN MA_PRD01_MT P ON (I.PRD_CD=P.PRD_CD)									--매장재고,상품 JOIN(PRD_CD)
+		WHERE PRT_CD=#{prtCd}																--매장코드 조건
+		    AND (P.PRD_CD LIKE '%'||#{keyword}||'%' OR P.PRD_NM LIKE '%'||#{keyword}||'%')	--상품코드,상품명 조건
 	</select>
 	
 	<!-- 판매 등록 쿼리 -->
@@ -98,7 +98,6 @@
 		    TOT_VAT_AMT,                        		--총부가세액
 		    CSH_STLM_AMT,                       		--현금결제금액
 		    CRD_STLM_AMT,                       		--카드결제금액
-		    PNT_STLM_AMT,                       		--포인트사용금액
 		    CUST_NO,                            		--고객번호
 		    CRD_NO,                             		--카드번호
 		    VLD_YM,                             		--유효년월
@@ -121,7 +120,6 @@
 		     #{saleData.totVatAmt},            			--총부가세액
 		     NVL(#{saleData.cshStlmAmt},0),           	--현금결제금액
 		     NVL(#{saleData.crdStlmAmt},0),           	--카드결제금액
-		     #{saleData.totSalAmt}-(NVL(#{saleData.cshStlmAmt},0)+NVL(#{saleData.crdStlmAmt},0)),	--포인트사용금액
 		     #{custNo},               					--고객번호
 		     #{saleData.crdNo, jdbcType=VARCHAR},       --카드번호
 		     #{saleData.vldYM, jdbcType=VARCHAR},       --유효년월
@@ -129,130 +127,140 @@
 		     SYSDATE,             						--최초등록일
 		     #{userId},            						--최초등록자
 		     SYSDATE,                       			--최종수정일
-		     #{userId}                      			--최종수정자
-		     )
+		     #{userId})                      			--최종수정자
 	</insert>
 	
 	<!-- 판매상세 등록 쿼리 -->
 	<insert id="insertSaleDt" parameterType="hashmap">
 		<foreach collection="saleDtData" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
-			INTO CS_SAL01_DT
-				(PRT_CD,												--매장코드
-			     SAL_DT,												--판매일자
-			     SAL_NO,												--판매번호
-			     SAL_SEQ,												--판매일련번호
-			     PRD_CD,												--상품코드
-			     PRD_CSMR_UPR,											--소비자단가
-			     SAL_QTY,												--판매수량
-			     SAL_AMT,												--판매금액
-			     SAL_VOS_AMT,											--판매공급가액
-			     SAL_VAT_AMT,											--판매부가세액
-			     FST_REG_DT,											--최초등록일자
-			     FST_USER_ID,											--최초등록자
-			     LST_UPD_DT,											--최종수정일자
-			     LST_UPD_ID)											--최종수정자
-			VALUES 
-				(#{prtCd},												--매장코드
-				 #{salDt},												--판매일자(오늘)
-				 (SELECT NVL(MAX(SAL_NO),0) 
-				  FROM CS_SAL01_MT 
-				  WHERE PRT_CD=#{prtCd} 
-				  	AND SAL_DT=#{salDt}),								--판매번호((이전 판매번호+1))
-				 #{index}+1,											--판매일련변호((이전 판매일련번호+index))
-				 #{item.prdCd},											--상품코드
-				 #{item.prdCsmrUpr},									--소비자단가
-				 #{item.salQty},										--판매수량				 
-				 #{item.salAmt},										--판매금액			 
-				 #{item.salVosAmt},										--판매공급가액			 
-				 #{item.salVatAmt},										--판매부가세액
-				 SYSDATE,												--최초등록일자 (sysdate)
-				 #{userId}, 											--최초등록자(세션 아이디)
-				 SYSDATE,												--최종수정일자(sysdate)
-				 #{userId})												--최종수정자(세션아이디)
+			INTO CS_SAL01_DT (
+				PRT_CD,								--매장코드
+			    SAL_DT,								--판매일자
+			    SAL_NO,								--판매번호
+			    SAL_SEQ,							--판매일련번호
+			    PRD_CD,								--상품코드
+			    PRD_CSMR_UPR,						--소비자단가
+			    SAL_QTY,							--판매수량
+			    SAL_AMT,							--판매금액
+			    SAL_VOS_AMT,						--판매공급가액
+			    SAL_VAT_AMT,						--판매부가세액
+			    FST_REG_DT,							--최초등록일자
+			    FST_USER_ID,						--최초등록자
+			    LST_UPD_DT,							--최종수정일자
+			    LST_UPD_ID)							--최종수정자
+			VALUES (
+				#{prtCd},							--매장코드
+				#{salDt},							--판매일자(오늘)
+				(SELECT NVL(MAX(SAL_NO),0) 
+				 FROM CS_SAL01_MT 
+				 WHERE PRT_CD=#{prtCd} 
+				 	AND SAL_DT=#{salDt}),			--판매번호((이전 판매번호+1))
+				#{index}+1,							--판매일련변호((이전 판매일련번호+index))
+				#{item.prdCd},						--상품코드
+				#{item.prdCsmrUpr},					--소비자단가
+				#{item.salQty},						--판매수량				 
+				#{item.salAmt},						--판매금액			 
+				#{item.salVosAmt},					--판매공급가액			 
+				#{item.salVatAmt},					--판매부가세액
+				SYSDATE,							--최초등록일자 (sysdate)
+				#{userId}, 							--최초등록자(세션 아이디)
+				SYSDATE,							--최종수정일자(sysdate)
+				#{userId})							--최종수정자(세션아이디)
   		</foreach>
 	</insert>
 	
 	<!-- 재고 수정(등록) 쿼리 -->
 	<update id="updateSaleIvco" parameterType="hashmap">
 		<foreach collection="saleDtData" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
-			UPDATE SD_IVCO01_MT
-			SET IVCO_QTY=#{item.ivcoQty}
-			WHERE PRT_CD=#{prtCd}
-			    AND PRD_CD=#{item.prdCd}
+			UPDATE SD_IVCO01_MT				--매장재고 테이블
+			SET IVCO_QTY=#{item.ivcoQty}	--재고수정
+			WHERE PRT_CD=#{prtCd}			--매장코드 조건
+			    AND PRD_CD=#{item.prdCd}	--상품코드 조건
 		</foreach>
 	</update>
+	
+	<!-- 원코드 조회 쿼리 -->
+	<select id="selectOrg" parameterType="hashmap" resultType="sale">
+		SELECT
+		    ORG_SHOP_CD AS ORGSHOPCD,	--원매장코드
+		    ORG_SAL_DT AS ORGSALDT,		--원판매일자
+		    ORG_SAL_NO AS ORGSALNO		--원판매번호
+		FROM CS_SAL01_MT				--판메 테이블
+		WHERE ORG_SHOP_CD=#{prtCd}		--원매장코드 조건
+		    AND ORG_SAL_DT=#{salDt}		--원판매일자 조건
+		    AND ORG_SAL_NO=#{salNo}		--원판매번호 조건
+	</select>
 		
 	<!-- 판매 상세 조회 쿼리 -->
 	<select id="selectSaleDt" parameterType="hashmap" resultType="saleDt">
 		SELECT 
-		    ROW_NUMBER() OVER(ORDER BY SAL_SEQ DESC) SEQNUM,
-		    S.PRD_CD AS PRDCD,
-		    P.PRD_NM AS PRDNM,
-		    S.SAL_QTY AS SALQTY,
-		    TO_CHAR(S.SAL_VOS_AMT,'FM999,999,999')AS SALVOSAMT,
-		    TO_CHAR(S.SAL_VAT_AMT,'FM999,999,999') AS SALVATAMT,
-		    TO_CHAR(S.SAL_AMT,'FM999,999,999') AS SALAMT
-		FROM CS_SAL01_DT S
-		    LEFT JOIN MA_PRD01_MT P ON (S.PRD_CD=P.PRD_CD)
-		WHERE PRT_CD=#{prtCd} 
-		    AND SAL_DT=#{salDt}
-		    AND SAL_NO=#{salNo}
-		ORDER BY SAL_SEQ DESC
+		    ROW_NUMBER() OVER(ORDER BY SAL_SEQ DESC) SEQNUM,		--번호
+		    S.PRD_CD AS PRDCD,										--상품코드
+		    P.PRD_NM AS PRDNM,										--상품명
+		    S.SAL_QTY AS SALQTY,									--판매수량
+		    TO_CHAR(S.SAL_VOS_AMT,'FM999,999,999')AS SALVOSAMT,		--판매공급가액
+		    TO_CHAR(S.SAL_VAT_AMT,'FM999,999,999') AS SALVATAMT,	--판매부가세액
+		    TO_CHAR(S.SAL_AMT,'FM999,999,999') AS SALAMT			--판매금액
+		FROM CS_SAL01_DT S											--판매상세 테이블
+		    LEFT JOIN MA_PRD01_MT P ON (S.PRD_CD=P.PRD_CD)			--판매상세,상품 JOIN(PRD_CD)
+		WHERE PRT_CD=#{prtCd} 										--매장코드 조건
+		    AND SAL_DT=#{salDt}										--판매일자 조건
+		    AND SAL_NO=#{salNo}										--판매번호 조건
+		ORDER BY SAL_SEQ DESC										--일련번호 역순
 	</select>
 	
 	<!-- 반품할 고객 판매 조회  쿼리 -->
 	<select id="selectOneSale" parameterType="hashmap" resultType="sale">
 		SELECT
-		    TOT_SAL_QTY AS TOTSALQTY,
-		    TOT_SAL_AMT AS TOTSALAMT,
-		    TOT_VOS_AMT AS TOTVOSAMT,
-		    TOT_VAT_AMT AS TOTVATAMT,
-		    CSH_STLM_AMT AS CSHSTLMAMT,
-		    CRD_STLM_AMT AS CRDSTLMAMT,
-		    PNT_STLM_AMT AS PNTSTLMAMT,
-		    CUST_NO AS CUSTNO,
-		    CRD_NO AS CRDNO,
-		    VLD_YM AS VLDYM,
-		    CRD_CO_CD AS CRDCOCD
-		FROM CS_SAL01_MT
-		WHERE PRT_CD=#{prtCd}
-		    AND SAL_DT=#{salDt}
-		    AND SAL_NO=#{salNo}
+		    TOT_SAL_QTY AS TOTSALQTY,		--총판매수량
+		    TOT_SAL_AMT AS TOTSALAMT,		--총판매금액
+		    TOT_VOS_AMT AS TOTVOSAMT,		--총공급가액
+		    TOT_VAT_AMT AS TOTVATAMT,		--총부가세액
+		    CSH_STLM_AMT AS CSHSTLMAMT,		--현금결제금액
+		    CRD_STLM_AMT AS CRDSTLMAMT,		--카드결제금액
+		    PNT_STLM_AMT AS PNTSTLMAMT,		--포인트사용금액
+		    CUST_NO AS CUSTNO,				--고객번호
+		    CRD_NO AS CRDNO,				--카드번호
+		    VLD_YM AS VLDYM,				--유효년월
+		    CRD_CO_CD AS CRDCOCD			--카드회사
+		FROM CS_SAL01_MT					--판매 테이블
+		WHERE PRT_CD=#{prtCd}				--매장코드 조건
+		    AND SAL_DT=#{salDt}				--판매일자 조건
+		    AND SAL_NO=#{salNo}				--판매번호 조건
 	</select>
 	
 	<!-- 반품 등록 쿼리 -->
 	<insert id="insertRtn" parameterType="hashmap">
 		<foreach collection="slist" item="item" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
-			INTO CS_SAL01_MT 
-			    (PRT_CD, 
-			     SAL_DT, 
-			     SAL_NO, 
-			     SAL_TP_CD, 
-			     TOT_SAL_QTY,
-			     TOT_SAL_AMT, 
-			     TOT_VOS_AMT, 
-			     TOT_VAT_AMT, 
-			     CSH_STLM_AMT, 
-			     CRD_STLM_AMT, 
-			     PNT_STLM_AMT, 
-			     CUST_NO, 
-			     CRD_NO, 
-			     VLD_YM, 
-			     CRD_CO_CD, 
-			     FST_REG_DT,
-			     FST_USER_ID,
-			     LST_UPD_DT,
-			     LST_UPD_ID,
-			     ORG_SHOP_CD,
-			     ORG_SAL_DT,
-			     ORG_SAL_NO)
-			VALUES 
-			    (#{prtCd},                 						--매장코드
+			INTO CS_SAL01_MT (
+				PRT_CD,						        			--매장코드
+			    SAL_DT,						        			--판매일자
+			    SAL_NO,						        			--판매번호
+			    SAL_TP_CD,						    			--판매구분코드
+			    TOT_SAL_QTY,									--총판매수량
+			    TOT_SAL_AMT,                        			--총판매금액
+			    TOT_VOS_AMT,                        			--총공급가액
+			    TOT_VAT_AMT,                        			--총부가세액
+			    CSH_STLM_AMT,                       			--현금결제금액
+			    CRD_STLM_AMT,                       			--카드결제금액
+			    CUST_NO,                            			--고객번호
+			    CRD_NO,                             			--카드번호
+			    VLD_YM,                             			--유효년월
+			    CRD_CO_CD,                          			--카드회사
+			    FST_REG_DT,						    			--최초등록일자
+			    FST_USER_ID,					    			--최초등록자
+			    LST_UPD_DT,						    			--최종수정일자
+			    LST_UPD_ID, 					    			--최종수정자
+			    ORG_SHOP_CD,									--원매장코드
+			    ORG_SAL_DT,										--원판매일자
+			    ORG_SAL_NO)										--원판매번호
+			VALUES (
+			     #{prtCd},                 						--매장코드
 			     TO_CHAR(SYSDATE,'YYYYMMDD'),   				--판매일자(오늘)
 			     (SELECT NVL(MAX(SAL_NO),0)+1 
 			      FROM CS_SAL01_MT 
 			      WHERE PRT_CD=#{prtCd} 
-			      	AND SAL_DT=TO_CHAR(SYSDATE,'YYYYMMDD')), 	--판매번호(스칼라쿼리_현매장,변경일자현재로 조회)
+			      	AND SAL_DT=TO_CHAR(SYSDATE,'YYYYMMDD')),	--판매번호(스칼라쿼리_현매장,변경일자현재로 조회)
 			     'RTN',                         				--판매구분코드
 			     #{item.totSalQty},            					--총판매수량
 			     #{item.totSalAmt},            					--총판매금액
@@ -260,56 +268,54 @@
 			     #{item.totVatAmt},            					--총부가세액
 			     #{item.cshStlmAmt},           					--현금결제금액
 			     #{item.crdStlmAmt},           					--카드결제금액
-			     #{item.pntStlmAmt},           					--포인트사용금액
 			     #{item.custNo},               					--고객번호
-			     #{item.crdNo, jdbcType=VARCHAR},               --카드번호
-			     #{item.vldYm, jdbcType=VARCHAR},               --유효년월
-			     #{item.crdCoCd, jdbcType=VARCHAR},             --카드회사
+			     #{item.crdNo, jdbcType=VARCHAR},       		--카드번호
+			     #{item.vldYM, jdbcType=VARCHAR},       		--유효년월
+			     #{item.crdCoCd, jdbcType=VARCHAR},     		--카드회사
 			     SYSDATE,             							--최초등록일
 			     #{userId},            							--최초등록자
 			     SYSDATE,                       				--최종수정일
 			     #{userId},                      				--최종수정자
 			     #{prtCd},										--원매장코드
 			     #{salDt},										--원판매일자
-			     #{salNo}										--원판매번호
-			     )
+			     #{salNo})										--원판매번호
 		</foreach>
 	</insert>
 	
 	<!-- 반품할 판매 상세 조회 쿼리  -->
 	<select id="selectOneSaleDt" parameterType="hashmap" resultType="saleDt">
 		SELECT
-		    PRD_CD AS PRDCD,
-		    PRD_CSMR_UPR AS PRDCSMRUPR,
-		    SAL_QTY AS SALQTY,
-		    SAL_AMT AS SALAMT,
-		    SAL_VOS_AMT AS SALVOSAMT,
-		    SAL_VAT_AMT AS SALVATAMT
-		FROM CS_SAL01_DT 
-		WHERE PRT_CD=#{prtCd}
-		    AND SAL_DT=#{salDt}
-		    AND SAL_NO=#{salNo}
-		ORDER BY SAL_SEQ
+		    PRD_CD AS PRDCD,				--상품코드
+		    PRD_CSMR_UPR AS PRDCSMRUPR,		--소비자단가
+		    SAL_QTY AS SALQTY,				--판매수량
+		    SAL_AMT AS SALAMT,				--판매금액
+		    SAL_VOS_AMT AS SALVOSAMT,		--판매공급가액
+		    SAL_VAT_AMT AS SALVATAMT		--판매부가세액
+		FROM CS_SAL01_DT 					--판매상세 테이블
+		WHERE PRT_CD=#{prtCd}				--매장코드 조건
+		    AND SAL_DT=#{salDt}				--판매일자 조건
+		    AND SAL_NO=#{salNo}				--판매번호 조건
+		ORDER BY SAL_SEQ					--일련번호 순
 	</select>
 	
 	<!-- 판매 상세 등록 쿼리 -->
 	<insert id="insertRtnDt" parameterType="hashmap">
 		<foreach collection="sdlist" item="item" index="index" open="INSERT ALL" separator="" close="SELECT * FROM DUAL">
-			INTO CS_SAL01_DT
-				(PRT_CD,
-			     SAL_DT,
-			     SAL_NO,
-			     SAL_SEQ,
-			     PRD_CD,
-			     PRD_CSMR_UPR,
-			     SAL_QTY,
-			     SAL_AMT,
-			     SAL_VOS_AMT,
-			     SAL_VAT_AMT,
-			     FST_REG_DT,
-			     FST_USER_ID,
-			     LST_UPD_DT,
-			     LST_UPD_ID)
+			INTO CS_SAL01_DT (
+				PRT_CD,											--매장코드
+			    SAL_DT,											--판매일자
+			    SAL_NO,											--판매번호
+			    SAL_SEQ,										--판매일련번호
+			    PRD_CD,											--상품코드
+			    PRD_CSMR_UPR,									--소비자단가
+			    SAL_QTY,										--판매수량
+			    SAL_AMT,										--판매금액
+			    SAL_VOS_AMT,									--판매공급가액
+			    SAL_VAT_AMT,									--판매부가세액
+			    FST_REG_DT,										--최초등록일자
+			    FST_USER_ID,									--최초등록자
+			    LST_UPD_DT,										--최종수정일자
+			    LST_UPD_ID)										--최종수정자
 			VALUES 
 				(#{prtCd},										--고객번호
 				 TO_CHAR(SYSDATE,'YYYYMMDD'),					--판매일자(오늘)
@@ -322,8 +328,8 @@
 				 #{item.prdCsmrUpr},							--소비자단가
 				 #{item.salQty},								--판매수량				 
 				 #{item.salAmt},								--판매금액				 
-				 #{item.salVosAmt},								--				 
-				 #{item.salVatAmt},								--			 
+				 #{item.salVosAmt},								--판매공급가액
+				 #{item.salVatAmt},								--판매부가세액
 				 SYSDATE,										--최초등록일자 (sysdate)
 				 #{userId}, 									--최초등록자(세션 아이디)
 				 SYSDATE,										--최종수정일자(sysdate)
@@ -334,13 +340,13 @@
 	<!-- 현재고 수정 쿼리 -->
 	<update id="updateRtnIvco">
 		<foreach collection="sdlist" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
-			UPDATE SD_IVCO01_MT
-			SET IVCO_QTY=(SELECT IVCO_QTY 
+			UPDATE SD_IVCO01_MT											--매장재고 테이블
+			SET IVCO_QTY=(SELECT IVCO_QTY
 						  FROM SD_IVCO01_MT 
 						  WHERE PRT_CD=#{prtCd} 
-						  	AND PRD_CD=#{item.prdCd})+#{item.salQty}
-			WHERE PRT_CD=#{prtCd}
-			    AND PRD_CD=#{item.prdCd}
+						  	AND PRD_CD=#{item.prdCd})+#{item.salQty}	--재고수정
+			WHERE PRT_CD=#{prtCd}										--매장코드 조건
+			    AND PRD_CD=#{item.prdCd}								--상품코드 조건
 		</foreach>
 	</update>
 </mapper>

@@ -71,7 +71,7 @@
 		    <if test="custNo!=null and !custNo.isEmpty()">
 		    AND C.CUST_NO = #{custNo}                                                                                   	--고객번호로 조회
 		    </if>
-		ORDER BY 1                                                                                                        	--고객번호 오름차순
+		ORDER BY 1 DESC                                                                                                     --고객번호 오름차순
 	</select>
 	
 	<!-- 거래처 검색 쿼리 -->

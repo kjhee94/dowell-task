@@ -101,6 +101,8 @@
 				<input id="sesPrtCd" type="hidden" value="${sessionScope.user.prtCd}">
 				<button id="applyBtn" class="btn-apply">반품</button>
 			</c:if>
+			
+			
 		</div>
 	</div>
 </body>

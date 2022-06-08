@@ -75,6 +75,14 @@ $(document).ready(function(){
 			return false;
 		}
 		
+		//해지고객 불가
+		if($('#custNm').val()=='해지고객'){
+			alert("해지고객에게 판매할 수 없습니다.");
+			$('#custNm').val('');
+			$('#custNm').focus();
+			return false;
+		}
+		
 		//체크박스가 선택된 것이 없을 떄
 		if ($("input:checkbox").is(":checked")==false) {
 			alert('체크박스를 선택해 주세요.');
@@ -139,8 +147,8 @@ $(document).ready(function(){
 		$('#crdNo').val(crdNo0+crdNo1+crdNo2+crdNo3);
 		
 		if($('#crdStlmAmt').val().length!=0){
-			if($('#vldYM').val().length==0){
-				alert('유효일자를 입력해 주세요.');
+			if($('#vldYM').val().length!=6){
+				alert('유효일자 6자리를 입력해 주세요.');
 				$('#vldYM').focus();
 				return false;
 			}else if($('#crdCoCd>option:selected').text()=='선택') {
@@ -276,7 +284,9 @@ function prdCdAuto(e) {
 			if(data["result"]) {	//정상적으로 데이터가 왔을 경우(try)
 				if(data["list"].length==1){	//조회 결과가 1개일 때
 					$.each(data["list"], function(idx,item){
-						if(item.prdSsCd!='R'){
+						if(item.prdTpCd!='10'){
+							$.prdCdReset("판매할 수 없는 상품입니다.",index);
+						}else if(item.prdSsCd!='R'){
 							$.prdCdReset("상품상태가 정상이 아닙니다.",index);
 						}else if(item.prdCsmrUpr=='0'){
 							$.prdCdReset("소비자단가가 없습니다.",index);
@@ -349,16 +359,21 @@ function salAmtAuto(e) {
 		var salQty = $('#salQty'+index).val();
 		var ivcoQty = $('#ivcoQty'+index).text();
 		
+		//숫자를 입력하지 않았을 때
 		if(!$.isNumber(salQty)){
 			alert('숫자만 입력해 주세요.');
-			$('#salQty'+index).val(salQty.replace(/[^0-9]/g,''));
+			$('#salQty'+index).val('');
+			$('#salAmt'+index).text('0');
+			$.allSum();
 			return false;
 		}
 		
+		//매장재고보다 많이 입력했을때
 		if(Number(ivcoQty)<salQty){
 			alert('매장재고가 부족합니다.');
 			$('#salQty'+index).val('');
-			$('#salQty'+index).focus();
+			$('#salAmt'+index).text('0');
+			$.allSum();
 			return false;
 		}
 		

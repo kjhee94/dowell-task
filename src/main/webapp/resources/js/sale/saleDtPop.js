@@ -8,6 +8,7 @@ $(document).ready(function(){
 	var salTpCd = $('#salTpCd').val();
 	var sesPrtCd = $('#sesPrtCd').val();
 	
+	//본사직원이거나 해당매장직원이 아닐경우
 	if(salTpCd=='RTN' || $('#prtCd').val()!=sesPrtCd){
 		$('#applyBtn').css('display','none');
 	}
@@ -60,6 +61,14 @@ $(document).ready(function(){
 				}else {//조회 결과가 0개일 때
 					var str = '<p>상세내역이 없습니다.</p>';
 					$resultTag.append(str);
+				}
+				
+				//이미 반품한 판매내역일 경우
+				if(data["olist"].length>0){
+					$('#applyBtn').prop('disabled',true);
+					$('#applyBtn').css('background-color','#c8c8c8');
+					$('#applyBtn').css('color','#fff');
+					$('#applyBtn').css('cursor','auto');
 				}
 				
 			}else { //비즈니스 로직중 에러가 났을 경우(catch)

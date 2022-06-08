@@ -192,9 +192,6 @@ private Logger log = LoggerFactory.getLogger(this.getClass());
 	//판매 상세 조회 팝업창 오픈(팝업)
 	@RequestMapping(value = "/sale/saleDtPop.do")
 	public String saleDtPop() {
-		
-		//원코드 조회쿼리 추가
-		
 		log.info("판매 상세 조회 팝업 오픈");
 		return "sale/saleDtPop";
 	}

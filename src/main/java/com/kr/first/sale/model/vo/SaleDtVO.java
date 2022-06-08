@@ -14,7 +14,8 @@ public class SaleDtVO {
 	private String prdNm;		//상품명		-JOIN
 	private String ivcoQty;		//재고수량		-JOIN
 	private String prdCsmrUpr;	//소비자단가
-	private String prdSsCd;		//상품유형코드	-JOIN
+	private String prdSsCd;		//상품상태코드	-JOIN _R : 런닝 / C : 해지
+	private String prdTpCd;		//상품유형코드	-JOIN _10 : 본품 / 20 : 견본품
 	private String salQty;		//판매수량
 	private String salAmt;		//판매금액
 	private String salVosAmt;	//판매공급가액
@@ -34,9 +35,9 @@ public class SaleDtVO {
 		// TODO Auto-generated constructor stub
 	}
 	public SaleDtVO(String seqNum, String prtCd, String prtNm, String salDt, String salNo, String salSeq, String prdCd,
-			String prdNm, String ivcoQty, String prdCsmrUpr, String prdSsCd, String salQty, String salAmt,
-			String salVosAmt, String salVatAmt, Date fstRegDt, String fstRegDtFm, String fstUserId, String fstUserNm,
-			Date lstUpdDt, String lstUpdDtFm, String lstUpdId, String lstUpdNm) {
+			String prdNm, String ivcoQty, String prdCsmrUpr, String prdSsCd, String prdTpCd, String salQty,
+			String salAmt, String salVosAmt, String salVatAmt, Date fstRegDt, String fstRegDtFm, String fstUserId,
+			String fstUserNm, Date lstUpdDt, String lstUpdDtFm, String lstUpdId, String lstUpdNm) {
 		this.seqNum = seqNum;
 		this.prtCd = prtCd;
 		this.prtNm = prtNm;
@@ -48,6 +49,7 @@ public class SaleDtVO {
 		this.ivcoQty = ivcoQty;
 		this.prdCsmrUpr = prdCsmrUpr;
 		this.prdSsCd = prdSsCd;
+		this.prdTpCd = prdTpCd;
 		this.salQty = salQty;
 		this.salAmt = salAmt;
 		this.salVosAmt = salVosAmt;
@@ -61,7 +63,6 @@ public class SaleDtVO {
 		this.lstUpdId = lstUpdId;
 		this.lstUpdNm = lstUpdNm;
 	}
-
 
 	//getter setter
 	public String getSeqNum() {
@@ -129,6 +130,12 @@ public class SaleDtVO {
 	}
 	public void setPrdSsCd(String prdSsCd) {
 		this.prdSsCd = prdSsCd;
+	}
+	public String getPrdTpCd() {
+		return prdTpCd;
+	}
+	public void setPrdTpCd(String prdTpCd) {
+		this.prdTpCd = prdTpCd;
 	}
 	public String getSalQty() {
 		return salQty;
@@ -209,9 +216,10 @@ public class SaleDtVO {
 	public String toString() {
 		return "SaleDtVO [seqNum=" + seqNum + ", prtCd=" + prtCd + ", prtNm=" + prtNm + ", salDt=" + salDt + ", salNo="
 				+ salNo + ", salSeq=" + salSeq + ", prdCd=" + prdCd + ", prdNm=" + prdNm + ", ivcoQty=" + ivcoQty
-				+ ", prdCsmrUpr=" + prdCsmrUpr + ", prdSsCd=" + prdSsCd + ", salQty=" + salQty + ", salAmt=" + salAmt
-				+ ", salVosAmt=" + salVosAmt + ", salVatAmt=" + salVatAmt + ", fstRegDt=" + fstRegDt + ", fstRegDtFm="
-				+ fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm + ", lstUpdDt=" + lstUpdDt
-				+ ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + ", lstUpdNm=" + lstUpdNm + "]";
+				+ ", prdCsmrUpr=" + prdCsmrUpr + ", prdSsCd=" + prdSsCd + ", prdTpCd=" + prdTpCd + ", salQty=" + salQty
+				+ ", salAmt=" + salAmt + ", salVosAmt=" + salVosAmt + ", salVatAmt=" + salVatAmt + ", fstRegDt="
+				+ fstRegDt + ", fstRegDtFm=" + fstRegDtFm + ", fstUserId=" + fstUserId + ", fstUserNm=" + fstUserNm
+				+ ", lstUpdDt=" + lstUpdDt + ", lstUpdDtFm=" + lstUpdDtFm + ", lstUpdId=" + lstUpdId + ", lstUpdNm="
+				+ lstUpdNm + "]";
 	}
 }
