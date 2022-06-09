@@ -223,13 +223,15 @@ $(function(){
 			$('.result-title').css('padding-right','16.5px'); 	//th의 tr에 스크롤바 넓이의 padding 추가
 			if(select=='sale'){
 				$('.sum-result').css('padding-right','19.2%');
+				$('.sum-result>span').css('width','19.3%');
 			}else if(select='saleDt'){
 				$('.sum-result').css('padding-right','16.5px');
 			}
 		}else {
 			$('.result-title').css('padding-right','0');		//스크롤바가 없는경우 padding 0
 			if(select=='sale'){
-				$('.sum-result').css('padding-right','17.8%');
+				$('.sum-result').css('padding-right','18.1%');
+				$('.sum-result>span').css('width','19.1%');
 			}else if(select='saleDt'){
 				$('.sum-result').css('padding-right','0');
 			}
@@ -605,16 +607,9 @@ $(function(){
 	$.checkAddrValid = function(){
 		var addr = $('#addr').val().trim();				//사용자가 입력한 값 공백 제거
 		var addrDtl = $('#addrDtl').val().trim();		//사용자가 입력한 값 공백 제거
-		if(addr.length!=0) {
-			if(addrDtl.length!=0){
-				$.validResult('T','None','#addr','#addrDtl');
-			}else {
-				$.validResult('F','주소를 모두 입력해주세요.','#addrDtl','#addr');
-			}
-		}else{
-			if(addrDtl.length==0){
-				$.validResult('T','None','#addr','#addrDtl');
-			}
+		
+		if((addr.length==0 && addrDtl.length==0)||(addr.length!=0 && addrDtl.length!=0)){
+			$.validResult('T','None','#addr','#addrDtl');
 		}
 	}
 	//상세주소 유효성검사
@@ -622,16 +617,8 @@ $(function(){
 		var addr = $('#addr').val().trim();				//사용자가 입력한 값 공백 제거
 		var addrDtl = $('#addrDtl').val().trim();		//사용자가 입력한 값 공백 제거
 		
-		if(addrDtl.length!=0) {
-			if(addr.length!=0){
-				$.validResult('T','None','#addr','#addrDtl');
-			}else {
-				$.validResult('F','주소를 모두 입력해주세요.','#addr','#addrDtl');
-			}
-		}else{
-			if(addr.length==0){
-				$.validResult('T','None','#addr','#addrDtl');
-			}
+		if((addr.length==0 && addrDtl.length==0)||(addr.length!=0 && addrDtl.length!=0)){
+			$.validResult('T','None','#addr','#addrDtl');
 		}
 	}
 	
@@ -713,8 +700,10 @@ $(function(){
 			}
 		}else if(email0.length==0 || email1.length==0){											//이메일 미입력
 			$.validResult('F','이메일을 입력해 주세요.','#email0','#email1');
-		}else if((addr.length==0 && addrDtl.length!=0)||(addr.length!=0 && addrDtl.length==0)) {//주소 유효성 재검사
+		}else if(addr.length==0 && addrDtl.length!=0){											//주소 유효성 재검사
 			$.validResult('F','주소를 모두 입력해주세요.','#addr','#addrDtl');
+		}else if(addr.length!=0 && addrDtl.length==0) {
+			$.validResult('F','주소를 모두 입력해주세요.','#addrDtl','#addr');
 		}
 		//모두통과시 true
 		else{
@@ -857,7 +846,7 @@ $(function(){
 			$('#checkMblNo>span').css("color","#FF5E4D");		//아이콘 색상 빨강
 			$('#checkMblNo').css('cursor','pointer');			//커서 손가락
 			$('#checkMblNo').on('click', function(){ 			//이밴트 생성
-				$.checkMblNoValid('update');
+				$.checkMblNoValid('insert');
 			});
 		}else {
 			$('#checkMblNo>span').css("color","#707070");		//아이콘 색상 무채색

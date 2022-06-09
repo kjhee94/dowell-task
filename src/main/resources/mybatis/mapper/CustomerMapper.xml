@@ -305,7 +305,7 @@
 			<choose>
 				<when test="custNo!=null and !custNo.isEmpty()">
 				CASE
-			        WHEN CUST_NO!=#{custNo, jdbcType=VARCHAR} THEN MBL_NO
+			        WHEN CUST_NO!=#{custNo} THEN MBL_NO
 			        ELSE 'MINE'
 			    END AS MBLNO
 				</when>

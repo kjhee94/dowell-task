@@ -192,7 +192,8 @@ input[type="date"] {
 /*테이블 내용*/
 .result-content {
 	width: 100%;
-	height: calc(100vh - 550px);
+	height: auto;
+	max-height: calc(100vh - 550px);
 	overflow: auto;
 }
 .one-content {
@@ -277,11 +278,11 @@ input[type="date"] {
 .sum-result {
 	width: 65%;
     text-align: right;
-    padding-right: 19.2%;
+    padding-right: 18.1%;
 }
 .sum-result>span {
 	display: inline-block;
-	width: 19.3%;
+	width: 19.1%;
 	padding: 0 15px;
 	font-size: 15px;
 	position: relative;

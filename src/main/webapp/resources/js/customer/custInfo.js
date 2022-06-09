@@ -249,10 +249,10 @@ $(function(){
 			
 			//변경전 form 객체
 			var bfObj = $('#bfCntForm').serializeArray();
-			console.log(bfObj);
+			//console.log(bfObj);
 			//변경후 form 객체
 			var aftObj = $('#updateCustInfo').serializeArray();
-			console.log(aftObj);
+			//console.log(aftObj);
 			
 			//--------------------------ajax로 배열2(수정에 사용할 [변경항목,변경내용])
 			var formData = new FormData(document.getElementById('updateCustInfo'));	//key: form의 name / value: form의 value 
@@ -261,7 +261,7 @@ $(function(){
 			for(var pair of formData.entries()) {
 				cUpObj[pair[0]] = pair[1];											//객체에 넣기
 			}
-			console.log('수정 객체 : '+JSON.stringify(cUpObj));
+			//console.log('수정 객체 : '+JSON.stringify(cUpObj));
 			
 			//--------------------------ajax로 배열1(변경이력에 사용할 [변경코드,변경전내용,변경후내용])
 			var cHtArr = new Array();						//Array선언
@@ -278,7 +278,7 @@ $(function(){
 					cHtArr.push(cHtObj);
 				}
 			}
-			console.log('변경이력 배열 : '+JSON.stringify(cHtArr));
+			//console.log('변경이력 배열 : '+JSON.stringify(cHtArr));
 			
 			//--------------------------ajax에 보낼 전체 데이터
 			var allObj = {
@@ -286,7 +286,7 @@ $(function(){
 					cHtData : cHtArr,
 					custNo : $('#bfCustNo').val()
 			}
-			//console.log('전체 데이터 : '+allObj);
+			//console.log('전체 데이터 : '+JSON.stringify(allObj));
 			
 			if(cHtArr.length==0){	//변경내역이 없으면
 				alert("변경내역이 없습니다.");

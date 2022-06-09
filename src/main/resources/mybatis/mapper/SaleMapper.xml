@@ -121,9 +121,9 @@
 		     NVL(#{saleData.cshStlmAmt},0),           	--현금결제금액
 		     NVL(#{saleData.crdStlmAmt},0),           	--카드결제금액
 		     #{custNo},               					--고객번호
-		     #{saleData.crdNo, jdbcType=VARCHAR},       --카드번호
-		     #{saleData.vldYM, jdbcType=VARCHAR},       --유효년월
-		     #{saleData.crdCoCd, jdbcType=VARCHAR},     --카드회사
+		     #{saleData.crdNo},       					--카드번호
+		     #{saleData.vldYM},      					--유효년월
+		     #{saleData.crdCoCd},     					--카드회사
 		     SYSDATE,             						--최초등록일
 		     #{userId},            						--최초등록자
 		     SYSDATE,                       			--최종수정일
@@ -269,9 +269,9 @@
 			     #{item.cshStlmAmt},           					--현금결제금액
 			     #{item.crdStlmAmt},           					--카드결제금액
 			     #{item.custNo},               					--고객번호
-			     #{item.crdNo, jdbcType=VARCHAR},       		--카드번호
-			     #{item.vldYM, jdbcType=VARCHAR},       		--유효년월
-			     #{item.crdCoCd, jdbcType=VARCHAR},     		--카드회사
+			     #{item.crdNo},       							--카드번호
+			     #{item.vldYM},       							--유효년월
+			     #{item.crdCoCd},     							--카드회사
 			     SYSDATE,             							--최초등록일
 			     #{userId},            							--최초등록자
 			     SYSDATE,                       				--최종수정일
