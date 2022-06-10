@@ -2,6 +2,7 @@ package com.kr.first.sale.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -50,8 +51,8 @@ public class SaleDAO {
 	}
 
 	//재고 수정(등록) 메소드(등록팝업)
-	public int updateSaleIvco(HashMap<String, Object> map) throws Exception {
-		return sqlSession.update("sale.updateSaleIvco",map);
+	public int updateIvco(HashMap<String, Object> map) throws Exception {
+		return sqlSession.update("sale.updateIvco",map);
 	}
 	
 	//원코드 조회(반품팝업)

@@ -133,6 +133,22 @@ $(function(){
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
 		var prtCd = $('#prtCd').val(); //사용자가 검색한 값 공백 제거
+		var salDtFrom = $('#salDtFrom').val(); //사용자가 검색한 값 공백 제거
+		var salDtTo = $('#salDtTo').val(); //사용자가 검색한 값 공백 제거
+		
+		//날짜가 비었을 때
+		if(salDtFrom.length==0){ 						
+			alert("판매일자를 선택하세요.");
+			$('#salDtFrom').focus();
+			return false;
+		}
+		//날짜가 비었을 때
+		if(salDtTo.length==0){ 						
+			alert("판매일자를 선택하세요.");
+			$('#salDtTo').focus();
+			return false;
+		}
+		
 		//keyword의 길이가 0일 때(검색어가 비어있을 경우)
 		if(prtCd.length==0){ 						
 			alert("매장을 선택하세요.");

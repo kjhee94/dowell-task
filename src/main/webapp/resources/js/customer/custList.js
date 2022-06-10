@@ -115,6 +115,23 @@ $(function(){
 	
 	//---------------------------------------검색버튼 클릭시 세팅 값
 	$('#SearchBtn').click(function(){
+		
+		var jsDtFrom = $('#jsDtFrom').val();
+		var jsDtTo = $('#jsDtTo').val();
+		
+		//날짜가 비었을 때
+		if(jsDtFrom.length==0){ 						
+			alert("가입일자를 선택하세요.");
+			$('#jsDtFrom').focus();
+			return false;
+		}
+		//날짜가 비었을 때
+		if(jsDtTo.length==0){ 						
+			alert("가입일자를 선택하세요.");
+			$('#jsDtTo').focus();
+			return false;
+		}
+		
 		//함수 재실행
 		$.selectSearchCust();
 	});

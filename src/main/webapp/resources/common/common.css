@@ -115,6 +115,10 @@ option[disabled]{
 	background-color: #c8c8c8;
 	color: #fff;
 }
+select[disabled]{
+	background-color: #d9d9d9;
+	opacity: 1;
+}
 
 /*상단 타이틀 영역 공통*/
 .box-title {

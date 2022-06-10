@@ -80,13 +80,13 @@
 				<div class="one-input">
 					<span class="input-title">유효일자</span>
 					<div class="box-input">
-						<input id="vldYM" class="style-input" type="text" maxlength="6" name="vldYM" autocomplete='off'>
+						<input id="vldYM" class="style-input" type="text" maxlength="6" name="vldYM" readonly autocomplete='off' placeholder="MMYYYY">
 					</div>
 				</div>
 				<div class="one-input">
 					<span class="input-title">카드회사</span>
 					<div class="box-input">
-						<select id="crdCoCd" name="crdCoCd" class="style-input">
+						<select id="crdCoCd" name="crdCoCd" disabled class="style-input">
 							<option selected disabled>선택</option>
 							<c:forEach items="${requestScope.map.ccList}" var="cc" varStatus="status">
 								<option id="crdCoCd${status.index}" value="${cc.crdCoCd}">${cc.crdCoNm}</option>
@@ -98,10 +98,10 @@
 				<div class="one-input box-crdNo">
 					<span class="input-title">카드번호</span>
 					<div class="box-input">
-						<input id="crdNo0" class="style-input" type="text" maxlength="4" autocomplete='off'>
-						<input id="crdNo1" class="style-input" type="text" maxlength="4" autocomplete='off'>
-						<input id="crdNo2" class="style-input" type="text" maxlength="4" autocomplete='off'>
-						<input id="crdNo3" class="style-input" type="text" maxlength="4" autocomplete='off'>
+						<input id="crdNo0" class="style-input" type="text" maxlength="4" readonly autocomplete='off'>
+						<input id="crdNo1" class="style-input" type="text" maxlength="4" readonly autocomplete='off'>
+						<input id="crdNo2" class="style-input" type="text" maxlength="4" readonly autocomplete='off'>
+						<input id="crdNo3" class="style-input" type="text" maxlength="4" readonly autocomplete='off'>
 						<input id="crdNo" name="crdNo" type="hidden">
 					</div>
 				</div>

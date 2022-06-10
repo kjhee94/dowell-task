@@ -16,7 +16,8 @@ $(document).ready(function(){
 	var prtCd = $('#prtCd').val();
 	var salDt = $('#salDt').val().replace(/\-/g,"");
 	var salNo = $('#salNo').val();
-	var data = {"prtCd" : prtCd, "salDt" : salDt, "salNo" : salNo};
+	var custNo = $('#custNo').val();
+	var data = {"prtCd" : prtCd, "salDt" : salDt, "salNo" : salNo, "custNo" : custNo};
 	
 	//고객 이력 조회 ajax
 	$.ajax({

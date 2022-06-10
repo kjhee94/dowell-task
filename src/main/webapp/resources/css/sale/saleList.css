@@ -134,7 +134,7 @@ input[type="date"] {
 .fstUserNm {width: 8%;}
 
 .totSalQty, .totSalAmt {
-	width: 50%;
+	width: 49.9%;
 }
 .cshStlmAmt, .crdStlmAmt, .pntStlmAmt {
 	width: 33.33%;
@@ -181,12 +181,17 @@ input[type="date"] {
 	height: 30px;
 	display: flex;
 	align-items: center;
+	border-bottom: 1px #d9d9d9 solid; 
 }
 .half-height>div>span {
 	text-align: center;
 	padding: 0 15px;
 	font-size: 15px;
 	font-weight: 500;
+	border-right: 1px #d9d9d9 solid; 
+}
+.half-height>div>span:last-child {
+	border-right: 0;
 }
 
 /*테이블 내용*/
@@ -283,7 +288,7 @@ input[type="date"] {
 .sum-result>span {
 	display: inline-block;
 	width: 19.1%;
-	padding: 0 15px;
+	padding: 0 13px;
 	font-size: 15px;
 	position: relative;
 }

@@ -284,20 +284,15 @@ $(function(){
 						//같은 상품코드가 있을경우
 						var resultLength = $(opener.document).find('#result').children().length;
 						for(var j=0; j<resultLength; j++){
+							
+							//팝업을 띄운 행의 상품코드와 동일할 때
 							if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
-								console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+								//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
 								alert('동일한 상품이 있습니다.');
 								window.close();
-								
-								$(opener.document).find(data1+index).val('');		//부모창 data1  초기화
-								$(opener.document).find(data2+index).text('');		//부모창 data2  초기화
-								$(opener.document).find(data3+index).text('0');		//부모창 data3  초기화
-								$(opener.document).find(data4+index).text('0');		//부모창 data4  초기화
-								$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
-								$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
-								$(opener.document).find('#prdCd'+j).focus();
 								return false;
 							}
+							
 						}
 					}
 				}
@@ -341,19 +336,13 @@ $(function(){
 				var resultLength = $(opener.document).find('#result').children().length;
 				for(var j=0; j<resultLength; j++){
 					if($(opener.document).find('#prdCd'+j).val()==$('#prdCd'+i).text()){
-						console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
+						//console.log('j : '+j+','+$(opener.document).find('#prdCd'+j).val()+' i : '+i+','+$('#prdCd'+i).text());
 						alert('동일한 상품이 있습니다.');
 						window.close();
-						
-						$(opener.document).find(data1+index).val('');		//부모창 data1  초기화
-						$(opener.document).find(data2+index).text('');		//부모창 data2  초기화
-						$(opener.document).find(data3+index).text('0');		//부모창 data3  초기화
-						$(opener.document).find(data4+index).text('0');		//부모창 data4  초기화
-						$(opener.document).find('#salQty'+index).val('');	//부모창 salQty 초기화
-						$(opener.document).find('#salAmt'+index).text('0');	//부모창 salAmt 초기화
 						$(opener.document).find('#prdCd'+j).focus();
 						return false;
 					}
+					
 				}
 			}
 			
@@ -930,13 +919,31 @@ $(function(){
 	}
 	
 	//input 내용이 숫자인가?
-	$.isNumber =  function(str){
-		var result = str.replace(/[^0-9]/g,'');
+	$.isNumber =  function(str,select){
+		if(select=='comma'){
+			var result = str.replace(/[^0-9,]/g,'');
+		}else {
+			var result = str.replace(/[^0-9]/g,'');
+		}
 		
 		if(str!=result){
 			return false;
 		}else {
 			return true;
+		}
+	}
+	
+	//숫자 유효성
+	$.checkNumberValid = function(selector){
+		
+		var data = $(selector).val();
+		
+		//숫자만 입력 가능
+		if(!$.isNumber(data)){
+			alert('숫자만 입력해 주세요.');
+			$(selector).val('');
+			$(selector).focus();
+			return false;
 		}
 	}
 	

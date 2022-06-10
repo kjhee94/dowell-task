@@ -40,8 +40,8 @@ $(document).ready(function(){
 								  '<span id="ivcoQty'+index+'" class="ivcoQty">'+item.ivcoQty+'</span>'+
 								  '<span id="prdCsmrUpr'+index+'" class="prdCsmrUpr">'+item.prdCsmrUpr+'</span>'+
 								  '</div>';
-								$resultTag.append(str);
 							}
+							$resultTag.append(str);
 						});
 						
 						//스크롤바 생성시 table 비율 맞추기

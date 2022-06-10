@@ -100,7 +100,7 @@ public class SaleServiceImpl implements SaleService {
 		
 		//재고 수정 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>재고 수정");
-		int resultUpdate = sDAO.updateSaleIvco(map);
+		int resultUpdate = sDAO.updateIvco(map);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -147,24 +147,24 @@ public class SaleServiceImpl implements SaleService {
 		//반품 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>반품 등록");
 		//변경할 판매목록 list에 담기
-		ArrayList<SaleVO> slist = sDAO.selectOneSale(map);
-		map.put("slist", slist);
-		int resultRtnInsert = sDAO.insertRtn(map);
+		ArrayList<SaleVO> saleData = sDAO.selectOneSale(map);
+		map.put("saleData", saleData);
+		int resultSaleInsert = sDAO.insertRtn(map);
 		
 		//반품상세 추가 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>반품상세 등록");
 		//변경할 판매상세목록 list에 담기
-		ArrayList<SaleDtVO> sdlist = sDAO.selectOneSaleDt(map);
-		map.put("sdlist", sdlist);
-		int resultRtnDtInsert = sDAO.insertRtnDt(map);
+		ArrayList<SaleDtVO> saleDtData = sDAO.selectOneSaleDt(map);
+		map.put("saleDtData", saleDtData);
+		int resultSaleDtInsert = sDAO.insertSaleDt(map);
 		
 		//재고 수정 결과 int에 담기(1이상:성공 / 0:실패)
 		log.info("=================>>재고 수정");
-		int resultUpdate = sDAO.updateRtnIvco(map);
+		int resultUpdate = sDAO.updateIvco(map);
 		
 		//반환할 객체 선언
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		if(resultRtnInsert!=0 && resultRtnDtInsert!=0 && resultUpdate!=0) {	//등록 성공		 
+		if(resultSaleInsert!=0 && resultSaleDtInsert!=0 && resultUpdate!=0) {	//등록 성공		 
 			log.info("=================>>반품 등록 & 반품상세 등록 & 재고 수정 성공");
 			resultMap.put("seccessYN","Y");
 		}else {	//수정 실패

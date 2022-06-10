@@ -16,6 +16,87 @@ $(document).ready(function(){
 	//custSearchBtn 클릭시 팝업 오픈
 	$.popupOpen($('#custSearchBtn'),'650','500','/customer/custPop.do','custPopOpen');
 	
+	//카드금액 유효성
+	$('#crdStlmAmt').change(function(){
+		//카드금액 입력시 readonly 해제
+		if($('#crdStlmAmt').val().length!=0){
+			$('#vldYM').prop('readonly',false);
+			$('#crdCoCd').prop('disabled',false);
+			$('#crdNo0').prop('readonly',false);
+			$('#crdNo1').prop('readonly',false);
+			$('#crdNo2').prop('readonly',false);
+			$('#crdNo3').prop('readonly',false);
+		}else {
+			$('#vldYM').prop('readonly',true);
+			$('#crdCoCd').prop('disabled',true);
+			$('#crdNo0').prop('readonly',true);
+			$('#crdNo1').prop('readonly',true);
+			$('#crdNo2').prop('readonly',true);
+			$('#crdNo3').prop('readonly',true);
+			
+			//값초기화
+			$('#vldYM').val('');
+			$("#crdCoCd option:eq(0)").prop("selected", true);
+			$('#crdNo0').val('');
+			$('#crdNo1').val('');
+			$('#crdNo2').val('');
+			$('#crdNo3').val('');
+		}
+	});
+	
+	//유효일자 유효성
+	$('#vldYM').change(function(){
+		//유효성 체크
+		var vldYM = $('#vldYM').val().trim();
+		var month = vldYM.substr(0,2);
+		var year = vldYM.substr(2,4);
+		//오늘날짜
+		var today = new Date();
+		var todayMonth = today.getMonth()+1;
+		var todayYear = today.getFullYear();
+		
+		//월 체크 유효성
+		var regex = RegExp(/^(0[1-9]|1[012])(20)\d{2}$/);
+		
+		if(regex.test(vldYM)){
+//			console.log(month);
+//			console.log(todayMonth);
+//			console.log(year);
+//			console.log(todayYear);
+			
+			if(year<=todayYear && month<todayMonth){
+//				console.log('2');
+				alert('유효일자가 유효하지 않습니다.');
+				$('#vldYM').val('');
+				$('#vldYM').focus();
+			}
+		}else {
+//			console.log('1');
+			alert('유효일자가 유효하지 않습니다.');
+			$('#vldYM').val('');
+			$('#vldYM').focus();
+		}
+	});
+	
+	//카드번호 유효성
+	$('#crdNo0').change(function(){
+		//숫자 유효성
+		$.checkNumberValid('#crdNo0');
+	});
+	$('#crdNo1').change(function(){
+		//숫자 유효성
+		$.checkNumberValid('#crdNo1');
+	});
+	$('#crdNo2').change(function(){
+		//숫자 유효성
+		$.checkNumberValid('#crdNo2');
+	});
+	$('#crdNo3').change(function(){
+		//숫자 유효성
+		$.checkNumberValid('#crdNo3');
+	});
+	
+	
 	//상품 추가버튼 클릭시
 	$('#prdAddBtn').click(function(){
 		//index는 result의 자식의 갯수
@@ -399,6 +480,13 @@ function salAmtAuto(e) {
 
 //결제금액 숫자 포멧팅
 function inputNumberFormat(obj) {
+
+	//숫자만 입력 가능
+	if(!$.isNumber(obj.value,'comma')){
+		alert('숫자만 입력해 주세요.');
+		obj.value = '';
+	}
+	
     obj.value = comma(uncomma(obj.value));
 }
 
