@@ -13,7 +13,7 @@
 		    ,S.PRT_CD AS PRTCD																				--매장코드
 		    ,P.PRT_NM AS PRTNM																				--매장명
 		    ,SUM(D.SAL_QTY) AS TOTSALQTY																	--총판매수량
-           	,SUM(D.SAL_AMT) AS TOTSALAMT																	--총판매금액
+           	,TO_CHAR(SUM(D.SAL_AMT),'FM999,999,999') AS TOTSALAMT											--총판매금액
 		    ,TO_CHAR(S.CSH_STLM_AMT,'FM999,999,999') AS CSHSTLMAMT											--현금결재금액(,포멧)
 		    ,TO_CHAR(S.CRD_STLM_AMT,'FM999,999,999') AS CRDSTLMAMT											--카드결제금액(,포멧)
 		    ,TO_CHAR(S.PNT_STLM_AMT,'FM999,999,999') AS PNTSTLMAMT											--포인트사용금액(,포멧)
@@ -24,11 +24,23 @@
 		    LEFT JOIN CS_CUST01_MT C ON (S.CUST_NO=C.CUST_NO)												--판매,고객관리 JOIN(CUST_NO)
 		    LEFT JOIN MA_PRT_MT P ON (S.PRT_CD=P.PRT_CD)													--판매,매장 JOIN(PRT_CD)
 		    LEFT JOIN MA_USER_MT U ON (S.FST_USER_ID=U.USER_ID) 											--판매,사용자 JOIN(FST_USER_ID/USER_ID)
-		WHERE (S.SAL_DT BETWEEN TO_DATE(#{salDtFrom}) AND TO_DATE(#{salDtTo}))								--판매일자 조건
+		WHERE S.SAL_DT BETWEEN TO_DATE(#{salDtFrom}) AND TO_DATE(#{salDtTo})								--판매일자 조건
 		    AND S.PRT_CD=#{prtCd}																			--매장 조건
 		    <if test="custNo!=null and !custNo.isEmpty()">
 		    AND S.CUST_NO=#{custNo}																			--고객번호 조건
 		    </if>
+		GROUP BY (SUBSTR(S.SAL_DT,1,4)||'-'||SUBSTR(S.SAL_DT,5,2)||'-'||SUBSTR(S.SAL_DT,7))
+		         ,S.CUST_NO
+		         ,C.CUST_NM
+		         ,S.SAL_NO
+		         ,S.SAL_TP_CD
+		         ,S.PRT_CD
+		         ,P.PRT_NM
+		         ,TO_CHAR(S.CSH_STLM_AMT,'FM999,999,999')
+		         ,TO_CHAR(S.CRD_STLM_AMT,'FM999,999,999')
+		         ,TO_CHAR(S.PNT_STLM_AMT,'FM999,999,999')
+		         ,U.USER_NM
+		         ,TO_CHAR(S.FST_REG_DT,'YYYY-MM-DD') 
 		ORDER BY 1 DESC, 4 DESC																				--판매일자,판매번호 역순
 	</select>
 	
